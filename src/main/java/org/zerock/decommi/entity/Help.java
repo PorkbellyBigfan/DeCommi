@@ -5,9 +5,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,22 +15,20 @@ import lombok.ToString;
 
 @Entity
 @Builder
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "writer")
-@Table(name = "d_member")
-public class Diary extends BaseEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Getter
+@ToString(exclude = "member")
+public class Help extends BaseEntity {
+
+    // helpboard
     @Id
-    private Long dino;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int hbId;
     private String title;
     private String content;
-    private boolean openYN;
-    private boolean commentYN;
-    private int heartCnt;
-    private int bookmarkCnt;
+    // private enum hbType[];
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email")
-    private Member writer;
+    private Member member;
+
 }

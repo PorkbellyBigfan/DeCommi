@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,23 +15,21 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Builder
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "writer")
-@Table(name = "d_member")
-public class Diary extends BaseEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@ToString(exclude = { "user", "diary" })
+public class Bookmark extends BaseEntity {
     @Id
-    private Long dino;
-    private String title;
-    private String content;
-    private boolean openYN;
-    private boolean commentYN;
-    private int heartCnt;
-    private int bookmarkCnt;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long bookmarkId;
+    private String bfolderName;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "email")
-    private Member writer;
+    private Member user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dino")
+    private Diary diary;
 }

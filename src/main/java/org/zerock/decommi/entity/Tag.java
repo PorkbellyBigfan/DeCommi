@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,14 +12,16 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Builder
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name = "d_member")
-public class ddd {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Tag extends BaseEntity {
     @Id
-    private Long dno;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long tagId;
+    private String tagName;
+    private int tagSearchCnt;
+    private int tagUseCnt;
 }

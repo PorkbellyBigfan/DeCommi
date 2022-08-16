@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,22 +16,22 @@ import lombok.ToString;
 
 @Entity
 @Builder
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "writer")
-@Table(name = "d_member")
-public class Diary extends BaseEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Getter
+@ToString(exclude = "diary")
+public class Reply extends BaseEntity {
     @Id
-    private Long dino;
-    private String title;
-    private String content;
-    private boolean openYN;
-    private boolean commentYN;
-    private int heartCnt;
-    private int bookmarkCnt;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long rno;
+    private String replyContent;
+
+    // 대댓글 구현을 위한 속성들
+    private int replyClass;
+    private int replyOrder;
+    private int replyGroup;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email")
-    private Member writer;
+    @JoinColumn(name = "dino")
+    private Diary diary;
 }

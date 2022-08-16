@@ -17,9 +17,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Table(name = "d_member")
-public class Member {
+public class Member extends BaseEntity {
     @Id
     private String email;
     private String pw;
     private String name;
+    private String phone;
 }
