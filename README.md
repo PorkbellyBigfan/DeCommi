@@ -4,6 +4,7 @@
 #0819- 
 작성자 : 김형준
 <변경사항> 
+
 1.DecommiApplication.java 클래스 변경 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class) 를 추가
 사용자인증기능이 구현이 되지 않아서 더미데이터를 넣는것에 문제가 생기는것 같습니다. 그래서 해당 dependency를 disable 하는 코드를 추가했습니다.
