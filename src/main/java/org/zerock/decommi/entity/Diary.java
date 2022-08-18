@@ -21,7 +21,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = "writer")
-@Table(name = "d_member")
+@Table(name = "d_diary")
 public class Diary extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
