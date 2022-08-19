@@ -1,5 +1,6 @@
 package org.zerock.decommi.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,18 +21,17 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "user", "diary" })
-public class Bookmark extends BaseEntity {
+@ToString(exclude = {"writer","post"})
+@Table(name="d_heart")
+public class Heart {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long bookmarkId;
-  private String bfolderName;
-  private boolean isBookmark;
-
+  private Long id;
+  private boolean isHeart;
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "email")
-  private Member user;
+  private Member writer;
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "dino")
-  private Diary diary;
+  private Diary post;
 }

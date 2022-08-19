@@ -30,9 +30,11 @@ public class Diary extends BaseEntity {
     private String content;
     private boolean openYN;
     private boolean commentYN;
+    private int reportCnt;
     private int heartCnt;
     private int bookmarkCnt;
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = FetchType.LAZY) // 한명의 멤버가 여러개의 글을 쓸수 있기때문에 @ManyToOne
     @JoinColumn(name = "email")
     private Member writer;
 }
