@@ -1,6 +1,11 @@
 package org.zerock.decommi.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -22,5 +27,15 @@ public class Member extends BaseEntity {
     private String email;
     private String pw;
     private String name;
-    private String phone;
+    private String mobile;
+    private boolean fromSocial;
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @Builder.Default
+    private Set<MemberRole> roleSet = new HashSet<>();
+
+    public void addMemberRole(MemberRole role) {
+        roleSet.add(role);
+    }
+
 }
