@@ -1,4 +1,4 @@
-package org.zerock;
+package org.zerock.decommi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

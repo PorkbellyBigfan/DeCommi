@@ -1,10 +1,12 @@
 package org.zerock.decommi.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -14,18 +16,21 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Getter
 @Builder
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name = "d_tag")
-public class Tag extends BaseEntity {
+@Table(name = "d_diary_tag")
+public class DiaryTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tagId;
-    @Column(unique = true)
-    private String tagName;
-    private int tagSearchCnt;
-    private int tagUseCnt;
+    private Long diarytagId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dino")
+    private Diary dino;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tagId")
+    private Tag tagId;
 }
