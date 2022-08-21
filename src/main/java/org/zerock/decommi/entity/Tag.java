@@ -26,6 +26,6 @@ public class Tag extends BaseEntity {
     private Long tagId;
     @Column(unique = true)
     private String tagName;
-    private int tagSearchCnt;
-    private int tagUseCnt;
+    private int tagSearchedCnt;
+    private int tagUsedCnt;
 }
