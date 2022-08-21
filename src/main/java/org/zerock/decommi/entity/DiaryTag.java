@@ -20,7 +20,7 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"dino", "tagId"})
+@ToString(exclude = { "diary", "tag" })
 @Table(name = "d_diary_tag")
 public class DiaryTag {
     @Id
@@ -29,8 +29,8 @@ public class DiaryTag {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dino")
-    private Diary dino;
+    private Diary diary;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tag")
-    private Tag tagId;
+    @JoinColumn(name = "tagId")
+    private Tag tag;
 }

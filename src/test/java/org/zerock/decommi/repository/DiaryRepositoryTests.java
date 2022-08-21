@@ -8,22 +8,26 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.zerock.decommi.entity.Diary;
 import org.zerock.decommi.entity.DiaryTag;
 import org.zerock.decommi.entity.Member;
+import org.zerock.decommi.entity.Tag;
 
 @SpringBootTest
 public class DiaryRepositoryTests {
   @Autowired
-  DiaryRepository repository; // 다이어리 리파지토리
+  DiaryRepository repository; // Diary Repository
+
   @Autowired
-  MemberRepository memberRepository; // 멤버리파지토리
+  DiaryTagRepository dtRepository; // Diary_Tag Repository
+
   @Autowired
-  DiaryTagRepository dtRepository;
+  MemberRepository memberRepository; // Member Repository
 
   @Test
   public void insertDiaryPosts() {
     IntStream.rangeClosed(1, 300).forEach(i -> {
       // 멤버 1~100 랜덤
       Long mno = (long) (Math.random() * 100) + 1;
-      Member writer = Member.builder().email("user" + mno + "@decommi.com").build();
+      Member writer = Member.builder().email("user" + mno +
+          "@decommi.com").build();
       Diary diary = Diary.builder()
           .title("title" + i)
           .content("content" + i)
@@ -36,9 +40,16 @@ public class DiaryRepositoryTests {
           .build();
       repository.save(diary);
 
+      Long tagno = (long) (Math.random() * 100) + 1;
+      Tag tag = Tag.builder().tagId(tagno).tagName("tagName" + tagno + "(" + i + ")").tagSearchedCnt(0).tagUsedCnt(0)
+          .build();
       int count = (int) (Math.random() * 3) + 1;
       for (int j = 0; j < count; j++) {
-        DiaryTag dt = DiaryTag.builder().build();
+        DiaryTag dt = DiaryTag.builder()
+            .tag(tag)
+            .diary(diary)
+            .build();
+        dtRepository.save(dt);
       }
     });
   }
