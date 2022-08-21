@@ -16,6 +16,9 @@ public class DiaryRepositoryTests {
   DiaryRepository repository; // Diary Repository
 
   @Autowired
+  TagRepository tagRepository;
+
+  @Autowired
   DiaryTagRepository dtRepository; // Diary_Tag Repository
 
   @Autowired
@@ -26,8 +29,7 @@ public class DiaryRepositoryTests {
     IntStream.rangeClosed(1, 300).forEach(i -> {
       // 멤버 1~100 랜덤
       Long mno = (long) (Math.random() * 100) + 1;
-      Member writer = Member.builder().email("user" + mno +
-          "@decommi.com").build();
+      Member writer = Member.builder().email("user" + mno + "@decommi.com").build();
       Diary diary = Diary.builder()
           .title("title" + i)
           .content("content" + i)
@@ -40,18 +42,21 @@ public class DiaryRepositoryTests {
           .build();
       repository.save(diary);
 
-      // Long tagno = (long) (Math.random() * 100) + 1;
-      // Tag tag = Tag.builder().tagName("tagName" + tagno + "(" + i +
-      // ")").tagSearchedCnt(0).tagUsedCnt(0)
-      // .build();
-      // int count = (int) (Math.random() * 3) + 1;
-      // for (int j = 0; j < count; j++) {
-      // DiaryTag dt = DiaryTag.builder()
-      // .tag(tag)
-      // .diary(diary)
-      // .build();
-      // dtRepository.save(dt);
-      // }
+      Tag tag = Tag.builder()
+          .tagName("tagName" + i)
+          .tagSearchedCnt(0)
+          .tagUsedCnt(0)
+          .build();
+      tagRepository.save(tag);
+
+      int count = (int) (Math.random() * 3) + 1;
+      for (int j = 0; j < count; j++) {
+        DiaryTag dt = DiaryTag.builder()
+            .dino(diary)
+            .tagName(tag)
+            .build();
+        dtRepository.save(dt);
+      }
     });
   }
 }

@@ -1,5 +1,6 @@
 package org.zerock.decommi.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,17 +21,17 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "diary", "tag" })
+@ToString(exclude = { "dino", "tagName" })
 @Table(name = "d_diary_tag")
 public class DiaryTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long diarytagId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "dino")
-    private Diary diary;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tagId")
-    private Tag tag;
+    private Diary dino;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "tagName")
+    private Tag tagName;
 }
