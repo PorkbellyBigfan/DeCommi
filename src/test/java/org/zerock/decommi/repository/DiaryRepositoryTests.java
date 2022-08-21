@@ -40,17 +40,18 @@ public class DiaryRepositoryTests {
           .build();
       repository.save(diary);
 
-      Long tagno = (long) (Math.random() * 100) + 1;
-      Tag tag = Tag.builder().tagId(tagno).tagName("tagName" + tagno + "(" + i + ")").tagSearchedCnt(0).tagUsedCnt(0)
-          .build();
-      int count = (int) (Math.random() * 3) + 1;
-      for (int j = 0; j < count; j++) {
-        DiaryTag dt = DiaryTag.builder()
-            .tag(tag)
-            .diary(diary)
-            .build();
-        dtRepository.save(dt);
-      }
+      // Long tagno = (long) (Math.random() * 100) + 1;
+      // Tag tag = Tag.builder().tagName("tagName" + tagno + "(" + i +
+      // ")").tagSearchedCnt(0).tagUsedCnt(0)
+      // .build();
+      // int count = (int) (Math.random() * 3) + 1;
+      // for (int j = 0; j < count; j++) {
+      // DiaryTag dt = DiaryTag.builder()
+      // .tag(tag)
+      // .diary(diary)
+      // .build();
+      // dtRepository.save(dt);
+      // }
     });
   }
 }
