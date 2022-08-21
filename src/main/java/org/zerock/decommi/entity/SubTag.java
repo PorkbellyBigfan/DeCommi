@@ -22,17 +22,16 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name="d_subtag")
+@Table(name = "d_subtag")
 public class SubTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long subtagId;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="tagId")
+    @JoinColumn(name = "tagId")
     private Long tagId;
     @Column(unique = true)
     private String subtagName;
     private int subtagSearchedCnt;
     private int subtagUsedCnt;
-
 }
