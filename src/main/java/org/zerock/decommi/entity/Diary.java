@@ -28,11 +28,11 @@ public class Diary extends BaseEntity {
     private Long dino;
     private String title;
     private String content;
-    private boolean openYN;
-    private boolean commentYN;
-    private int reportCnt;
-    private int heartCnt;
-    private int bookmarkCnt;
+    private boolean openYN;     //공개여부
+    private boolean commentYN;  //댓글 허용여부
+    private int reportCnt;      //신고 카운트
+    private int heartCnt;       //하트 카운트
+    private int bookmarkCnt;    //북마크 카운트
 
     @ManyToOne(fetch = FetchType.LAZY) // 한명의 멤버가 여러개의 글을 쓸수 있기때문에 @ManyToOne
     @JoinColumn(name = "email")

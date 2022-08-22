@@ -28,9 +28,11 @@ public class Heart {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private boolean isHeart;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "email")
   private Member writer;
+  
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "dino")
   private Diary post;
