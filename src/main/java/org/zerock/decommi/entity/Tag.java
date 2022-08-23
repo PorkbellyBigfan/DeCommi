@@ -31,7 +31,6 @@ public class Tag extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tagId;
-<<<<<<< HEAD
     @Column(unique = true, nullable = false)
     private String tagName;
     private int tagSearchedCnt;
@@ -47,10 +46,4 @@ public class Tag extends BaseEntity {
         this.parent = parent;
     }
 
-=======
-    @Column(unique = true)
-    private String tagName;
-    private int tagSearchedCnt;
-    private int tagUsedCnt;
->>>>>>> ec97dbc3c430e2e50bb8ed28a6a8af6f67475215
 }

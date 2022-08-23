@@ -19,11 +19,8 @@ public class DiaryRepositoryTests {
 
   @Autowired
   TagRepository tagRepository;
-<<<<<<< HEAD
   // @Autowired
   // SubTagRepository subTagRepository;
-=======
->>>>>>> ec97dbc3c430e2e50bb8ed28a6a8af6f67475215
 
   @Autowired
   DiaryTagRepository dtRepository; // Diary_Tag Repository
@@ -53,10 +50,7 @@ public class DiaryRepositoryTests {
           .tagName("tagName" + i)
           .tagSearchedCnt(0)
           .tagUsedCnt(0)
-<<<<<<< HEAD
           .parent(isNull())
-=======
->>>>>>> ec97dbc3c430e2e50bb8ed28a6a8af6f67475215
           .build();
       tagRepository.save(tag);
 
