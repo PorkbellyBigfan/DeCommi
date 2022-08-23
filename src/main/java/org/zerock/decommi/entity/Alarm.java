@@ -19,15 +19,12 @@
 // @AllArgsConstructor
 // @NoArgsConstructor
 // @Builder
-// @ToString(exclude = { "receiver", "sender", "bookmarkId", "helpId" })
+// @ToString(exclude = { "receiver", "sender", "bookmarkId", "scid" })
 // public class Alarm extends BaseEntity {
 // @Id
 // @GeneratedValue(strategy = GenerationType.IDENTITY)
 // private Long alarmId;
-// // private array alarmType;
 // private String alarmContent;
-
-// // 알람 확인시간을 어떻게 저장해야할까?
 
 // @ManyToOne(fetch = FetchType.LAZY)
 // @JoinColumn(name = "email")
@@ -41,8 +38,11 @@
 // @ManyToOne(fetch = FetchType.LAZY)
 // @JoinColumn(name = "bookmarkId")
 // private Bookmark bookmarkId;
+// // @ManyToOne(fetch = FetchType.LAZY)
+// // @JoinColumn(name = "hbId")
+// // private Help helpId;
 // @ManyToOne(fetch = FetchType.LAZY)
-// @JoinColumn(name = "hbId")
-// private Help helpId;
+// @JoinColumn(name = "scid")
+// private ServiceCenter scid;
 
 // }

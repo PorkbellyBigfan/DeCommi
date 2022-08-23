@@ -16,28 +16,20 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@ToString(exclude = { "diary", "member" })
-@Table(name = "d_reply")
-public class Reply extends BaseEntity {
+@ToString(exclude = "writer")
+@Table(name = "d_todo")
+public class ToDo extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long rno;
-    private String replyContent;
-
-    // 대댓글 구현을 위한 속성들
-    private int replyClass;
-    private int replyOrder;
-    private int replyGroup;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dino")
-    private Diary diary;
-
+    private Long todoid;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "email")
-    private Member member;
+    private Member writer;
+    private String todoTitle;
+    private String todoContent;
+    private boolean todoStatus;
 }

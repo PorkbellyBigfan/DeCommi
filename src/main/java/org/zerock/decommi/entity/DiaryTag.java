@@ -1,5 +1,6 @@
 package org.zerock.decommi.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,27 +18,23 @@ import lombok.ToString;
 
 @Entity
 @Builder
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@ToString(exclude = { "diary", "member" })
-@Table(name = "d_reply")
-public class Reply extends BaseEntity {
+@ToString(exclude = { "dino", "tagName" })
+@Table(name = "d_diary_tag")
+public class DiaryTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long rno;
-    private String replyContent;
+    private Long diarytagId;
 
-    // 대댓글 구현을 위한 속성들
-    private int replyClass;
-    private int replyOrder;
-    private int replyGroup;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "dino")
-    private Diary diary;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email")
-    private Member member;
+    private Diary dino;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "tagName", referencedColumnName = "tagName")
+    private Tag tagName;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "parent_id")
+    private Tag parent;
 }

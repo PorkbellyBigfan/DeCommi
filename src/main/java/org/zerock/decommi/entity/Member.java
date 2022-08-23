@@ -38,4 +38,12 @@ public class Member extends BaseEntity {
         roleSet.add(role);
     }
 
+    public void changePw(String pw) {
+        this.pw = pw;
+    }
+
+    public void changeMobile(String mobile) {
+        this.pw = mobile;
+    }
+
 }
