@@ -24,12 +24,10 @@ public class BookmarkRepositoryTests {
     public void insertBookmarkDummies() {
         IntStream.rangeClosed(1, 100).forEach(i -> {
             Long mno = (long) (Math.random() * 100) + 1;
-            Long dino = (long) (Math.random() * 50) + 1;
+            Long dino = (long) (Math.random() * 80) + 1;
             Member writer = Member.builder().email("user" + mno +
                     "@decommi.com").build();
-            memberRepository.save(writer);
             Diary diary = Diary.builder().dino(dino).build();
-            diaryRepository.save(diary);
 
             Bookmark bookmark = Bookmark.builder()
                     .bfolderName("folderName " + i)

@@ -19,7 +19,6 @@ public class TodoRepositoryTests {
     public void insertToDoDummies() {
         IntStream.rangeClosed(1, 100).forEach(i -> {
             Member writer = Member.builder().email("user" + i + "@decommi.com").build();
-
             int count = (int) (Math.random() * 5) + 1;
             for (int j = 0; j < count; j++) {
                 ToDo todo = ToDo.builder()
