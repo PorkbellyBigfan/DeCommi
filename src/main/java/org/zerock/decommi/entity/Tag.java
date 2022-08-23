@@ -35,8 +35,8 @@ public class Tag extends BaseEntity {
     private String tagName;
     private int tagSearchedCnt;
     private int tagUsedCnt;
-    
+
     private boolean isSubTag;
     private Long tagGroup;
-    
+    //
 }
