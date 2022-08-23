@@ -58,8 +58,8 @@ public class Alarm extends BaseEntity {
     @Builder.Default
     private Set<AlarmType> roleSet = new HashSet<>();
 
-    @Enumerated(EnumType.ORDINAL)
-    private AlarmType alarmType;
+    // @Enumerated(EnumType.ORDINAL)
+    // private AlarmType alarmType;
 
     public enum AlarmType {
         DECLARATION, HELP, BOOKMARK, HEART
