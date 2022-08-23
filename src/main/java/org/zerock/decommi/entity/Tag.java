@@ -35,15 +35,8 @@ public class Tag extends BaseEntity {
     private String tagName;
     private int tagSearchedCnt;
     private int tagUsedCnt;
-
-    @ManyToOne(fetch = FetchType.LAZY) // 여러개의 하위태그가 (childTag) 하나의 상위태그 (parentTag)를 참조
-    @JoinColumn(name = "parent_id") // 만약 본인이 상위 카테고리일 경우 null, 하위 카테고리일 경우 false
-    @OnDelete(action = OnDeleteAction.CASCADE) // 상위 태그가 지워지면 하위태그도 자동적으로 삭제
-    private Tag parent;
-
-    public Tag(String tagName, Tag parent) {
-        this.tagName = tagName;
-        this.parent = parent;
-    }
-
+    
+    private boolean isSubTag;
+    private Long tagGroup;
+    
 }
