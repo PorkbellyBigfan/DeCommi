@@ -14,34 +14,35 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-// @Entity
-// @Getter
-// @AllArgsConstructor
-// @NoArgsConstructor
-// @Builder
+@Entity
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 // @ToString(exclude = { "receiver", "sender", "bookmarkId", "scid" })
-// public class Alarm extends BaseEntity {
-// @Id
-// @GeneratedValue(strategy = GenerationType.IDENTITY)
-// private Long alarmId;
-// private String alarmContent;
+@ToString(exclude = {"receiver","sender"})
+public class Alarm extends BaseEntity {
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Long alarmId;
+private String alarmContent;
 
-// @ManyToOne(fetch = FetchType.LAZY)
-// @JoinColumn(name = "email")
-// private Member receiver;
-// @ManyToOne(fetch = FetchType.LAZY)
-// @JoinColumn(name = "email")
-// private Member sender;
+@ManyToOne(fetch = FetchType.LAZY)
+@JoinColumn(name = "email_receiver")
+private Member receiver;
+@ManyToOne(fetch = FetchType.LAZY)
+@JoinColumn(name = "email_sender")
+private Member sender;
 // @ManyToOne(fetch = FetchType.LAZY)
 // @JoinColumn(name = "dino")
 // private Diary diary;
 // @ManyToOne(fetch = FetchType.LAZY)
 // @JoinColumn(name = "bookmarkId")
 // private Bookmark bookmarkId;
-// // @ManyToOne(fetch = FetchType.LAZY)
-// // @JoinColumn(name = "hbId")
-// // private Help helpId;
+// @ManyToOne(fetch = FetchType.LAZY)
+// @JoinColumn(name = "hbId")
+// private Help helpId;
 // @ManyToOne(fetch = FetchType.LAZY)
 // @JoinColumn(name = "scid")
 // private ServiceCenter scid;
-// }
+}
