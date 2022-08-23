@@ -31,10 +31,13 @@ public class DiaryTag {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "dino")
     private Diary dino;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "tagName", referencedColumnName = "tagName")
     private Tag tagName;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "parent_id")
     private Tag parent;
+
 }
