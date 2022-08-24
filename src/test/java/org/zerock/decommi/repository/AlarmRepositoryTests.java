@@ -30,8 +30,7 @@ public class AlarmRepositoryTests {
     @Autowired
     HelpRepository helpRepository;
 
-    @Autowired
-    HeartRepository heartRepository;
+
 
     @Test
     public void insertAlarmDummies() {
@@ -42,14 +41,12 @@ public class AlarmRepositoryTests {
             Diary diary = Diary.builder().dino((long) (Math.random() * 100) + 1).build();
             Bookmark bookmark = Bookmark.builder().bookmarkId((long) (Math.random() * 100) + 1).build();
             Help help = Help.builder().hbId((long) (Math.random() * 100) + 1).build();
-            Heart heart = Heart.builder().heartId((long) (Math.random() * 100) + 1).build();
             Alarm alarm = Alarm.builder()
                     .receiver(receiver)
                     .sender(sender)
                     .diary(diary)
                     .bookmarkId(bookmark)
                     .helpId(help)
-                    .heartId(heart)
                     .alarmContent("alarmContent" + i)
                     .build();
 

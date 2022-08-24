@@ -50,9 +50,7 @@ public class Alarm extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hbId")
     private Help helpId;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "heartId")
-    private Heart heartId;
+
 
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default
