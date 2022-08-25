@@ -30,7 +30,8 @@ public class DiaryRepositoryTests {
   public void insertDiaryPosts() {
     IntStream.rangeClosed(1, 10).forEach(i -> {
       // 멤버 1~100 랜덤
-      Long mno = (long) (Math.random() * 10) + 1;
+      Long mno = (long) (Math.random() * 100) + 1;
+      Long tagno = (long) (Math.random() * 5) + 1;
       Member writer = Member.builder().email("user" + mno + "@decommi.com").build();
       Diary diary = Diary.builder()
           .title("title" + i)
@@ -48,7 +49,8 @@ public class DiaryRepositoryTests {
           .tagName("tagName" + i)
           .tagSearchedCnt(0)
           .tagUsedCnt(0)
-          .parent(Tag.builder().tagId(mno).tagName("subtagName" + mno).build())
+          .isSubTag(false)
+          .tagGroup(tagno)
           .build();
       tagRepository.save(tag);
 
