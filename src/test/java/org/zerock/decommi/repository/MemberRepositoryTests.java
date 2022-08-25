@@ -15,7 +15,7 @@ public class MemberRepositoryTests {
 
   @Test
   public void insertMemberDummies() {
-    IntStream.rangeClosed(1, 100).forEach(i -> {
+    IntStream.rangeClosed(1, 10).forEach(i -> {
       Member m = Member.builder()
           .email("user" + i + "@decommi.com")
           .pw("1234")
@@ -24,9 +24,9 @@ public class MemberRepositoryTests {
           .fromSocial(false)
           .build();
       m.addMemberRole(MemberRole.GUEST);
-      if (i > 50)
+      if (i > 5)
         m.addMemberRole(MemberRole.MEMBER);
-      if (i > 95)
+      if (i > 9)
         m.addMemberRole(MemberRole.ADMIN);
       repository.save(m);
     });

@@ -1,7 +1,5 @@
 package org.zerock.decommi.repository;
 
-import static org.mockito.ArgumentMatchers.isNull;
-
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
@@ -30,9 +28,9 @@ public class DiaryRepositoryTests {
 
   @Test
   public void insertDiaryPosts() {
-    IntStream.rangeClosed(1, 300).forEach(i -> {
+    IntStream.rangeClosed(1, 10).forEach(i -> {
       // 멤버 1~100 랜덤
-      Long mno = (long) (Math.random() * 100) + 1;
+      Long mno = (long) (Math.random() * 10) + 1;
       Member writer = Member.builder().email("user" + mno + "@decommi.com").build();
       Diary diary = Diary.builder()
           .title("title" + i)
@@ -50,7 +48,7 @@ public class DiaryRepositoryTests {
           .tagName("tagName" + i)
           .tagSearchedCnt(0)
           .tagUsedCnt(0)
-          .parent(isNull())
+          .parent(Tag.builder().tagId(mno).tagName("subtagName" + mno).build())
           .build();
       tagRepository.save(tag);
 
