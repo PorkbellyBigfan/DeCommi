@@ -1,6 +1,5 @@
 package org.zerock.decommi.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,19 +20,20 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"writer","post"})
-@Table(name="d_heart")
+@ToString(exclude = { "writer", "post" })
+@Table(name = "d_heart")
 public class Heart {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long heartId;
   private boolean isHeart;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "email")
   private Member writer;
-  
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "dino")
   private Diary post;
+
 }

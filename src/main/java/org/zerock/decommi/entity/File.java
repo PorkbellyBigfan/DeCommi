@@ -1,9 +1,11 @@
 package org.zerock.decommi.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,15 +17,16 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "diary")
 @Getter
 public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int fileId;
-    private String fileType;
+
+    private String uuid;
     private String fileName;
-    private String fileOrgName;
     private String filePath;
-    private int fileSize;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Diary diary;
 }

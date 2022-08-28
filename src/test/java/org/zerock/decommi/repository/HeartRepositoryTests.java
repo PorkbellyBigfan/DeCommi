@@ -21,11 +21,10 @@ public class HeartRepositoryTests {
     @Test
     public void insertHeartDummies() {
         IntStream.rangeClosed(1, 100).forEach(i -> {
-            Long mno = (long) (Math.random() * 100) + 1;
+            Long mno = (long) (Math.random() * 80) + 1;
+            Long dino = (long) (Math.random() * 100) + 1;
             Member writer = Member.builder().email("user" + mno + "@decommi.com").build();
-            memberRepository.save(writer);
-            Diary diary = Diary.builder().build();
-            diaryRepository.save(diary);
+            Diary diary = Diary.builder().dino(dino).build();
             Heart heart = Heart.builder()
                     .isHeart(false)
                     .writer(writer)
