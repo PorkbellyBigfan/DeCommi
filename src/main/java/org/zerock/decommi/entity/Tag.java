@@ -32,5 +32,4 @@ public class Tag extends BaseEntity {
     // 하위태그를 위한 컬럼
     private boolean isSubTag;
     private Long tagGroup;
-
 }
