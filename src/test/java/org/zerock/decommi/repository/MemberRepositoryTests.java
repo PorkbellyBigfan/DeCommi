@@ -1,5 +1,6 @@
 package org.zerock.decommi.repository;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
@@ -30,5 +31,14 @@ public class MemberRepositoryTests {
         m.addMemberRole(MemberRole.ADMIN);
       repository.save(m);
     });
+  }
+
+  @Test
+  public void testMember() {
+    Optional<Member> result = repository.findByEmail("user99@decommi.com");
+    if (result.isPresent()) {
+      Member member = result.get();
+      System.out.println("findByEmail : " + member);
+    }
   }
 }
