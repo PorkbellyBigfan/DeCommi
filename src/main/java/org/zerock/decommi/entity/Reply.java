@@ -40,4 +40,9 @@ public class Reply extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "email")
     private Member member;
+
+    public void changeReplyContent(String replyContent) {
+        this.replyContent = replyContent;
+    }
+
 }
