@@ -36,15 +36,13 @@ public interface DiaryService {
     // 댓글 아이콘을 클릭했을때, 해당 다이리에 달린 댓글들 보여주기
     // DiaryDTO getReplyList(Long dino);
 
-    default DiaryDTO entityToDTO(Diary diary, List<Tag> tag) {
+    default DiaryDTO entityToDTO(Diary diary, List<Tag> tag, Long replyCnt, Long heartCnt, Long bookmarkCnt,
+            Long reportCnt) {
         DiaryDTO diaryDTO = DiaryDTO.builder()
                 .title(diary.getTitle())
                 .content(diary.getContent())
                 .openYN(diary.isOpenYN())
                 .commentYN(diary.isCommentYN())
-                .heartCnt(diary.getHeartCnt())
-                .bookmarkCnt(diary.getBookmarkCnt())
-                .reportCnt(diary.getReportCnt())
                 .writerEmail(diary.getWriter().getEmail())
                 .build();
         List<TagDTO> tagDTOs = tag.stream().map(
@@ -62,6 +60,10 @@ public interface DiaryService {
                     };
                 }).collect(Collectors.toList());
         diaryDTO.setTagDTOList(tagDTOs);
+        diaryDTO.setReplyCnt(replyCnt.intValue());
+        diaryDTO.setHeartCnt(heartCnt.intValue());
+        diaryDTO.setBookmarkCnt(bookmarkCnt.intValue());
+        diaryDTO.setReportCnt(reportCnt.intValue());
         return diaryDTO;
     }
 
@@ -75,9 +77,6 @@ public interface DiaryService {
                 .content(diaryDTO.getContent())
                 .openYN(diaryDTO.isOpenYN())
                 .commentYN(diaryDTO.isCommentYN())
-                .heartCnt(diaryDTO.getHeartCnt())
-                .bookmarkCnt(diaryDTO.getBookmarkCnt())
-                .reportCnt(diaryDTO.getReportCnt())
                 .writer(Member.builder().email(diaryDTO.getWriterEmail()).build())
                 .build();
         entityMap.put("diary", diary);

@@ -19,6 +19,7 @@ public class DiaryDTO {
     private String content;
     private boolean openYN;
     private boolean commentYN;
+    private int replyCnt;
     private int reportCnt;
     private int heartCnt;
     private int bookmarkCnt;

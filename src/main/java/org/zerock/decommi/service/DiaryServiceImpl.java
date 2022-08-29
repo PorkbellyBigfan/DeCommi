@@ -79,7 +79,11 @@ public class DiaryServiceImpl implements DiaryService {
                 tagList.add(tag);
             }
         });
-        return entityToDTO(diary, tagList);
+        Long replyCnt = (Long) result.get(0)[2];
+        Long heartCnt = (Long) result.get(0)[3];
+        Long bookmarkCnt = (Long) result.get(0)[4];
+        Long reportCnt = (Long) result.get(0)[5];
+        return entityToDTO(diary, tagList, replyCnt, heartCnt, bookmarkCnt, reportCnt);
     }
 
     @Override
@@ -93,7 +97,12 @@ public class DiaryServiceImpl implements DiaryService {
             public DiaryDTO apply(Object[] t) {
                 return entityToDTO(
                         (Diary) t[0],
-                        (List<Tag>) (Arrays.asList((Tag) t[1])));
+                        (List<Tag>) (Arrays.asList((Tag) t[1])), // tagList
+                        (Long) t[2], // replyCnt
+                        (Long) t[3], // heartCnt
+                        (Long) t[4], // bookmarkCnt
+                        (Long) t[5] // reportCnt
+                );
             }
         };
         return new PageResultDTO<>(result, fn);
