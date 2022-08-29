@@ -1,5 +1,7 @@
 package org.zerock.decommi.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -9,6 +11,9 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
@@ -64,27 +69,33 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public DiaryDTO getDiary(Long dino) {
-        Optional<Diary> result = repository.getDiaryWithWriter(dino);
-        if (result.isPresent()) {
-            return entityToDTO(result.get());
-        }
-        return null;
-    }
-
-    @Override
-    public List<DiaryDTO> getDiaryList() {
-        List<Diary> result = repository.findAll();
-        return result.stream().map(new Function<Diary, DiaryDTO>() {
+        List<Object[]> result = repository.getDiaryWithAll(dino);
+        Diary diary = (Diary) result.get(0)[0];
+        List<Tag> tagList = new ArrayList();
+        result.forEach(new Consumer<Object[]>() {
             @Override
-            public DiaryDTO apply(Diary t) {
-                return entityToDTO(t);
+            public void accept(Object[] arr) {
+                Tag tag = (Tag) arr[1];
+                tagList.add(tag);
             }
-        }).collect(Collectors.toList());
+        });
+        return entityToDTO(diary, tagList);
     }
 
     @Override
     public PageResultDTO<DiaryDTO, Object[]> getPageList(PageRequestDTO req) {
-        // TODO Auto-generated method stub
-        return null;
+        // 요청하는 페이지에 대한 정보를 가진 객체 Pageable
+        Pageable pageable = req.getPageable(Sort.by("dino").descending());
+        // 해당 페이지에 대한 정보를 가진 객체 Page
+        Page<Object[]> result = repository.getListPage(pageable);
+        Function<Object[], DiaryDTO> fn = new Function<Object[], DiaryDTO>() {
+            @Override
+            public DiaryDTO apply(Object[] t) {
+                return entityToDTO(
+                        (Diary) t[0],
+                        (List<Tag>) (Arrays.asList((Tag) t[1])));
+            }
+        };
+        return new PageResultDTO<>(result, fn);
     }
 }

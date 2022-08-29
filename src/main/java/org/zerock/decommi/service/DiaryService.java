@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.zerock.decommi.dto.DiaryDTO;
@@ -26,7 +25,7 @@ public interface DiaryService {
     void delete(Long dino);
 
     // 페이징 처리 안된 리스트
-    List<DiaryDTO> getDiaryList();
+    // List<DiaryDTO> getDiaryList();
 
     // 게시글 리스트 조회(Pagenated List)
     PageResultDTO<DiaryDTO, Object[]> getPageList(PageRequestDTO req);
