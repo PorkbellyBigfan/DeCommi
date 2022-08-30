@@ -30,6 +30,8 @@ public class Diary extends BaseEntity {
     private String content;
     private boolean openYN; // 공개여부
     private boolean commentYN; // 댓글 허용여부
+
+    // Query문 쉽게 쓰기 위해서 이부분은 Diary Entity에서 직접 저장하지 않을 예정
     // private int replyCnt; //댓글 카운트
     // private int reportCnt; // 신고 카운트
     // private int heartCnt; // 하트 카운트
