@@ -20,7 +20,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString(exclude = { "diary", "member" })
+@ToString(exclude = { "diary", "writer" })
 @Table(name = "d_reply")
 public class Reply extends BaseEntity {
     @Id
@@ -39,7 +39,7 @@ public class Reply extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "email")
-    private Member member;
+    private Member writer;
 
     public void changeReplyContent(String replyContent) {
         this.replyContent = replyContent;

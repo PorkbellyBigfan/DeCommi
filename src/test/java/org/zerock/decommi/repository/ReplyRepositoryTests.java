@@ -32,7 +32,7 @@ public class ReplyRepositoryTests {
                     .replyOrder(0)
                     .replyClass(0)
                     .diary(diary)
-                    .member(Member.builder().email("user" + mno + "@decommi.com").build())
+                    .writer(Member.builder().email("user" + mno + "@decommi.com").build())
                     .build();
             repository.save(reply);
 
