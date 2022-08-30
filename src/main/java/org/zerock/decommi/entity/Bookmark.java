@@ -23,17 +23,17 @@ import lombok.ToString;
 @ToString(exclude = { "user", "diary" })
 @Table(name = "d_bookmark")
 public class Bookmark extends BaseEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long bookmarkId;
-  private String bfolderName;
-  private boolean isBookmark;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long bookmarkId;
+    private String bfolderName;
+    private boolean isBookmark;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "email")
-  private Member user;
-  
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "dino")
-  private Diary diary;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "email")
+    private Member user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dino")
+    private Diary diary;
 }

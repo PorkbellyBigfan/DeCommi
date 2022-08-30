@@ -16,7 +16,7 @@ public class MemberRepositoryTests {
 
   @Test
   public void insertMemberDummies() {
-    IntStream.rangeClosed(1, 100).forEach(i -> {
+    IntStream.rangeClosed(1, 10).forEach(i -> {
       Member m = Member.builder()
           .email("user" + i + "@decommi.com")
           .pw("1234")
@@ -35,7 +35,7 @@ public class MemberRepositoryTests {
 
   @Test
   public void testMember() {
-    Optional<Member> result = repository.findByEmail("user99@decommi.com");
+    Optional<Member> result = repository.findByEmail("user9@decommi.com");
     if (result.isPresent()) {
       Member member = result.get();
       System.out.println("findByEmail : " + member);

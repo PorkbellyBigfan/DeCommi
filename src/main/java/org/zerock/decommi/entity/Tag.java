@@ -24,7 +24,7 @@ public class Tag extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tagId;
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String tagName;
     private int tagSearchedCnt;
     private int tagUsedCnt;

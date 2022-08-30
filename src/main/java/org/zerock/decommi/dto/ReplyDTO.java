@@ -1,4 +1,5 @@
 package org.zerock.decommi.dto;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,6 @@ public class ReplyDTO {
     private int replyOrder;
     private int replyGroup;
 
-    private String memberemail;         //Member 엔티티의 PK email
-    private Long diarynum;              //Diary 엔티티의 PK dino
+    private String writerEmail; // Member 엔티티의 PK email
+    private Long diarynum; // Diary 엔티티의 PK dino
 }
