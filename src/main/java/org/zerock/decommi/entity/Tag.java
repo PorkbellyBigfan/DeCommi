@@ -2,9 +2,11 @@ package org.zerock.decommi.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -24,7 +26,7 @@ public class Tag extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tagId;
-    @Column(unique = true)
+    // @Column(unique = true)
     private String tagName;
     private int tagSearchedCnt;
     private int tagUsedCnt;
@@ -32,4 +34,7 @@ public class Tag extends BaseEntity {
     // 하위태그를 위한 컬럼
     private boolean isSubTag;
     private Long tagGroup;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Diary diary;
 }

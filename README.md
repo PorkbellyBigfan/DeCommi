@@ -11,3 +11,20 @@
 
 2.몇몇 entities 주석
 아직 테이블끼리의 관계가 불명확해 대부분의 테이블을 주석처리하고 기본적인 테이블만 살려뒀습니다. 조금씩 데이터를 집어넣으면서 구현하겠습니다.
+
+# DeCommi
+#Develop 브랜치 공유사항
+
+#0830- 
+작성자 : 이준호
+<변경사항> 
+댓글 기능에 관련된 기능을 Board와 club 폴더 등에서 참조하여
+Decommi Reply로 변경 
+
+DTO/ReplyDTO
+Entity/Reply
+Service/ReplyService
+Controller/ReplyController
+
+추가 및 수정
+저희 파일 구조와 맞지않아서 발생하는 문제가 있으면 말씀부탁드립니다 이후 추가 수정하겠습니다
