@@ -1,5 +1,6 @@
 package org.zerock.decommi.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -37,7 +38,7 @@ public class Diary extends BaseEntity {
     // private int heartCnt; // 하트 카운트
     // private int bookmarkCnt; // 북마크 카운트
 
-    @ManyToOne(fetch = FetchType.LAZY) // 한명의 멤버가 여러개의 글을 쓸수 있기때문에 @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) // 한명의 멤버가 여러개의 글을 쓸수 있기때문에 @ManyToOne
     @JoinColumn(name = "email")
     private Member writer;
 

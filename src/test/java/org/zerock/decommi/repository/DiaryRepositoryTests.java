@@ -38,9 +38,9 @@ public class DiaryRepositoryTests {
           .content("content" + i)
           .openYN(false)
           .commentYN(false)
-          .reportCnt(0)
-          .heartCnt(0)
-          .bookmarkCnt(0)
+          // .reportCnt(0)
+          // .heartCnt(0)
+          // .bookmarkCnt(0)
           .writer(writer)
           .build();
       repository.save(diary);

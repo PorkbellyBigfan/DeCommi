@@ -15,5 +15,5 @@ public class ToDoDTO {
     private String todoContent;
     private boolean todoStatus;
 
-    private String memberemail;         //Member 엔티티의 PK email
+    private String email;         //Member 엔티티의 PK email
 }
