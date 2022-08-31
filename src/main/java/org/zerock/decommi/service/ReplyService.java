@@ -20,7 +20,6 @@ public interface ReplyService {
   void remove(Long rno);
 
   default Reply dtoToEntity(ReplyDTO dto) {
-
     Diary diary = Diary.builder().dino(dto.getDino()).build();
 
     Reply reply = Reply.builder().rno(dto.getRno())
