@@ -20,8 +20,8 @@ public class DiaryDTO {
     private boolean openYN;
     private boolean commentYN;
     private int replyCnt;
-    private int reportCnt;
     private int heartCnt;
+    private int reportCnt;
     private int bookmarkCnt;
 
     private String writerEmail; // Member의 Primary key :email

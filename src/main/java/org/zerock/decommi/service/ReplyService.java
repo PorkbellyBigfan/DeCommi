@@ -19,14 +19,9 @@
 
 // void remove(Long rno);
 
-<<<<<<< HEAD
-  default Reply dtoToEntity(ReplyDTO dto) {
-    Diary diary = Diary.builder().dino(dto.getDino()).build();
-=======
 // default Reply dtoToEntity(ReplyDTO dto) {
 
 // Diary diary = Diary.builder().dino(dto.getDino()).build();
->>>>>>> 25dce0b61b859f0b329cd8b04ee925ce74edc4c3
 
 // Reply reply = Reply.builder().rno(dto.getRno())
 // .replyContent(dto.getReplyContent())
