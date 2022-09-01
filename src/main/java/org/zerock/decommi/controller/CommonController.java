@@ -1,12 +1,15 @@
-// package org.zerock.decommi.controller;
+package org.zerock.decommi.controller;
 
-// import org.springframework.stereotype.Controller;
-// import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-// @Controller
-// public class CommonController {
-//   @RequestMapping({"","/"})  
-//   public String index() {
-//     return "index";
-//   }
-// }
+import lombok.extern.log4j.Log4j2;
+
+@Controller
+@Log4j2
+public class CommonController {
+    @RequestMapping({ "", "/" })
+    public String index() {
+        return "index";
+    }
+}

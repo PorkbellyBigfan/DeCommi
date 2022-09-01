@@ -74,6 +74,7 @@ public interface DiaryService {
         // 첫번째 Element of Map
         Diary diary = Diary.builder()
                 .dino(diaryDTO.getDino())
+                .title(diaryDTO.getTitle())
                 .content(diaryDTO.getContent())
                 .openYN(diaryDTO.isOpenYN())
                 .commentYN(diaryDTO.isCommentYN())

@@ -27,7 +27,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = { "receiver", "sender", "bookmarkId", "diary", "helpId", "heartId" })
+@ToString(exclude = { "receiver", "sender", "bookmarkId", "diary", "helpId",
+        "heartId" })
 @Table(name = "d_alarm")
 public class Alarm extends BaseEntity {
     @Id
@@ -50,7 +51,6 @@ public class Alarm extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hbId")
     private Help helpId;
-
 
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default

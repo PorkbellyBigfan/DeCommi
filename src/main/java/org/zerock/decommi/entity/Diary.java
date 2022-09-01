@@ -31,12 +31,15 @@ public class Diary extends BaseEntity {
     private String content;
     private boolean openYN; // 공개여부
     private boolean commentYN; // 댓글 허용여부
+<<<<<<< HEAD
 
     // Query문 쉽게 쓰기 위해서 이부분은 Diary Entity에서 직접 저장하지 않을 예정
     // private int replyCnt; //댓글 카운트
     // private int reportCnt; // 신고 카운트
     // private int heartCnt; // 하트 카운트
     // private int bookmarkCnt; // 북마크 카운트
+=======
+>>>>>>> 25dce0b61b859f0b329cd8b04ee925ce74edc4c3
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) // 한명의 멤버가 여러개의 글을 쓸수 있기때문에 @ManyToOne
     @JoinColumn(name = "email")

@@ -38,6 +38,9 @@
           <th scope="col">Heart Count</th>
           <th scope="col">Bookmark Count</th>
           <th scope="col">Report Count</th>
+          <th scope="col">공개 여부</th>
+          <th scope="col">댓글 허용 여부</th>
+          <th scope="col">Report Count</th>
           <th scope="col">Reg Date</th>
           <th scope="col">Mod Date</th>
         </tr>
@@ -47,12 +50,48 @@
         .tr-list:hover{background-color:aliceblue}
       </style>
       <tbody>
-        
+        <tr class="tr-list" th:each="dto : ${result.dtoList}"
+            th:onclick="|location.href='@{/diary/read(
+              dino=${dto.dino},page=${result.page},type=${requestDTO.type},
+              keyword=${requestDTO.keyword})}'|">
+            <td scope="row">[[${dto.dino}]]</td>
+            <td>[[${dto.title}]]</td>
+            <td>[[${dto.content}]]</td>
+            <td>[[${dto.tagDTOList}]]</td>
+            <td>[[${dto.replyCnt}]]</td>
+            <td>[[${dto.heartCnt}]]</td>
+            <td>[[${dto.bookmarkCnt}]]</td>
+            <td>[[${dto.reportCnt}]]</td>
+            <td>[[${dto.openYN}]]</td>
+            <td>[[${dto.commentYN}]]</td>
+            <td>[[${#temporals.format(dto.regDate,'yyyy/MM/dd')}]]</td>
+            <td>[[${#temporals.format(dto.modDate,'yyyy/MM/dd')}]]</td>
+        </tr>
       </tbody>
     </table>
+    <ul class="pagination h-100 justify-content-center align-items-center">
+      <li class="page-item " th:if="${result.prev}">
+        <a th:href="@{/movie/list(page=${result.start-1}, 
+                                      type=${requestDTO.type},
+                                      keyword=${requestDTO.keyword})}" 
+          class="page-link" tabindex="-1">Previous</a>
+      </li>
+      <li th:class=" 'page-item ' + ${result.page == page?'active':''} " 
+        th:each="page: ${result.pageList}">
+        <a th:href="@{/movie/list(page=${page}, 
+                                      type=${requestDTO.type},
+                                      keyword=${requestDTO.keyword})}" 
+          class="page-link">[[${page}]]</a>
+      </li>
+      <li class="page-item " th:if="${result.next}">
+        <a th:href="@{/movie/list(page=${result.end+1}, 
+                                      type=${requestDTO.type},
+                                      keyword=${requestDTO.keyword})}" 
+          class="page-link">Next</a>
+      </li>
+    </ul>
   </th:block>
 </th:block>
 <body>
-  
 </body>
 </html>

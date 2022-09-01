@@ -83,7 +83,8 @@ public class DiaryServiceImpl implements DiaryService {
         Long heartCnt = (Long) result.get(0)[3];
         Long bookmarkCnt = (Long) result.get(0)[4];
         Long reportCnt = (Long) result.get(0)[5];
-        return entityToDTO(diary, tagList, replyCnt, heartCnt, bookmarkCnt, reportCnt);
+        return entityToDTO(diary, tagList, replyCnt, heartCnt, bookmarkCnt,
+                reportCnt);
     }
 
     @Override

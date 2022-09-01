@@ -9,9 +9,9 @@ import org.zerock.decommi.entity.Diary;
 import org.zerock.decommi.entity.Reply;
 
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
-    @Modifying
-    @Query("delete from Reply r where r.Diary.dino=:dino ")//쿼리어노테이션
-    void deleteBydino(Long dino);
-  
-    List<Reply> getRepliesByDiaryOrderByRno(Diary Diary); //쿼리메서드
+    // @Modifying
+    // @Query("delete from Reply r where r.Diary.dino=:dino ") // 쿼리어노테이션
+    // void deleteBydino(Long dino);
+
+    // List<Reply> getRepliesByDiaryOrderByRno(Diary diary); // 쿼리메서드
 }
