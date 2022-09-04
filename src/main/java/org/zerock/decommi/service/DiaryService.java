@@ -40,11 +40,14 @@ public interface DiaryService {
     // Long heartCnt, Long bookmarkCnt,Long reportCnt
     ) {
         DiaryDTO diaryDTO = DiaryDTO.builder()
+                .dino(diary.getDino())
                 .title(diary.getTitle())
                 .content(diary.getContent())
                 .openYN(diary.isOpenYN())
                 .commentYN(diary.isCommentYN())
                 .writerEmail(diary.getWriter().getEmail())
+                .modDate(diary.getModDate())
+                .regDate(diary.getRegDate())
                 .build();
         List<TagDTO> tagDTOs = tag.stream().map(
                 new Function<Tag, TagDTO>() {
