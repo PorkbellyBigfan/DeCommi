@@ -1,11 +1,11 @@
-package org.zerock.decommi.service;
+package org.zerock.decommi.service.reply;
 
 import java.util.List;
 
 import org.zerock.decommi.dto.ReplyDTO;
-import org.zerock.decommi.entity.Diary;
-import org.zerock.decommi.entity.Member;
-import org.zerock.decommi.entity.Reply;
+import org.zerock.decommi.entity.diary.Diary;
+import org.zerock.decommi.entity.diary.Reply;
+import org.zerock.decommi.entity.member.Member;
 
 public interface ReplyService {
     Long register(ReplyDTO replyDTO);

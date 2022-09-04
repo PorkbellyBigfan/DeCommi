@@ -3,7 +3,7 @@ package org.zerock.decommi.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.zerock.decommi.entity.Member;
+import org.zerock.decommi.entity.member.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

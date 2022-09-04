@@ -1,4 +1,4 @@
-package org.zerock.decommi.entity;
+package org.zerock.decommi.entity.diary;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.zerock.decommi.entity.common.BaseEntity;
+import org.zerock.decommi.entity.member.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

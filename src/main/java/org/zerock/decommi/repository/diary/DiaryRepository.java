@@ -1,4 +1,4 @@
-package org.zerock.decommi.repository;
+package org.zerock.decommi.repository.diary;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
-import org.zerock.decommi.entity.Diary;
+import org.zerock.decommi.entity.diary.Diary;
 
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
 

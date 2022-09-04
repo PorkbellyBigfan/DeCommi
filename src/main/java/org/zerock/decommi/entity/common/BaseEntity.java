@@ -1,4 +1,4 @@
-package org.zerock.decommi.entity;
+package org.zerock.decommi.entity.common;
 
 import java.time.LocalDateTime;
 

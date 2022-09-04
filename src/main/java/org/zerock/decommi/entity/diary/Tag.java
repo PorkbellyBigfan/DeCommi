@@ -1,13 +1,15 @@
-package org.zerock.decommi.entity;
+package org.zerock.decommi.entity.diary;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.zerock.decommi.entity.common.BaseEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,20 +22,21 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "writer", "post" })
-@Table(name = "d_heart")
-public class Heart {
+@ToString
+@Table(name = "d_tag")
+public class Tag extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long heartId;
-    private boolean isHeart;
+    private Long tagId;
+    // @Column(unique = true)
+    private String tagName;
+    private int tagSearchedCnt;
+    private int tagUsedCnt;
+
+    // 하위태그를 위한 컬럼
+    private boolean isSubTag;
+    private Long tagGroup;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email")
-    private Member writer;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dino")
-    private Diary post;
-
+    private Diary diary;
 }

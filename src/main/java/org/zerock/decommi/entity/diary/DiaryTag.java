@@ -1,3 +1,4 @@
+package org.zerock.decommi.entity.diary;
 // package org.zerock.decommi.entity;
 
 // import javax.persistence.CascadeType;

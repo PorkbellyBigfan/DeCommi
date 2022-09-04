@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
-import org.zerock.decommi.service.DiaryService;
+import org.zerock.decommi.service.diary.DiaryService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

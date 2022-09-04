@@ -1,4 +1,4 @@
-package org.zerock.decommi.entity;
+package org.zerock.decommi.entity.member;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,6 +15,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.zerock.decommi.entity.Bookmark;
+import org.zerock.decommi.entity.Help;
+import org.zerock.decommi.entity.common.BaseEntity;
+import org.zerock.decommi.entity.diary.Diary;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

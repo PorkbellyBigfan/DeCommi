@@ -1,13 +1,13 @@
-package org.zerock.decommi.entity;
+package org.zerock.decommi.entity.file;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+
+import org.zerock.decommi.entity.diary.Diary;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,25 +16,19 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@Table(name = "d_tag")
-public class Tag extends BaseEntity {
+@ToString(exclude = "diary")
+@Getter
+public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tagId;
-    // @Column(unique = true)
-    private String tagName;
-    private int tagSearchedCnt;
-    private int tagUsedCnt;
+    private int fileId;
 
-    // 하위태그를 위한 컬럼
-    private boolean isSubTag;
-    private Long tagGroup;
-
+    private String uuid;
+    private String fileName;
+    private String filePath;
     @ManyToOne(fetch = FetchType.LAZY)
     private Diary diary;
 }

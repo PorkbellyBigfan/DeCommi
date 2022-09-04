@@ -1,3 +1,4 @@
+package org.zerock.decommi.repository.diary;
 // package org.zerock.decommi.repository;
 
 // import org.springframework.data.jpa.repository.JpaRepository;

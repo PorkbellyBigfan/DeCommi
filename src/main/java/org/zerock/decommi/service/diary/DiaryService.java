@@ -1,4 +1,4 @@
-package org.zerock.decommi.service;
+package org.zerock.decommi.service.diary;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,9 +10,9 @@ import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.dto.TagDTO;
-import org.zerock.decommi.entity.Diary;
-import org.zerock.decommi.entity.Member;
-import org.zerock.decommi.entity.Tag;
+import org.zerock.decommi.entity.diary.Diary;
+import org.zerock.decommi.entity.diary.Tag;
+import org.zerock.decommi.entity.member.Member;
 
 public interface DiaryService {
     // 등록

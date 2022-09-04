@@ -1,4 +1,4 @@
-package org.zerock.decommi.service;
+package org.zerock.decommi.service.diary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,10 +18,10 @@ import org.springframework.stereotype.Service;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
-import org.zerock.decommi.entity.Diary;
-import org.zerock.decommi.entity.Tag;
-import org.zerock.decommi.repository.DiaryRepository;
-import org.zerock.decommi.repository.TagRepository;
+import org.zerock.decommi.entity.diary.Diary;
+import org.zerock.decommi.entity.diary.Tag;
+import org.zerock.decommi.repository.diary.DiaryRepository;
+import org.zerock.decommi.repository.diary.TagRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

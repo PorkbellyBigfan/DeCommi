@@ -5,10 +5,13 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.zerock.decommi.entity.Diary;
-import org.zerock.decommi.entity.DiaryTag;
-import org.zerock.decommi.entity.Member;
-import org.zerock.decommi.entity.Tag;
+import org.zerock.decommi.entity.diary.Diary;
+// import org.zerock.decommi.entity.diary.DiaryTag;
+import org.zerock.decommi.entity.diary.Tag;
+import org.zerock.decommi.entity.member.Member;
+import org.zerock.decommi.repository.diary.DiaryRepository;
+import org.zerock.decommi.repository.diary.TagRepository;
+import org.zerock.decommi.repository.member.MemberRepository;
 
 @SpringBootTest
 public class DiaryRepositoryTests {
@@ -18,8 +21,8 @@ public class DiaryRepositoryTests {
     @Autowired
     TagRepository tagRepository;
 
-    @Autowired
-    DiaryTagRepository dtRepository; // Diary_Tag Repository
+    // @Autowired
+    // DiaryTagRepository dtRepository; // Diary_Tag Repository
 
     @Autowired
     MemberRepository memberRepository; // Member Repository
@@ -50,14 +53,14 @@ public class DiaryRepositoryTests {
                     .build();
             tagRepository.save(tag);
 
-            int count = (int) (Math.random() * 3) + 1;
-            for (int j = 0; j < count; j++) {
-                DiaryTag dt = DiaryTag.builder()
-                        .dino(diary)
-                        .tagName(tag)
-                        .build();
-                dtRepository.save(dt);
-            }
+            // int count = (int) (Math.random() * 3) + 1;
+            // for (int j = 0; j < count; j++) {
+            // DiaryTag dt = DiaryTag.builder()
+            // .dino(diary)
+            // .tagName(tag)
+            // .build();
+            // dtRepository.save(dt);
+            // }
         });
     }
 }

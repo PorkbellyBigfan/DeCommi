@@ -1,23 +1,77 @@
-// package org.zerock.decommi.controller;
+package org.zerock.decommi.controller;
 
-// import org.springframework.stereotype.Controller;
-// import org.springframework.web.bind.annotation.GetMapping;
-// import org.springframework.web.bind.annotation.RequestMapping;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-// import lombok.RequiredArgsConstructor;
-// import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.zerock.decommi.dto.MemberDTO;
+import org.zerock.decommi.dto.PageRequestDTO;
+import org.zerock.decommi.dto.PageResultDTO;
+import org.zerock.decommi.entity.member.Member;
+import org.zerock.decommi.service.member.MemberService;
 
-// @Controller
-// @RequestMapping("/member")
-// @RequiredArgsConstructor
-// @Log4j2
-// public class MemberController {
-// private final MemberService service;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
-// @GetMapping("/login")
-// public void login(){log.info("/member/login")}
+@RestController
+@Log4j2
+@RequestMapping("/member")
+@RequiredArgsConstructor
+public class MemberController {
+  public final MemberService service;
 
-// @GetMapping("/logout")
-// public void logout(){log.info("/member/login")}
+  @RequestMapping(value = "/getAuth", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Map<String, Object>> getAuth(@RequestBody Map<String, Object> mapObj,
+      @RequestHeader("token") String token) {
+    String email = mapObj.get("email").toString();
+    Map<String, Object> map = new HashMap<>();
+    map.put("dto", service.getMemberDTO(email));
+    return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+  }
 
-// }
+  @RequestMapping(value = "/emailCheck", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Map<String, Long>> emailCheck(
+      @RequestBody Map<String, Object> mapObj,
+      @RequestHeader("token") String token) {
+    String email = mapObj.get("email").toString();
+    MemberDTO dto = service.emailCheck(email);
+
+    Map<String, Long> mapForResult = new HashMap<>();
+    mapForResult.put("result", (dto == null) ? 0L : 1L);
+
+    return new ResponseEntity<Map<String, Long>>(mapForResult, HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/signUp", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<String> signUp(@RequestBody MemberDTO dto,
+      @RequestHeader("token") String token) {
+    log.info("member/signUp : " + dto);
+    String email = service.signUp(dto);
+    return new ResponseEntity<>(email, HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/getlist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<MemberDTO>> getList(
+      @RequestHeader("token") String token) {
+    List<MemberDTO> result = service.getList();
+    log.info(result);
+    return new ResponseEntity<>(result, HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/get-page-list", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<PageResultDTO<MemberDTO, Member>> getPagingList(
+      @RequestBody PageRequestDTO dto,
+      @RequestHeader("token") String token) {
+    log.info("PageRequestDTO page: " + dto.getPage());
+    return new ResponseEntity<>(service.getPageList(dto), HttpStatus.OK);
+  }
+
+}

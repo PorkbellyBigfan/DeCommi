@@ -16,9 +16,11 @@ import lombok.NoArgsConstructor;
 public class MemberDTO {
     private String email;
     private String pw;
-    private String name;
+    // private String name;
     private String mobile;
     private boolean fromSocial;
+
+    // 여기에 선호태그 비선호태그 넣으면 될것 같음
 
     private LocalDateTime regDate, modDate;
 

@@ -1,12 +1,12 @@
-package org.zerock.decommi.repository;
+package org.zerock.decommi.repository.diary;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.zerock.decommi.entity.Diary;
-import org.zerock.decommi.entity.Reply;
+import org.zerock.decommi.entity.diary.Diary;
+import org.zerock.decommi.entity.diary.Reply;
 
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
     // @Modifying
