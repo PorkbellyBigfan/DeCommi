@@ -26,7 +26,7 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
-  public final MemberService service;
+  private final MemberService service;
 
   @RequestMapping(value = "/getAuth", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Map<String, Object>> getAuth(@RequestBody Map<String, Object> mapObj,

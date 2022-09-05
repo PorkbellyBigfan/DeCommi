@@ -28,9 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private DecommiUserDetailsService userDetailsService;
 
-  @Autowired
-  private PasswordEncoder passwordEncoder;
-
   // 기본적으로 제공되는 PasswordEncoder가 아닌
   // createDelegatingPasswordEncoder 를 사용했다 추후에 유용하게 쓰인다고 한다.
   @Bean

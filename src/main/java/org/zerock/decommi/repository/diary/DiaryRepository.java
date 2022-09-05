@@ -17,6 +17,7 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
         @Query("select d, t, count(distinct r) from Diary d "
                         + " left outer join Tag t on t.diary = d "
                         + " left outer join Reply r on r.diary = r "
+                        + " left outer join Heart h on h.diary = h "
                         + " where d.dino=:dino group by t ")
         List<Object[]> getDiaryWithAll(Long dino);
 
@@ -24,6 +25,7 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
         @Query("select d, t, count(distinct r) from Diary d "
                         + " left outer join Tag t on t.diary = d "
                         + " left outer join Reply r on r.diary = d "
+                        + " left outer join Heart h on h.diary = h "
                         + " group by d ")
         Page<Object[]> getListPage(Pageable pageable);
 
