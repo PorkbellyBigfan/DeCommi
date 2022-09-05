@@ -29,11 +29,11 @@ public class Heart {
     private boolean isHeart;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email")
-    private Member writer;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dino")
     private Diary diary;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "email")
+    private Member writer;
 
 }

@@ -14,9 +14,10 @@ import org.zerock.decommi.entity.Diary;
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
         // // 페이징 처리 안된 다이어리 게시글 리스트
-        @Query("select d, t, count(distinct r) from Diary d "
+        @Query("select d, t, count(distinct r), count(distinct h) from Diary d "
                         + " left outer join Tag t on t.diary = d "
                         + " left outer join Reply r on r.diary = r "
+                        + " left outer join Heart h on h.diary = h "
                         + " where d.dino=:dino group by t ")
         List<Object[]> getDiaryWithAll(Long dino);
 
