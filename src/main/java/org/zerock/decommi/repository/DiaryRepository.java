@@ -21,9 +21,10 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
         List<Object[]> getDiaryWithAll(Long dino);
 
         // 페이징 처리된 다이어리게시글리스트
-        @Query("select d, t, count(distinct r) from Diary d "
+        @Query("select d, t, count(distinct r),h from Diary d "
                         + " left outer join Tag t on t.diary = d "
                         + " left outer join Reply r on r.diary = d "
+                        + " left outer join Heart h on h.diary = d "
                         + " group by d ")
         Page<Object[]> getListPage(Pageable pageable);
 

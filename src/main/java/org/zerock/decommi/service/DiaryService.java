@@ -36,8 +36,8 @@ public interface DiaryService {
     // 댓글 아이콘을 클릭했을때, 해당 다이리에 달린 댓글들 보여주기
     // DiaryDTO getReplyList(Long dino);
 
-    default DiaryDTO entityToDTO(Diary diary, List<Tag> tag, Long replyCnt
-    // Long heartCnt, Long bookmarkCnt,Long reportCnt
+    default DiaryDTO entityToDTO(Diary diary, List<Tag> tag, Long replyCnt, Long heartCnt 
+    //Long bookmarkCnt,Long reportCnt
     ) {
         DiaryDTO diaryDTO = DiaryDTO.builder()
                 .dino(diary.getDino())
@@ -65,7 +65,7 @@ public interface DiaryService {
                 }).collect(Collectors.toList());
         diaryDTO.setTagDTOList(tagDTOs);
         diaryDTO.setReplyCnt(replyCnt.intValue());
-        // diaryDTO.setHeartCnt(heartCnt.intValue());
+        diaryDTO.setHeartCnt(heartCnt.intValue());
         // diaryDTO.setBookmarkCnt(bookmarkCnt.intValue());
         // diaryDTO.setReportCnt(reportCnt.intValue());
         return diaryDTO;
