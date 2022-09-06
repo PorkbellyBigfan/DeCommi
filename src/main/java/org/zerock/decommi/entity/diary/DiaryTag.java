@@ -1,40 +1,37 @@
 package org.zerock.decommi.entity.diary;
-// package org.zerock.decommi.entity;
 
-// import javax.persistence.CascadeType;
-// import javax.persistence.Entity;
-// import javax.persistence.FetchType;
-// import javax.persistence.GeneratedValue;
-// import javax.persistence.GenerationType;
-// import javax.persistence.Id;
-// import javax.persistence.JoinColumn;
-// import javax.persistence.ManyToOne;
-// import javax.persistence.Table;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-// import lombok.AllArgsConstructor;
-// import lombok.Builder;
-// import lombok.Getter;
-// import lombok.NoArgsConstructor;
-// import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.zerock.decommi.entity.common.BaseEntity;
 
-// @Entity
-// @Builder
-// @Getter
-// @AllArgsConstructor
-// @NoArgsConstructor
-// @ToString(exclude = { "dino", "tagName" })
-// @Table(name = "d_diary_tag")
-// public class DiaryTag {
-// @Id
-// @GeneratedValue(strategy = GenerationType.IDENTITY)
-// private Long diarytagId;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-// @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-// @JoinColumn(name = "dino")
-// private Diary dino;
+@Entity
+@Builder
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString(exclude = { "dino", "tagId" })
+@Table(name = "d_diary_tag")
+public class DiaryTag extends BaseEntity {
+  // Mapping Table
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "dino")
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  private Diary dino;
 
-// @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-// @JoinColumn(name = "tagName", referencedColumnName = "tagName")
-// private Tag tagName;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "tagId")
+  private Tag tagId;
 
-// }
+}

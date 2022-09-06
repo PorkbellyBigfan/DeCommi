@@ -46,7 +46,7 @@ public class Diary extends BaseEntity {
     public void changeContent(String content) {
         this.content = content;
     }
-    // public void changeOpenOption(boolean OpenYN){this.openYN}
+    // public void changeOpenOption(boolean OpenYN){}
     // public void changeCommentOption(boolean commentYN){};
 
 }

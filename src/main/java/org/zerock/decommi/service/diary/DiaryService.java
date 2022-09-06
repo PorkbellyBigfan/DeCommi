@@ -53,8 +53,6 @@ public interface DiaryService {
                         return TagDTO.builder()
                                 .tagId(t.getTagId())
                                 .tagName(t.getTagName())
-                                .tagSearchedCnt(t.getTagSearchedCnt())
-                                .tagUsedCnt(t.getTagUsedCnt())
                                 .isSubTag(t.isSubTag())
                                 .tagGroup(t.getTagGroup())
                                 .build();
@@ -92,8 +90,6 @@ public interface DiaryService {
                             Tag tag = Tag.builder()
                                     .tagId(t.getTagId())
                                     .tagName(t.getTagName())
-                                    .tagSearchedCnt(t.getTagSearchedCnt())
-                                    .tagUsedCnt(t.getTagUsedCnt())
                                     .isSubTag(t.isSubTag())
                                     .tagGroup(t.getTagGroup())
                                     .build();
