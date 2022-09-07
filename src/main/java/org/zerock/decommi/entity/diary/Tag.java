@@ -1,17 +1,15 @@
-package org.zerock.decommi.entity;
+package org.zerock.decommi.entity.diary;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.zerock.decommi.entity.common.BaseEntity;
-import org.zerock.decommi.entity.diary.Diary;
-import org.zerock.decommi.entity.member.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,20 +22,19 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "user", "diary" })
-@Table(name = "d_bookmark")
-public class Bookmark extends BaseEntity {
+@ToString
+@Table(name = "d_tag")
+public class Tag extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookmarkId;
-    private String bfolderName;
-    private boolean isBookmark;
+    private Long tagId;
+    // @Column(unique = true)
+    private String tagName;
+
+    // 하위태그를 위한 컬럼
+    private boolean isSubTag;
+    private Long tagGroup;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email")
-    private Member user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dino")
     private Diary diary;
 }

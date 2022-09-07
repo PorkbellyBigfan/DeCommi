@@ -5,9 +5,12 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.zerock.decommi.entity.Diary;
-import org.zerock.decommi.entity.Member;
-import org.zerock.decommi.entity.Reply;
+import org.zerock.decommi.entity.diary.Diary;
+import org.zerock.decommi.entity.diary.Reply;
+import org.zerock.decommi.entity.member.Member;
+import org.zerock.decommi.repository.diary.DiaryRepository;
+import org.zerock.decommi.repository.diary.ReplyRepository;
+import org.zerock.decommi.repository.member.MemberRepository;
 
 @SpringBootTest
 public class ReplyRepositoryTests {

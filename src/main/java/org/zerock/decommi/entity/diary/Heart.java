@@ -1,4 +1,4 @@
-package org.zerock.decommi.entity;
+package org.zerock.decommi.entity.diary;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,8 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.zerock.decommi.entity.common.BaseEntity;
-import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.member.Member;
 
 import lombok.AllArgsConstructor;
@@ -24,20 +22,20 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "user", "diary" })
-@Table(name = "d_bookmark")
-public class Bookmark extends BaseEntity {
+@ToString(exclude = { "writer", "diary" })
+@Table(name = "d_heart")
+public class Heart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookmarkId;
-    private String bfolderName;
-    private boolean isBookmark;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email")
-    private Member user;
+    private Long heartId;
+    private boolean isHeart;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dino")
     private Diary diary;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "email")
+    private Member writer;
+
 }

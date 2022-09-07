@@ -1,4 +1,4 @@
-package org.zerock.decommi.entity;
+package org.zerock.decommi.entity.diary;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.zerock.decommi.entity.common.BaseEntity;
-import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.member.Member;
 
 import lombok.AllArgsConstructor;
@@ -20,24 +19,33 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "user", "diary" })
-@Table(name = "d_bookmark")
-public class Bookmark extends BaseEntity {
+@Getter
+@ToString(exclude = { "diary", "writer" })
+@Table(name = "d_reply")
+public class Reply extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookmarkId;
-    private String bfolderName;
-    private boolean isBookmark;
+    private Long rno;
+    private String replyContent;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email")
-    private Member user;
+    // 대댓글 구현을 위한 속성들
+    private int replyClass;
+    private int replyOrder;
+    private int replyGroup;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dino")
     private Diary diary;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "email")
+    private Member writer;
+
+    public void changeReplyContent(String replyContent) {
+        this.replyContent = replyContent;
+    }
+
 }
