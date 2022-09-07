@@ -35,7 +35,7 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
         @Query("select d from Diary d where d.dino = :dino ")
         Optional<Diary> getDiaryWithWriter(Long dino);
 
-        @Query("select d from Diary d ordered by d.dino desc")
-        List<Diary> getDiaryList();
+        // @Query("select d from Diary d ordered by d.dino desc")
+        // List<Diary> getDiaryList();
 
 }

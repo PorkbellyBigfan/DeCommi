@@ -21,7 +21,7 @@ public class MemberRepositoryTests {
   private PasswordEncoder encoder;
 
   @Test
-  @Transactional
+  // @Transactional
   public void insertMemberDummies() {
     IntStream.rangeClosed(1, 100).forEach(i -> {
       Member m = Member.builder()
@@ -39,12 +39,12 @@ public class MemberRepositoryTests {
     });
   }
 
-  @Test
-  public void testMember() {
-    Optional<Member> result = repository.findByEmail("user9@decommi.com");
-    if (result.isPresent()) {
-      Member member = result.get();
-      System.out.println("findByEmail : " + member);
-    }
-  }
+  // @Test
+  // public void testMember() {
+  //   Optional<Member> result = repository.findByEmail("user9@decommi.com");
+  //   if (result.isPresent()) {
+  //     Member member = result.get();
+  //     System.out.println("findByEmail : " + member);
+  //   }
+  // }
 }

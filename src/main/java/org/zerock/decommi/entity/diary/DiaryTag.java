@@ -2,6 +2,9 @@ package org.zerock.decommi.entity.diary;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -24,6 +27,9 @@ import lombok.ToString;
 @ToString(exclude = { "dino", "tagId" })
 @Table(name = "d_diary_tag")
 public class DiaryTag extends BaseEntity {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long dtNo;
   // Mapping Table
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "dino")
