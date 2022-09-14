@@ -38,16 +38,6 @@ public class MemberRepositoryTests {
     });
   }
 
-<<<<<<< HEAD
-  // @Test
-  // public void testMember() {
-  // Optional<Member> result = repository.findByEmail("user9@decommi.com");
-  // if (result.isPresent()) {
-  // Member member = result.get();
-  // System.out.println("findByEmail : " + member);
-  // }
-  // }
-=======
   @Test
   public void testMember() {
     Optional<Member> result = repository.findByEmail("user9@decommi.com");
@@ -56,5 +46,4 @@ public class MemberRepositoryTests {
       System.out.println("findByEmail : " + member);
     }
   }
->>>>>>> e744735123f9e1f30d25fe926b218bd6f40be31f
 }
