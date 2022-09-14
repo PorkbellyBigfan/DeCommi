@@ -32,8 +32,9 @@ public class Reply extends BaseEntity {
     private String replyContent;
 
     // 대댓글 구현을 위한 속성들
-    private int replyDepth;
-    private int replyGroup;
+    // private int replyClass;
+    // private int replyOrder;
+    // private int replyGroup;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dino")

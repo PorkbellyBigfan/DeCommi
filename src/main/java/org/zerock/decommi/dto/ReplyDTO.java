@@ -18,9 +18,9 @@ public class ReplyDTO {
     private Long rno;
     private String replyContent;
 
-    private int replyClass;
-    private int replyOrder;
-    private int replyGroup;
+    // private int replyClass;
+    // private int replyOrder;
+    // private int replyGroup;
 
     private String writerEmail; // Member의 Primary key :email
     private Long dino; // Diary 엔티티의 PK dino

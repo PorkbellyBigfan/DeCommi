@@ -31,9 +31,9 @@ public class ReplyRepositoryTests {
             diaryRepository.save(diary);
             Reply reply = Reply.builder()
                     .replyContent("reply..." + i)
-                    .replyGroup(0)
-                    .replyOrder(0)
-                    .replyClass(0)
+                    // .replyGroup(0)
+                    // .replyOrder(0)
+                    // .replyClass(0)
                     .diary(diary)
                     .writer(Member.builder().email("user" + mno + "@decommi.com").build())
                     .build();
