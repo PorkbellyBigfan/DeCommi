@@ -3,6 +3,8 @@ package org.zerock.decommi.dto;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.List;
+import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,4 +28,9 @@ public class MemberDTO {
 
     @Builder.Default
     private Set<String> roleSet = new HashSet<>();
+    @Builder.Default
+    private List<TagDTO> likeTagDTOList = new ArrayList<>();
+    @Builder.Default
+    private List<TagDTO> dislikeTagDTOList = new ArrayList<>();
+
 }

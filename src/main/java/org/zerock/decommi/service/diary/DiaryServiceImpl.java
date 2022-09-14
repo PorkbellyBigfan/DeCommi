@@ -21,6 +21,7 @@ import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.repository.diary.DiaryRepository;
+import org.zerock.decommi.repository.diary.DiaryTagRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 
 import lombok.RequiredArgsConstructor;
