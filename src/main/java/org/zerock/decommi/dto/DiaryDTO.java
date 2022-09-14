@@ -25,6 +25,7 @@ public class DiaryDTO {
     private int bookmarkCnt;
 
     private String writerEmail; // Member의 Primary key :email
+
     @Builder.Default
     private List<TagDTO> tagDTOList = new ArrayList<>();
 
