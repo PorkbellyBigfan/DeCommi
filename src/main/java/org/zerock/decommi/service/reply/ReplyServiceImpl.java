@@ -1,6 +1,8 @@
 package org.zerock.decommi.service.reply;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -15,31 +17,37 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ReplyServiceImpl implements ReplyService {
-    private final ReplyRepository repository;
+  private final ReplyRepository repository;
 
-    @Override
-    public Long register(ReplyDTO replyDTO) {
-        Reply reply = dtoToEntity(replyDTO);
-        repository.save(reply).getRno();
-        return reply.getRno();
-        // return repository.save(dtoToEntity(replyDTO)).getRno();
-    }
+  @Override
+  public Long register(ReplyDTO dto) {
+    return repository.save(dtoToEntity(dto)).getRno();
+  }
 
-    @Override
-    public List<ReplyDTO> getList(Long dino) {
-        List<Reply> result = repository.getRepliesByDiaryOrderByRno(
-                Diary.builder().dino(dino).build());
-        return result.stream().map(reply -> entityToDTO(reply))
-                .collect(Collectors.toList());
-    }
+  @Override
+  public List<ReplyDTO> getReplyList(Long dino) {
+    List<Reply> result = repository.findByDino(dino);
+    return result.stream().map(new Function<Reply, ReplyDTO>() {
+      @Override
+      public ReplyDTO apply(Reply t) {
+        return entityToDTO(t);
+      }
+    }).collect(Collectors.toList());
+  }
 
-    @Override
-    public void modify(ReplyDTO replyDTO) {
-        repository.save(dtoToEntity(replyDTO));
+  @Override
+  public void modify(ReplyDTO dto) {
+    Long rno = dto.getRno();
+    Optional<Reply> result = repository.findById(rno);
+    if (result.isPresent()) {
+      Reply reply = result.get();
+      reply.changeReplyContent(dto.getReplyContent());
+      repository.save(reply);
     }
+  }
 
-    @Override
-    public void remove(Long rno) {
-        repository.deleteById(rno);
-    }
+  @Override
+  public void remove(Long rno) {
+    repository.deleteById(rno);
+  }
 }
