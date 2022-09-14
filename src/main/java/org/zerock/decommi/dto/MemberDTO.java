@@ -18,6 +18,7 @@ public class MemberDTO {
     private String pw;
     // private String name;
     private String mobile;
+    private boolean auth;
     private boolean fromSocial;
 
     // 여기에 선호태그 비선호태그 넣으면 될것 같음

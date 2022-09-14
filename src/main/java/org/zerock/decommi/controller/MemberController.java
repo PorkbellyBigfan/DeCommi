@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,13 +21,14 @@ import org.zerock.decommi.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
-@Controller
+@RestController
 @Log4j2
 @RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
   private final MemberService service;
 
+  // 멤버 하나 가져오기
   @RequestMapping(value = "/getAuth", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Map<String, Object>> getAuth(@RequestBody Map<String, Object> mapObj,
       @RequestHeader("token") String token) {
@@ -38,6 +38,7 @@ public class MemberController {
     return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
   }
 
+  // 이메일체크
   @RequestMapping(value = "/emailCheck", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Map<String, Long>> emailCheck(
       @RequestBody Map<String, Object> mapObj,
@@ -51,6 +52,7 @@ public class MemberController {
     return new ResponseEntity<Map<String, Long>>(mapForResult, HttpStatus.OK);
   }
 
+  // 회원가입
   @RequestMapping(value = "/signUp", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<String> signUp(@RequestBody MemberDTO dto,
       @RequestHeader("token") String token) {

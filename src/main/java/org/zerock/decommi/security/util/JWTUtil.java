@@ -11,7 +11,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 public class JWTUtil {
-    private String secretKey = "decommi1234";
+    private String secretKey = "decommi123456789";
     private long expire = 60 * 24 * 30;
 
     public String generateToken(String content) throws Exception {

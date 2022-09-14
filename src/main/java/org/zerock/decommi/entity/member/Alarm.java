@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.zerock.decommi.entity.Bookmark;
-import org.zerock.decommi.entity.Help;
+import org.zerock.decommi.entity.HelpBoard;
 import org.zerock.decommi.entity.common.BaseEntity;
 import org.zerock.decommi.entity.diary.Diary;
 
@@ -32,7 +32,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = { "receiver", "sender", "bookmarkId", "diary", "helpId",
+@ToString(exclude = { "receiver", "sender", "bookmarkId", "diary", "hbno",
         "heartId" })
 @Table(name = "d_alarm")
 public class Alarm extends BaseEntity {
@@ -54,8 +54,8 @@ public class Alarm extends BaseEntity {
     @JoinColumn(name = "bookmarkId")
     private Bookmark bookmarkId;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hbId")
-    private Help helpId;
+    @JoinColumn(name = "hbno")
+    private HelpBoard hbno;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default

@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.DefaultRedirectStrategy;
-import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import lombok.extern.log4j.Log4j2;
@@ -33,9 +31,5 @@ public class ApiLoginFailHandler implements AuthenticationFailureHandler {
     PrintWriter out = response.getWriter();
     out.print(json);
 
-    // Useful for page navigation.
-    // RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-    // request.setAttribute("msg", message);
-    // redirectStrategy.sendRedirect(request, response, "/error");
   }
 }

@@ -28,7 +28,7 @@ import lombok.ToString;
 public class ToDo extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long todoid;
+    private Long todoId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "email")
     private Member writer;

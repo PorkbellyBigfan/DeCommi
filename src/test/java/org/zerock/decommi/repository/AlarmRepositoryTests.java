@@ -41,7 +41,7 @@
 // Diary diary = Diary.builder().dino((long) (Math.random() * 100) + 1).build();
 // Bookmark bookmark = Bookmark.builder().bookmarkId((long) (Math.random() *
 // 100) + 1).build();
-// Help help = Help.builder().hbId((long) (Math.random() * 100) + 1).build();
+// HelpBoard help = Help.builder().hbno((long) (Math.random() * 100) + 1).build();
 // Alarm alarm = Alarm.builder()
 // .receiver(receiver)
 // .sender(sender)

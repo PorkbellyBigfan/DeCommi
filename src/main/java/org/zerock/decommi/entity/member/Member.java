@@ -3,6 +3,7 @@ package org.zerock.decommi.entity.member;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,12 +28,14 @@ import lombok.ToString;
 public class Member extends BaseEntity {
     @Id
     private String email;
+    @Column(nullable = false)
     private String pw;
-
     // 최대한 필수데이터만 저장하는게 어떨까 해서 주석처리함
     // private String name;
-
+    @Column(nullable = false)
     private String mobile;
+    @Column
+    private boolean auth;
     private boolean fromSocial;
 
     @ElementCollection(fetch = FetchType.LAZY)

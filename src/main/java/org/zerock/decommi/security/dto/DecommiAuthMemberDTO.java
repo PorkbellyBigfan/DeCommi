@@ -7,9 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
@@ -19,6 +17,7 @@ public class DecommiAuthMemberDTO extends User implements OAuth2User {
   private String pw;
   private String mobile;
   private boolean fromSocial;
+  private boolean auth;
   private Map<String, Object> attr; // Google 에서 받은 정보 담는 곳
 
   public DecommiAuthMemberDTO(String username, String pw,
@@ -42,9 +41,9 @@ public class DecommiAuthMemberDTO extends User implements OAuth2User {
     return attr;
   }
 
+  // 이게 없으면 에러가 뜨는데 이유를 모르겠음
   @Override
   public String getName() {
-    // TODO Auto-generated method stub
     return null;
   }
 }

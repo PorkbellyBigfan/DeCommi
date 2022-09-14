@@ -23,17 +23,18 @@ public class MemberRepositoryTests {
   @Test
   // @Transactional
   public void insertMemberDummies() {
-    IntStream.rangeClosed(1, 100).forEach(i -> {
+    IntStream.rangeClosed(1, 20).forEach(i -> {
       Member m = Member.builder()
           .email("user" + i + "@decommi.com")
           .pw(encoder.encode("1234"))
           .mobile("010" + i)
           .fromSocial(false)
+          .auth(true)
           .build();
       m.addMemberRole(MemberRole.GUEST);
-      if (i > 50)
+      if (i > 5)
         m.addMemberRole(MemberRole.MEMBER);
-      if (i > 95)
+      if (i > 9)
         m.addMemberRole(MemberRole.ADMIN);
       repository.save(m);
     });
@@ -41,10 +42,10 @@ public class MemberRepositoryTests {
 
   // @Test
   // public void testMember() {
-  //   Optional<Member> result = repository.findByEmail("user9@decommi.com");
-  //   if (result.isPresent()) {
-  //     Member member = result.get();
-  //     System.out.println("findByEmail : " + member);
-  //   }
+  // Optional<Member> result = repository.findByEmail("user9@decommi.com");
+  // if (result.isPresent()) {
+  // Member member = result.get();
+  // System.out.println("findByEmail : " + member);
+  // }
   // }
 }

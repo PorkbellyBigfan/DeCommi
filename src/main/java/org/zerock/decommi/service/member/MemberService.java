@@ -27,6 +27,7 @@ public interface MemberService {
                 .email(member.getEmail())
                 .mobile(member.getMobile())
                 .fromSocial(member.isFromSocial())
+                .auth(member.isAuth())
                 .roleSet(member.getRoleSet().stream().map(
                         role -> new String("ROLE_" + role.name()))
                         .collect(Collectors.toSet()))
@@ -42,6 +43,7 @@ public interface MemberService {
                 .pw(dto.getPw())
                 .mobile(dto.getMobile())
                 .fromSocial(dto.isFromSocial())
+                .auth(dto.isAuth())
                 .roleSet(dto.getRoleSet().stream().map(
                         t -> {
                             if (t.equals("ROLE_GUEST"))

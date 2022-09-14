@@ -29,18 +29,18 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "user")
+@ToString(exclude = "writer")
 @Table(name = "d_help")
-public class Help extends BaseEntity {
+public class HelpBoard extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long hbId;
+    private Long hbno;
     private String title;
     private String content;
 
     @ManyToOne
     @JoinColumn(name = "email")
-    private Member user;
+    private Member writer;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default

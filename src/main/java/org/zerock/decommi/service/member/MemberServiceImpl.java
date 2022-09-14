@@ -53,7 +53,6 @@ public class MemberServiceImpl implements MemberService {
     dto.setPw(encoder.encode(dto.getPw()));
     Member member = dtoToEntity(dto);
     repository.save(member);
-
     return member.getEmail();
   }
 
