@@ -40,7 +40,7 @@ public class DiaryRepositoryTests {
           .title("title" + i)
           .content("content" + i)
           .openYN(false)
-          .commentYN(false)
+          .replyYN(false)
           .writer(writer)
           .build();
       repository.save(diary);

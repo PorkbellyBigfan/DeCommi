@@ -1,14 +1,8 @@
 package org.zerock.decommi.service.diary;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import org.zerock.decommi.dto.DiaryDTO;
-import org.zerock.decommi.dto.PageRequestDTO;
-import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.dto.ReplyDTO;
 import org.zerock.decommi.dto.TagDTO;
 import org.zerock.decommi.entity.diary.Diary;
@@ -18,7 +12,7 @@ import org.zerock.decommi.entity.member.Member;
 
 public interface DiaryService {
     //다이어리
-    String registerDiary(DiaryDTO dto, List<String> tagList);
+    String registerDiary(DiaryDTO dto, List<TagDTO> tagList);
     String modifyDiary(DiaryDTO dto, String email);
     String deleteDiary(Long dino, String email);
     List<Object[]>getDiaryList();

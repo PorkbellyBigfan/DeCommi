@@ -46,10 +46,8 @@ public class DiaryServiceImpl implements DiaryService {
     public String registerDiary(DiaryDTO dto, List<TagDTO> tagList) {
         Diary result = dtoToEntity(dto);
         repository.save(result);
-
         //이미지 업로드 구현되면 추가예정
         // List<ImageList> lists = dto.getImage();
-
         for(TagDTO i : tagList){
             Tag tagResult = tagDTOtoEntity(i);
             tagResult.updateDiary(result);
@@ -72,14 +70,15 @@ public class DiaryServiceImpl implements DiaryService {
 
 
     //댓글 등록, 대댓글 등록
-    // @Override
-    // public String registerReply(ReplyDTO dto) {
-    //     Optional<Member> result = memberRepository.findByEmail(dto.getEmail());
-    //     Optional<Reply> checkMember = replyRepository.getReplyByDinoAndEmail(Diary.builder().dino(dto.getDino()).build(), Member.builder().email(dto.getEmail()).build());
-    //     if(!checkMember.isPresent()){
-    //         dto.setReplyContent(replyContent);
-    //     }
-    // }
+    @Override
+    public String registerReply(ReplyDTO dto) {
+        // Optional<Member> result = memberRepository.findByEmail(dto.getEmail());
+        // Optional<Reply> checkMember = replyRepository.getReplyByDinoAndEmail(Diary.builder().dino(dto.getDino()).build(), Member.builder().email(dto.getEmail()).build());
+        // if(!checkMember.isPresent()){
+        //     dto.setReplyContent(replyContent);
+        // }
+        return "임시";
+    }
     //댓글 수정
     @Override
     public String modifyReply(ReplyDTO dto, String email) {

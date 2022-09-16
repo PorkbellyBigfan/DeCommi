@@ -16,7 +16,7 @@ public class DiaryDTO {
     private Long dino;
     private String title;
     private String content;
-    private List<String>tags;
+    private List<TagDTO>tags;
     private boolean openYN;
     private boolean replyYN;
     // private int replyCnt;
