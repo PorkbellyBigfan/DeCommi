@@ -19,10 +19,6 @@ public class DiaryDTO {
     private List<TagDTO>tags;
     private boolean openYN;
     private boolean replyYN;
-    // private int replyCnt;
-    // private int heartCnt;
-    // private int reportCnt;
-    // private int bookmarkCnt;
 
     private String writer; // Member의 Primary key :email
 

@@ -56,16 +56,37 @@ public class DiaryServiceImpl implements DiaryService {
         return result.getDino().toString();
     }
 
+    //고쳐야함
     @Override
-    public String modifyDiary(DiaryDTO dto, String email) {
-    // TODO Auto-generated method stub
-    return null;
+    public String modifyDiary(DiaryDTO dto, List<TagDTO>tagList) {
+        Diary originalDiary = repository.findByDino(dto.getDino());
+        DiaryDTO getByDino = entityToDTO(originalDiary);
+
+        originalDiary.getTags().forEach(tag->{
+            tagRepository.deleteById(tag.getTagId());
+        });
+        getByDino.setTitle(dto.getTitle());
+        getByDino.setContent(dto.getContent());
+        getByDino.setOpenYN(dto.isOpenYN());
+        getByDino.setReplyYN(dto.isReplyYN());
+        Diary modifiedDiary = dtoToEntity(getByDino);
+        repository.save(modifiedDiary);
+
+        // for(Tag i : tagList){
+        //     Optional<Tag> tagTemp = tagRepository.findByDiaryAndTagName(modifiedDiary, i);
+        //     if(!tagTemp.isPresent()){
+        //         Tag tagResult = tagDTOtoEntity(i);
+        //         tagResult.updateDiary(modifiedDiary);
+        //         tagRepository.save(tagResult);
+        //     }
+        // }
+        return modifiedDiary.getDino().toString();
     }
 
     @Override
     public String deleteDiary(Long dino, String email) {
-    // TODO Auto-generated method stub
-    return null;
+        // TODO Auto-generated method stub
+        return null;
     }
 
 
@@ -82,20 +103,20 @@ public class DiaryServiceImpl implements DiaryService {
     //댓글 수정
     @Override
     public String modifyReply(ReplyDTO dto, String email) {
-    // TODO Auto-generated method stub
-    return null;
+        // TODO Auto-generated method stub
+        return null;
     }
     //댓글 삭제    
-    @Override
-    public String deleteReply(ReplyDTO dto, String email) {
-        Optional<Reply> checkReply = replyRepository.getReplyByRnoAndEmail(dto.getRno(), dto.getEmail());  
-        if(checkReply.isPresent()){
-            replyRepository.delete(checkReply.get());
-            return "Deleted Successfully";
-        } else {
-            return "Could not Delete Reply";
-        }
-    }
+    // @Override
+    // public String deleteReply(ReplyDTO dto, String email) {
+    //     Optional<Reply> checkReply = replyRepository.getReplyByRnoAndEmail(dto.getRno(), dto.getEmail());  
+    //     if(checkReply.isPresent()){
+    //         replyRepository.delete(checkReply.get());
+    //         return "Deleted Successfully";
+    //     } else {
+    //         return "Could not Delete Reply";
+    //     }
+    // }
 
 
     

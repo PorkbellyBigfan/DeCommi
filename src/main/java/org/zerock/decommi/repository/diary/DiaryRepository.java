@@ -29,15 +29,15 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
   @Query("select d from Diary d")
   List<Diary>getList();
 
-  @Query("select d FROM Diary d WHERE title =:title or d.desc like :title%")
-  List<Diary>findByTitle(String title);
+  // @Query("select d FROM Diary d WHERE title =:title or d.desc like :title%")
+  // List<Diary>findByTitle(String title);
 
-  @Query(" select d, t.tagName FROM Diary d "+
-         " left join Tag t "+
-         " WHERE t.tagName like :tagsearch" +
-         "ORDER BY d.dino DESC"
-        )
-  List<Object[]>getDiaryListByTagName(String tagsearch);
+  // @Query(" select d, t.tagName FROM Diary d "+
+  //        " left join Tag t "+
+  //        " WHERE t.tagName like :tagsearch" +
+  //        "ORDER BY d.dino DESC"
+  //       )
+  // List<Object[]>getDiaryListByTagName(String tagsearch);
 
 
 

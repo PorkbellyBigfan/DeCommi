@@ -13,7 +13,7 @@ import org.zerock.decommi.entity.member.Member;
 public interface DiaryService {
     //다이어리
     String registerDiary(DiaryDTO dto, List<TagDTO> tagList);
-    String modifyDiary(DiaryDTO dto, String email);
+    String modifyDiary(DiaryDTO dto, List<TagDTO> tagList);
     String deleteDiary(Long dino, String email);
     List<Object[]>getDiaryList();
     List<Object[]>getSearchDiaryList(String search);
@@ -22,7 +22,7 @@ public interface DiaryService {
     //댓글
     String registerReply(ReplyDTO dto);
     String modifyReply(ReplyDTO dto, String email);
-    String deleteReply(ReplyDTO dto, String email);
+    // String deleteReply(ReplyDTO dto, String email);
 
     // 북마크
     // 하트
@@ -60,7 +60,7 @@ public interface DiaryService {
             .tagName(tagList.getTagName())
             .tagGroup(tagList.getTagGroup())
             .isSubTag(tagList.isSubTag())
-            .dino(tagList.getDino())
+            .diary(tagList.getDino())
             .build();
         return tags;
     }
@@ -71,7 +71,7 @@ public interface DiaryService {
             .tagName(tagList.getTagName())
             .tagGroup(tagList.getTagGroup())
             .isSubTag(tagList.isSubTag())
-            .dino(tagList.getDino())
+            .dino(tagList.getDiary())
             .build();
         return dto;
     }

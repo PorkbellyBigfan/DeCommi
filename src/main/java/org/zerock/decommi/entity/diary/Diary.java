@@ -29,7 +29,7 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "writer")
+@ToString(exclude = "tags")
 @Table(name = "d_diary")
 public class Diary extends BaseEntity {
     @Id
@@ -47,7 +47,7 @@ public class Diary extends BaseEntity {
     private String writer;
 
     @Builder.Default
-    @OneToMany(mappedBy = "dino", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Tag> tags = new ArrayList<>();
 
 

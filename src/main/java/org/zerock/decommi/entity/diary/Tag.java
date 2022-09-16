@@ -23,7 +23,7 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "diary")
 @Table(name = "d_tag")
 public class Tag extends BaseEntity {
     @Id
@@ -40,10 +40,10 @@ public class Tag extends BaseEntity {
     private Long tagGroup;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="dino", referencedColumnName = "dino")
-    private Diary dino;
+    @JoinColumn(name="diary_id", referencedColumnName = "dino")
+    private Diary diary;
 
     public void updateDiary(Diary list){
-        this.dino = list;
+        this.diary = list;
     }
 }
