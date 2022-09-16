@@ -23,7 +23,7 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = {"roleSet"})
 @Table(name = "d_member")
 public class Member extends BaseEntity {
     @Id

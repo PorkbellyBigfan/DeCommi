@@ -13,13 +13,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReplyDTO {
     private Long rno;
+    private String email; //Member email
+    private Long dino; //Diary dino
+
     private String replyContent;
-
-    private int replyGroup;
-    private int replyDepth;
-
-    private Long dino; // Diary 엔티티의 PK dino
-    private String writer; // Member의 Primary key :email
+    private Long replyGroup;
+    private Long replyDepth;
+    private Long replyOrder;
 
     private LocalDateTime regDate, modDate;
 }

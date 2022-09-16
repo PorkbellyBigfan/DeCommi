@@ -11,11 +11,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.zerock.decommi.entity.diary.Diary;
-import org.zerock.decommi.entity.diary.DiaryTag;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.repository.diary.DiaryRepository;
-import org.zerock.decommi.repository.diary.DiaryTagRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 
@@ -26,9 +24,6 @@ public class DiaryRepositoryTests {
 
   @Autowired
   TagRepository tagRepository;
-
-  @Autowired
-  DiaryTagRepository dtRepository; // Diary_Tag Repository
 
   @Autowired
   MemberRepository memberRepository; // Member Repository

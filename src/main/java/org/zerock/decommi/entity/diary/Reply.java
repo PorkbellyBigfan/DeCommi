@@ -23,7 +23,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString(exclude = { "dino", "writer" })
+@ToString(exclude = { "diary", "member" })
 @Table(name = "d_reply")
 public class Reply extends BaseEntity {
     @Id
@@ -32,16 +32,15 @@ public class Reply extends BaseEntity {
     private String replyContent;
 
     // 대댓글 구현을 위한 속성들
-    private int replyGroup;
-    private int replyDepth;
+    private Long replyGroup;
+    private Long replyDepth;
+    private Long replyOrder;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dino")
-    private Diary dino;
+    private Diary diary;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email")
-    private Member writer;
+    private Member member;
 
     public void changeReplyContent(String replyContent) {
         this.replyContent = replyContent;

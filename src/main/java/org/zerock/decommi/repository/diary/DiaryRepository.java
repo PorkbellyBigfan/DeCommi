@@ -9,54 +9,36 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
-import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import org.zerock.decommi.entity.diary.Diary;
 
+@Repository
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
-        // // 페이징 처리 안된 다이어리 게시글 리스트
-        @Query("select d, t, count(distinct r),count(distinct h),count(distinct m) from Diary d "
-                        + " left outer join Tag t on t.diary = d "
-                        + " left outer join Reply r on r.diary = r "
-                        + " left outer join Heart h on h.diary = d "
-                        + " left outer join Bookmark m on m.diary = d "
-                        + " where d.dino=:dino group by t ")
-        List<Object[]> getDiaryWithAll(Long dino);
+  //번호로 게시글 가져오기
+  Diary getByDino(Long dino);
+  //번호로 게시글 조회
+  Diary findByDino(Long dino);
 
-        // 페이징 처리된 다이어리게시글리스트
-        @Query("select d, t, count(distinct r),count(distinct h),count(distinct m) from Diary d "
-                        + " left outer join Tag t on t.diary = d "
-                        + " left outer join Reply r on r.diary = d "
-                        + " left outer join Heart h on h.diary = d "
-                        + " left outer join Bookmark m on m.diary = d "
-                        + " group by d ")
-        Page<Object[]> getListPage(Pageable pageable);
+  //태그가 포함된 다이어리 리스트
+  @EntityGraph(attributePaths = {"tags"}, type = EntityGraphType.LOAD)
+  @Query(value = "select d from Diary d")
+  Page<Diary> getDiaryListWithTag(Pageable pageable);
 
-        @EntityGraph(attributePaths = { "writer" }, type = EntityGraphType.LOAD)
-        @Query("select d from Diary d where d.dino = :dino ")
-        Optional<Diary> getDiaryWithWriter(Long dino);
+  //페이징 처리 안된 다이어리 리스트
+  @Query("select d from Diary d")
+  List<Diary>getList();
 
-        // @Query("select d from Diary d ordered by d.dino desc")
-        // List<Diary> getDiaryList();
+  @Query("select d FROM Diary d WHERE title =:title or d.desc like :title%")
+  List<Diary>findByTitle(String title);
 
-        // Diary, Writer
-        // @Query("select d, w from Diary d left join d.writer w where d.dino=:dino")
-        // Object getBoardWithWriter(@Param("dino") Long dino);
+  @Query(" select d, t.tagName FROM Diary d "+
+         " left join Tag t "+
+         " WHERE t.tagName like :tagsearch" +
+         "ORDER BY d.dino DESC"
+        )
+  List<Object[]>getDiaryListByTagName(String tagsearch);
 
-        // // Diary, Reply
-        // @Query("select d, r from Diary d left join Reply r on r.diary=d where
-        // d.dino=:dino")
-        // List<Object[]> getBoardWithReply(@Param("dino") Long dino);
 
-        // // Diary, Writer, 댓글 갯수
-        // @Query(value = "select d,w,count(r) from Diary d left join d.writer w "
-        // + "left join Reply r on r.diary=d group by b ", countQuery = "select count(b)
-        // from Diary d")
-        // Page<Object[]> getBoardWithReplyCount(Pageable pageable);
-
-        // // 글번호에 의해 Diary, Writer, 댓글 갯수
-        // @Query(value = "select d,w,count(r) from Diary d left join d.writer w "
-        // + "left join Reply r on r.diary=d where d.dino=:dino ")
-        // Object getBoardByBno(@Param("dino") Long dino);
 
 }
