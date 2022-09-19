@@ -1,4 +1,5 @@
 package org.zerock.decommi.dto;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,5 +16,5 @@ public class ToDoDTO {
     private String todoContent;
     private boolean todoStatus;
 
-    private String email;         //Member 엔티티의 PK email
+    private String id; // Member 엔티티의 PK email
 }

@@ -40,10 +40,10 @@ public class Tag extends BaseEntity {
     private Long tagGroup;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="diary_id", referencedColumnName = "dino")
-    private Diary diary;
+    @JoinColumn(name = "dino", referencedColumnName = "dino")
+    private Diary dino;
 
-    public void updateDiary(Diary list){
-        this.diary = list;
+    public void updateDiary(Diary list) {
+        this.dino = list;
     }
 }

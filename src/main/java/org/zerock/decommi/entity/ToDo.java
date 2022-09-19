@@ -30,7 +30,7 @@ public class ToDo extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long todoId;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email")
+    @JoinColumn(name = "id")
     private Member writer;
     private String todoTitle;
     private String todoContent;

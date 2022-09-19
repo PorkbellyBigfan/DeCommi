@@ -14,6 +14,7 @@ public interface MemberService {
     MemberDTO getMemberDTO(String email); // MemberDTO 가져오기
 
     MemberDTO emailCheck(String email); // 이메일 체크
+    // String findId(MemberDTO id); //아이디 찾기
 
     String signUp(MemberDTO dto); // 회원가입
 
@@ -24,10 +25,15 @@ public interface MemberService {
 
     default MemberDTO entityToDTO(Member member) {
         MemberDTO memberDTO = MemberDTO.builder()
+                .mid(member.getMid())
+                .id(member.getId())
+                .pw(member.getPw())
                 .email(member.getEmail())
-                .mobile(member.getMobile())
                 .fromSocial(member.isFromSocial())
                 .auth(member.isAuth())
+                .q1(member.getQ1())
+                .q1(member.getQ2())
+                .q1(member.getQ3())
                 .roleSet(member.getRoleSet().stream().map(
                         role -> new String("ROLE_" + role.name()))
                         .collect(Collectors.toSet()))
@@ -39,11 +45,15 @@ public interface MemberService {
 
     default Member dtoToEntity(MemberDTO dto) {
         Member member = Member.builder()
-                .email(dto.getEmail())
+                .mid(dto.getMid())
+                .id(dto.getId())
                 .pw(dto.getPw())
-                .mobile(dto.getMobile())
+                .email(dto.getEmail())
                 .fromSocial(dto.isFromSocial())
                 .auth(dto.isAuth())
+                .q1(dto.getQ1())
+                .q1(dto.getQ2())
+                .q1(dto.getQ3())
                 .roleSet(dto.getRoleSet().stream().map(
                         t -> {
                             if (t.equals("ROLE_GUEST"))

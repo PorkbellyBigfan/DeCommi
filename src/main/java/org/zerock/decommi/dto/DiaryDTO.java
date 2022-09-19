@@ -16,11 +16,11 @@ public class DiaryDTO {
     private Long dino;
     private String title;
     private String content;
-    private List<TagDTO>tags;
+    private List<TagDTO> tags;
     private boolean openYN;
     private boolean replyYN;
 
-    private String writer; // Member의 Primary key :email
+    private String writer; // Member의 Primary key :id
 
     private LocalDateTime regDate, modDate;
 }

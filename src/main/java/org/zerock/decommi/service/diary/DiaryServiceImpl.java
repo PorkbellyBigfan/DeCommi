@@ -41,14 +41,13 @@ public class DiaryServiceImpl implements DiaryService {
     private final TagRepository tagRepository;
     private final ReplyRepository replyRepository;
 
-
     @Override
     public String registerDiary(DiaryDTO dto, List<TagDTO> tagList) {
         Diary result = dtoToEntity(dto);
         repository.save(result);
-        //이미지 업로드 구현되면 추가예정
+        // 이미지 업로드 구현되면 추가예정
         // List<ImageList> lists = dto.getImage();
-        for(TagDTO i : tagList){
+        for (TagDTO i : tagList) {
             Tag tagResult = tagDTOtoEntity(i);
             tagResult.updateDiary(result);
             tagRepository.save(tagResult);
@@ -56,13 +55,23 @@ public class DiaryServiceImpl implements DiaryService {
         return result.getDino().toString();
     }
 
-    //고쳐야함
     @Override
-    public String modifyDiary(DiaryDTO dto, List<TagDTO>tagList) {
+    public DiaryDTO checkBeforeDiaryModify(Long dino, String id) {
+        // Optional<Diary> isit = repository.getDiaryByDinoAndId(dino, id);
+        if (!isit.isPresent()) {
+            return null;
+        } else {
+            DiaryDTO dto = entityToDTO(isit.get());
+
+        }
+    }
+
+    @Override
+    public String modifyDiary(DiaryDTO dto, List<TagDTO> tagList) {
         Diary originalDiary = repository.findByDino(dto.getDino());
         DiaryDTO getByDino = entityToDTO(originalDiary);
 
-        originalDiary.getTags().forEach(tag->{
+        originalDiary.getTags().forEach(tag -> {
             tagRepository.deleteById(tag.getTagId());
         });
         getByDino.setTitle(dto.getTitle());
@@ -72,64 +81,65 @@ public class DiaryServiceImpl implements DiaryService {
         Diary modifiedDiary = dtoToEntity(getByDino);
         repository.save(modifiedDiary);
 
-        // for(Tag i : tagList){
-        //     Optional<Tag> tagTemp = tagRepository.findByDiaryAndTagName(modifiedDiary, i);
-        //     if(!tagTemp.isPresent()){
-        //         Tag tagResult = tagDTOtoEntity(i);
-        //         tagResult.updateDiary(modifiedDiary);
-        //         tagRepository.save(tagResult);
-        //     }
-        // }
+        // 태그가 있을때만 TagDTO를 Tag로
+        if (tagList != null && tagList.size() > 0) {
+            for (TagDTO i : tagList) {
+                Tag tagResult = tagDTOtoEntity(i);
+                tagResult.updateDiary(modifiedDiary);
+                tagRepository.save(tagResult);
+            }
+        }
         return modifiedDiary.getDino().toString();
     }
 
     @Override
-    public String deleteDiary(Long dino, String email) {
+    public String deleteDiary(Long dino, String id) {
         // TODO Auto-generated method stub
         return null;
     }
 
-
-    //댓글 등록, 대댓글 등록
+    // 댓글 등록, 대댓글 등록
     @Override
     public String registerReply(ReplyDTO dto) {
-        // Optional<Member> result = memberRepository.findByEmail(dto.getEmail());
-        // Optional<Reply> checkMember = replyRepository.getReplyByDinoAndEmail(Diary.builder().dino(dto.getDino()).build(), Member.builder().email(dto.getEmail()).build());
+        // Optional<Member> result = memberRepository.findById(dto.getId());
+        // Optional<Reply> checkMember =
+        // replyRepository.getReplyByDinoAndId(Diary.builder().dino(dto.getDino()).build(),
+        // Member.builder().Id(dto.getId()).build());
         // if(!checkMember.isPresent()){
-        //     dto.setReplyContent(replyContent);
+        // dto.setReplyContent(replyContent);
         // }
         return "임시";
     }
-    //댓글 수정
+
+    // 댓글 수정
     @Override
-    public String modifyReply(ReplyDTO dto, String email) {
+    public String modifyReply(ReplyDTO dto, String id) {
         // TODO Auto-generated method stub
         return null;
     }
-    //댓글 삭제    
+    // 댓글 삭제
     // @Override
-    // public String deleteReply(ReplyDTO dto, String email) {
-    //     Optional<Reply> checkReply = replyRepository.getReplyByRnoAndEmail(dto.getRno(), dto.getEmail());  
-    //     if(checkReply.isPresent()){
-    //         replyRepository.delete(checkReply.get());
-    //         return "Deleted Successfully";
-    //     } else {
-    //         return "Could not Delete Reply";
-    //     }
+    // public String deleteReply(ReplyDTO dto, String id) {
+    // Optional<Reply> checkReply =
+    // replyRepository.getReplyByRnoAndId(dto.getRno(), dto.getId());
+    // if(checkReply.isPresent()){
+    // replyRepository.delete(checkReply.get());
+    // return "Deleted Successfully";
+    // } else {
+    // return "Could not Delete Reply";
+    // }
     // }
 
-
-    
     @Override
     public List<Object[]> getDiaryList() {
-    // TODO Auto-generated method stub
-    return null;
-    }
-    @Override
-    public List<Object[]> getSearchDiaryList(String search) {
-    // TODO Auto-generated method stub
-    return null;
+        // TODO Auto-generated method stub
+        return null;
     }
 
-    
+    @Override
+    public List<Object[]> getSearchDiaryList(String search) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

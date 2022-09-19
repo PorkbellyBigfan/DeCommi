@@ -42,10 +42,10 @@ public class Alarm extends BaseEntity {
     private String alarmContent;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email_receiver")
+    @JoinColumn(name = "id_receiver")
     private Member receiver;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email_sender")
+    @JoinColumn(name = "id_sender")
     private Member sender;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dino")

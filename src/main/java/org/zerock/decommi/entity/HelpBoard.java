@@ -39,7 +39,7 @@ public class HelpBoard extends BaseEntity {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "email")
+    @JoinColumn(name = "id")
     private Member writer;
 
     @ElementCollection(fetch = FetchType.LAZY)

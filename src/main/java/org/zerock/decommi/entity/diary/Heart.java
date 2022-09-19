@@ -35,7 +35,7 @@ public class Heart {
     private Diary diary;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email")
+    @JoinColumn(name = "id")
     private Member writer;
 
 }

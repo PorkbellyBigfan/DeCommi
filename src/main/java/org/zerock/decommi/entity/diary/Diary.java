@@ -50,10 +50,10 @@ public class Diary extends BaseEntity {
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Tag> tags = new ArrayList<>();
 
-
     public void changeTitle(String title) {
         this.title = title;
     }
+
     public void changeContent(String content) {
         this.content = content;
     }

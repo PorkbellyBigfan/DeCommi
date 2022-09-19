@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReplyDTO {
     private Long rno;
-    private String email; //Member email
-    private Long dino; //Diary dino
+    private String id; // Member id
+    private Long dino; // Diary dino
 
     private String replyContent;
     private Long replyGroup;

@@ -16,10 +16,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberDTO {
-    private String email;
+    private Long mid;
+    private String id;
     private String pw;
+    private String email;
     // private String name;
-    private String mobile;
+    // private String mobile;
+    private String q1;
+    private String q2;
+    private String q3;
     private boolean auth;
     private boolean fromSocial;
 
