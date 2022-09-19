@@ -26,10 +26,7 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
   @Query(value = "select dlwt from Diary dlwt")
   Page<Diary> getDiaryListWithTag(Pageable pageable);
 
-<<<<<<< HEAD
-  //글작성자와 게시글 번호 가져오기
-  @Query("select d from Diary d where writer=:id and dino=dino")
-  Optional<Diary> getDiaryByDinoAndId(Long dino, Long id);
+
 
   @Query("select m.id  d.dino, d.title, d.content, d.openYN, d.replyYN d.regDate " 
         +"from Diary d left join Member m "
@@ -45,10 +42,9 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
         +"ORDER BY d.dino DESC ")
   List<Object[]>getListAndAuthorByAuthorOrDtitle(String search);
 
-=======
+
   // 글작성자와 게시글 번호 가져오기
   @Query("select d from Diary d where writer=:id and dino=:dino ")
   Optional<Diary> getDiaryByDinoAndId(Long dino, String id);
->>>>>>> 3bf4ce10c5f0da7a99c26ea4b8f71861a3a64c41
 
 }

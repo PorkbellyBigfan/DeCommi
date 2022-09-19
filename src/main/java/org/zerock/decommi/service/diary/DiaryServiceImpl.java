@@ -1,5 +1,6 @@
 package org.zerock.decommi.service.diary;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -189,14 +190,17 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public List<Object[]> getDiaryList() {
-        // TODO Auto-generated method stub
-        return null;
+        return repository.getListAndAuthor();
     }
 
     @Override
     public List<Object[]> getSearchDiaryList(String search) {
-        // TODO Auto-generated method stub
-        return null;
+        String decode = "";
+        try{
+            decode = URLDecoder.decode(search, "UTF-8");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return repository.getListAndAuthorByAuthorOrDtitle(decode);
     }
-
 }
