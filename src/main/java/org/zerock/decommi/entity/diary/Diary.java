@@ -29,7 +29,7 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "tags")
+@ToString(exclude = { "tags", "replies" })
 @Table(name = "d_diary")
 public class Diary extends BaseEntity {
     @Id
@@ -47,8 +47,12 @@ public class Diary extends BaseEntity {
     private String writer;
 
     @Builder.Default
-    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "dino", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Tag> tags = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "dino", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Reply> replyList = new ArrayList<>();
 
     public void changeTitle(String title) {
         this.title = title;

@@ -24,7 +24,7 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "member", "diary" })
+@ToString(exclude = { "member", "dino" })
 @Table(name = "d_bookmark")
 public class Bookmark extends BaseEntity {
     @Id
@@ -39,5 +39,5 @@ public class Bookmark extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dino")
-    private Diary diary;
+    private Diary dino;
 }

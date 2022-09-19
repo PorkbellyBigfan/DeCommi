@@ -14,7 +14,7 @@ import org.zerock.decommi.entity.diary.Tag;
 public interface TagRepository extends JpaRepository<Tag, Long> {
 
   @Query("select t from Tag t where dino =:dino ")
-  List<Tag> getTagList(Long dino);
+  List<Tag> findByDino(Long dino);
 
   @Query("select t from Tag t where t.tagName =:tagName")
   List<Tag> findByTagName(String tagName);
@@ -22,8 +22,8 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
   @Query("select t from Tag t where t.tagGroup =:tagGroup")
   List<Tag> findByTagGroup(Long tagGroup);
 
-  @Query("select t from Tag t where t.diary =:diary")
-  List<Tag> findByDiary(Diary diary);
+  @Query("select t from Tag t where t.dino =:dino")
+  List<Tag> findByDiary(Diary dino);
 
-  Optional<Tag> findByDiaryAndTagName(Diary diary, String tagName);
+  // Optional<Tag> findByDiaryAndTagName(Diary diary, String tagName);
 }

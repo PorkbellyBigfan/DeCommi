@@ -2,6 +2,9 @@ package org.zerock.decommi.dto;
 
 import java.time.LocalDateTime;
 import java.util.Set;
+
+import org.zerock.decommi.entity.diary.Reply;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
@@ -27,6 +30,7 @@ public class MemberDTO {
     private String q3;
     private boolean auth;
     private boolean fromSocial;
+    private List<Reply> replyList;
 
     // 여기에 선호태그 비선호태그 넣으면 될것 같음
 

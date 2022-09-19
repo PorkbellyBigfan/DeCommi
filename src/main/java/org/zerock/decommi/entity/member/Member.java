@@ -1,8 +1,11 @@
 package org.zerock.decommi.entity.member;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.ArrayList;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -10,9 +13,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.zerock.decommi.entity.common.BaseEntity;
+import org.zerock.decommi.entity.diary.Reply;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -58,6 +63,10 @@ public class Member extends BaseEntity {
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default
     private Set<MemberRole> roleSet = new HashSet<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Reply> replyList = new ArrayList<>();
 
     public void addMemberRole(MemberRole role) {
         roleSet.add(role);

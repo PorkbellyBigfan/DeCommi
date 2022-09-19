@@ -23,7 +23,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString(exclude = { "diary", "member" })
+@ToString(exclude = { "dino", "member" })
 @Table(name = "d_reply")
 public class Reply extends BaseEntity {
     @Id
@@ -37,7 +37,7 @@ public class Reply extends BaseEntity {
     private Long replyOrder;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Diary diary;
+    private Diary dino;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
