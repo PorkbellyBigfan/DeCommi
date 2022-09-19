@@ -1,7 +1,9 @@
 package org.zerock.decommi.service.diary;
 
+import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.ReplyDTO;
 import org.zerock.decommi.dto.TagDTO;
@@ -14,21 +16,24 @@ public interface DiaryService {
     // 다이어리
     String registerDiary(DiaryDTO dto, List<TagDTO> tagList);
 
-    DiaryDTO checkBeforeDiaryModify(Long dino, String id);
-
+    // DiaryDTO checkBeforeDiaryModify(Long dino, String id);
     String modifyDiary(DiaryDTO dto, List<TagDTO> tagList);
 
-    String deleteDiary(Long dino, String id);
+    String deleteDiary(DiaryDTO dto);
 
     List<Object[]> getDiaryList();
 
     List<Object[]> getSearchDiaryList(String search);
 
     // 댓글
-    String registerReply(ReplyDTO dto);
+    Long registerReply(ReplyDTO dto);
 
     String modifyReply(ReplyDTO dto, String id);
+
     // String deleteReply(ReplyDTO dto, String id);
+    HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable);
+
+    HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable pageable, String id);
 
     // 북마크
     // 하트
