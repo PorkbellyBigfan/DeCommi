@@ -2,6 +2,7 @@ package org.zerock.decommi.service.diary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -55,16 +56,20 @@ public class DiaryServiceImpl implements DiaryService {
         return result.getDino().toString();
     }
 
-    @Override
-    public DiaryDTO checkBeforeDiaryModify(Long dino, String id) {
-        // Optional<Diary> isit = repository.getDiaryByDinoAndId(dino, id);
-        if (!isit.isPresent()) {
-            return null;
-        } else {
-            DiaryDTO dto = entityToDTO(isit.get());
-
-        }
-    }
+    // @Override
+    // public DiaryDTO checkBeforeDiaryModify(Long dino, String id) {
+    // Optional<Diary> isit = repository.getDiaryByDinoAndId(dino, id);
+    // if (!isit.isPresent()) {
+    // return null;
+    // } else {
+    // DiaryDTO dto = entityToDTO(isit.get());
+    // List<String>tagString = tagRepository.getTagList(dto.getDino())
+    // .stream().map(tagEntity -> tagEntity.getTagName())
+    // .collect(Collectors.toList());
+    // dto.setTags(tagString);
+    // return dto;
+    // }
+    // }
 
     @Override
     public String modifyDiary(DiaryDTO dto, List<TagDTO> tagList) {
@@ -93,22 +98,39 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public String deleteDiary(Long dino, String id) {
-        // TODO Auto-generated method stub
-        return null;
+    public String deleteDiary(DiaryDTO dto) {
+        Optional<Diary> checkDiary = repository.getDiaryByDinoAndId(dto.getDino(), dto.getWriter());
+        if (checkDiary.isPresent()) {
+            repository.delete(checkDiary.get());
+            return "성공적으로 삭제되었습니다.";
+        } else {
+            return "유효하지 않은 요청입니다.";
+        }
     }
 
-    // 댓글 등록, 대댓글 등록
+    // 댓글 등록 //이해가 잘 가지 않음
     @Override
-    public String registerReply(ReplyDTO dto) {
-        // Optional<Member> result = memberRepository.findById(dto.getId());
-        // Optional<Reply> checkMember =
-        // replyRepository.getReplyByDinoAndId(Diary.builder().dino(dto.getDino()).build(),
-        // Member.builder().Id(dto.getId()).build());
-        // if(!checkMember.isPresent()){
-        // dto.setReplyContent(replyContent);
-        // }
-        return "임시";
+    public Long registerReply(ReplyDTO dto) {
+        Optional<Member> result = memberRepository.findById(dto.getId());
+        Optional<Reply> checkMember = replyRepository.getReplyByDinoAndId(
+                Diary.builder().dino(dto.getDino()).build(),
+                Member.builder().id(dto.getId()).build());
+        if (!checkMember.isPresent()) {
+            Optional<List<Long>> lastestrg = replyRepository.getLastestReplyGroupWhereMatchWithDino(dto.getDino());
+            Long setrg = 1L; // set ReplyGroup = rg
+            if (lastestrg.get().size() != 0) {
+                setrg = lastestrg.get().get(0) + 1;
+            }
+            dto.setReplyGroup(setrg);
+            dto.setReplyDepth(0L);
+            dto.setReplyOrder(0L);
+            dto.setId(result.get().getId());
+            Reply reply = replyDTOtoEntity(dto);
+            replyRepository.save(reply);
+            return -1L;
+        } else {
+            return checkMember.get().getRno();
+        }
     }
 
     // 댓글 수정
@@ -129,6 +151,41 @@ public class DiaryServiceImpl implements DiaryService {
     // return "Could not Delete Reply";
     // }
     // }
+
+    @Override
+    public HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable) {
+        Page<Reply> replyList = replyRepository.getPageList(pageable, dino);
+        if (!replyList.isEmpty()) {
+            List<ReplyDTO> dto = replyList.stream().map((Function<Reply, ReplyDTO>) rt -> {
+                log.info(rt);
+                return replyEntityToDTO(rt);
+            }).collect(Collectors.toList());
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("replyList", dto);
+            result.put("page", pageable.getPageNumber());
+            result.put("pageTotalCount", replyList.getTotalPages());
+            return result;
+        }
+        return null;
+    }
+
+    @Override
+    public HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable pageable, String id) {
+        Page<Reply> replyList = replyRepository.getPageList(pageable, dino);
+        if (!replyList.isEmpty()) {
+            List<ReplyDTO> dto = replyList.stream().map((Function<Reply, ReplyDTO>) rt -> {
+                return replyEntityToDTO(rt);
+            }).collect(Collectors.toList());
+            // 댓글 신고부분 여기에 작성해야함
+            // =============================
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("replyList", dto);
+            result.put("page", pageable.getPageNumber());
+            result.put("pageTotalCount", replyList.getTotalPages());
+            return result;
+        }
+        return null;
+    }
 
     @Override
     public List<Object[]> getDiaryList() {

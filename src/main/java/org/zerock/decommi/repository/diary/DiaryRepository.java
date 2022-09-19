@@ -15,16 +15,18 @@ import org.zerock.decommi.entity.diary.Diary;
 @Repository
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
-  //번호로 게시글 가져오기
+  // 번호로 게시글 가져오기
   Diary getByDino(Long dino);
-  //번호로 게시글 조회
+
+  // 번호로 게시글 조회
   Diary findByDino(Long dino);
 
-  //태그가 포함된 다이어리 리스트
-  @EntityGraph(attributePaths = {"tags"}, type = EntityGraphType.LOAD)
-  @Query(value = "select d from Diary d")
+  // 태그가 포함된 다이어리 리스트
+  @EntityGraph(attributePaths = { "tags" }, type = EntityGraphType.LOAD)
+  @Query(value = "select dlwt from Diary dlwt")
   Page<Diary> getDiaryListWithTag(Pageable pageable);
 
+<<<<<<< HEAD
   //글작성자와 게시글 번호 가져오기
   @Query("select d from Diary d where writer=:id and dino=dino")
   Optional<Diary> getDiaryByDinoAndId(Long dino, Long id);
@@ -43,5 +45,10 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
         +"ORDER BY d.dino DESC ")
   List<Object[]>getListAndAuthorByAuthorOrDtitle(String search);
 
+=======
+  // 글작성자와 게시글 번호 가져오기
+  @Query("select d from Diary d where writer=:id and dino=:dino ")
+  Optional<Diary> getDiaryByDinoAndId(Long dino, String id);
+>>>>>>> 3bf4ce10c5f0da7a99c26ea4b8f71861a3a64c41
 
 }
