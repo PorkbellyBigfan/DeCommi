@@ -25,20 +25,23 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
   @Query(value = "select d from Diary d")
   Page<Diary> getDiaryListWithTag(Pageable pageable);
 
-  //페이징 처리 안된 다이어리 리스트
-  @Query("select d from Diary d")
-  List<Diary>getList();
+  //글작성자와 게시글 번호 가져오기
+  @Query("select d from Diary d where writer=:id and dino=dino")
+  Optional<Diary> getDiaryByDinoAndId(Long dino, Long id);
 
-  // @Query("select d FROM Diary d WHERE title =:title or d.desc like :title%")
-  // List<Diary>findByTitle(String title);
+  @Query("select m.id  d.dino, d.title, d.content, d.openYN, d.replyYN d.regDate " 
+        +"from Diary d left join Member m "
+        +"on m.id=d.writer "
+        +"ORDER BY d.dino DESC ")
+  List<Object[]>getListAndAuthor();
 
-  // @Query(" select d, t.tagName FROM Diary d "+
-  //        " left join Tag t "+
-  //        " WHERE t.tagName like :tagsearch" +
-  //        "ORDER BY d.dino DESC"
-  //       )
-  // List<Object[]>getDiaryListByTagName(String tagsearch);
-
+  @Query("select m.name  d.dino, d.title, d.content, d.openYN, d.replyYN d.regDate " 
+        +"from Diary d left join Member m "
+        +"on m.mid=d.writer "
+        +"where m.name LIKE CONCAT('%',:search,'%') Or "
+        +"d.title LIKE CONCAT('%',:search,'%') Or "
+        +"ORDER BY d.dino DESC ")
+  List<Object[]>getListAndAuthorByAuthorOrDtitle(String search);
 
 
 }
