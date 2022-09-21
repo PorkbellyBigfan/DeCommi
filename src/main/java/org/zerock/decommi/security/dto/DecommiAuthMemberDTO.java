@@ -21,11 +21,14 @@ public class DecommiAuthMemberDTO extends User implements OAuth2User {
   private boolean auth;
   private Map<String, Object> attr; // Google 에서 받은 정보 담는 곳
 
-  public DecommiAuthMemberDTO(String username, String pw, boolean fromSocial, Collection<? extends GrantedAuthority> authorities, Map<String, Object> attr) {
+  // 만약의 구글로그인 기능 용도
+  public DecommiAuthMemberDTO(String username, String pw, boolean fromSocial,
+      Collection<? extends GrantedAuthority> authorities, Map<String, Object> attr) {
     this(username, pw, fromSocial, authorities);
     this.attr = attr;
   }
 
+  // mid 안들어가는 경우 (보류)
   public DecommiAuthMemberDTO(
       String username, String password, boolean auth,
       Collection<? extends GrantedAuthority> authorities) {
@@ -35,6 +38,7 @@ public class DecommiAuthMemberDTO extends User implements OAuth2User {
     this.auth = auth;
   }
 
+  // 실제로 사용하는 Auth DTO
   public DecommiAuthMemberDTO(
       String username, String password, Long mid, boolean auth,
       Collection<? extends GrantedAuthority> authorities) {
@@ -45,6 +49,7 @@ public class DecommiAuthMemberDTO extends User implements OAuth2User {
     this.auth = auth;
   }
 
+  // 구글 계정 용도
   @Override
   public Map<String, Object> getAttributes() {
     return attr;

@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @RequiredArgsConstructor
 // @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-public class SecurityConfig{
+public class SecurityConfig {
 
   // 기본적으로 제공되는 PasswordEncoder가 아닌
   // createDelegatingPasswordEncoder 를 사용했다 추후에 유용하게 쓰인다고 한다.
@@ -33,31 +33,44 @@ public class SecurityConfig{
   PasswordEncoder passwordEncoder() {
     return PasswordEncoderFactories.createDelegatingPasswordEncoder();
   }
-  
+
+  // csrf 복제방지 apiCheckFilter : 올바른 로그인확인
   @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
-      http.csrf().disable();
-      http.addFilterBefore(apiCheckFilter(), UsernamePasswordAuthenticationFilter.class);
-      http.addFilterAfter(apiLoginFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class);
-      return http.build();
-  }
-  @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-      return authenticationConfiguration.getAuthenticationManager();
+  public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager)
+      throws Exception {
+    http.csrf().disable();
+    http.addFilterBefore(apiCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+    http.addFilterAfter(apiLoginFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class);
+    return http.build();
   }
 
   @Bean
-  public DecommiAccessDeniedHandler accessDeniedHandler() {return new DecommiAccessDeniedHandler();}
-  @Bean
-  public DecommiLoginSuccessHandler successHandler() {return new DecommiLoginSuccessHandler(passwordEncoder());}
-  @Bean
-  public DecommiLogoutSuccessHandler logoutSuccessHandler() {return new DecommiLogoutSuccessHandler();}
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+      throws Exception {
+    return authenticationConfiguration.getAuthenticationManager();
+  }
 
-
-
-  
   @Bean
-  public ApiCheckFilter apiCheckFilter() {return new ApiCheckFilter("/api/**/*", jwtUtil());}
+  public DecommiAccessDeniedHandler accessDeniedHandler() {
+    return new DecommiAccessDeniedHandler();
+  }
+
+  @Bean
+  public DecommiLoginSuccessHandler successHandler() {
+    return new DecommiLoginSuccessHandler(passwordEncoder());
+  }
+
+  @Bean
+  public DecommiLogoutSuccessHandler logoutSuccessHandler() {
+    return new DecommiLogoutSuccessHandler();
+  }
+
+  @Bean
+  public ApiCheckFilter apiCheckFilter() {
+    return new ApiCheckFilter("/api/**/*", jwtUtil());
+  }
+
+  // apiCheckFilter: api주소로 시작되는 모든곳에 해당(가입부분때문에 수정고려)
 
   @Bean
   public ApiLoginFilter apiLoginFilter(AuthenticationManager authenticationManager) throws Exception {
@@ -68,10 +81,11 @@ public class SecurityConfig{
     return apiLoginFilter;
   }
 
+  // apiLoginFilter 을 사용하기위해서 @bean에 등록해야 함
+
   @Bean
   public JWTUtil jwtUtil() {
     return new JWTUtil();
   }
-
 
 }
