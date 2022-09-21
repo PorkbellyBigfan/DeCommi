@@ -1,5 +1,6 @@
 package org.zerock.decommi.security.util;
 
+import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
@@ -14,29 +15,36 @@ public class JWTUtil {
     private String secretKey = "decommi123456789";
     private long expire = 60 * 24 * 30;
 
-    public String generateToken(String content) throws Exception {
-        return Jwts.builder()
+    public String generateToken(Long mid, String email) throws Exception {
+        String result = Jwts.builder()
                 .setIssuedAt(new Date())
                 .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(expire).toInstant()))
-                .claim("sub", content)
+                .claim("jti", mid)
+                .claim("sub", email)
                 .signWith(SignatureAlgorithm.HS256, secretKey.getBytes("UTF-8"))
                 .compact();
+        log.info(result);
+        return result;
     }
 
-    public String validateAndExtract(String tokenStr) throws Exception {
-        String contentValue = null;
+    @SuppressWarnings("rawtypes") //Generic을 사용하는 클래스 매개변수가 불특정일 때의 경고를 무시
+    public Boolean validateAndExtract(String tokenStr, String mid) throws Exception {
+        Boolean checker = null;
         try {
             DefaultJws defaultjJws = (DefaultJws) Jwts.parser()
-                    .setSigningKey(secretKey.getBytes("UTF-8")).parseClaimsJws(tokenStr);
-            // log.info("defaultJws: " + defaultjJws);
+                    .setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8)).parseClaimsJws(tokenStr);
+
             DefaultClaims claims = (DefaultClaims) defaultjJws.getBody();
-            // log.info("claims: " + claims);
-            contentValue = claims.getSubject();
+            String mid_check = claims.getId();
+            if(Integer.parseInt(mid_check)== Integer.parseInt(mid)){
+                checker = true;
+            } else{
+                checker = false;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
-            contentValue = null;
         }
-        return contentValue;
+        return checker;
     }
 }

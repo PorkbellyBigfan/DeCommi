@@ -13,27 +13,36 @@ import lombok.*;
 @Setter
 @ToString
 public class DecommiAuthMemberDTO extends User implements OAuth2User {
+  private Long mid;
+  private String id;
   private String email;
   private String pw;
-  private String mobile;
   private boolean fromSocial;
   private boolean auth;
   private Map<String, Object> attr; // Google 에서 받은 정보 담는 곳
 
-  public DecommiAuthMemberDTO(String username, String pw,
-      boolean fromSocial, Collection<? extends GrantedAuthority> authorities,
-      Map<String, Object> attr) {
+  public DecommiAuthMemberDTO(String username, String pw, boolean fromSocial, Collection<? extends GrantedAuthority> authorities, Map<String, Object> attr) {
     this(username, pw, fromSocial, authorities);
     this.attr = attr;
   }
 
   public DecommiAuthMemberDTO(
-      String username, String password, boolean fromSocial,
+      String username, String password, boolean auth,
       Collection<? extends GrantedAuthority> authorities) {
     super(username, password, authorities);
     email = username; // ★ security와 사용자가 생성한 DB의 계정을 매칭
     this.pw = password;
-    this.fromSocial = fromSocial;
+    this.auth = auth;
+  }
+
+  public DecommiAuthMemberDTO(
+      String username, String password, Long mid, boolean auth,
+      Collection<? extends GrantedAuthority> authorities) {
+    super(username, password, authorities);
+    this.mid = mid;
+    email = username; // ★ security와 사용자가 생성한 DB의 계정을 매칭
+    this.pw = password;
+    this.auth = auth;
   }
 
   @Override

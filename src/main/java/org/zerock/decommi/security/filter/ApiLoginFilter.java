@@ -54,7 +54,8 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
     String email = jsonObject.get("email").toString();
     String pw = jsonObject.get("pw").toString();
     log.info("email: " + email + "/pw: " + pw);
-    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, pw);
+    UsernamePasswordAuthenticationToken authToken = 
+      new UsernamePasswordAuthenticationToken(email, pw);
 
     return getAuthenticationManager().authenticate(authToken);
   }
@@ -65,28 +66,27 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
     log.info("successfulAuthentication... authResult:" + authResult.getPrincipal());
     // Jason Web Token publishing
     // 인증이 되었으니까 세션을 통해서 email을 획득
+    Long mid = ((DecommiAuthMemberDTO) authResult.getPrincipal()).getMid();
     String email = ((DecommiAuthMemberDTO) authResult.getPrincipal()).getEmail();
     String token = null;
     ObjectMapper mapper = new ObjectMapper();
     String curl = "";
     try {
-      token = "Bearer " + jwtUtil.generateToken(email);
+      token = "Bearer " + jwtUtil.generateToken(mid, email);
       ApiSessionDTO sessionDTO = DecommiAuthToSessionDTO((DecommiAuthMemberDTO) authResult.getPrincipal(), token, curl);
       String res = mapper.writeValueAsString(sessionDTO);
       response.setContentType("application/json;charset=utf-8");
       // response.setCharacterEncoding("UTF-8");
       response.getOutputStream().write(res.getBytes());
-      log.info("sessionDTO: " + sessionDTO.getEmail());
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    } catch (Exception e) {e.printStackTrace();}
   }
 
   private ApiSessionDTO DecommiAuthToSessionDTO(DecommiAuthMemberDTO dto,
       String token, String curl) {
-    log.info("dto.getEmail:" + dto.getEmail());
     ApiSessionDTO sessionDTO = ApiSessionDTO.builder()
+        .mid(dto.getMid())
         .email(dto.getEmail())
+        .id(dto.getId())
         .curl(curl)
         .fromSocial(dto.isFromSocial())
         .attr(dto.getAttr())
