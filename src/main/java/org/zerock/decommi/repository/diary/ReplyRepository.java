@@ -30,23 +30,14 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
     Optional<List<Long>> getLastestReplyGroupWhereMatchWithDino(Long dino);
 
     // 페이징 처리된 댓글리스트
-<<<<<<< HEAD
-    @Query(value = "select r from Reply r where diary_dino=:dino order by
-    reply_group asc, reply_order asc,
-    reply_depth desc", countQuery = "select
-    count(r) from reply r where diary_dino=:dino order by reply_group asc,
-    reply_order asc, reply_depth desc ")
-
-=======
     @Query(value = "select r from Reply r where diary_dino=:dino order by reply_group asc, reply_order asc, reply_depth desc ", countQuery = "select count(r) from Reply r where diary_dino=:dino order by reply_group asc, reply_order asc, reply_depth desc ")
->>>>>>> 10b7bf1ea95b3d9e853b7ec76c1376140b5b0ba4
     Page<Reply> getPageList(Pageable pageable, Long dino);
 
-    //댓글 리스트
+    // 댓글 리스트
     @Query("select r from Reply r where diary_dino=:dino order by reply_group asc, reply_order asc, reply_depth desc")
     Optional<List<Reply>> getReplyListByDino2(Long dino);
 
-    //댓글 페이지 리스트
+    // 댓글 페이지 리스트
     @Query(value = "select r from Reply r where diary_dino=:dino order by reply_group asc, reply_order asc, reply_depth desc ", countQuery = "select count(r) from Reply r where diary_dino=:dino order by reply_group asc, reply_order asc, reply_depth desc ")
     Page<Reply> getReplyPageList(Pageable pageable, Long dino);
 }
