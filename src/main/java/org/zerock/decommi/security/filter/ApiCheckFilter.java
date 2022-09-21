@@ -16,6 +16,7 @@ import org.zerock.decommi.security.util.JWTUtil;
 import lombok.extern.log4j.Log4j2;
 import net.minidev.json.JSONObject;
 
+//올바른 접근인지 아닌지 확인
 @Log4j2
 public class ApiCheckFilter extends OncePerRequestFilter {
   private AntPathMatcher antPathMatcher;
