@@ -31,4 +31,7 @@ public interface MemberRepository extends JpaRepository<Member, String> {
   @EntityGraph(attributePaths = { "roleSet" }, type = EntityGraphType.LOAD)
   @Query(value = "select m from Member m ", countQuery = "select count(m) from Member m")
   Page<Member> getPageList(Pageable pageable);
+
+  @Query("select id from Member m where email=:email and (q1=:q1 or q2=:q2 or q3=:q3)")
+  String findIdByEmailAndQ(String email, String q1, String q2, String q3);
 }

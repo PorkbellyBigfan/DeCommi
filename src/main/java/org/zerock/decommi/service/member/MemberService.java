@@ -34,6 +34,9 @@ public interface MemberService {
                 .q1(member.getQ1())
                 .q1(member.getQ2())
                 .q1(member.getQ3())
+                //선호태그 비선호태그
+                .likeTagList(member.getLikeTagList())
+                .dislikeTagList(member.getDislikeTagList())
                 .roleSet(member.getRoleSet().stream().map(
                         role -> new String("ROLE_" + role.name()))
                         .collect(Collectors.toSet()))
@@ -54,6 +57,8 @@ public interface MemberService {
                 .q1(dto.getQ1())
                 .q1(dto.getQ2())
                 .q1(dto.getQ3())
+                .likeTagList(dto.getLikeTagList())
+                .dislikeTagList(dto.getDislikeTagList())
                 .roleSet(dto.getRoleSet().stream().map(
                         t -> {
                             if (t.equals("ROLE_GUEST"))

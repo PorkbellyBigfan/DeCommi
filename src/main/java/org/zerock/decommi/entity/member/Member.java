@@ -31,7 +31,7 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "roleSet" })
+@ToString(exclude = { "roleSet", "likeTagList", "dislikeTagList" })
 @Table(name = "d_member")
 public class Member extends BaseEntity {
     @Id
@@ -69,6 +69,15 @@ public class Member extends BaseEntity {
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Reply> replyList = new ArrayList<>();
+
+    @Builder.Default
+    
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Tag> likeTagList = new ArrayList<>();
+    @Builder.Default
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Tag> dislikeTagList = new ArrayList<>();
+
 
     public void addMemberRole(MemberRole role) {roleSet.add(role);}
     public void changePw(String pw) {this.pw = pw;}

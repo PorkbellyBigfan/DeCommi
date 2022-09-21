@@ -10,18 +10,24 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.repository.diary.DiaryRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
+import org.zerock.decommi.service.diary.DiaryService;
 
 import lombok.extern.log4j.Log4j2;
 
 @SpringBootTest
 @Log4j2
 public class DiaryRepositoryTests {
+
+  @Autowired
+  DiaryService diaryService;
+
   @Autowired
   DiaryRepository repository; // Diary Repository
 
@@ -83,4 +89,11 @@ public class DiaryRepositoryTests {
   // System.out.println(Arrays.toString(arr));
   // });
   // }
+
+  @Test
+  public void testRegisterDiary(){
+    DiaryDTO dto = DiaryDTO.builder().build();
+    TagDTO tagDTO = TagDTO
+    diaryService.registerDiary(dto, tagList)
+  }
 }

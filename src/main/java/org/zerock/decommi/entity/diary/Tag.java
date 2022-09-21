@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.zerock.decommi.entity.common.BaseEntity;
+import org.zerock.decommi.entity.member.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,6 +43,10 @@ public class Tag extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diary_dino", referencedColumnName = "dino")
     private Diary dino;
+    
+    //선호태그 비선호태그를 위해서 연결
+    @ManyToOne
+    private Member member;
 
     public void updateDiary(Diary list) {
         this.dino = list;

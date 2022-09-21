@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 import org.zerock.decommi.entity.diary.Reply;
+import org.zerock.decommi.entity.diary.Tag;
 
 import java.util.HashSet;
 import java.util.List;
@@ -31,6 +32,8 @@ public class MemberDTO {
     private boolean auth;
     private boolean fromSocial;
     private List<Reply> replyList;
+    private List<Tag> likeTagList;
+    private List<Tag> dislikeTagList;
 
     // 여기에 선호태그 비선호태그 넣으면 될것 같음
 
