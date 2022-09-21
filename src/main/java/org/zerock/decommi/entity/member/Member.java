@@ -18,6 +18,7 @@ import javax.persistence.Table;
 
 import org.zerock.decommi.entity.common.BaseEntity;
 import org.zerock.decommi.entity.diary.Reply;
+import org.zerock.decommi.entity.diary.Tag;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -64,20 +65,13 @@ public class Member extends BaseEntity {
     @Builder.Default
     private Set<MemberRole> roleSet = new HashSet<>();
 
+    //댓글리스트
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Reply> replyList = new ArrayList<>();
 
-    public void addMemberRole(MemberRole role) {
-        roleSet.add(role);
-    }
-
-    public void changePw(String pw) {
-        this.pw = pw;
-    }
-
-    public void changeMobile(String mobile) {
-        this.pw = mobile;
-    }
+    public void addMemberRole(MemberRole role) {roleSet.add(role);}
+    public void changePw(String pw) {this.pw = pw;}
+    public void changeMobile(String mobile) {this.pw = mobile;}
 
 }
