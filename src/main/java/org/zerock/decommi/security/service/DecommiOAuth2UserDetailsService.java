@@ -59,7 +59,7 @@ public class DecommiOAuth2UserDetailsService extends DefaultOAuth2UserService {
   }
 
   private Member saveSocialMember(String email) {
-    Optional<Member> result = repository.findByEmail(email, true);
+    Optional<Member> result = repository.findByEmailWithSocid(email, true);
     if (result.isPresent())
       return result.get();
 
