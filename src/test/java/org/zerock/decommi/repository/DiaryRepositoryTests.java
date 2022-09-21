@@ -1,7 +1,10 @@
 package org.zerock.decommi.repository;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.IntStream;
+
+import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +13,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.annotation.Commit;
 import org.zerock.decommi.entity.diary.Diary;
+// import org.zerock.decommi.entity.diary.DiaryTag;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.member.Member;
+import org.zerock.decommi.entity.member.MemberRole;
 import org.zerock.decommi.repository.diary.DiaryRepository;
+// import org.zerock.decommi.repository.diary.DiaryTagRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 
@@ -28,59 +36,70 @@ public class DiaryRepositoryTests {
   @Autowired
   TagRepository tagRepository;
 
+  // @Autowired
+  // DiaryTagRepository dtRepository; // Diary_Tag Repository
+
   @Autowired
   MemberRepository memberRepository; // Member Repository
 
+  @Autowired
+  private PasswordEncoder encoder;
+
+  
   @Test
-  public void test() {
-    log.info(repository.findByDino(1L));
+  public void insertDiaryPosts() {
+    IntStream.rangeClosed(1, 20).forEach(i -> {
+      Long mno = (long) (Math.random() * 20) + 1;
+      // 멤버 1~100 랜덤
+      //  Member writer = Member.builder().email("user" + i + "decommi.com").build();
+      Member writer = Member.builder().email("user" + i +
+          "@decommi.com").pw(encoder.encode("1234"))
+          .id("id" + i).q1("q1").q2("q2").q3("q3").fromSocial(false).auth(true).build();
+          memberRepository.save(writer);
+      writer.addMemberRole(MemberRole.GUEST);
+      if (i > 5)
+        writer.addMemberRole(MemberRole.MEMBER);
+      if (i > 17)
+        writer.addMemberRole(MemberRole.ADMIN);
+      Diary diary = Diary.builder()
+          .title("title" + i)
+          .content("content" + i)
+          .openYN(false)
+          .replyYN(true)
+          .writer("user"+i+"@decommi.com")
+          .build();
+      repository.save(diary);
+    });
   }
+      @Test
+      public void insertTag(){
+        IntStream.rangeClosed(1, 20).forEach(i->{
+        Long tagname = (long) (Math.random() * 5) + 1;
+        Long tagG = (long) (Math.random() * 5) + 1;
 
-  // @Test
-  // public void insertDiaryPosts() {
-  // IntStream.rangeClosed(1, 10).forEach(i -> {
-  // // 멤버 1~100 랜덤
-  // Long mno = (long) (Math.random() * 100) + 1;
-  // Long tagno = (long) (Math.random() * 5) + 1;
-  // Member writer = Member.builder().email("user" + mno +
-  // "@decommi.com").build();
-  // Diary diary = Diary.builder()
-  // .title("title" + i)
-  // .content("content" + i)
-  // .openYN(false)
-  // .replyYN(false)
-  // .writer(writer)
-  // .build();
-  // repository.save(diary);
+      Tag tag = Tag.builder()
+          .tagName("tagName" + i)
+          .isSubTag(false)
+          .tagGroup(tagG)
+          .dino(Diary.builder().dino((long) i).build())
+          .build();
+      tagRepository.save(tag);
+    });
+    }
 
-  // Tag tag = Tag.builder()
-  // .tagId(tagno)
-  // .tagName("tagName" + tagno)
-  // // .tagSearchedCnt(0)
-  // // .tagUsedCnt(0)
-  // .isSubTag(false)
-  // .tagGroup(tagno)
-  // .build();
-  // tagRepository.save(tag);
+    
+    @Test
+    public void test() {
+      log.info(repository.findByDino(1L));
+    }
 
-  // int count = (int) (Math.random() * 3) + 1;
-  // for (int j = 0; j < count; j++) {
-  // DiaryTag dt = DiaryTag.builder()
-  // .dino(diary)
-  // .tagId(tag)
-  // .build();
-  // dtRepository.save(dt);
-  // }
-  // });
-  // }
+    
+    @Test
+    public void findemail(){
+        Optional<Member> result = memberRepository.findByEmail("user1@decommi.com");
+        log.info(result);
+    }
 
-  // @Test
-  // public void testGetListPage() {
-  // Pageable pageable = PageRequest.of(0, 10, Sort.by("dino").descending());
-  // Page<Object[]> result = repository.getListPage(pageable);
-  // result.get().forEach(row -> {
-  // Object[] arr = (Object[]) row;
-  // System.out.println(Arrays.toString(arr));
-  // });
-  // }
-}
+
+    
+  }
