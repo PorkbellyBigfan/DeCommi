@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.log4j.Log4j2;
 
+//체크 이후 로그인 필터 생성
 @Log4j2
 public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 
@@ -59,24 +60,27 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
     return getAuthenticationManager().authenticate(authToken);
   }
 
+  // 토큰 생성
   @Override
   protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
       Authentication authResult) throws IOException, ServletException {
     log.info("successfulAuthentication... authResult:" + authResult.getPrincipal());
     // Jason Web Token publishing
     // 인증이 되었으니까 세션을 통해서 email을 획득
+    Long mid = ((DecommiAuthMemberDTO) authResult.getPrincipal()).getMid();
     String email = ((DecommiAuthMemberDTO) authResult.getPrincipal()).getEmail();
-    String token = null;
-    ObjectMapper mapper = new ObjectMapper();
-    String curl = "";
+    String token = null; // 초기화
+    ObjectMapper mapper = new ObjectMapper(); // 맵퍼에 넣음
+    String curl = ""; // 클라이언트 주소
     try {
-      token = "Bearer " + jwtUtil.generateToken(email);
+      token = "Bearer " + jwtUtil.generateToken(mid, email);
       ApiSessionDTO sessionDTO = DecommiAuthToSessionDTO((DecommiAuthMemberDTO) authResult.getPrincipal(), token, curl);
+      // sessionDTO에 토큰과 클라이언트 주소를 넣음
+
       String res = mapper.writeValueAsString(sessionDTO);
       response.setContentType("application/json;charset=utf-8");
       // response.setCharacterEncoding("UTF-8");
       response.getOutputStream().write(res.getBytes());
-      log.info("sessionDTO: " + sessionDTO.getEmail());
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -84,9 +88,10 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 
   private ApiSessionDTO DecommiAuthToSessionDTO(DecommiAuthMemberDTO dto,
       String token, String curl) {
-    log.info("dto.getEmail:" + dto.getEmail());
     ApiSessionDTO sessionDTO = ApiSessionDTO.builder()
+        .mid(dto.getMid())
         .email(dto.getEmail())
+        .id(dto.getId())
         .curl(curl)
         .fromSocial(dto.isFromSocial())
         .attr(dto.getAttr())

@@ -12,7 +12,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ApiSessionDTO {
+  private Long mid;
   private String email;
+  private String id;
   private String token;
   private String curl;
   private boolean fromSocial;
