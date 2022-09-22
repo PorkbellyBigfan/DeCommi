@@ -23,29 +23,31 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
   Diary findByDino(Long dino);
 
   // 태그가 포함된 다이어리 리스트
-  @EntityGraph(attributePaths = { "tags", "replies" }, type = EntityGraphType.LOAD)
-  @Query(value = "select dlwt from Diary dlwt") // dlwt = DiaryList With Tag
-  Page<Diary> getDiaryListWithTag(Pageable pageable);
+  @EntityGraph(attributePaths = { "tags", "replyList" }, type = EntityGraphType.LOAD)
+  @Query(value = "select d from Diary d") 
+  Page<Diary> getDiaryListWithTagAndReply(Pageable pageable);
 
-  // 글작성자와 게시글 번호 가져오기
+  //관리자페이지에서 사용할것같음
+  //글작성자와 게시글 번호 가져오기
   @Query("select d from Diary d where writer=:id and dino=:dino")
   Optional<Diary> getDiaryByDinoAndId(Long dino, String id);
 
   //댓글카운트, 하트카운트, 북마크카운트, 신고카운트 추가해야됨
-  @Query("select m.id, d.dino, d.title, d.content, d.openYN, d.replyYN d.regDate, d.modDate "
-        + "from Diary d left join Member m "
-        + "on m.id=d.writer "
+  @Query("select m.id, d.dino, d.title, d.content, count(distinct r), d.openYN, d.replyYN, d.regDate, d.modDate "
+        + "from Diary d "
+        + "left join Member m on m.id=d.writer "
+        + "left join Reply r on r.dino = d"
         + "ORDER BY d.dino DESC ")
   List<Object[]> getListAndAuthor();
 
   //댓글카운트, 하트카운트, 북마크카운트, 신고카운트 추가해야됨
-  // @Query("select m.name d.dino, d.title, d.content, d.openYN, d.replyYN
-  // d.regDate "
-  // + "from Diary d left join Member m "
-  // + "on m.mid=d.writer "
-  // + "where m.name LIKE CONCAT('%',:search,'%') Or "
-  // + "d.title LIKE CONCAT('%',:search,'%') Or "
-  // + "ORDER BY d.dino DESC ")
-  // List<Object[]> getListAndAuthorByAuthorOrDtitle(String search);
+  @Query("select m.id, d.dino, d.title, d.content, count(distinct r), d.openYN, d.replyYN, d.regDate, d.modDate "
+  + "from Diary d "
+  + "left join Member m on m.id = d.writer "
+  + "left join Reply r on r.dino = d "
+  + "where d.title LIKE CONCAT('%',:search,'%') Or "
+  + "d.content LIKE CONCAT('%',:search,'%') Or "
+  + "ORDER BY d.dino DESC ")
+  List<Object[]> getListByTitleOrContent(String search);
 
 }
