@@ -54,14 +54,7 @@ public class Diary extends BaseEntity {
     @OneToMany(mappedBy = "dino", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Reply> replyList = new ArrayList<>();
 
-    public void changeTitle(String title) {
-        this.title = title;
-    }
-
-    public void changeContent(String content) {
-        this.content = content;
-    }
-    // public void changeOpenOption(boolean OpenYN){}
-    // public void changeCommentOption(boolean commentYN){};
+    // public void changeTitle(String title) {this.title = title;}
+    // public void changeContent(String content) { this.content = content; }
 
 }

@@ -64,7 +64,7 @@ public class DiaryServiceImpl implements DiaryService {
         return null;
     } else {
         DiaryDTO dto = entityToDTO(isit.get());
-        List<Tag> tagList = tagRepository.getList(dto.getDino());
+        List<TagDTO> tagList = tagRepository.getList(dto.getDino());
         dto.setTags(tagList);
         return dto;
     }
@@ -192,19 +192,20 @@ public class DiaryServiceImpl implements DiaryService {
     // return null;
     // }
 
-    @Override
-    public List<Object[]> getDiaryList() {
-        return repository.getListAndAuthor();
-    }
+    // @Override
+    // public List<Object[]> getDiaryList() {
+    //     return repository.getListAndAuthor();
+    // }
 
-    @Override
-    public List<Object[]> getSearchDiaryList(String search) {
-        String decode = "";
-        try{
-            decode = URLDecoder.decode(search, "UTF-8");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return repository.getListByTitleOrContent(decode);
-    }
+    // @Transactional
+    // @Override
+    // public List<Object[]> getSearchDiaryList(String search) {
+    //     String decode = "";
+    //     try{
+    //         decode = URLDecoder.decode(search, "UTF-8");
+    //     }catch (Exception e){
+    //         e.printStackTrace();
+    //     }
+    //     return repository.getListByTitleOrContent(decode);
+    // }
 }

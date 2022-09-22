@@ -25,7 +25,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequestMapping("/member")
 @RequiredArgsConstructor
-public class ApiMemberController {
+public class MemberApiController {
   private final MemberService service;
 
   // 멤버 하나 가져오기

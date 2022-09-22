@@ -21,8 +21,8 @@ public interface DiaryService {
 
     String deleteDiary(DiaryDTO dto);
 
-    List<Object[]> getDiaryList();
-    List<Object[]> getSearchDiaryList(String search);
+    // List<Object[]> getDiaryList();
+    // List<Object[]> getSearchDiaryList(String search);
 
     // // 댓글
     // Long registerReply(ReplyDTO dto);

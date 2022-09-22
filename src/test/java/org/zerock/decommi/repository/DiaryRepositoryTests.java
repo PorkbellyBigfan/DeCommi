@@ -1,5 +1,6 @@
 package org.zerock.decommi.repository;
 
+import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -98,6 +99,17 @@ public class DiaryRepositoryTests {
         log.info(result);
     }
 
-
+    @Test
+    public void testSearchDiary(){
+      String decode="";
+      try{
+        decode = URLDecoder.decode("aa", "UTF-8");
+      }catch(Exception e){
+        e.printStackTrace();
+      }
+      log.info(decode);
+      log.info(repository.getListByTitleOrContent("a"));
+      // log.info(repository.getListAndAuthor());
+    }
     
   }
