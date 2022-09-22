@@ -41,7 +41,7 @@ public class DecommiLogoutSuccessHandler implements LogoutSuccessHandler {
     if (roleNames.contains("ROLE_MEMBER"))
       forward = "/";
     if (roleNames.contains("ROLE_ADMIN"))
-      forward = "/member/login";
+      forward = "/";
     if (auth != null && auth.getDetails() != null) {
       try {
         request.getSession().invalidate();
