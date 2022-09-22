@@ -40,7 +40,7 @@ public class SecurityConfig {
       throws Exception {
     http.csrf().disable();
     http.addFilterBefore(apiCheckFilter(), UsernamePasswordAuthenticationFilter.class);
-    http.addFilterAfter(apiLoginFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class);
+    http.addFilterBefore(apiLoginFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
 

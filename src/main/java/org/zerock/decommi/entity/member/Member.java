@@ -30,7 +30,7 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "roleSet" })
+@ToString(exclude = { "roleSet", "replyList"})
 @Table(name = "d_member")
 public class Member extends BaseEntity {
     @Id
