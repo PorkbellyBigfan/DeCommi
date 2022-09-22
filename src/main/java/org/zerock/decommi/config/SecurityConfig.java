@@ -74,7 +74,7 @@ public class SecurityConfig {
 
   @Bean
   public ApiLoginFilter apiLoginFilter(AuthenticationManager authenticationManager) throws Exception {
-    ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/members/login", jwtUtil());
+    ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/member/login", jwtUtil());
     apiLoginFilter.setAuthenticationManager(authenticationManager);
     apiLoginFilter.setAuthenticationSuccessHandler(successHandler());
     apiLoginFilter.setAuthenticationFailureHandler(new ApiLoginFailHandler());

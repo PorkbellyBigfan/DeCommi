@@ -53,7 +53,7 @@ public class ApiMemberController {
   }
 
   // 회원가입
-  @RequestMapping(value = "/signUp", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(value = "/signup", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<String> signUp(@RequestBody MemberDTO dto) {
     log.info("member/signUp : " + dto);
     String email = service.signUp(dto);
