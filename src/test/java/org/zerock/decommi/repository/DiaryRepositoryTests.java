@@ -56,9 +56,7 @@ public class DiaryRepositoryTests {
           "@decommi.com").pw(encoder.encode("1234"))
           .id("id" + i).q1("q1").q2("q2").q3("q3").fromSocial(false).auth(true).build();
           memberRepository.save(writer);
-      writer.addMemberRole(MemberRole.GUEST);
-      if (i > 5)
-        writer.addMemberRole(MemberRole.MEMBER);
+      writer.addMemberRole(MemberRole.MEMBER);
       if (i > 17)
         writer.addMemberRole(MemberRole.ADMIN);
       Diary diary = Diary.builder()

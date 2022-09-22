@@ -56,14 +56,12 @@ public interface MemberService {
                 .q1(dto.getQ3())
                 .roleSet(dto.getRoleSet().stream().map(
                         t -> {
-                            if (t.equals("ROLE_GUEST"))
-                                return MemberRole.GUEST;
-                            else if (t.equals("ROLE_MEMBER"))
+                            if (t.equals("ROLE_MEMBER"))
                                 return MemberRole.MEMBER;
                             else if (t.equals("ROLE_ADMIN"))
                                 return MemberRole.ADMIN;
                             else
-                                return MemberRole.GUEST;
+                                return MemberRole.MEMBER;
                         }).collect(Collectors.toSet()))
                 .build();
         return member;
