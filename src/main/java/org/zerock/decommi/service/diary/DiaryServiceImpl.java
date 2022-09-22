@@ -109,30 +109,30 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     // 댓글 등록 //이해가 잘 가지 않음
-    @Override
-    public Long registerReply(ReplyDTO dto) {
-    Optional<Member> result = memberRepository.findById(dto.getId());
-    Optional<Reply> checkMember = replyRepository.getReplyByDinoAndId(
-    Diary.builder().dino(dto.getDino()).build(),
-    Member.builder().id(dto.getId()).build());
-    if (!checkMember.isPresent()) {
-    // Optional<List<Long>> lastestrg =
-    // replyRepository.getLastestReplyGroupWhereMatchWithDino(dto.getDino());
-    Long setrg = 1L; // set ReplyGroup = rg
-    // if (lastestrg.get().size() != 0) {
-    // setrg = lastestrg.get().get(0) + 1;
+    // @Override
+    // public Long registerReply(ReplyDTO dto) {
+    // Optional<Member> result = memberRepository.findById(dto.getId());
+    // Optional<Reply> checkMember = replyRepository.getReplyByDinoAndId(
+    // Diary.builder().dino(dto.getDino()).build(),
+    // Member.builder().id(dto.getId()).build());
+    // if (!checkMember.isPresent()) {
+    // // Optional<List<Long>> lastestrg =
+    // // replyRepository.getLastestReplyGroupWhereMatchWithDino(dto.getDino());
+    // Long setrg = 1L; // set ReplyGroup = rg
+    // // if (lastestrg.get().size() != 0) {
+    // // setrg = lastestrg.get().get(0) + 1;
+    // // }
+    // dto.setReplyGroup(setrg);
+    // dto.setReplyDepth(0L);
+    // dto.setReplyOrder(0L);
+    // dto.setId(result.get().getId());
+    // Reply reply = replyDTOtoEntity(dto);
+    // replyRepository.save(reply);
+    // return -1L;
+    // } else {
+    // return checkMember.get().getRno();
     // }
-    dto.setReplyGroup(setrg);
-    dto.setReplyDepth(0L);
-    dto.setReplyOrder(0L);
-    dto.setId(result.get().getId());
-    Reply reply = replyDTOtoEntity(dto);
-    replyRepository.save(reply);
-    return -1L;
-    } else {
-    return checkMember.get().getRno();
-    }
-    }
+    // }
 
     // 댓글 수정
     // @Override
@@ -199,12 +199,12 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public List<Object[]> getSearchDiaryList(String search) {
-    String decode = "";
-    try{
-    decode = URLDecoder.decode(search, "UTF-8");
-    }catch (Exception e){
-    e.printStackTrace();
-    }
-    return repository.getListAndAuthorByAuthorOrDtitle(decode);
+        String decode = "";
+        try{
+            decode = URLDecoder.decode(search, "UTF-8");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return repository.getListByTitleOrContent(decode);
     }
 }
