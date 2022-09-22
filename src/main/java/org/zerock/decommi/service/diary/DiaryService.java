@@ -16,25 +16,20 @@ public interface DiaryService {
     // 다이어리
     String registerDiary(DiaryDTO dto, List<TagDTO> tagList);
 
-    // DiaryDTO checkBeforeDiaryModify(Long dino, String id);
+    DiaryDTO checkBeforeDiaryModify(Long dino, String id);
     String modifyDiary(DiaryDTO dto, List<TagDTO> tagList);
 
     String deleteDiary(DiaryDTO dto);
 
-    // List<Object[]> getDiaryList();
-
-    // List<Object[]> getSearchDiaryList(String search);
+    List<Object[]> getDiaryList();
+    List<Object[]> getSearchDiaryList(String search);
 
     // // 댓글
-    // Long registerReply(ReplyDTO dto);
-
-    // String modifyReply(ReplyDTO dto, String id);
-
-    // // String deleteReply(ReplyDTO dto, String id);
-    // HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable);
-
-    // HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable
-    // pageable, String id);
+    Long registerReply(ReplyDTO dto);
+    String modifyReply(ReplyDTO dto, String id);
+    String deleteReply(ReplyDTO dto, String id);
+    HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable);
+    HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable pageable, String id);
 
     // 북마크
     // 하트
@@ -90,35 +85,35 @@ public interface DiaryService {
         return dto;
     }
 
-    // // 댓글
-    // default Reply replyDTOtoEntity(ReplyDTO dto) {
-    // Diary diary = Diary.builder().dino(dto.getDino()).build();
-    // Member member = Member.builder().id(dto.getId()).build();
-    // Reply reply = Reply.builder()
-    // .rno(dto.getRno())
-    // .dino(diary)
-    // .member(member)
-    // .replyContent(dto.getReplyContent())
-    // .replyGroup(dto.getReplyGroup())
-    // .replyDepth(dto.getReplyDepth())
-    // .replyOrder(dto.getReplyOrder())
-    // .build();
-    // return reply;
-    // }
+    // 댓글
+    default Reply replyDTOtoEntity(ReplyDTO dto) {
+    Diary diary = Diary.builder().dino(dto.getDino()).build();
+    Member member = Member.builder().id(dto.getId()).build();
+    Reply reply = Reply.builder()
+    .rno(dto.getRno())
+    .dino(diary)
+    .member(member)
+    .replyContent(dto.getReplyContent())
+    .replyGroup(dto.getReplyGroup())
+    .replyDepth(dto.getReplyDepth())
+    .replyOrder(dto.getReplyOrder())
+    .build();
+    return reply;
+    }
 
-    // // 댓글
-    // default ReplyDTO replyEntityToDTO(Reply reply) {
-    // ReplyDTO dto = ReplyDTO.builder()
-    // .rno(reply.getRno())
-    // .dino(reply.getDino().getDino())
-    // .id(reply.getMember().getId())
-    // .replyContent(reply.getReplyContent())
-    // .replyGroup(reply.getReplyGroup())
-    // .replyDepth(reply.getReplyDepth())
-    // .replyOrder(reply.getReplyOrder())
-    // .regDate(reply.getRegDate())
-    // .build();
-    // return dto;
-    // }
+    // 댓글
+    default ReplyDTO replyEntityToDTO(Reply reply) {
+    ReplyDTO dto = ReplyDTO.builder()
+    .rno(reply.getRno())
+    .dino(reply.getDino().getDino())
+    .id(reply.getMember().getId())
+    .replyContent(reply.getReplyContent())
+    .replyGroup(reply.getReplyGroup())
+    .replyDepth(reply.getReplyDepth())
+    .replyOrder(reply.getReplyOrder())
+    .regDate(reply.getRegDate())
+    .build();
+    return dto;
+    }
 
 }

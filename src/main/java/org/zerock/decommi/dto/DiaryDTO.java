@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.zerock.decommi.entity.diary.Reply;
+import org.zerock.decommi.entity.diary.Tag;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +19,7 @@ public class DiaryDTO {
     private Long dino;
     private String title;
     private String content;
-    private List<TagDTO> tags;
+    private List<Tag> tags;
     private List<Reply> replyList;
     private boolean openYN;
     private boolean replyYN;

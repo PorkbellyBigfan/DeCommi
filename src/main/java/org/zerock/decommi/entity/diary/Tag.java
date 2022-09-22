@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.zerock.decommi.entity.common.BaseEntity;
+import org.zerock.decommi.entity.member.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +24,7 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "dino")
+@ToString(exclude = {"member", "dino"})
 @Table(name = "d_tag")
 public class Tag extends BaseEntity {
     @Id
@@ -42,6 +43,9 @@ public class Tag extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diary_dino", referencedColumnName = "dino")
     private Diary dino;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
 
     public void updateDiary(Diary list) {
         this.dino = list;

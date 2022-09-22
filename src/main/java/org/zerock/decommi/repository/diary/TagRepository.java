@@ -25,5 +25,7 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
   @Query("select t from Tag t where t.dino =:dino")
   List<Tag> findByDiary(Diary dino);
 
+  @Query("select t from Tag t where diary_dino=:dino ")
+  List<Tag> getList(Long dino);
   // Optional<Tag> findByDiaryAndTagName(Diary diary, String tagName);
 }

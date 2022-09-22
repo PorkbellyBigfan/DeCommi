@@ -12,13 +12,12 @@ import org.zerock.decommi.entity.member.MemberRole;
 public interface MemberService {
 
     MemberDTO getMemberDTO(String email); // MemberDTO 가져오기
-
     MemberDTO emailCheck(String email); // 이메일 체크
     // String findId(MemberDTO id); //아이디 찾기
-
     String signUp(MemberDTO dto); // 회원가입
-
     List<MemberDTO> getList(); // 멤버 리스트 조회
+
+    
 
     PageResultDTO<MemberDTO, Member> getPageList(PageRequestDTO dto);
     // void removeUuid(String uuid); //파일 고유아이디 삭제

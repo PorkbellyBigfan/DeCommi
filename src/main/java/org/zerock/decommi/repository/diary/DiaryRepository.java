@@ -31,13 +31,14 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
   @Query("select d from Diary d where writer=:id and dino=:dino")
   Optional<Diary> getDiaryByDinoAndId(Long dino, String id);
 
-  // @Query("select m.id d.dino, d.title, d.content, d.openYN, d.replyYN d.regDate
-  // "
-  // + "from Diary d left join Member m "
-  // + "on m.id=d.writer "
-  // + "ORDER BY d.dino DESC ")
-  // List<Object[]> getListAndAuthor();
+  //댓글카운트, 하트카운트, 북마크카운트, 신고카운트 추가해야됨
+  @Query("select m.id, d.dino, d.title, d.content, d.openYN, d.replyYN d.regDate, d.modDate "
+        + "from Diary d left join Member m "
+        + "on m.id=d.writer "
+        + "ORDER BY d.dino DESC ")
+  List<Object[]> getListAndAuthor();
 
+  //댓글카운트, 하트카운트, 북마크카운트, 신고카운트 추가해야됨
   // @Query("select m.name d.dino, d.title, d.content, d.openYN, d.replyYN
   // d.regDate "
   // + "from Diary d left join Member m "
