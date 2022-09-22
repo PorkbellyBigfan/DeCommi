@@ -15,7 +15,7 @@
 // import lombok.extern.log4j.Log4j2;
 
 // @RestController
-// @RequestMapping("/diary")
+// @RequestMapping("/api/diary")
 // @Log4j2
 // @RequiredArgsConstructor
 // public class DiaryController {

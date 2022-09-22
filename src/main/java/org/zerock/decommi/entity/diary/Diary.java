@@ -29,7 +29,7 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "tags", "replies" })
+@ToString(exclude = { "tags", "replyList" })
 @Table(name = "d_diary")
 public class Diary extends BaseEntity {
     @Id

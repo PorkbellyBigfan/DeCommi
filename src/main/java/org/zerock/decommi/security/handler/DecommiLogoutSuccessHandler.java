@@ -36,8 +36,6 @@ public class DecommiLogoutSuccessHandler implements LogoutSuccessHandler {
     });
     String forward = "";
     System.out.println(">>>" + roleNames);
-    if (roleNames.contains("ROLE_GUEST"))
-      forward = "/";
     if (roleNames.contains("ROLE_MEMBER"))
       forward = "/";
     if (roleNames.contains("ROLE_ADMIN"))

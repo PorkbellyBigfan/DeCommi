@@ -63,10 +63,10 @@ public class DecommiOAuth2UserDetailsService extends DefaultOAuth2UserService {
     if (result.isPresent())
       return result.get();
 
-    Member cm = Member.builder().email(email)
+    Member member = Member.builder().email(email)
         .pw(encoder.encode("1")).fromSocial(true).build();
-    cm.addMemberRole(MemberRole.GUEST);
-    repository.save(cm);
-    return cm;
+    member.addMemberRole(MemberRole.MEMBER);
+    repository.save(member);
+    return member;
   }
 }

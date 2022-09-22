@@ -18,6 +18,7 @@ import javax.persistence.Table;
 
 import org.zerock.decommi.entity.common.BaseEntity;
 import org.zerock.decommi.entity.diary.Reply;
+import org.zerock.decommi.entity.diary.Tag;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,7 +31,7 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "roleSet", "replyList"})
+@ToString(exclude = { "roleSet", "replyList", "likeTagList", "dislikeTagList"})
 @Table(name = "d_member")
 public class Member extends BaseEntity {
     @Id
@@ -67,6 +68,12 @@ public class Member extends BaseEntity {
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Reply> replyList = new ArrayList<>();
+    @Builder.Default
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Tag> likeTagList = new ArrayList<>();
+    @Builder.Default
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Tag> dislikeTagList = new ArrayList<>();
 
     public void addMemberRole(MemberRole role) {
         roleSet.add(role);

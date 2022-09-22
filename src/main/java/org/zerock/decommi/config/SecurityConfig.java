@@ -70,8 +70,6 @@ public class SecurityConfig {
     return new ApiCheckFilter("/api/**/*", jwtUtil());
   }
 
-  // apiCheckFilter: api주소로 시작되는 모든곳에 해당(가입부분때문에 수정고려)
-
   @Bean
   public ApiLoginFilter apiLoginFilter(AuthenticationManager authenticationManager) throws Exception {
     ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/member/login", jwtUtil());

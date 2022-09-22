@@ -29,9 +29,7 @@
 //           .fromSocial(false)
 //           .auth(true)
 //           .build();
-//       m.addMemberRole(MemberRole.GUEST);
-//       if (i > 5)
-//         m.addMemberRole(MemberRole.MEMBER);
+//       m.addMemberRole(MemberRole.MEMBER);
 //       if (i > 9)
 //         m.addMemberRole(MemberRole.ADMIN);
 //       repository.save(m);
