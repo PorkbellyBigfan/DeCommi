@@ -54,7 +54,7 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
       e.printStackTrace();
     }
 
-    String email = jsonObject.get("id").toString();
+    String email = jsonObject.get("email").toString();
     String pw = jsonObject.get("pw").toString();
     log.info("id: " + email + "/pw: " + pw);
     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, pw);
