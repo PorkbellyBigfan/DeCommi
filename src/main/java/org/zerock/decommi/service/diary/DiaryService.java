@@ -25,11 +25,11 @@ public interface DiaryService {
     List<Object[]> getSearchDiaryList(String search);
 
     // // 댓글
-    Long registerReply(ReplyDTO dto);
-    String modifyReply(ReplyDTO dto, String id);
-    String deleteReply(ReplyDTO dto, String id);
-    HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable);
-    HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable pageable, String id);
+    // Long registerReply(ReplyDTO dto);
+    // String modifyReply(ReplyDTO dto, String id);
+    // String deleteReply(ReplyDTO dto, String id);
+    // HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable);
+    // HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable pageable, String id);
 
     // 북마크
     // 하트
