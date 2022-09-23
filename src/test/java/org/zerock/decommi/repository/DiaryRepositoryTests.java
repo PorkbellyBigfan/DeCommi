@@ -3,6 +3,7 @@ package org.zerock.decommi.repository;
 import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.IntStream;
 
 import javax.transaction.Transactional;
@@ -37,79 +38,21 @@ public class DiaryRepositoryTests {
   @Autowired
   TagRepository tagRepository;
 
-  // @Autowired
-  // DiaryTagRepository dtRepository; // Diary_Tag Repository
-
-  @Autowired
-  MemberRepository memberRepository; // Member Repository
-
-  @Autowired
-  private PasswordEncoder encoder;
-
-  
   @Test
-  public void insertDiaryPosts() {
-    IntStream.rangeClosed(1, 20).forEach(i -> {
-      Long mno = (long) (Math.random() * 20) + 1;
-      // 멤버 1~100 랜덤
-      //  Member writer = Member.builder().email("user" + i + "decommi.com").build();
-      Member writer = Member.builder().email("user" + i +
-          "@decommi.com").pw(encoder.encode("1234"))
-          .id("id" + i).q1("q1").q2("q2").q3("q3").fromSocial(false).auth(true).build();
-          memberRepository.save(writer);
-      writer.addMemberRole(MemberRole.MEMBER);
-      if (i > 17)
-        writer.addMemberRole(MemberRole.ADMIN);
-      Diary diary = Diary.builder()
-          .title("title" + i)
-          .content("content" + i)
-          .openYN(false)
-          .replyYN(true)
-          .writer("user"+i+"@decommi.com")
-          .build();
-      repository.save(diary);
+  public void insertDiaryDummies(){
+    IntStream.rangeClosed(1,50).forEach(i->{
+      Random randomBoolean = new Random();
+      Member member = Member.builder().email(i+"@"+i+".com").build();
+      Diary d = Diary.builder()
+        .title("title"+i)
+        .content("content"+i)
+        .writer(member.getEmail())
+        .openYN(randomBoolean.nextBoolean())
+        .replyYN(randomBoolean.nextBoolean())
+        .build();
     });
   }
-      @Test
-      public void insertTag(){
-        IntStream.rangeClosed(1, 20).forEach(i->{
-        Long tagname = (long) (Math.random() * 5) + 1;
-        Long tagG = (long) (Math.random() * 5) + 1;
 
-      Tag tag = Tag.builder()
-          .tagName("tagName" + i)
-          .isSubTag(false)
-          .tagGroup(tagG)
-          .dino(Diary.builder().dino((long) i).build())
-          .build();
-      tagRepository.save(tag);
-    });
-    }
 
-    
-    @Test
-    public void test() {
-      log.info(repository.findByDino(1L));
-    }
-
-    
-    @Test
-    public void findemail(){
-        Optional<Member> result = memberRepository.findByEmail("user1@decommi.com");
-        log.info(result);
-    }
-
-    @Test
-    public void testSearchDiary(){
-      String decode="";
-      try{
-        decode = URLDecoder.decode("aa", "UTF-8");
-      }catch(Exception e){
-        e.printStackTrace();
-      }
-      log.info(decode);
-      log.info(repository.getListByTitleOrContent("a"));
-      // log.info(repository.getListAndAuthor());
-    }
     
   }

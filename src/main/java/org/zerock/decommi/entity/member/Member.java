@@ -72,9 +72,6 @@ public class Member extends BaseEntity {
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Tag> likeTagList = new ArrayList<>();
-    @Builder.Default
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Tag> dislikeTagList = new ArrayList<>();
 
     public void addMemberRole(MemberRole role) {
         roleSet.add(role);
@@ -87,5 +84,6 @@ public class Member extends BaseEntity {
     public void changeMobile(String mobile) {
         this.pw = mobile;
     }
+
 
 }

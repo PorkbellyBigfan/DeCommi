@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.stereotype.Repository;
@@ -51,5 +52,10 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
   // + "d.content LIKE CONCAT('%',:search,'%') Or "
   // + "ORDER BY d.dino DESC ")
   // List<Object[]> getListByTitleOrContent(String search);
+
+  //Dino로 파일 삭제하기
+  @Modifying
+  @Query("delete from File f where f.dino.dino=:dino")
+  void deleteFileByDino(Long dino);
 
 }

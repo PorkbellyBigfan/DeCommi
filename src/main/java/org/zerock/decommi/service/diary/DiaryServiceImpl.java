@@ -18,15 +18,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.zerock.decommi.dto.DiaryDTO;
+import org.zerock.decommi.dto.FileDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.dto.ReplyDTO;
 import org.zerock.decommi.dto.TagDTO;
 import org.zerock.decommi.entity.diary.Diary;
+import org.zerock.decommi.entity.diary.File;
 import org.zerock.decommi.entity.diary.Reply;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.repository.diary.DiaryRepository;
+import org.zerock.decommi.repository.diary.FileRepository;
 import org.zerock.decommi.repository.diary.ReplyRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
@@ -42,13 +45,21 @@ public class DiaryServiceImpl implements DiaryService {
     private final MemberRepository memberRepository;
     private final TagRepository tagRepository;
     private final ReplyRepository replyRepository;
+    private final FileRepository fileRepository;
 
     @Override
     public String registerDiary(DiaryDTO dto, List<TagDTO> tagList) {
         Diary result = dtoToEntity(dto);
-        repository.save(result);
-        // 이미지 업로드 구현되면 추가예정
-        // List<ImageList> lists = dto.getImage();
+        repository.save(result); // 여기서 dino 생성됨
+        
+        List<FileDTO> fileList = dto.getFileDTOList();
+        fileList.forEach(new Consumer<FileDTO>(){
+            @Override
+            public void accept(FileDTO dto) {
+              File file = fileDTOtoEntity(dto, result.getDino());
+              fileRepository.save(file); 
+            }
+        });
         for (TagDTO i : tagList) {
             Tag tagResult = tagDTOtoEntity(i);
             tagResult.updateDiary(result);
@@ -86,6 +97,15 @@ public class DiaryServiceImpl implements DiaryService {
         Diary modifiedDiary = dtoToEntity(getByDino);
         repository.save(modifiedDiary);
 
+        List<FileDTO> fileList = dto.getFileDTOList();
+        fileList.forEach(new Consumer<FileDTO>(){
+            @Override
+            public void accept(FileDTO dto) {
+              File file = fileDTOtoEntity(dto, modifiedDiary.getDino());
+              fileRepository.save(file); 
+            }
+        });
+
         // 태그가 있을때만 TagDTO를 Tag로
         if (tagList != null && tagList.size() > 0) {
             for (TagDTO i : tagList) {
@@ -98,14 +118,10 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public String deleteDiary(DiaryDTO dto) {
-        Optional<Diary> checkDiary = repository.getDiaryByDinoAndId(dto.getDino(), dto.getWriter());
-        if (checkDiary.isPresent()) {
-            repository.delete(checkDiary.get());
-            return "성공적으로 삭제되었습니다.";
-        } else {
-            return "유효하지 않은 요청입니다.";
-        }
+    public void deleteDiary(Long dino) {
+        repository.deleteById(dino);
+        repository.deleteFileByDino(dino);
+        
     }
 
     // 댓글 등록 //이해가 잘 가지 않음

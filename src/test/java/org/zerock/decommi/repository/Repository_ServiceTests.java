@@ -147,6 +147,6 @@ public class Repository_ServiceTests {
     @Test
     public void deleteDiary(){
         DiaryDTO dto = DiaryDTO.builder().dino(2L).writer("user2@decommi.com").build();
-        diaryService.deleteDiary(dto);
+        diaryService.deleteDiary(dto.getDino());
     }
 }

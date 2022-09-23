@@ -32,7 +32,6 @@ public class MemberDTO {
     private boolean fromSocial;
     private List<Reply> replyList;
     private List<Tag> likeTagList;
-    private List<Tag> dislikeTagList;
 
     // 여기에 선호태그 비선호태그 넣으면 될것 같음
 
