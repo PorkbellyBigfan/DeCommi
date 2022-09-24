@@ -71,11 +71,11 @@ public class ApiCheckFilter extends OncePerRequestFilter {
   private boolean checkAuthHeader(HttpServletRequest request) {
     boolean checkResult = false;
     String authHeader = request.getHeader("Authorization");
-    String mid = request.getHeader("mid");
+    String email = request.getHeader("email");
     if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
       log.info("Authorization exist: " + authHeader);
       try {
-        checkResult = jwtUtil.validateAndExtract(authHeader.substring(7), mid);
+        checkResult = jwtUtil.validateAndExtract(authHeader.substring(7), email);
         log.info(("validate result: " + checkResult));
       } catch (Exception e) {
         e.printStackTrace();

@@ -51,13 +51,13 @@ public class DiaryServiceImpl implements DiaryService {
     public String registerDiary(DiaryDTO dto, List<TagDTO> tagList) {
         Diary result = dtoToEntity(dto);
         repository.save(result); // 여기서 dino 생성됨
-        
+
         List<FileDTO> fileList = dto.getFileDTOList();
-        fileList.forEach(new Consumer<FileDTO>(){
+        fileList.forEach(new Consumer<FileDTO>() {
             @Override
             public void accept(FileDTO dto) {
-              File file = fileDTOtoEntity(dto, result.getDino());
-              fileRepository.save(file); 
+                File file = fileDTOtoEntity(dto, result.getDino());
+                fileRepository.save(file);
             }
         });
         for (TagDTO i : tagList) {
@@ -70,15 +70,15 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public DiaryDTO checkBeforeDiaryModify(Long dino, String id) {
-    Optional<Diary> isit = repository.getDiaryByDinoAndId(dino, id);
-    if (!isit.isPresent()) {
-        return null;
-    } else {
-        DiaryDTO dto = entityToDTO(isit.get());
-        List<TagDTO> tagList = tagRepository.getList(dto.getDino());
-        dto.setTags(tagList);
-        return dto;
-    }
+        Optional<Diary> isit = repository.getDiaryByDinoAndId(dino, id);
+        if (!isit.isPresent()) {
+            return null;
+        } else {
+            DiaryDTO dto = entityToDTO(isit.get());
+            List<TagDTO> tagList = tagRepository.getList(dto.getDino());
+            dto.setTags(tagList);
+            return dto;
+        }
     }
 
     @Transactional
@@ -98,11 +98,11 @@ public class DiaryServiceImpl implements DiaryService {
         repository.save(modifiedDiary);
 
         List<FileDTO> fileList = dto.getFileDTOList();
-        fileList.forEach(new Consumer<FileDTO>(){
+        fileList.forEach(new Consumer<FileDTO>() {
             @Override
             public void accept(FileDTO dto) {
-              File file = fileDTOtoEntity(dto, modifiedDiary.getDino());
-              fileRepository.save(file); 
+                File file = fileDTOtoEntity(dto, modifiedDiary.getDino());
+                fileRepository.save(file);
             }
         });
 
@@ -121,7 +121,7 @@ public class DiaryServiceImpl implements DiaryService {
     public void deleteDiary(Long dino) {
         repository.deleteById(dino);
         repository.deleteFileByDino(dino);
-        
+
     }
 
     // 댓글 등록 //이해가 잘 가지 않음
@@ -208,20 +208,20 @@ public class DiaryServiceImpl implements DiaryService {
     // return null;
     // }
 
-    // @Override
-    // public List<Object[]> getDiaryList() {
-    //     return repository.getListAndAuthor();
-    // }
+    @Override
+    public List<Object[]> getDiaryList() {
+        return repository.getListAndAuthor();
+    }
 
     // @Transactional
     // @Override
     // public List<Object[]> getSearchDiaryList(String search) {
-    //     String decode = "";
-    //     try{
-    //         decode = URLDecoder.decode(search, "UTF-8");
-    //     }catch (Exception e){
-    //         e.printStackTrace();
-    //     }
-    //     return repository.getListByTitleOrContent(decode);
+    // String decode = "";
+    // try{
+    // decode = URLDecoder.decode(search, "UTF-8");
+    // }catch (Exception e){
+    // e.printStackTrace();
+    // }
+    // return repository.getListByTitleOrContent(decode);
     // }
 }

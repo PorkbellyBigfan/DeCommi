@@ -16,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.zerock.decommi.entity.Bookmark;
 import org.zerock.decommi.entity.HelpBoard;
 import org.zerock.decommi.entity.common.BaseEntity;
 import org.zerock.decommi.entity.diary.Diary;
