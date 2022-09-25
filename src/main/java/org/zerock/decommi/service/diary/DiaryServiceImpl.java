@@ -48,7 +48,7 @@ public class DiaryServiceImpl implements DiaryService {
     private final FileRepository fileRepository;
 
     @Override
-    public String registerDiary(DiaryDTO dto, List<TagDTO> tagList) {
+    public String registerDiary(DiaryDTO dto, List<String> tagList) {
         Diary result = dtoToEntity(dto);
         repository.save(result); // 여기서 dino 생성됨
 
@@ -60,7 +60,7 @@ public class DiaryServiceImpl implements DiaryService {
                 fileRepository.save(file);
             }
         });
-        for (TagDTO i : tagList) {
+        for (String i : tagList) {
             Tag tagResult = tagDTOtoEntity(i);
             tagResult.updateDiary(result);
             tagRepository.save(tagResult);
@@ -75,7 +75,10 @@ public class DiaryServiceImpl implements DiaryService {
             return null;
         } else {
             DiaryDTO dto = entityToDTO(isit.get());
-            List<TagDTO> tagList = tagRepository.getList(dto.getDino());
+            List<String> tagList = tagRepository.getList(dto.getDino())
+                    .stream()
+                    .map(tentity -> tentity.getTagName())
+                    .collect(Collectors.toList());
             dto.setTags(tagList);
             return dto;
         }
@@ -83,7 +86,7 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Transactional
     @Override
-    public String modifyDiary(DiaryDTO dto, List<TagDTO> tagList) {
+    public String modifyDiary(DiaryDTO dto, List<String> tagList) {
         Diary originalDiary = repository.findByDino(dto.getDino());
         DiaryDTO getByDino = entityToDTO(originalDiary);
 
@@ -107,8 +110,9 @@ public class DiaryServiceImpl implements DiaryService {
         });
 
         // 태그가 있을때만 TagDTO를 Tag로
-        if (tagList != null && tagList.size() > 0) {
-            for (TagDTO i : tagList) {
+        for (String i : tagList) {
+            Optional<Tag> tagTemp = tagRepository.findByDiaryAndTagName(modifiedDiary, i);
+            if (!tagTemp.isPresent()) {
                 Tag tagResult = tagDTOtoEntity(i);
                 tagResult.updateDiary(modifiedDiary);
                 tagRepository.save(tagResult);

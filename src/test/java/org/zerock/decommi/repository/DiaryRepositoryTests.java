@@ -61,6 +61,7 @@ public class DiaryRepositoryTests {
           .replyYN(randomBoolean.nextBoolean())
           .files(null)
           .tags(null)
+          .replyList(null)
           .build();
       repository.save(d);
     });

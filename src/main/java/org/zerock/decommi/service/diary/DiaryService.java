@@ -16,11 +16,11 @@ import org.zerock.decommi.entity.member.Member;
 
 public interface DiaryService {
     // 다이어리
-    String registerDiary(DiaryDTO dto, List<TagDTO> tagList);
+    String registerDiary(DiaryDTO dto, List<String> tagList);
 
     DiaryDTO checkBeforeDiaryModify(Long dino, String id);
 
-    String modifyDiary(DiaryDTO dto, List<TagDTO> tagList);
+    String modifyDiary(DiaryDTO dto, List<String> tagList);
 
     void deleteDiary(Long dino);
 
@@ -84,12 +84,9 @@ public interface DiaryService {
     }
 
     // 태그
-    default Tag tagDTOtoEntity(TagDTO dto) {
+    default Tag tagDTOtoEntity(String tagList) {
         Tag tag = Tag.builder()
-                .tagName(dto.getTagName())
-                .tagGroup(dto.getTagGroup())
-                .isSubTag(dto.isSubTag())
-                .dino(dto.getDino())
+                .tagName(tagList)
                 .build();
         return tag;
     }
@@ -99,8 +96,6 @@ public interface DiaryService {
         TagDTO dto = TagDTO.builder()
                 .tagId(tagList.getTagId())
                 .tagName(tagList.getTagName())
-                .tagGroup(tagList.getTagGroup())
-                .isSubTag(tagList.isSubTag())
                 .dino(tagList.getDino())
                 .build();
         return dto;

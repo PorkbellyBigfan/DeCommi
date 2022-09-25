@@ -24,7 +24,7 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"member", "dino"})
+@ToString(exclude = { "member", "dino" })
 @Table(name = "d_tag")
 public class Tag extends BaseEntity {
     @Id
@@ -34,11 +34,11 @@ public class Tag extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String tagName;
 
-    // 하위태그를 위한 컬럼
-    @Column(nullable = false)
-    private boolean isSubTag;
-    @Column(nullable = false)
-    private Long tagGroup;
+    // // 하위태그를 위한 컬럼
+    // @Column(nullable = false)
+    // private boolean isSubTag;
+    // @Column(nullable = false)
+    // private Long tagGroup;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diary_dino", referencedColumnName = "dino")
