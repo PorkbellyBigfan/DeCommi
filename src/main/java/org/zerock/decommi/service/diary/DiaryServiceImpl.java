@@ -111,7 +111,7 @@ public class DiaryServiceImpl implements DiaryService {
 
         // 태그가 있을때만 TagDTO를 Tag로
         for (String i : tagList) {
-            Optional<Tag> tagTemp = tagRepository.findByDiaryAndTagName(modifiedDiary, i);
+            Optional<Tag> tagTemp = tagRepository.findByDinoAndTagName(modifiedDiary, i);
             if (!tagTemp.isPresent()) {
                 Tag tagResult = tagDTOtoEntity(i);
                 tagResult.updateDiary(modifiedDiary);

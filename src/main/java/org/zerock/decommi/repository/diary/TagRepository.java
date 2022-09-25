@@ -13,16 +13,14 @@ import org.zerock.decommi.entity.diary.Tag;
 @Repository
 public interface TagRepository extends JpaRepository<Tag, Long> {
 
-  @Query("select t from Tag t where dino =:dino ")
-  List<Tag> findByDino(Long dino);
-
-  @Query("select t from Tag t where t.dino =:dino")
-  List<Tag> findByDiary(Diary dino);
-
+  // 해당 게시글에 있는 태그 리스트를 가져오는 쿼리문
   @Query("select t from Tag t where diary_dino=:dino ")
   List<Tag> getList(Long dino);
 
-  Optional<Tag> findByDiaryAndTagName(Diary dino, String tagName);
+  // 게시글번호와 태그이름을 찾음
+  Optional<Tag> findByDinoAndTagName(Diary dino, String tagName);
+
+  List<Tag> findByDiary(Diary dino);
 
   @Query("select t from Tag t where tag_name like %:keyword%")
   Optional<List<Tag>> getAidListByHashTagName(String keyword);

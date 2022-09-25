@@ -51,6 +51,7 @@ public class DiaryApiController {
     @RequestMapping(value = "/write", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> register(@RequestBody DiaryDTO dto) {
         List<String> tagList = dto.getTags();
+        log.info("hello");
         log.info("dto : " + dto);
         return new ResponseEntity<>(diaryService.registerDiary(dto, tagList), HttpStatus.OK);
     }
