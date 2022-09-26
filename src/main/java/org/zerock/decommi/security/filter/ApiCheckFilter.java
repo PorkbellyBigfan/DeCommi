@@ -72,6 +72,7 @@ public class ApiCheckFilter extends OncePerRequestFilter {
     boolean checkResult = false;
     String authHeader = request.getHeader("Authorization");
     String mid = request.getHeader("mid");
+    log.info("Authorization: " + authHeader);
     if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
       log.info("Authorization exist: " + authHeader);
       try {
