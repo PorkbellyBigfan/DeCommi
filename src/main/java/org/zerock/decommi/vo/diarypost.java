@@ -1,7 +1,6 @@
 package org.zerock.decommi.vo;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.zerock.decommi.repository.diary.DiaryRepository;
 

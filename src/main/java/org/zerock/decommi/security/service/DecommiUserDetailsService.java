@@ -35,11 +35,12 @@ public class DecommiUserDetailsService implements UserDetailsService {
 
     // DecommiAuthMemberDTO는 User를 상속받았기 때문.
     DecommiAuthMemberDTO dto = new DecommiAuthMemberDTO(
-        member.getEmail(), member.getPw(), member.getMid(), 
-        member.isAuth(),
+        member.getEmail(), member.getPw(), member.getId(),
+        member.getMid(), member.isAuth(),
         member.getRoleSet().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
             .collect(Collectors.toList()));
     dto.setEmail(member.getEmail());
+    dto.setId(member.getId());
     dto.setAuth(member.isAuth());
     return dto;
   }
