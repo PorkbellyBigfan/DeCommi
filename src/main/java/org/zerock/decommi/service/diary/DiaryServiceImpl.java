@@ -42,6 +42,7 @@ import org.zerock.decommi.repository.diary.ReplyRepository;
 import org.zerock.decommi.repository.diary.ReportRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
+import org.zerock.decommi.vo.diaryPostList;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -140,6 +141,7 @@ public class DiaryServiceImpl implements DiaryService {
 
     }
 
+    @Transactional
     @Override
     public DiaryDTO getDiaryPostByDino(Long dino) {
         Diary result = repository.getByDino(dino);
@@ -150,6 +152,58 @@ public class DiaryServiceImpl implements DiaryService {
                 .collect(Collectors.toList());
         dto.setTags(tagString);
         return dto;
+    }
+
+    @Override
+    public List<diaryPostList> getDiaryPostList() {
+        Sort sort = sortByDino();
+        List<diaryPostList> result = repository.getList(sort).get().stream().map(v -> {
+            return new diaryPostList(v);
+        }).collect(Collectors.toList());
+        return result;
+    }
+
+    // 하트
+    @Override
+    public String addHeart(HeartDTO dto) {
+        Optional<Heart> checkHeart = heartRepository.checkHeartLogByMemberIdAndDiaryId(dto.getMid(), dto.getDino());
+        Heart entity = heartDTOtoEntity(dto);
+        if (checkHeart.isPresent()) {
+            heartRepository.delete(checkHeart.get());
+            return "좋아요 취소";
+        } else {
+            heartRepository.save(entity);
+            return "좋아요";
+        }
+    }
+
+    // 북마크
+    @Override
+    public String addBookmark(BookmarkDTO dto) {
+        Optional<Bookmark> checkBookmark = bookmarkRepository.checkBookmarkLogByMemberIdAndDiary(dto.getMid(),
+                dto.getDino());
+        Bookmark entity = bookmarkDTOtoEntity(dto);
+        if (checkBookmark.isPresent()) {
+            bookmarkRepository.delete(checkBookmark.get());
+            return "북마크 취소";
+        } else {
+            bookmarkRepository.save(entity);
+            return "북마크 추가";
+        }
+
+    }
+
+    // 신고
+    @Override
+    public String addDiaryReport(ReportDTO dto) {
+        Optional<Report> checkReport = reportRepository.checkReportLogByMemberIdAndDiaryId(dto.getMid(), dto.getDino());
+        if (checkReport.isPresent()) {
+            return "이미 신고한 글입니다";
+        } else {
+            reportRepository.save(reportDTOtoEntity(dto));
+            return "신고가 완료되었습니다";
+        }
+
     }
 
     // 댓글 등록 //이해가 잘 가지 않음
@@ -236,11 +290,6 @@ public class DiaryServiceImpl implements DiaryService {
     // return null;
     // }
 
-    @Override
-    public List<Object[]> getDiaryList() {
-        return repository.getListAndAuthor();
-    }
-
     // @Transactional
     // @Override
     // public List<Object[]> getSearchDiaryList(String search) {
@@ -252,4 +301,8 @@ public class DiaryServiceImpl implements DiaryService {
     // }
     // return repository.getListByTitleOrContent(decode);
     // }
+
+    private Sort sortByDino() {
+        return Sort.by(Sort.Direction.DESC, "dino");
+    }
 }

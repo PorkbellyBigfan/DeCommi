@@ -19,6 +19,7 @@ import org.zerock.decommi.entity.diary.Report;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.member.Bookmark;
 import org.zerock.decommi.entity.member.Member;
+import org.zerock.decommi.vo.diaryPostList;
 
 public interface DiaryService {
     // 다이어리
@@ -30,9 +31,9 @@ public interface DiaryService {
 
     void deleteDiary(Long dino);
 
-    DiaryDTO getDiaryPostByDino(Long dino); 
+    DiaryDTO getDiaryPostByDino(Long dino);
 
-    List<Object[]> getDiaryList();
+    List<diaryPostList> getDiaryPostList();
 
     // 검색조건 만족하는 다이어리 게시글 리스트
     // List<Object[]> getSearchDiaryList(String search);
@@ -144,8 +145,9 @@ public interface DiaryService {
                 .build();
         return dto;
     }
-     // 하트
-     default Heart heartDTOtoEntity(HeartDTO dto) {
+
+    // 하트
+    default Heart heartDTOtoEntity(HeartDTO dto) {
         Heart entity = Heart.builder()
                 .heartId(dto.getHeartId())
                 .dino(dto.getDino())

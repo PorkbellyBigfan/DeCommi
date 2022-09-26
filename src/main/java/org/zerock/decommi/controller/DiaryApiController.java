@@ -37,6 +37,7 @@ import org.zerock.decommi.dto.UploadResultDTO;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.service.diary.DiaryService;
 import org.zerock.decommi.service.member.MemberService;
+import org.zerock.decommi.vo.diaryPost;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -59,7 +60,17 @@ public class DiaryApiController {
         return new ResponseEntity<>(diaryService.registerDiary(dto, tagList), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/modify/check", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<DiaryDTO> CheckBeforeDiaryModify(@RequestBody diaryPost vo) {
+        DiaryDTO diaryPost = diaryService.checkBeforeDiaryModify(vo.getDino(), vo.getWriter());
+        return new ResponseEntity<>(diaryPost, HttpStatus.OK);
+    }
 
+    @RequestMapping(value = "/modify/register", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> articleModify(@RequestBody DiaryDTO dto) {
+        String diaryPost = diaryService.modifyDiary(dto, dto.getTags());
+        return new ResponseEntity<>(diaryPost, HttpStatus.OK);
+    }
 
     @PostMapping("/write/uploadAjax")
     public ResponseEntity<List<UploadResultDTO>> uploadFile(MultipartFile[] uploadFiles) {
@@ -108,19 +119,19 @@ public class DiaryApiController {
         return folderPath;
     }
 
-    @RequestMapping(value = "/like", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> LikeDiary(@RequestBody HeartDTO dto) {
-      return new ResponseEntity<>(diaryService.addHeart(dto), HttpStatus.OK);
+    @RequestMapping(value = "/heart", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> HeartDiary(@RequestBody HeartDTO dto) {
+        return new ResponseEntity<>(diaryService.addHeart(dto), HttpStatus.OK);
     }
-  
+
     @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> bookmarDiary(@RequestBody BookmarkDTO dto) {
-      return new ResponseEntity<>(diaryService.addBookmark(dto), HttpStatus.OK);
+        return new ResponseEntity<>(diaryService.addBookmark(dto), HttpStatus.OK);
     }
-  
+
     @RequestMapping(value = "/report", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> reportingDiary(@RequestBody ReportDTO dto) {
-      return new ResponseEntity<>(diaryService.addDiaryReport(dto), HttpStatus.OK);
+        return new ResponseEntity<>(diaryService.addDiaryReport(dto), HttpStatus.OK);
     }
 
 }

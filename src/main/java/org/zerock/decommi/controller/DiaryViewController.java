@@ -1,6 +1,7 @@
 package org.zerock.decommi.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.service.diary.DiaryService;
+import org.zerock.decommi.vo.diaryPostList;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -28,7 +30,12 @@ public class DiaryViewController {
     DiaryDTO diaryPost = diaryService.getDiaryPostByDino(dino);
     log.info("diaryPost" + diaryPost);
     result.put("diaryPost", diaryPost);
-    // List<String> tagList = dto.getTags();
     return new ResponseEntity<>(result, HttpStatus.OK);
   }
+
+  @RequestMapping(value = "/list", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<diaryPostList>> ArticleCardsList() {
+    return new ResponseEntity<>(diaryService.getDiaryPostList(), HttpStatus.OK);
+  }
+
 }

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
@@ -32,6 +33,7 @@ import org.zerock.decommi.repository.diary.ReplyRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.service.diary.DiaryService;
+import org.zerock.decommi.vo.diaryPostList;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -86,7 +88,7 @@ public class DiaryRepositoryTests {
   @Test
   public void insertReply() {
     Diary diary = Diary.builder().dino(1L).build();
-    Member member = Member.builder().mid(1L).build();
+    Member member = Member.builder().mid(4L).build();
     Reply reply = Reply.builder()
         .dino(diary)
         .member(member)
@@ -120,12 +122,11 @@ public class DiaryRepositoryTests {
 
   // 다이어리 리스트
   @Test
-  public void testGetDiaryList() {
-    List<Object[]> result = repository.getListAndAuthor();
-    for (Object[] arr : result) {
-      // log.info(Arrays.toString(arr));
-      System.out.println(Arrays.toString(arr));
-    }
+  public void testGetDiaryPostList() {
+    List<diaryPostList> result = repository.getList(Sort.by("dino").descending()).get().stream().map(v -> {
+      return new diaryPostList(v);
+    }).collect(Collectors.toList());
+    log.info(result);
   }
 
   @Test
