@@ -19,7 +19,7 @@ import org.zerock.decommi.vo.DiaryPostList;
 
 @Repository
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
-  // , DiaryCustomRepository
+
   // 번호로 게시글 가져오기
   Diary getByDino(Long dino);
 
