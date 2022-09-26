@@ -31,32 +31,24 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "roleSet", "replyList", "likeTagList", "dislikeTagList"})
+@ToString(exclude = { "roleSet", "replyList", "likeTagList", "dislikeTagList" })
 @Table(name = "d_member")
 public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long mid;
-
     @Column(nullable = false)
     private String id;
-
     @Column(nullable = false)
     private String pw;
-
     @Column(nullable = false)
     private String email;
-    // 최대한 필수데이터만 저장하는게 어떨까 해서 주석처리함
-    // private String name;
-    // @Column(nullable = false)
-    // private String mobile;
     @Column
     private String q1;
     @Column
     private String q2;
     @Column
     private String q3;
-
     @Column
     private boolean auth;
     private boolean fromSocial;
@@ -64,11 +56,9 @@ public class Member extends BaseEntity {
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default
     private Set<MemberRole> roleSet = new HashSet<>();
-
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Reply> replyList = new ArrayList<>();
-    
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Tag> likeTagList = new ArrayList<>();
@@ -80,10 +70,5 @@ public class Member extends BaseEntity {
     public void changePw(String pw) {
         this.pw = pw;
     }
-
-    public void changeMobile(String mobile) {
-        this.pw = mobile;
-    }
-
 
 }

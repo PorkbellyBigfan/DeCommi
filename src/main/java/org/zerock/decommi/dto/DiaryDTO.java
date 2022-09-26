@@ -21,16 +21,19 @@ import lombok.NoArgsConstructor;
 public class DiaryDTO {
     private Long dino;
     private String title;
+
     private String content;
     private boolean openYN;
     private boolean replyYN;
+
     private String writer; // Member의 Primary key :id
-    
+
     @Builder.Default
-    @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     private List<FileDTO> fileDTOList = new ArrayList<>();
-    private List<TagDTO> tags;
+
+    private List<String> tags;
+
     private List<Reply> replyList;
-    
+
     private LocalDateTime regDate, modDate;
 }

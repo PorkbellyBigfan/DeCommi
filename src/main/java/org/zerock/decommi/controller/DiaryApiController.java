@@ -32,6 +32,7 @@ import org.zerock.decommi.dto.TagDTO;
 import org.zerock.decommi.dto.UploadResultDTO;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.service.diary.DiaryService;
+import org.zerock.decommi.service.member.MemberService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -42,64 +43,63 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Log4j2
 @RequiredArgsConstructor
 public class DiaryApiController {
-  private final DiaryService diaryService;
-  
-  @Value("${org.zerock.upload.path}")
-  private String uploadPath;
+    private final DiaryService diaryService;
 
-  @RequestMapping(value = "/write", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<String> register(@RequestBody DiaryDTO dto) {
-    List<String> tagList = dto.getTags();
-    return new ResponseEntity<>(diaryService.registerDiary(dto, tagList), HttpStatus.OK);
-  }
+    @Value("${org.zerock.upload.path}")
+    private String uploadPath;
 
-  @PostMapping("/write/uploadAjax")
-  public ResponseEntity<List<UploadResultDTO>> uploadFile(MultipartFile[] uploadFiles) {
-    List<UploadResultDTO> result = new ArrayList<>();
-
-    for (MultipartFile uploadFile : uploadFiles) {
-        if (uploadFile.getContentType().startsWith("image") == false) {
-            log.warn("this is not image type");
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-
-        String orig = uploadFile.getOriginalFilename();
-        String fileName = orig.substring(orig.lastIndexOf("\\") + 1);
-        log.info("Original File Name: " + orig);
-        log.info("File Name: " + fileName);
-
-        String folderPath = makeFolder();
-
-        String uuid = UUID.randomUUID().toString();
-        String saveName = uploadPath + File.separator + folderPath + File.separator
-                + uuid + "_" + fileName;
-        log.info(saveName);
-        Path savePath = Paths.get(saveName);
-        try {
-            uploadFile.transferTo(savePath);
-            String thumbnailSaveName = uploadPath + File.separator + folderPath + File.separator
-                    + "s_" + uuid + "_" + fileName;
-            File thumbnailFile = new File(thumbnailSaveName);
-            Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 100, 100);
-
-            result.add(new UploadResultDTO(fileName, uuid, folderPath));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    @RequestMapping(value = "/write", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> register(@RequestBody DiaryDTO dto) {
+        List<String> tagList = dto.getTags();
+        log.info("dto : " + dto);
+        return new ResponseEntity<>(diaryService.registerDiary(dto, tagList), HttpStatus.OK);
     }
-    return new ResponseEntity<>(result, HttpStatus.OK);
-}
 
-private String makeFolder() {
-    String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-    String folderPath = str.replace("/", File.separator);
-    File uploadPathFolder = new File(uploadPath, folderPath);
-    if (uploadPathFolder.exists() == false) {
-        uploadPathFolder.mkdirs();
+    @PostMapping("/write/uploadAjax")
+    public ResponseEntity<List<UploadResultDTO>> uploadFile(MultipartFile[] uploadFiles) {
+        List<UploadResultDTO> result = new ArrayList<>();
+
+        for (MultipartFile uploadFile : uploadFiles) {
+            if (uploadFile.getContentType().startsWith("image") == false) {
+                log.warn("this is not image type");
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+
+            String orig = uploadFile.getOriginalFilename();
+            String fileName = orig.substring(orig.lastIndexOf("\\") + 1);
+            log.info("Original File Name: " + orig);
+            log.info("File Name: " + fileName);
+
+            String folderPath = makeFolder();
+
+            String uuid = UUID.randomUUID().toString();
+            String saveName = uploadPath + File.separator + folderPath + File.separator
+                    + uuid + "_" + fileName;
+            log.info(saveName);
+            Path savePath = Paths.get(saveName);
+            try {
+                uploadFile.transferTo(savePath);
+                String thumbnailSaveName = uploadPath + File.separator + folderPath + File.separator
+                        + "s_" + uuid + "_" + fileName;
+                File thumbnailFile = new File(thumbnailSaveName);
+                Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 100, 100);
+
+                result.add(new UploadResultDTO(fileName, uuid, folderPath));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
-    return folderPath;
-}
 
-  
+    private String makeFolder() {
+        String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        String folderPath = str.replace("/", File.separator);
+        File uploadPathFolder = new File(uploadPath, folderPath);
+        if (uploadPathFolder.exists() == false) {
+            uploadPathFolder.mkdirs();
+        }
+        return folderPath;
+    }
 
 }

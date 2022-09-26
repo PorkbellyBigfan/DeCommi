@@ -25,7 +25,7 @@ public class MemberRepositoryTests {
     IntStream.rangeClosed(1, 20).forEach(i -> {
       Member m = Member.builder()
           .email("user" + i + "@decommi.com")
-          .id("user"+i)
+          .id("user" + i)
           .pw(encoder.encode("1234"))
           .fromSocial(false)
           .auth(true)
@@ -34,7 +34,8 @@ public class MemberRepositoryTests {
           .q3("부산")
           .build();
       m.addMemberRole(MemberRole.MEMBER);
-      if (i > 9) m.addMemberRole(MemberRole.ADMIN);
+      if (i > 9)
+        m.addMemberRole(MemberRole.ADMIN);
       repository.save(m);
     });
   }
