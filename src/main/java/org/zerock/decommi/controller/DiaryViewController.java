@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.zerock.decommi.dto.DiaryDTO;
+import org.zerock.decommi.service.diary.DiaryService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -18,9 +20,13 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("/diary/")
 @RequiredArgsConstructor
 public class DiaryViewController {
+  private final DiaryService diaryService;
+
   @RequestMapping(value = "/read/{dino}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Object> DiaryRead(@ModelAttribute("dino") Long dino){
       HashMap<String,Object> result = new HashMap<>();
+      DiaryDTO diaryPost = diaryService.getDiaryPostByDino(dino);
+      result.put("diaryPost", diaryPost);
       // List<String> tagList = dto.getTags();
       return new ResponseEntity<>(result, HttpStatus.OK);
   }
