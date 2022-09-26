@@ -8,6 +8,7 @@ import javax.persistence.Id;
 
 import javax.persistence.Table;
 
+import org.zerock.decommi.entity.common.BaseEntity;
 import org.zerock.decommi.entity.member.Member;
 
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "d_heart")
-public class Heart {
+public class Heart extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long heartId;

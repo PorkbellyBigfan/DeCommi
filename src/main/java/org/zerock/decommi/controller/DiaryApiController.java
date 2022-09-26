@@ -108,8 +108,8 @@ public class DiaryApiController {
         return folderPath;
     }
 
-    @RequestMapping(value = "/like", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> LikeDiary(@RequestBody HeartDTO dto) {
+    @RequestMapping(value = "/heart", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> HeartDiary(@RequestBody HeartDTO dto) {
       return new ResponseEntity<>(diaryService.addHeart(dto), HttpStatus.OK);
     }
   
