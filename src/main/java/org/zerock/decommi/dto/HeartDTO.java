@@ -10,11 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HeartDTO {
-    private Long heartId;
+    private Long hid;
     private Long dino;
     private Long mid;
-
-
 
     // private boolean isHeart;
     // private Long dino; // Diary 엔티티의 PK dino

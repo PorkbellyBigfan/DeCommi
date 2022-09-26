@@ -42,7 +42,7 @@ import org.zerock.decommi.repository.diary.ReplyRepository;
 import org.zerock.decommi.repository.diary.ReportRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
-import org.zerock.decommi.vo.diaryPostList;
+import org.zerock.decommi.vo.DiaryPostList;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -155,10 +155,10 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public List<diaryPostList> getDiaryPostList() {
+    public List<DiaryPostList> getDiaryPostList() {
         Sort sort = sortByDino();
-        List<diaryPostList> result = repository.getList(sort).get().stream().map(v -> {
-            return new diaryPostList(v);
+        List<DiaryPostList> result = repository.getList(sort).get().stream().map(v -> {
+            return new DiaryPostList(v);
         }).collect(Collectors.toList());
         return result;
     }

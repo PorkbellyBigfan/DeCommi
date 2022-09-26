@@ -20,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Commit;
+import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.File;
 import org.zerock.decommi.entity.diary.Reply;
@@ -33,7 +34,7 @@ import org.zerock.decommi.repository.diary.ReplyRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.service.diary.DiaryService;
-import org.zerock.decommi.vo.diaryPostList;
+import org.zerock.decommi.vo.DiaryPostList;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -69,21 +70,6 @@ public class DiaryRepositoryTests {
     });
   }
 
-  @Test
-  public void findByDino() {
-    log.info(repository.findByDino(1L));
-  }
-
-  @Test
-  void getDiaryWithAll() {
-    Optional<Diary> isit = repository.getDiaryWithAll(1L);
-    if (isit.isPresent()) {
-      log.info(-1);
-    } else {
-      log.info(diaryService.entityToDTO(isit.get()));
-    }
-  }
-
   // 댓글 등록
   @Test
   public void insertReply() {
@@ -98,6 +84,14 @@ public class DiaryRepositoryTests {
         .replyOrder(0L)
         .build();
     replyRepository.save(reply);
+  }
+
+  @Test
+  public void testGetDiaryPostByDino() {
+    Diary diary = Diary.builder().dino(1L).build();
+    DiaryDTO result = diaryService.getDiaryPostByDino(diary.getDino());
+    log.info(result);
+
   }
 
   // 댓글 등록2
@@ -123,17 +117,17 @@ public class DiaryRepositoryTests {
   // 다이어리 리스트
   @Test
   public void testGetDiaryPostList() {
-    List<diaryPostList> result = repository.getList(Sort.by("dino").descending()).get().stream().map(v -> {
-      return new diaryPostList(v);
+    List<DiaryPostList> result = repository.getList(Sort.by("dino").descending()).get().stream().map(v -> {
+      return new DiaryPostList(v);
     }).collect(Collectors.toList());
     log.info(result);
   }
 
-  @Test
-  @Transactional
-  public void testGetDiaryList2() {
-    Pageable pageable = PageRequest.of(0, 5, Sort.by("dino").descending());
-    Page<Diary> result = repository.getDiaryListWithTagAndReply(pageable);
-    log.info(result);
-  }
+  // @Test
+  // @Transactional
+  // public void testGetDiaryList2() {
+  // Pageable pageable = PageRequest.of(0, 5, Sort.by("dino").descending());
+  // Page<Diary> result = repository.getDiaryListWithTagAndReply(pageable);
+  // log.info(result);
+  // }
 }

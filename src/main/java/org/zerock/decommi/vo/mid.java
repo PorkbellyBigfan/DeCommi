@@ -3,6 +3,6 @@ package org.zerock.decommi.vo;
 import lombok.Data;
 
 @Data
-public class mid {
+public class Mid {
     Long mid;
 }

@@ -8,21 +8,21 @@ import org.zerock.decommi.entity.diary.Heart;
 public interface HeartService {
     HashMap<String, Object> getListDino(Long dino);
 
-    default Heart dtoToEntity(HeartDTO dto){
+    default Heart dtoToEntity(HeartDTO dto) {
         Heart entity = Heart.builder()
-            .dino(dto.getDino())
-            .heartId(dto.getHeartId())
-            .mid(dto.getMid())
-            .build();
+                .dino(dto.getDino())
+                .hid(dto.getHid())
+                .mid(dto.getMid())
+                .build();
         return entity;
     }
 
-    default HeartDTO EntityToDto(Heart entity){
+    default HeartDTO EntityToDto(Heart entity) {
         HeartDTO dto = HeartDTO.builder()
-            .dino(entity.getDino())
-            .heartId(entity.getHeartId())
-            .mid(entity.getMid())
-            .build();
+                .dino(entity.getDino())
+                .hid(entity.getHid())
+                .mid(entity.getMid())
+                .build();
         return dto;
     }
 }

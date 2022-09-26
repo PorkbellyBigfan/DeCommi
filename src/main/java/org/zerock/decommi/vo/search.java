@@ -3,7 +3,7 @@ package org.zerock.decommi.vo;
 import lombok.Data;
 
 @Data
-public class search {
+public class Search {
   String search;
-  String order;
+  String tag;
 }

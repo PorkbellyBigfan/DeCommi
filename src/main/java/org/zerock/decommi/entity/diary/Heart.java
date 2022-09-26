@@ -23,10 +23,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "d_heart")
-public class Heart extends BaseEntity{
+public class Heart extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long heartId;
+    private Long hid;
     // private boolean isHeart;
 
     // @ManyToOne(fetch = FetchType.LAZY)

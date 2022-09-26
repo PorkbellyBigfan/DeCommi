@@ -27,7 +27,7 @@ import lombok.ToString;
 public class Bookmark extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookmarkId;
+    private Long bid;
     // private String bfolderName;
     // private boolean isBookmark;
 

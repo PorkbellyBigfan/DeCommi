@@ -41,19 +41,17 @@ public class MemberApiController {
   // }
 
   // 이메일체크
-  // @RequestMapping(value = "/emailCheck", method = RequestMethod.POST, consumes
-  // = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  // public ResponseEntity<Map<String, Long>> emailCheck(
-  // @RequestBody Map<String, Object> mapObj,
-  // @RequestHeader("token") String token) {
-  // String email = mapObj.get("email").toString();
-  // MemberDTO dto = service.emailCheck(email);
+  @RequestMapping(value = "/emailCheck", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Map<String, Long>> emailCheck(
+      @RequestBody Map<String, Object> mapObj) {
+    String email = mapObj.get("email").toString();
+    MemberDTO dto = service.emailCheck(email);
 
-  // Map<String, Long> mapForResult = new HashMap<>();
-  // mapForResult.put("result", (dto == null) ? 0L : 1L);
+    Map<String, Long> mapForResult = new HashMap<>();
+    mapForResult.put("result", (dto == null) ? 0L : 1L);
 
-  // return new ResponseEntity<Map<String, Long>>(mapForResult, HttpStatus.OK);
-  // }
+    return new ResponseEntity<Map<String, Long>>(mapForResult, HttpStatus.OK);
+  }
 
   // 회원가입
   @RequestMapping(value = "/signup", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

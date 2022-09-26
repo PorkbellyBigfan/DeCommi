@@ -19,7 +19,7 @@ import org.zerock.decommi.entity.diary.Report;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.member.Bookmark;
 import org.zerock.decommi.entity.member.Member;
-import org.zerock.decommi.vo.diaryPostList;
+import org.zerock.decommi.vo.DiaryPostList;
 
 public interface DiaryService {
     // 다이어리
@@ -33,7 +33,7 @@ public interface DiaryService {
 
     DiaryDTO getDiaryPostByDino(Long dino);
 
-    List<diaryPostList> getDiaryPostList();
+    List<DiaryPostList> getDiaryPostList();
 
     // 검색조건 만족하는 다이어리 게시글 리스트
     // List<Object[]> getSearchDiaryList(String search);
@@ -149,7 +149,7 @@ public interface DiaryService {
     // 하트
     default Heart heartDTOtoEntity(HeartDTO dto) {
         Heart entity = Heart.builder()
-                .heartId(dto.getHeartId())
+                .hid(dto.getHid())
                 .dino(dto.getDino())
                 .mid(dto.getMid())
                 .build();
@@ -159,7 +159,7 @@ public interface DiaryService {
     // 하트
     default HeartDTO heartEntityToDTO(Heart entity) {
         HeartDTO dto = HeartDTO.builder()
-                .heartId(entity.getHeartId())
+                .hid(entity.getHid())
                 .dino(entity.getDino())
                 .mid(entity.getMid())
                 .build();
@@ -170,7 +170,7 @@ public interface DiaryService {
     default Bookmark bookmarkDTOtoEntity(BookmarkDTO dto) {
         Bookmark entity = Bookmark.builder()
                 .dino(dto.getDino())
-                .bookmarkId(dto.getBookmarkId())
+                .bid(dto.getBid())
                 .mid(dto.getMid())
                 .build();
         return entity;
@@ -180,7 +180,7 @@ public interface DiaryService {
     default BookmarkDTO bookmarkEntityToDto(Bookmark entity) {
         BookmarkDTO dto = BookmarkDTO.builder()
                 .dino(entity.getDino())
-                .bookmarkId(entity.getBookmarkId())
+                .bid(entity.getBid())
                 .mid(entity.getMid())
                 .build();
         return dto;

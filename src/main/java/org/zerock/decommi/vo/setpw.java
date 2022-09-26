@@ -1,5 +1,5 @@
 package org.zerock.decommi.vo;
 
-public class setpw {
-  
+public class Setpw {
+
 }

@@ -11,7 +11,7 @@ public interface BookmarkService {
     default Bookmark dtoToEntity(BookmarkDTO dto) {
         Bookmark entity = Bookmark.builder()
                 .dino(dto.getDino())
-                .bookmarkId(dto.getBookmarkId())
+                .bid(dto.getBid())
                 .mid(dto.getMid())
                 .build();
         return entity;
@@ -20,7 +20,7 @@ public interface BookmarkService {
     default BookmarkDTO EntityToDto(Bookmark entity) {
         BookmarkDTO dto = BookmarkDTO.builder()
                 .dino(entity.getDino())
-                .bookmarkId(entity.getBookmarkId())
+                .bid(entity.getBid())
                 .mid(entity.getMid())
                 .build();
         return dto;
