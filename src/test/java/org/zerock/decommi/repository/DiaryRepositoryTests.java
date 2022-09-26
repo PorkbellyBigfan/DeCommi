@@ -34,7 +34,8 @@ import lombok.extern.log4j.Log4j2;
 public class DiaryRepositoryTests {
   @Autowired
   DiaryRepository repository; // Diary Repository
-
+  @Autowired
+  MemberRepository memberRepository;
   @Autowired
   TagRepository tagRepository;
 
@@ -43,6 +44,7 @@ public class DiaryRepositoryTests {
     IntStream.rangeClosed(1,50).forEach(i->{
       Random randomBoolean = new Random();
       Member member = Member.builder().email(i+"@"+i+".com").build();
+      memberRepository.save(member);
       Diary d = Diary.builder()
         .title("title"+i)
         .content("content"+i)
