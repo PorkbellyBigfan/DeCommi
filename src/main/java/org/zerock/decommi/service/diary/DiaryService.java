@@ -24,6 +24,8 @@ public interface DiaryService {
 
     void deleteDiary(Long dino);
 
+    DiaryDTO getDiaryPostByDino(Long dino); 
+
     List<Object[]> getDiaryList();
 
     // 검색조건 만족하는 다이어리 게시글 리스트
