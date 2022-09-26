@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.zerock.decommi.entity.common.BaseEntity;
-import org.zerock.decommi.entity.diary.Diary;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,20 +22,16 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "member", "dino" })
+@ToString
 @Table(name = "d_bookmark")
 public class Bookmark extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookmarkId;
-    private String bfolderName;
-    private boolean isBookmark;
+    // private String bfolderName;
+    // private boolean isBookmark;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email")
-    private Member member;
+    private Long dino;
+    private Long mid;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dino")
-    private Diary dino;
 }

@@ -1,13 +1,15 @@
 package org.zerock.decommi.entity.diary;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.zerock.decommi.entity.common.BaseEntity;
 import org.zerock.decommi.entity.member.Member;
 
 import lombok.AllArgsConstructor;
@@ -17,23 +19,25 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Getter
 @Builder
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "d_heart")
-public class Heart {
+@ToString
+@Table(name = "d_report")
+public class Report extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long heartId;
-    // private boolean isHeart;
+    private Long reid;
 
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "dino")
-    private Long dino;
+    @Column
+    private String reportContent;
 
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "id")
-    private Long mid;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Diary dino;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member mid;
 
 }

@@ -17,20 +17,29 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.zerock.decommi.dto.BookmarkDTO;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.FileDTO;
+import org.zerock.decommi.dto.HeartDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.dto.ReplyDTO;
+import org.zerock.decommi.dto.ReportDTO;
 import org.zerock.decommi.dto.TagDTO;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.File;
+import org.zerock.decommi.entity.diary.Heart;
 import org.zerock.decommi.entity.diary.Reply;
+import org.zerock.decommi.entity.diary.Report;
 import org.zerock.decommi.entity.diary.Tag;
+import org.zerock.decommi.entity.member.Bookmark;
 import org.zerock.decommi.entity.member.Member;
+import org.zerock.decommi.repository.diary.BookmarkRepository;
 import org.zerock.decommi.repository.diary.DiaryRepository;
 import org.zerock.decommi.repository.diary.FileRepository;
+import org.zerock.decommi.repository.diary.HeartRepository;
 import org.zerock.decommi.repository.diary.ReplyRepository;
+import org.zerock.decommi.repository.diary.ReportRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 
@@ -46,6 +55,9 @@ public class DiaryServiceImpl implements DiaryService {
     private final TagRepository tagRepository;
     private final ReplyRepository replyRepository;
     private final FileRepository fileRepository;
+    private final HeartRepository heartRepository;
+    private final BookmarkRepository bookmarkRepository;
+    private final ReportRepository reportRepository;
 
     @Override
     public String registerDiary(DiaryDTO dto, List<String> tagList) {
@@ -128,6 +140,48 @@ public class DiaryServiceImpl implements DiaryService {
 
     }
 
+    // 하트
+    @Override
+    public String addHeart(HeartDTO dto) {
+        Optional<Heart> checkHeart = heartRepository.checkHeartLogByMemberIdAndDiaryId(dto.getMid(), dto.getDino());
+        Heart entity = heartDTOtoEntity(dto);
+        if (checkHeart.isPresent()) {
+            heartRepository.delete(checkHeart.get());
+            return "좋아요 취소";
+        } else {
+            heartRepository.save(entity);
+            return "좋아요";
+        }
+    }
+
+    // 북마크
+    @Override
+    public String addBookmark(BookmarkDTO dto) {
+        Optional<Bookmark> checkBookmark = bookmarkRepository.checkBookmarkLogByMemberIdAndDiary(dto.getMid(),
+                dto.getDino());
+        Bookmark entity = bookmarkDTOtoEntity(dto);
+        if (checkBookmark.isPresent()) {
+            bookmarkRepository.delete(checkBookmark.get());
+            return "북마크 취소";
+        } else {
+            bookmarkRepository.save(entity);
+            return "북마크 추가";
+        }
+
+    }
+
+    // 신고
+    @Override
+    public String addDiaryReport(ReportDTO dto) {
+        Optional<Report> checkReport = reportRepository.checkReportLogByMemberIdAndDiaryId(dto.getMid(), dto.getDino());
+        if (checkReport.isPresent()) {
+            return "이미 신고한 글입니다";
+        } else {
+            reportRepository.save(reportDTOtoEntity(dto));
+            return "신고가 완료되었습니다";
+        }
+
+    }
     // 댓글 등록 //이해가 잘 가지 않음
     // @Override
     // public Long registerReply(ReplyDTO dto) {

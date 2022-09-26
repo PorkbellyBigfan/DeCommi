@@ -26,8 +26,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.zerock.decommi.dto.BookmarkDTO;
 import org.zerock.decommi.dto.DiaryDTO;
+import org.zerock.decommi.dto.HeartDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
+import org.zerock.decommi.dto.ReportDTO;
 import org.zerock.decommi.dto.TagDTO;
 import org.zerock.decommi.dto.UploadResultDTO;
 import org.zerock.decommi.entity.diary.Tag;
@@ -101,6 +104,21 @@ public class DiaryApiController {
             uploadPathFolder.mkdirs();
         }
         return folderPath;
+    }
+
+    @RequestMapping(value = "/like", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> LikeDiary(@RequestBody HeartDTO dto) {
+      return new ResponseEntity<>(diaryService.addHeart(dto), HttpStatus.OK);
+    }
+  
+    @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> bookmarDiary(@RequestBody BookmarkDTO dto) {
+      return new ResponseEntity<>(diaryService.addBookmark(dto), HttpStatus.OK);
+    }
+  
+    @RequestMapping(value = "/report", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> reportingDiary(@RequestBody ReportDTO dto) {
+      return new ResponseEntity<>(diaryService.addDiaryReport(dto), HttpStatus.OK);
     }
 
 }
