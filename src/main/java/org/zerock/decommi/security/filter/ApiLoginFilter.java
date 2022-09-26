@@ -45,16 +45,18 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
     String msgBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
     log.info("msgBody:: " + msgBody);
     JSONParser parser = new JSONParser();
-    JSONObject jsonObject = null;
+    JSONObject jsonObject = new JSONObject();
+    log.info("jsonObject"+jsonObject);
     try {
       jsonObject = (JSONObject) parser.parse(msgBody);
+      log.info("jsonObject"+jsonObject);
     } catch (Exception e) {
       e.printStackTrace();
     }
 
     String email = jsonObject.get("email").toString();
     String pw = jsonObject.get("pw").toString();
-    log.info("email: " + email + "/pw: " + pw);
+    log.info("id: " + email + "/pw: " + pw);
     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, pw);
 
     return getAuthenticationManager().authenticate(authToken);

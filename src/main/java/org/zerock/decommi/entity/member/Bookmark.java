@@ -1,4 +1,4 @@
-package org.zerock.decommi.entity;
+package org.zerock.decommi.entity.member;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.zerock.decommi.entity.common.BaseEntity;
-import org.zerock.decommi.entity.member.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,16 +22,16 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "writer")
-@Table(name = "d_todo")
-public class ToDo extends BaseEntity {
+@ToString
+@Table(name = "d_bookmark")
+public class Bookmark extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long todoId;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
-    private Member writer;
-    private String todoTitle;
-    private String todoContent;
-    private boolean todoStatus;
+    private Long bookmarkId;
+    // private String bfolderName;
+    // private boolean isBookmark;
+
+    private Long dino;
+    private Long mid;
+
 }

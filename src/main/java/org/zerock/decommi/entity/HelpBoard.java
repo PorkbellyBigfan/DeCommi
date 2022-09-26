@@ -46,15 +46,13 @@ public class HelpBoard extends BaseEntity {
     @Builder.Default
     private Set<HelpType> roleSet = new HashSet<>();
 
-    // @Enumerated(EnumType.ORDINAL)
-    // private HelpType helpType;
+    @Enumerated(EnumType.STRING)
+    private HelpType helpType;
 
     public enum HelpType {
         NOTICE, FQA
     }
 
-    public void addHelpType(HelpType type) {
-        roleSet.add(type);
-    }
+    
 
 }

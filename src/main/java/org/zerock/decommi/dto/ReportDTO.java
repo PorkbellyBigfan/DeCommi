@@ -9,11 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookmarkDTO {
-    private Long bookmarkId;
-    // private String bfolderName;
-    // private boolean isBookmark;
-
+public class ReportDTO {
+    private Long reid;
+    private String reportContent;
     private Long dino;
     private Long mid;
 }

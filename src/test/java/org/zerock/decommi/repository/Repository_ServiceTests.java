@@ -18,12 +18,19 @@ import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.MemberDTO;
 import org.zerock.decommi.dto.TagDTO;
 import org.zerock.decommi.entity.diary.Diary;
+import org.zerock.decommi.entity.diary.Heart;
+import org.zerock.decommi.entity.diary.Report;
 import org.zerock.decommi.entity.member.Member;
+import org.zerock.decommi.repository.diary.BookmarkRepository;
 import org.zerock.decommi.repository.diary.DiaryRepository;
+import org.zerock.decommi.repository.diary.HeartRepository;
 import org.zerock.decommi.repository.diary.ReplyRepository;
+import org.zerock.decommi.repository.diary.ReportRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
+import org.zerock.decommi.service.diary.BookmarkService;
 import org.zerock.decommi.service.diary.DiaryService;
+import org.zerock.decommi.service.diary.HeartServiceImpl;
 import org.zerock.decommi.service.member.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -33,6 +40,9 @@ import lombok.extern.log4j.Log4j2;
 @SpringBootTest
 @RequiredArgsConstructor
 public class Repository_ServiceTests {
+    @Autowired
+    HeartServiceImpl himpl;
+
     @Autowired
     MemberRepository memberRepository;
 
@@ -51,6 +61,17 @@ public class Repository_ServiceTests {
     @Autowired
     TagRepository tagRepository;
 
+    @Autowired
+    HeartRepository heartRepository;
+
+    @Autowired
+    BookmarkRepository bookmarkRepository;
+
+    @Autowired
+    BookmarkService bookmarkService;
+
+    @Autowired
+    ReportRepository reportRepository;
     //MemberTests
     @Test
     public void findById(){
@@ -147,6 +168,26 @@ public class Repository_ServiceTests {
     @Test
     public void deleteDiary(){
         DiaryDTO dto = DiaryDTO.builder().dino(2L).writer("user2@decommi.com").build();
-        diaryService.deleteDiary(dto);
+        diaryService.deleteDiary(dto.getDino());
+    }
+    // HeartTests
+    @Test
+    public void test() {
+        log.info(himpl.getListDino(1L));
+    }
+
+    @Test
+    public void insertHeart(){
+        Heart heart = Heart.builder().heartId(1L).dino(1L).mid(1L).build();
+        heartRepository.save(heart);
+    }
+
+    // BookmarkTests
+    // ReportTests
+    @Test
+    public void findByReid() {
+        // log.info(reportRepository.findByReid(1L));
+        log.info(reportRepository.checkReportLogByMemberIdAndDiaryId(1L, 1L));
     }
 }
+

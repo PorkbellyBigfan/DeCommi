@@ -50,12 +50,10 @@ public class DecommiLoginSuccessHandler implements AuthenticationSuccessHandler 
     });
     String forward = "";
     System.out.println(">>>" + roleNames);
-    if (roleNames.contains("ROLE_GUEST"))
-      forward = "./";
     if (roleNames.contains("ROLE_MEMBER"))
-      forward = "./";
+      forward = "/main";
     if (roleNames.contains("ROLE_ADMIN"))
-      forward = "./";
+      forward = "/admin";
     redirectStrategy.sendRedirect(request, response, forward);
   }
 }

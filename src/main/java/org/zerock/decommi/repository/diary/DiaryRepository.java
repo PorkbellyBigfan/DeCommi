@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.stereotype.Repository;
@@ -22,29 +23,41 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
   // 번호로 게시글 조회
   Diary findByDino(Long dino);
 
-  // 태그가 포함된 다이어리 리스트
-  @EntityGraph(attributePaths = { "tags", "replies" }, type = EntityGraphType.LOAD)
-  @Query(value = "select dlwt from Diary dlwt") // dlwt = DiaryList With Tag
-  Page<Diary> getDiaryListWithTag(Pageable pageable);
+  @Query("select d from Diary d where d.dino=:dino "
+      + " ")
+  Optional<Diary> getDiaryWithAll(Long dino);
 
+  // 태그가 포함된 다이어리 리스트
+  @EntityGraph(attributePaths = { "tags", "files", "replyList" }, type = EntityGraphType.LOAD)
+  @Query(value = "select d from Diary d")
+  Page<Diary> getDiaryListWithTagAndReply(Pageable pageable);
+
+  // 관리자페이지에서 사용할것같음
   // 글작성자와 게시글 번호 가져오기
   @Query("select d from Diary d where writer=:id and dino=:dino")
   Optional<Diary> getDiaryByDinoAndId(Long dino, String id);
 
-  // @Query("select m.id d.dino, d.title, d.content, d.openYN, d.replyYN d.regDate
-  // "
-  // + "from Diary d left join Member m "
-  // + "on m.id=d.writer "
-  // + "ORDER BY d.dino DESC ")
-  // List<Object[]> getListAndAuthor();
+  // 댓글카운트, 하트카운트, 북마크카운트, 신고카운트 추가해야됨
+  @Query("select m.id, d.dino, d.title, d.content, d.tags, count(distinct r), d.openYN, d.replyYN, d.regDate, d.modDate "
+      + "from Diary d "
+      + "left join Member m on m.id=d.writer "
+      + "left join Reply r on r.dino = d "
+      + "ORDER BY d.dino DESC ")
+  List<Object[]> getListAndAuthor();
 
-  // @Query("select m.name d.dino, d.title, d.content, d.openYN, d.replyYN
-  // d.regDate "
-  // + "from Diary d left join Member m "
-  // + "on m.mid=d.writer "
-  // + "where m.name LIKE CONCAT('%',:search,'%') Or "
-  // + "d.title LIKE CONCAT('%',:search,'%') Or "
+  // 댓글카운트, 하트카운트, 북마크카운트, 신고카운트 추가해야됨
+  // @Query("select m.id, d.dino, d.title, d.content, d.openYN, d.replyYN,
+  // d.regDate, d.modDate "
+  // + "from Diary d "
+  // + "left join Member m on m.id = d.writer "
+  // + "where d.title LIKE CONCAT('%',:search,'%') Or "
+  // + "d.content LIKE CONCAT('%',:search,'%') Or "
   // + "ORDER BY d.dino DESC ")
-  // List<Object[]> getListAndAuthorByAuthorOrDtitle(String search);
+  // List<Object[]> getListByTitleOrContent(String search);
+
+  // Dino로 파일 삭제하기
+  @Modifying
+  @Query("delete from File f where f.dino.dino=:dino")
+  void deleteFileByDino(Long dino);
 
 }

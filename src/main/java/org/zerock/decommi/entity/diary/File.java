@@ -1,6 +1,5 @@
 package org.zerock.decommi.entity.diary;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -8,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import org.zerock.decommi.entity.common.BaseEntity;
 import org.zerock.decommi.entity.member.Member;
@@ -20,34 +18,30 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "member", "dino" })
-@Table(name = "d_tag")
-public class Tag extends BaseEntity {
+@ToString(exclude = {"dino"})
+@Getter
+public class File extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tagId;
-
-    @Column(unique = true, nullable = false)
-    private String tagName;
-
-    // // 하위태그를 위한 컬럼
-    // @Column(nullable = false)
-    // private boolean isSubTag;
-    // @Column(nullable = false)
-    // private Long tagGroup;
+    private Long fid;
+    private String uuid;
+    private String fname;
+    private String fpath;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diary_dino", referencedColumnName = "dino")
     private Diary dino;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
-
-    public void updateDiary(Diary list) {
-        this.dino = list;
+    public void changeUuid(String uuid){
+        this.uuid = uuid;
+    }
+    public void changeFname(String fname){
+        this.fname = fname;
+    }
+    public void changeFpath(String fpath){
+        this.fpath = fpath;
     }
 }

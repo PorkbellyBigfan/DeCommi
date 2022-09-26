@@ -14,9 +14,7 @@ import lombok.NoArgsConstructor;
 public class TagDTO {
     private Long tagId;
     private String tagName;
-    // private int tagSearchedCnt;
-    // private int tagUsedCnt;
-    private boolean isSubTag;
-    private Long tagGroup;
+    // private boolean isSubTag;
+    // private Long tagGroup;
     private Diary dino;
 }

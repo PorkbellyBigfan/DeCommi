@@ -25,7 +25,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequestMapping("/member")
 @RequiredArgsConstructor
-public class ApiMemberController {
+public class MemberApiController {
   private final MemberService service;
 
   // 멤버 하나 가져오기
@@ -58,7 +58,7 @@ public class ApiMemberController {
   // 회원가입
   @RequestMapping(value = "/signup", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<String> signUp(@RequestBody MemberDTO dto) {
-    log.info("member/signUp : " + dto);
+    log.info("member/signup : " + dto);
     String email = service.signUp(dto);
     return new ResponseEntity<>(email, HttpStatus.OK);
   }

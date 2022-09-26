@@ -41,7 +41,7 @@ public class SecurityConfig {
       throws Exception {
     http.csrf().disable();
     http.addFilterBefore(apiCheckFilter(), UsernamePasswordAuthenticationFilter.class);
-    http.addFilterAfter(apiLoginFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class);
+    http.addFilterBefore(apiLoginFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
 
@@ -70,8 +70,6 @@ public class SecurityConfig {
   public ApiCheckFilter apiCheckFilter() {
     return new ApiCheckFilter("/api/**/*", jwtUtil());
   }
-
-  // apiCheckFilter: api주소로 시작되는 모든곳에 해당(가입부분때문에 수정고려)
 
   @Bean
   public ApiLoginFilter apiLoginFilter(AuthenticationManager authenticationManager) throws Exception {

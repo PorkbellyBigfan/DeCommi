@@ -1,8 +1,12 @@
 package org.zerock.decommi.repository;
 
+import java.net.URLDecoder;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 import javax.transaction.Transactional;
 
@@ -16,14 +20,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Commit;
 import org.zerock.decommi.entity.diary.Diary;
+import org.zerock.decommi.entity.diary.File;
+import org.zerock.decommi.entity.diary.Reply;
 // import org.zerock.decommi.entity.diary.DiaryTag;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.entity.member.MemberRole;
 import org.zerock.decommi.repository.diary.DiaryRepository;
+import org.zerock.decommi.repository.diary.ReplyRepository;
 // import org.zerock.decommi.repository.diary.DiaryTagRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
+import org.zerock.decommi.service.diary.DiaryService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -32,74 +40,99 @@ import lombok.extern.log4j.Log4j2;
 public class DiaryRepositoryTests {
   @Autowired
   DiaryRepository repository; // Diary Repository
-
+  @Autowired
+  DiaryService diaryService;
   @Autowired
   TagRepository tagRepository;
-
-  // @Autowired
-  // DiaryTagRepository dtRepository; // Diary_Tag Repository
-
   @Autowired
-  MemberRepository memberRepository; // Member Repository
+  ReplyRepository replyRepository;
 
-  @Autowired
-  private PasswordEncoder encoder;
-
-  
   @Test
-  public void insertDiaryPosts() {
-    IntStream.rangeClosed(1, 20).forEach(i -> {
+  public void insertDiaryDummies() {
+    IntStream.rangeClosed(1, 50).forEach(i -> {
       Long mno = (long) (Math.random() * 20) + 1;
-      // 멤버 1~100 랜덤
-      //  Member writer = Member.builder().email("user" + i + "decommi.com").build();
-      Member writer = Member.builder().email("user" + i +
-          "@decommi.com").pw(encoder.encode("1234"))
-          .id("id" + i).q1("q1").q2("q2").q3("q3").fromSocial(false).auth(true).build();
-          memberRepository.save(writer);
-      writer.addMemberRole(MemberRole.GUEST);
-      if (i > 5)
-        writer.addMemberRole(MemberRole.MEMBER);
-      if (i > 17)
-        writer.addMemberRole(MemberRole.ADMIN);
-      Diary diary = Diary.builder()
+      Random randomBoolean = new Random();
+      Member member = Member.builder().email("user" + mno + "@decommi.com").id("user" + i).build();
+      Diary d = Diary.builder()
           .title("title" + i)
           .content("content" + i)
-          .openYN(false)
-          .replyYN(true)
-          .writer("user"+i+"@decommi.com")
+          .writer(member.getId())
+          .openYN(randomBoolean.nextBoolean())
+          .replyYN(randomBoolean.nextBoolean())
+          .files(null)
+          .tags(null)
+          .replyList(null)
           .build();
-      repository.save(diary);
+      repository.save(d);
     });
   }
-      @Test
-      public void insertTag(){
-        IntStream.rangeClosed(1, 20).forEach(i->{
-        Long tagname = (long) (Math.random() * 5) + 1;
-        Long tagG = (long) (Math.random() * 5) + 1;
 
-      Tag tag = Tag.builder()
-          .tagName("tagName" + i)
-          .isSubTag(false)
-          .tagGroup(tagG)
-          .dino(Diary.builder().dino((long) i).build())
-          .build();
-      tagRepository.save(tag);
-    });
-    }
-
-    
-    @Test
-    public void test() {
-      log.info(repository.findByDino(1L));
-    }
-
-    
-    @Test
-    public void findemail(){
-        Optional<Member> result = memberRepository.findByEmail("user1@decommi.com");
-        log.info(result);
-    }
-
-
-    
+  @Test
+  public void findByDino() {
+    log.info(repository.findByDino(1L));
   }
+
+  @Test
+  void getDiaryWithAll() {
+    Optional<Diary> isit = repository.getDiaryWithAll(1L);
+    if (isit.isPresent()) {
+      log.info(-1);
+    } else {
+      log.info(diaryService.entityToDTO(isit.get()));
+    }
+  }
+
+  // 댓글 등록
+  @Test
+  public void insertReply() {
+    Diary diary = Diary.builder().dino(1L).build();
+    Member member = Member.builder().mid(1L).build();
+    Reply reply = Reply.builder()
+        .dino(diary)
+        .member(member)
+        .replyContent("replyContent")
+        .replyGroup(1L)
+        .replyDepth(0L)
+        .replyOrder(0L)
+        .build();
+    replyRepository.save(reply);
+  }
+
+  // 댓글 등록2
+  @Test
+  public void insertReplies() {
+    LongStream.rangeClosed(1L, 20L).forEach(i -> {
+      Diary diary = Diary.builder().dino(1L).build();
+      Long rand = (long) (Math.random() * 20) + 1;
+      Member member = Member.builder().mid(rand).build();
+      Reply reply = Reply.builder()
+          .dino(diary)
+          .member(member)
+          .replyContent("replyContent" + i)
+          .replyGroup(i)
+          .replyDepth(0L)
+          .replyOrder(0L)
+          .build();
+      replyRepository.save(reply);
+
+    });
+  }
+
+  // 다이어리 리스트
+  @Test
+  public void testGetDiaryList() {
+    List<Object[]> result = repository.getListAndAuthor();
+    for (Object[] arr : result) {
+      // log.info(Arrays.toString(arr));
+      System.out.println(Arrays.toString(arr));
+    }
+  }
+
+  @Test
+  @Transactional
+  public void testGetDiaryList2() {
+    Pageable pageable = PageRequest.of(0, 5, Sort.by("dino").descending());
+    Page<Diary> result = repository.getDiaryListWithTagAndReply(pageable);
+    log.info(result);
+  }
+}
