@@ -140,6 +140,7 @@ public class DiaryServiceImpl implements DiaryService {
 
     }
 
+<<<<<<< HEAD
     // 하트
     @Override
     public String addHeart(HeartDTO dto) {
@@ -182,6 +183,20 @@ public class DiaryServiceImpl implements DiaryService {
         }
 
     }
+=======
+    @Override
+    public DiaryDTO getDiaryPostByDino(Long dino) {
+        Diary result = repository.getByDino(dino);
+        DiaryDTO dto = entityToDTO(result);
+        List<String> tagString = tagRepository.getList(result.getDino())
+            .stream()
+            .map(tentity -> tentity.getTagName())
+            .collect(Collectors.toList());
+        dto.setTags(tagString);
+        return dto;
+    }
+
+>>>>>>> e8f40cc32c8a49935a2986c6d90d651c04f117bc
     // 댓글 등록 //이해가 잘 가지 않음
     // @Override
     // public Long registerReply(ReplyDTO dto) {

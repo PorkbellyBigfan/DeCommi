@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,10 +55,11 @@ public class DiaryApiController {
     @RequestMapping(value = "/write", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> register(@RequestBody DiaryDTO dto) {
         List<String> tagList = dto.getTags();
-        log.info("hello");
         log.info("dto : " + dto);
         return new ResponseEntity<>(diaryService.registerDiary(dto, tagList), HttpStatus.OK);
     }
+
+
 
     @PostMapping("/write/uploadAjax")
     public ResponseEntity<List<UploadResultDTO>> uploadFile(MultipartFile[] uploadFiles) {

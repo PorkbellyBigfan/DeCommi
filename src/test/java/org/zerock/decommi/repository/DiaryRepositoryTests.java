@@ -129,10 +129,10 @@ public class DiaryRepositoryTests {
   }
 
   @Test
+  @Transactional
   public void testGetDiaryList2() {
     Pageable pageable = PageRequest.of(0, 5, Sort.by("dino").descending());
     Page<Diary> result = repository.getDiaryListWithTagAndReply(pageable);
     log.info(result);
   }
-
 }

@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import org.zerock.decommi.dto.TagDTO;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.Tag;
 
@@ -20,7 +19,7 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
   // 게시글번호와 태그이름을 찾음
   Optional<Tag> findByDinoAndTagName(Diary dino, String tagName);
 
-  List<Tag> findByDiary(Diary dino);
+  List<Tag> findByDino(Diary dino);
 
   @Query("select t from Tag t where tag_name like %:keyword%")
   Optional<List<Tag>> getAidListByHashTagName(String keyword);
