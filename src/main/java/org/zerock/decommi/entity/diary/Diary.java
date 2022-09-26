@@ -22,11 +22,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = { "tags", "files", "replyList" })
@@ -60,5 +62,4 @@ public class Diary extends BaseEntity {
 
     // public void changeTitle(String title) {this.title = title;}
     // public void changeContent(String content) { this.content = content; }
-
 }

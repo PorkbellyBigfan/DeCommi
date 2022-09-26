@@ -1,17 +1,28 @@
 package org.zerock.decommi.repository.diary;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+
 import org.zerock.decommi.entity.diary.Diary;
+import org.zerock.decommi.entity.diary.QDiary;
+import org.zerock.decommi.vo.SearchCondition;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-public class DiaryRepositoryImpl extends QuerydslRepositorySupport implements DiaryRepositoryCustom {
-    @Autowired
-    private JPAQueryFactory queryFactory;
+import lombok.RequiredArgsConstructor;
 
-    public DiaryRepositoryImpl() {
-        super(Diary.class);
+@RequiredArgsConstructor
+public class DiaryRepositoryImpl implements DiaryCustomRepository {
+    private final JPAQueryFactory jpaQueryFactory;
+
+    @Override
+    public List<Diary> search(SearchCondition searchCondition) {
+        Diary diary = jpaQueryFactory
+                .selectFrom(QDiary.diary)
+                .where(QDiary.diary.dino.eq(dino))
+                .fetch();
+        return;
     }
 
 }
