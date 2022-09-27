@@ -52,6 +52,7 @@ public interface DiaryRepository extends JpaRepository<Diary, Long>, DiaryCustom
       + "left join Report rp on rp.dino = d "
       + "where d.openYN = 1L "
       + "group by d.dino ")
+  
   Optional<List<getDiaryPostList>> getList(Sort sort);
 
   // 댓글카운트, 하트카운트, 북마크카운트, 신고카운트 추가해야됨

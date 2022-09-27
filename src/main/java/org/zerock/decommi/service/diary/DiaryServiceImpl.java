@@ -71,6 +71,7 @@ public class DiaryServiceImpl implements DiaryService {
                 fileRepository.save(file);
             }
         });
+        log.info("result.getDino() : "+result.getDino());
         List<String> tagList = dto.getTagList();
         tagList.forEach(new Consumer<String>(){
             @Override
@@ -85,6 +86,7 @@ public class DiaryServiceImpl implements DiaryService {
         //     tagResult.updateDiary(result);
         //     tagRepository.save(tagResult);
         // }
+        
         return result.getDino().toString();
     }
 
