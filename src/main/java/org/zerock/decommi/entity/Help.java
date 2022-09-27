@@ -31,28 +31,28 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString(exclude = "writer")
 @Table(name = "d_help")
-public class HelpBoard extends BaseEntity {
+public class Help extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long hbno;
     private String title;
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     private Member writer;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default
-    private Set<HelpType> roleSet = new HashSet<>();
+    private Set<HelpRole> roleSet = new HashSet<>();
 
-    @Enumerated(EnumType.STRING)
-    private HelpType helpType;
+    // @Enumerated(EnumType.ORDINAL)
+    // private HelpType helpType;
 
-    public enum HelpType {
-        NOTICE, FQA
+    public void addHelpRole(HelpRole role) {
+    roleSet.add(role);
     }
-
-    
-
+    public void changTitle(String title){this.title=title;}
+    public void changContent(String content){this.content=content;}
 }
+    

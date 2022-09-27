@@ -1,5 +1,10 @@
 package org.zerock.decommi.dto;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.zerock.decommi.entity.HelpRole;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,13 +14,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class HelpBoardDTO {
-    private int hbno;
+public class HelpDTO {
+    private Long hbno;
     private String title;
     private String content;
+    private Long writer;
 
-    private Enum hbType[];
-
-    private String memberemail;
+    @Builder.Default
+    private Set<String> roleSet = new HashSet<>();
+  
 
 }

@@ -16,7 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.zerock.decommi.entity.HelpBoard;
+import org.zerock.decommi.entity.Help;
 import org.zerock.decommi.entity.common.BaseEntity;
 import org.zerock.decommi.entity.diary.Diary;
 
@@ -54,7 +54,7 @@ public class Alarm extends BaseEntity {
     private Bookmark bookmarkId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hbno")
-    private HelpBoard hbno;
+    private Help hbno;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default
