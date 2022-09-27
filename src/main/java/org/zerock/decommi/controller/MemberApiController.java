@@ -29,16 +29,14 @@ public class MemberApiController {
   private final MemberService service;
 
   // 멤버 하나 가져오기
-  // @RequestMapping(value = "/getAuth", method = RequestMethod.POST, consumes =
-  // MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  // public ResponseEntity<Map<String, Object>> getAuth(@RequestBody Map<String,
-  // Object> mapObj,
-  // @RequestHeader("token") String token) {
-  // String email = mapObj.get("email").toString();
-  // Map<String, Object> map = new HashMap<>();
-  // map.put("dto", service.getMemberDTO(email));
-  // return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-  // }
+  @RequestMapping(value = "/getAuth", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Map<String, Object>> getAuth(@RequestBody Map<String, Object> mapObj,
+      @RequestHeader("token") String token) {
+    String email = mapObj.get("email").toString();
+    Map<String, Object> map = new HashMap<>();
+    map.put("dto", service.getMemberDTO(email));
+    return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+  }
 
   // 이메일체크
   @RequestMapping(value = "/emailCheck", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -61,22 +59,20 @@ public class MemberApiController {
     return new ResponseEntity<>(email, HttpStatus.OK);
   }
 
-  // @RequestMapping(value = "/getlist", method = RequestMethod.POST, consumes =
-  // MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  // @RequestMapping(value = "/getlist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   // public ResponseEntity<List<MemberDTO>> getList(
-  // @RequestHeader("token") String token) {
-  // List<MemberDTO> result = service.getList();
-  // log.info(result);
-  // return new ResponseEntity<>(result, HttpStatus.OK);
+  //     @RequestHeader("token") String token) {
+  //   List<MemberDTO> result = service.getList();
+  //   log.info(result);
+  //   return new ResponseEntity<>(result, HttpStatus.OK);
   // }
 
-  // @RequestMapping(value = "/get-page-list", method = RequestMethod.POST,
-  // consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  // @RequestMapping(value = "/get-page-list", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   // public ResponseEntity<PageResultDTO<MemberDTO, Member>> getPagingList(
-  // @RequestBody PageRequestDTO dto,
-  // @RequestHeader("token") String token) {
-  // log.info("PageRequestDTO page: " + dto.getPage());
-  // return new ResponseEntity<>(service.getPageList(dto), HttpStatus.OK);
+  //     @RequestBody PageRequestDTO dto,
+  //     @RequestHeader("token") String token) {
+  //   log.info("PageRequestDTO page: " + dto.getPage());
+  //   return new ResponseEntity<>(service.getPageList(dto), HttpStatus.OK);
   // }
 
 }

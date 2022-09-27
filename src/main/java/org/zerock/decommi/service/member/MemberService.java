@@ -45,7 +45,7 @@ public interface MemberService {
     default Member dtoToEntity(MemberDTO dto) {
         Member member = Member.builder()
                 .mid(dto.getMid())
-                .id(dto.getId())
+                .id(dto.getId())    
                 .pw(dto.getPw())
                 .email(dto.getEmail())
                 .fromSocial(dto.isFromSocial())

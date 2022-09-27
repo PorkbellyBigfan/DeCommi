@@ -92,7 +92,7 @@ public class DiaryServiceImpl implements DiaryService {
                     .stream()
                     .map(tentity -> tentity.getTagName())
                     .collect(Collectors.toList());
-            dto.setTags(tagList);
+            dto.setTagList(tagList);
             return dto;
         }
     }
@@ -103,7 +103,7 @@ public class DiaryServiceImpl implements DiaryService {
         Diary originalDiary = repository.findByDino(dto.getDino());
         DiaryDTO getByDino = entityToDTO(originalDiary);
 
-        originalDiary.getTags().forEach(tag -> {
+        originalDiary.getTagList().forEach(tag -> {
             tagRepository.deleteById(tag.getTagId());
         });
         getByDino.setTitle(dto.getTitle());
@@ -150,7 +150,7 @@ public class DiaryServiceImpl implements DiaryService {
                 .stream()
                 .map(tentity -> tentity.getTagName())
                 .collect(Collectors.toList());
-        dto.setTags(tagString);
+        dto.setTagList(tagString);
         return dto;
     }
 

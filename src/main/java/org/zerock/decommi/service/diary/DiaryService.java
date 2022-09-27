@@ -3,6 +3,7 @@ package org.zerock.decommi.service.diary;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.zerock.decommi.dto.BookmarkDTO;
 import org.zerock.decommi.dto.DiaryDTO;
@@ -34,6 +35,11 @@ public interface DiaryService {
     DiaryDTO getDiaryPostByDino(Long dino);
 
     List<DiaryPostList> getDiaryPostList();
+
+    //정렬조건
+    //default 는 작성일자 최신이 제일 위로
+    //하트순
+    //북마크순
 
     // 검색조건 만족하는 다이어리 게시글 리스트
     // List<Object[]> getSearchDiaryList(String search);

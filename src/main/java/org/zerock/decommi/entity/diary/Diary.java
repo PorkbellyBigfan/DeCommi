@@ -31,7 +31,7 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "tags", "files", "replyList" })
+@ToString(exclude = { "tagList", "files", "replyList" })
 @Table(name = "d_diary")
 public class Diary extends BaseEntity {
     @Id
@@ -50,7 +50,7 @@ public class Diary extends BaseEntity {
 
     @Builder.Default
     @OneToMany(mappedBy = "dino", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Tag> tags = new ArrayList<>();
+    private List<Tag> tagList = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "dino", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)

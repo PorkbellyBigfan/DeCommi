@@ -31,7 +31,7 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
   Optional<Diary> getDiaryWithAll(Long dino);
 
   // 태그가 포함된 다이어리 리스트
-  @EntityGraph(attributePaths = { "tags", "files", "replyList" }, type = EntityGraphType.LOAD)
+  @EntityGraph(attributePaths = { "tagList", "files", "replyList" }, type = EntityGraphType.LOAD)
   @Query(value = "select d from Diary d")
   Page<Diary> getDiaryListWithTagAndReply(Pageable pageable);
 
@@ -78,6 +78,8 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
     String getContent();
 
+    List<String> getTagList();
+
     Long getReplyCnt();
 
     Long getHeartCnt();
@@ -97,6 +99,8 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     String getWriter();
 
     String getContent();
+
+    List<String> getTagList();
 
     Long getReplyCnt();
 

@@ -31,7 +31,7 @@ public class DiaryDTO {
     @Builder.Default
     private List<FileDTO> fileDTOList = new ArrayList<>();
 
-    private List<String> tags;
+    private List<String> tagList;
 
     private List<Reply> replyList;
 

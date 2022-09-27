@@ -1,6 +1,7 @@
 package org.zerock.decommi.vo;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.zerock.decommi.repository.diary.DiaryRepository;
 
@@ -14,6 +15,7 @@ public class DiaryPostList {
   private String writer;
   private String title;
   private String content;
+  private List<String> tagList;
   private Long replyCnt;
   private Long heartCnt;
   private Long bookmarkCnt;
@@ -25,6 +27,7 @@ public class DiaryPostList {
     this.writer = dpl.getWriter();
     this.title = dpl.getTitle();
     this.content = dpl.getContent();
+    this.tagList = dpl.getTagList();
     this.replyCnt = dpl.getReplyCnt();
     this.heartCnt = dpl.getHeartCnt();
     this.bookmarkCnt = dpl.getBookmarkCnt();
