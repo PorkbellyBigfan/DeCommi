@@ -11,12 +11,11 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import javax.transaction.Transactional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.decommi.dto.BookmarkDTO;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.FileDTO;
@@ -61,7 +60,7 @@ public class DiaryServiceImpl implements DiaryService {
     private final ReportRepository reportRepository;
 
     @Override
-    public String registerDiary(DiaryDTO dto, List<String> tagList) {
+    public String registerDiary(DiaryDTO dto) {
         Diary result = dtoToEntity(dto);
         repository.save(result); // 여기서 dino 생성됨
         List<FileDTO> fileList = dto.getFileDTOList();
@@ -72,13 +71,20 @@ public class DiaryServiceImpl implements DiaryService {
                 fileRepository.save(file);
             }
         });
-        for (String i : tagList) {
-            Tag tagResult = tagDTOtoEntity(i);
-            tagResult.updateDiary(result);
-            tagRepository.save(tagResult);
-        }
-        dto.setTagList(tagList);
-        log.info(dto);
+        List<String> tagList = dto.getTagList();
+        tagList.forEach(new Consumer<String>(){
+            @Override
+            public void accept(String dto) {
+                Tag tag = tagDTOtoEntity(dto);
+                tag.updateDiary(result);
+                tagRepository.save(tag);
+            }
+        });
+        // for (String i : tagList) {
+        //     Tag tagResult = tagDTOtoEntity(i);
+        //     tagResult.updateDiary(result);
+        //     tagRepository.save(tagResult);
+        // }
         return result.getDino().toString();
     }
 
@@ -142,7 +148,7 @@ public class DiaryServiceImpl implements DiaryService {
 
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public DiaryDTO getDiaryPostByDino(Long dino) {
         Diary result = repository.getByDino(dino);
@@ -154,7 +160,7 @@ public class DiaryServiceImpl implements DiaryService {
         dto.setTagList(tagString);
         return dto;
     }
-
+    @Transactional(readOnly=true)
     @Override
     public List<DiaryPostList> getDiaryPostList() {
         Sort sort = sortByDino();

@@ -31,7 +31,7 @@ public class Tag extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tagId;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String tagName;
 
     // // 하위태그를 위한 컬럼

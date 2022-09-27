@@ -24,7 +24,7 @@ import org.zerock.decommi.vo.DiaryPostList;
 
 public interface DiaryService {
     // 다이어리
-    String registerDiary(DiaryDTO dto, List<String> tagList);
+    String registerDiary(DiaryDTO dto);
 
     DiaryDTO checkBeforeDiaryModify(Long dino, String id);
 
