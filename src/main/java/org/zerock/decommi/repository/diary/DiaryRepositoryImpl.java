@@ -35,7 +35,7 @@ public class DiaryRepositoryImpl extends QuerydslRepositorySupport implements Di
   public List<Diary> search(SearchCondition searchCondition) {
     QDiary qDiary = QDiary.diary;
     QTag qTag = QTag.tag;
-    JPQLQuery<Diary> jpqlQuery = from();
+    // JPQLQuery<Diary> jpqlQuery = from();
     return null;
   }
 
