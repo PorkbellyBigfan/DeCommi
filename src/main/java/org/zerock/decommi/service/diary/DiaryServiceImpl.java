@@ -64,7 +64,6 @@ public class DiaryServiceImpl implements DiaryService {
     public String registerDiary(DiaryDTO dto, List<String> tagList) {
         Diary result = dtoToEntity(dto);
         repository.save(result); // 여기서 dino 생성됨
-
         List<FileDTO> fileList = dto.getFileDTOList();
         fileList.forEach(new Consumer<FileDTO>() {
             @Override
@@ -78,6 +77,8 @@ public class DiaryServiceImpl implements DiaryService {
             tagResult.updateDiary(result);
             tagRepository.save(tagResult);
         }
+        dto.setTagList(tagList);
+        log.info(dto);
         return result.getDino().toString();
     }
 

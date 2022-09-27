@@ -47,7 +47,7 @@ public class Tag extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    public void updateDiary(Diary list) {
-        this.dino = list;
+    public void updateDiary(Diary tagList) {
+        this.dino = tagList;
     }
 }

@@ -25,7 +25,7 @@ public class DiaryViewController {
   private final DiaryService diaryService;
 
   @RequestMapping(value = "/list", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<DiaryPostList>> ArticleCardsList() {
+  public ResponseEntity<List<DiaryPostList>> getDiaryList() {
     return new ResponseEntity<>(diaryService.getDiaryPostList(), HttpStatus.OK);
   }
 
