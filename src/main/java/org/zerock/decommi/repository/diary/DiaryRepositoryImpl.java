@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.QDiary;
-import static org.zerock.decommi.entity.diary.QDiary.diary;
 import org.zerock.decommi.entity.diary.QTag;
 import org.zerock.decommi.vo.DiaryPostList;
 import org.zerock.decommi.vo.SearchCondition;
@@ -37,11 +36,17 @@ public class DiaryRepositoryImpl extends QuerydslRepositorySupport implements Di
 
 
   @Override
-  public List<DiaryPostList> getSearch(SearchCondition searchCondition) {
-    JPQLQuery<DiaryPostList> query = queryFactory.selectFrom(diary);
-        
-    
+  public List<Diary> getSearch(SearchCondition searchCondition) {
+    JPQLQuery<Diary> query = queryFactory
+    .selectFrom(QDiary.diary)
+    .where(
+      tagContain(searchCondition.getTagList()),
+      QDiary.diary.title.contains(searchCondition.getKeyword()).or(QDiary.diary.content.contains(searchCondition.getKeyword()))
+    );
     return null;
+  }
+  private BooleanExpression tagContain(List<String> tagList){
+    return tagList.size()==0 ? null : QDiary.diary.tagList.contains(searchCondition.getTagList().stream().map());
   }
 
 

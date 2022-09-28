@@ -24,10 +24,12 @@ import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.dto.ReplyDTO;
 import org.zerock.decommi.dto.ReportDTO;
+// import org.zerock.decommi.dto.SearchResultDTO;
 import org.zerock.decommi.dto.TagDTO;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.File;
 import org.zerock.decommi.entity.diary.Heart;
+import org.zerock.decommi.entity.diary.QDiary;
 import org.zerock.decommi.entity.diary.Reply;
 import org.zerock.decommi.entity.diary.Report;
 import org.zerock.decommi.entity.diary.Tag;
@@ -42,6 +44,10 @@ import org.zerock.decommi.repository.diary.ReportRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.vo.DiaryPostList;
+import org.zerock.decommi.vo.SearchCondition;
+
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -163,6 +169,7 @@ public class DiaryServiceImpl implements DiaryService {
         return dto;
     }
     @Transactional(readOnly=true)
+
     @Override
     public List<DiaryPostList> getDiaryPostList() {
         Sort sort = sortByDino();
@@ -171,6 +178,30 @@ public class DiaryServiceImpl implements DiaryService {
         }).collect(Collectors.toList());
         return result;
     }
+
+    // @Override
+    // public SearchResultDTO<DiaryPostList, Diary> getDiaryPostList(SearchCondition searchCondition) {
+    //     Sort sort = sortByDino();
+    //     BooleanBuilder booleanBuilder = getSearch(searchCondition);
+    //     return new SearchResultDTO<>(result, fn);
+    // }
+
+    // private BooleanBuilder getSearch(SearchCondition searchCondition){
+    //     String keyword = searchCondition.getKeyword();
+    //     List<String>tagList = searchCondition.getTagList();
+
+    //     BooleanBuilder booleanBuilder = new BooleanBuilder(); //쿼리를 질의하기 위한 객체
+    //     QDiary qDiary = QDiary.diary; //관련된 쿼리 객체
+    //     BooleanExpression expression = qDiary.dino.gt(0L); //게시글번호가 0 이상인것만 검색
+    //     booleanBuilder.and(expression);
+    //     BooleanBuilder conditionBuilder = new BooleanBuilder();
+    //     if(tagList == null){
+    //         conditionBuilder.or(qDiary.title.contains(keyword));
+    //     }
+    //     return booleanBuilder;
+
+    // }
+
 
     // 하트
     @Override
