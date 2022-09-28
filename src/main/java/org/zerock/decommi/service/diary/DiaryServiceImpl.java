@@ -28,6 +28,7 @@ import org.zerock.decommi.dto.TagDTO;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.File;
 import org.zerock.decommi.entity.diary.Heart;
+import org.zerock.decommi.entity.diary.QDiary;
 import org.zerock.decommi.entity.diary.Reply;
 import org.zerock.decommi.entity.diary.Report;
 import org.zerock.decommi.entity.diary.Tag;
@@ -42,6 +43,10 @@ import org.zerock.decommi.repository.diary.ReportRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.vo.DiaryPostList;
+import org.zerock.decommi.vo.SearchCondition;
+
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -150,8 +155,8 @@ public class DiaryServiceImpl implements DiaryService {
 
     }
 
-    @Transactional(readOnly = true)
     @Override
+    @Transactional(readOnly = true)
     public DiaryDTO getDiaryPostByDino(Long dino) {
         Diary result = repository.getByDino(dino);
         DiaryDTO dto = entityToDTO(result);
@@ -162,11 +167,22 @@ public class DiaryServiceImpl implements DiaryService {
         dto.setTagList(tagString);
         return dto;
     }
-    @Transactional(readOnly=true)
+
+
+    // @Override
+    // @Transactional(readOnly=true)
+    // public List<DiaryPostList> getDiaryPostList() {
+    //     Sort sort = sortByDino();
+    //     List<DiaryPostList> result = repository.getList(sort).get().stream().map(v -> {
+    //         return new DiaryPostList(v);
+    //     }).collect(Collectors.toList());
+    //     return result;
+    // }
     @Override
-    public List<DiaryPostList> getDiaryPostList() {
+    public List<DiaryPostList> getDiaryPostList(SearchCondition searchCondition) {
         Sort sort = sortByDino();
-        List<DiaryPostList> result = repository.getList(sort).get().stream().map(v -> {
+        BooleanBuilder booleanBuilder = getSearch(searchCondition);
+        List<DiaryPostList> result = repository.getList(sort).get().stream().map(v->{
             return new DiaryPostList(v);
         }).collect(Collectors.toList());
         return result;
@@ -299,17 +315,30 @@ public class DiaryServiceImpl implements DiaryService {
     // return null;
     // }
 
-    // @Transactional
-    // @Override
-    // public List<Object[]> getSearchDiaryList(String search) {
-    // String decode = "";
-    // try{
-    // decode = URLDecoder.decode(search, "UTF-8");
-    // }catch (Exception e){
-    // e.printStackTrace();
-    // }
-    // return repository.getListByTitleOrContent(decode);
-    // }
+    private BooleanBuilder getSearch(SearchCondition searchCondition){
+        String search = searchCondition.getSearch();
+        String type = searchCondition.getType();
+        boolean searchType = searchCondition.isSearchType();
+        List<String>tagList = searchCondition.getTagList();
+
+        BooleanBuilder booleanBuilder = new BooleanBuilder(); //쿼리 질의를 위한 객체 생성
+        QDiary qDiary = QDiary.diary;// 관련된 테이블에 대한 쿼리 객체
+        BooleanExpression expression = qDiary.dino.gt(0L); //dino가 0 보다 큰 게시글만 조회
+        booleanBuilder.and(expression);
+        if(type == null || type.trim().length() == 0){
+            return booleanBuilder;
+        }
+        BooleanBuilder conditionBuilder = new BooleanBuilder();
+        if(type.contains("t")){
+            conditionBuilder.or(qDiary.title.contains(search));
+        }
+        if(type.contains("c")){
+            conditionBuilder.or(qDiary.content.contains(search));
+        }
+        booleanBuilder.and(conditionBuilder);
+
+        return booleanBuilder;
+    }
 
     private Sort sortByDino() {
         return Sort.by(Sort.Direction.DESC, "dino");

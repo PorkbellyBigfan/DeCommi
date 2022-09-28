@@ -12,13 +12,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.vo.DiaryPostList;
 
 @Repository
-public interface DiaryRepository extends JpaRepository<Diary, Long>, DiaryCustomRepository {
+public interface DiaryRepository extends JpaRepository<Diary, Long>,
+QuerydslPredicateExecutor<Diary> {
+  // , DiaryCustomRepository
 
   // 번호로 게시글 가져오기
   Diary getByDino(Long dino);
@@ -33,7 +36,7 @@ public interface DiaryRepository extends JpaRepository<Diary, Long>, DiaryCustom
   // 태그가 포함된 다이어리 리스트
   @EntityGraph(attributePaths = { "tagList", "files", "replyList" }, type = EntityGraphType.LOAD)
   @Query(value = "select d from Diary d")
-  Page<Diary> getDiaryListWithTagAndReply(Pageable pageable);
+  List<Diary> getDiaryListWithAll();
 
   // 관리자페이지에서 사용할것같음
   // 글작성자와 게시글 번호 가져오기
