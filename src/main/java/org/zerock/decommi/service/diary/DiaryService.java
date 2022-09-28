@@ -198,6 +198,7 @@ public interface DiaryService {
         Report entity = Report.builder().reid(dto.getReid())
                 .dino(Diary.builder().dino(dto.getDino()).build())
                 .mid(Member.builder().mid(dto.getMid()).build())
+                .title(dto.getTitle())
                 .reportContent(dto.getReportContent())
                 .build();
         return entity;
@@ -208,6 +209,7 @@ public interface DiaryService {
         ReportDTO dto = ReportDTO.builder().reid(entity.getReid())
                 .dino(entity.getDino().getDino())
                 .mid(entity.getMid().getMid())
+                .title(entity.getTitle())
                 .reportContent(entity.getReportContent())
                 .build();
         return dto;

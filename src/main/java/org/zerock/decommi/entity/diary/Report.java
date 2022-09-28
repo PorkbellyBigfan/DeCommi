@@ -32,6 +32,9 @@ public class Report extends BaseEntity {
     private Long reid;
 
     @Column
+    private String title;
+
+    @Column
     private String reportContent;
 
     @ManyToOne(fetch = FetchType.LAZY)
