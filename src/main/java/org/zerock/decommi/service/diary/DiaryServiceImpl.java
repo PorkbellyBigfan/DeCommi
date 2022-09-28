@@ -24,6 +24,7 @@ import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.dto.ReplyDTO;
 import org.zerock.decommi.dto.ReportDTO;
+import org.zerock.decommi.dto.SearchResultDTO;
 // import org.zerock.decommi.dto.SearchResultDTO;
 import org.zerock.decommi.dto.TagDTO;
 import org.zerock.decommi.entity.diary.Diary;
@@ -161,7 +162,7 @@ public class DiaryServiceImpl implements DiaryService {
     public DiaryDTO getDiaryPostByDino(Long dino) {
         Diary result = repository.getByDino(dino);
         DiaryDTO dto = entityToDTO(result);
-        List<String> tagString = tagRepository.getList(result.getDino())
+        List<String> tagString = tagRepository.getList(Diary.builder().dino(result.getDino()).build())
                 .stream()
                 .map(tentity -> tentity.getTagName())
                 .collect(Collectors.toList());
@@ -171,36 +172,30 @@ public class DiaryServiceImpl implements DiaryService {
     @Transactional(readOnly=true)
 
     @Override
-    public List<DiaryPostList> getDiaryPostList() {
-        Sort sort = sortByDino();
-        List<DiaryPostList> result = repository.getList(sort).get().stream().map(v -> {
-            return new DiaryPostList(v);
-        }).collect(Collectors.toList());
-        return result;
+    public List<DiaryPostList> getDiaryPostList(SearchCondition searchCondition) {
+        // Sort sort = sortByDino();
+        // List<DiaryPostList> result = repository.getSearch().get().stream().map(v -> {
+        //     return new DiaryPostList(v);
+        // }).collect(Collectors.toList());
+        // return result;
+        return repository.getSearch(searchCondition);
     }
+
+
+
 
     // @Override
     // public SearchResultDTO<DiaryPostList, Diary> getDiaryPostList(SearchCondition searchCondition) {
-    //     Sort sort = sortByDino();
-    //     BooleanBuilder booleanBuilder = getSearch(searchCondition);
+    //     List<DiaryPostList> result = repository.getSearch(searchCondition);
+    //     Function<Diary, DiaryPostList> fn = new Function<Diary,DiaryPostList>() {
+    //         @Override
+    //         public DiaryPostList apply(Diary entity) {
+    //           return entityToDTO(entity);
+    //         }
+    //     };
     //     return new SearchResultDTO<>(result, fn);
     // }
 
-    // private BooleanBuilder getSearch(SearchCondition searchCondition){
-    //     String keyword = searchCondition.getKeyword();
-    //     List<String>tagList = searchCondition.getTagList();
-
-    //     BooleanBuilder booleanBuilder = new BooleanBuilder(); //쿼리를 질의하기 위한 객체
-    //     QDiary qDiary = QDiary.diary; //관련된 쿼리 객체
-    //     BooleanExpression expression = qDiary.dino.gt(0L); //게시글번호가 0 이상인것만 검색
-    //     booleanBuilder.and(expression);
-    //     BooleanBuilder conditionBuilder = new BooleanBuilder();
-    //     if(tagList == null){
-    //         conditionBuilder.or(qDiary.title.contains(keyword));
-    //     }
-    //     return booleanBuilder;
-
-    // }
 
 
     // 하트

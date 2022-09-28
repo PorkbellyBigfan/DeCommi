@@ -21,6 +21,7 @@ import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.member.Bookmark;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.vo.DiaryPostList;
+import org.zerock.decommi.vo.SearchCondition;
 
 public interface DiaryService {
     // 다이어리
@@ -34,7 +35,7 @@ public interface DiaryService {
 
     DiaryDTO getDiaryPostByDino(Long dino);
 
-    List<DiaryPostList> getDiaryPostList();
+    List<DiaryPostList> getDiaryPostList(SearchCondition searchCondition);
 
     //정렬조건
     //default 는 작성일자 최신이 제일 위로

@@ -35,6 +35,7 @@ import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.service.diary.DiaryService;
 import org.zerock.decommi.vo.DiaryPostList;
+import org.zerock.decommi.vo.SearchCondition;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -114,14 +115,17 @@ public class DiaryRepositoryTests {
     });
   }
 
+
+
   // 다이어리 리스트
-  @Test
-  public void testGetDiaryPostList() {
-    List<DiaryPostList> result = repository.getList(Sort.by("dino").descending()).get().stream().map(v -> {
-      return new DiaryPostList(v);
-    }).collect(Collectors.toList());
-    log.info(result);
-  }
+
+  // @Test
+  // public void testGetDiaryPostList() {
+  //   List<DiaryPostList> result = repository.getList(Sort.by("dino").descending()).get().stream().map(v -> {
+  //     return new DiaryPostList(v);
+  //   }).collect(Collectors.toList());
+  //   log.info(result);
+  // }
 
   // @Test
   // @Transactional
