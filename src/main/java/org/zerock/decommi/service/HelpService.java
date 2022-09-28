@@ -9,7 +9,6 @@ import org.zerock.decommi.dto.HelpDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.entity.Help;
-import org.zerock.decommi.entity.HelpRole;
 import org.zerock.decommi.entity.member.Member;
 
 public interface HelpService {
@@ -25,15 +24,7 @@ public interface HelpService {
             .title(dto.getTitle())
             .content(dto.getContent())
             .writer(Member.builder().mid(dto.getWriter()).build())
-            .roleSet(dto.getRoleSet().stream().map(
-                    t->{
-                        if(t.equals("ROLE_NOTICE"))
-                            return HelpRole.NOTICE;
-                        else if(t.equals("ROLE_FQA"))
-                            return HelpRole.FQA;
-                        else
-                            return HelpRole.NOTICE;
-                    }).collect(Collectors.toSet()))
+            .helpType(dto.getHelpType())
             .build();
         return help;
     }
@@ -43,9 +34,7 @@ public interface HelpService {
             .hbno(entity.getHbno())
             .title(entity.getTitle())
             .content(entity.getContent())
-            .roleSet(entity.getRoleSet().stream().map(
-                role -> new String("ROLE_" + role.name()))
-                .collect(Collectors.toSet()))            
+            .helpType(entity.getHelpType())    
             .writer(entity.getWriter().getMid())
             .build();
         return dto;

@@ -62,4 +62,5 @@ public class HelpController {
         helpService.deleteHelp(hbno);
         return new ResponseEntity<>("removed",HttpStatus.OK);
     }
+    
 }

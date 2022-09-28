@@ -13,7 +13,7 @@ public interface HelpRepository extends JpaRepository<Help, Long> {
 
     Help getByhbno (Long hbno);
 
-    //getList 타입별로 만들기
+    //getList 타입별로 만들기,, where절에 타입 확인
 
 
     // @Query("select hp from Help hp left join b.writer")

@@ -42,16 +42,17 @@ public class Help extends BaseEntity {
     @JoinColumn(name = "id")
     private Member writer;
 
-    @ElementCollection(fetch = FetchType.LAZY)
-    @Builder.Default
-    private Set<HelpRole> roleSet = new HashSet<>();
+    // @ElementCollection(fetch = FetchType.LAZY)
+    // @Builder.Default
+    // private Set<HelpRole> roleSet = new HashSet<>();
 
-    // @Enumerated(EnumType.ORDINAL)
-    // private HelpType helpType;
+    // @Enumerated(EnumType.STRING)
+    private String helpType;
 
-    public void addHelpRole(HelpRole role) {
-    roleSet.add(role);
-    }
+
+    // public void addHelpRole(HelpRole role) {
+    // roleSet.add(role);
+    // }
     public void changTitle(String title){this.title=title;}
     public void changContent(String content){this.content=content;}
 }

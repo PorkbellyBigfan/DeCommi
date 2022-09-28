@@ -1,10 +1,5 @@
 package org.zerock.decommi.dto;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.zerock.decommi.entity.HelpRole;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,8 +15,6 @@ public class HelpDTO {
     private String content;
     private Long writer;
 
-    @Builder.Default
-    private Set<String> roleSet = new HashSet<>();
-  
+    private String helpType;
 
 }

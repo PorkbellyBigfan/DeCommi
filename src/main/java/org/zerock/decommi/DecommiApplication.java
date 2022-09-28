@@ -17,9 +17,9 @@ public class DecommiApplication {
 		SpringApplication.run(DecommiApplication.class, args);
 	}
 
-//	@Bean
-//	public JPAQueryFactory jpaQueryFactory(EntityManager em) {
-//		return new JPAQueryFactory(em);
-//	}
+	@Bean
+	public JPAQueryFactory jpaQueryFactory(EntityManager em) {
+		return new JPAQueryFactory(em);
+	}
 
 }
