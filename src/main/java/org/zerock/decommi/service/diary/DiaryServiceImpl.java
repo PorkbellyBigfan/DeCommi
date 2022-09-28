@@ -44,6 +44,7 @@ import org.zerock.decommi.repository.diary.ReplyRepository;
 import org.zerock.decommi.repository.diary.ReportRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
+import org.zerock.decommi.vo.DiaryPost;
 import org.zerock.decommi.vo.DiaryPostList;
 import org.zerock.decommi.vo.SearchCondition;
 
@@ -171,30 +172,23 @@ public class DiaryServiceImpl implements DiaryService {
     }
     @Transactional(readOnly=true)
 
+ 
     @Override
-    public List<DiaryPostList> getDiaryPostList(SearchCondition searchCondition) {
-        // Sort sort = sortByDino();
-        // List<DiaryPostList> result = repository.getSearch().get().stream().map(v -> {
-        //     return new DiaryPostList(v);
-        // }).collect(Collectors.toList());
-        // return result;
-        return repository.getSearch(searchCondition);
+    public PageResultDTO<DiaryDTO, Diary> getDiaryPostList(PageRequestDTO requestDTO) {
+        Pageable pageable = requestDTO.getPageable(Sort.by("dino").ascending());
+        BooleanBuilder booleanBuilder = getSearch(requestDTO);
+        Page<Diary> result = repository.findAll(booleanBuilder, pageable);
+        Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>(){
+            @Override
+            public DiaryDTO apply(Diary t) {
+              return entityToDTO(t);
+            }
+        };
+        return new PageResultDTO<>(result, fn);
     }
 
 
 
-
-    // @Override
-    // public SearchResultDTO<DiaryPostList, Diary> getDiaryPostList(SearchCondition searchCondition) {
-    //     List<DiaryPostList> result = repository.getSearch(searchCondition);
-    //     Function<Diary, DiaryPostList> fn = new Function<Diary,DiaryPostList>() {
-    //         @Override
-    //         public DiaryPostList apply(Diary entity) {
-    //           return entityToDTO(entity);
-    //         }
-    //     };
-    //     return new SearchResultDTO<>(result, fn);
-    // }
 
 
 
@@ -339,5 +333,29 @@ public class DiaryServiceImpl implements DiaryService {
 
     private Sort sortByDino() {
         return Sort.by(Sort.Direction.DESC, "dino");
+    }
+
+    private BooleanBuilder getSearch(PageRequestDTO requestDTO){
+        String type = requestDTO.getType();
+        String keyword = requestDTO.getKeyword();
+        QDiary qDiary = QDiary.diary;
+
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        BooleanExpression expression = qDiary.dino.gt(0L);
+        booleanBuilder.and(expression);
+        if(type == null || type.trim().length() == 0){
+            return booleanBuilder;
+        }
+        
+        BooleanBuilder conditionBuilder = new BooleanBuilder();
+        if(type.contains("d")){
+            conditionBuilder.or(qDiary.title.contains(keyword)).or(qDiary.content.contains(keyword));
+        }
+        if(type.contains("t")){
+            //태그검색 구현 못함
+            return null;
+        }
+        booleanBuilder.and(conditionBuilder);
+        return booleanBuilder;
     }
 }

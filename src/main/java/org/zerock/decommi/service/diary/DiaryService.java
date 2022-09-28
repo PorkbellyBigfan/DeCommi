@@ -9,6 +9,8 @@ import org.zerock.decommi.dto.BookmarkDTO;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.FileDTO;
 import org.zerock.decommi.dto.HeartDTO;
+import org.zerock.decommi.dto.PageRequestDTO;
+import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.dto.ReplyDTO;
 import org.zerock.decommi.dto.ReportDTO;
 import org.zerock.decommi.dto.TagDTO;
@@ -35,7 +37,7 @@ public interface DiaryService {
 
     DiaryDTO getDiaryPostByDino(Long dino);
 
-    List<DiaryPostList> getDiaryPostList(SearchCondition searchCondition);
+    PageResultDTO<DiaryDTO, Diary>getDiaryPostList(PageRequestDTO requestDTO);
 
     //정렬조건
     //default 는 작성일자 최신이 제일 위로
@@ -92,6 +94,7 @@ public interface DiaryService {
         return dto;
 
     }
+    
 
     // 파일
     default File fileDTOtoEntity(FileDTO dto, Long dino) {

@@ -14,13 +14,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
+import org.zerock.decommi.dto.FileDTO;
 import org.zerock.decommi.entity.diary.Diary;
+import org.zerock.decommi.entity.diary.File;
+import org.zerock.decommi.entity.diary.Reply;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.vo.DiaryPostList;
 
 @Repository
-public interface DiaryRepository extends JpaRepository<Diary, Long>, DiaryCustomRepository {
-
+public interface DiaryRepository extends JpaRepository<Diary, Long>, QuerydslPredicateExecutor<Diary>{
+  // , DiaryCustomRepository 
   // 번호로 게시글 가져오기
   Diary getByDino(Long dino);
 
@@ -73,47 +76,31 @@ public interface DiaryRepository extends JpaRepository<Diary, Long>, DiaryCustom
 
   public interface getDiaryPostList {
     Long getDino();
-
-    String getTitle();
-
     String getWriter();
-
+    String getTitle();
     String getContent();
-
+    boolean isOpenYN();
+    boolean isReplyYN();
     List<String> getTagList();
+    List<Reply> getReplyList();
+    List<File>getFiles();
 
-    Long getReplyCnt();
-
-    Long getHeartCnt();
-
-    Long getBookmarkCnt();
-
-    Long getReportCnt();
-
-    LocalDateTime getRegDate();
+    // Long getReplyCnt();
+    // Long getHeartCnt();
+    // Long getBookmarkCnt();
+    // Long getReportCnt();
+    // LocalDateTime getRegDate();
   }
 
   public interface getDiaryPost {
     Long getDino();
-
-    String getTitle();
-
     String getWriter();
-
+    String getTitle();
     String getContent();
-
+    boolean isOpenYN();
+    boolean isReplyYN();
     List<String> getTagList();
-
-    Long getReplyCnt();
-
-    Long getHeartCnt();
-
-    Long getBookmarkCnt();
-
-    Long getReportCnt();
-
-    LocalDateTime getRegDate();
-
-    LocalDateTime getModDate();
+    List<Reply> getReplyList();
+    List<File>getFiles();
   }
 }

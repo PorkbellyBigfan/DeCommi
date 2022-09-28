@@ -87,14 +87,6 @@ public class DiaryRepositoryTests {
     replyRepository.save(reply);
   }
 
-  @Test
-  public void testGetDiaryPostByDino() {
-    Diary diary = Diary.builder().dino(1L).build();
-    DiaryDTO result = diaryService.getDiaryPostByDino(diary.getDino());
-    log.info(result);
-
-  }
-
   // 댓글 등록2
   @Test
   public void insertReplies() {
@@ -119,6 +111,14 @@ public class DiaryRepositoryTests {
 
   // 다이어리 리스트
 
+  // @Test
+  // public void testGetDiaryList3(){
+  //   SearchCondition searchCondition = new SearchCondition("1", false, null);
+  //   List<DiaryPostList> result = repository.getSearch(searchCondition);
+  //   log.info(result);
+  // }  
+
+  
   // @Test
   // public void testGetDiaryPostList() {
   //   List<DiaryPostList> result = repository.getList(Sort.by("dino").descending()).get().stream().map(v -> {
