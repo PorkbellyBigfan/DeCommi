@@ -34,7 +34,7 @@ import org.zerock.decommi.repository.diary.ReplyRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.service.diary.DiaryService;
-import org.zerock.decommi.vo.DiaryPostList;
+// import org.zerock.decommi.vo.diaryPostList;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -62,9 +62,9 @@ public class DiaryRepositoryTests {
           .writer(member.getId())
           .openYN(randomBoolean.nextBoolean())
           .replyYN(randomBoolean.nextBoolean())
-          .files(null)
-          .tagList(null)
-          .replyList(null)
+          // .files(null)
+          // .tagList(null)
+          // .replyList(null)
           .build();
       repository.save(d);
     });
@@ -115,19 +115,20 @@ public class DiaryRepositoryTests {
   }
 
   // 다이어리 리스트
-  @Test
-  public void testGetDiaryPostList() {
-    List<DiaryPostList> result = repository.getList(Sort.by("dino").descending()).get().stream().map(v -> {
-      return new DiaryPostList(v);
-    }).collect(Collectors.toList());
-    log.info(result);
-  }
-
   // @Test
-  // @Transactional
-  // public void testGetDiaryList2() {
-  // Pageable pageable = PageRequest.of(0, 5, Sort.by("dino").descending());
-  // Page<Diary> result = repository.getDiaryListWithTagAndReply(pageable);
+  // public void testGetDiaryPostList() {
+  // List<diaryPostList> result = repository.getList(Sort.by("dino")
+  // .descending()).get().stream().map(v -> {
+  // return new diaryPostList(v);
+  // }).collect(Collectors.toList());
   // log.info(result);
   // }
+
+  @Test
+  @Transactional
+  public void testGetDiaryList2() {
+    Pageable pageable = PageRequest.of(0, 5, Sort.by("dino").descending());
+    Page<Diary> result = repository.getDiaryListWithTagAndReply(pageable);
+    log.info(result);
+  }
 }

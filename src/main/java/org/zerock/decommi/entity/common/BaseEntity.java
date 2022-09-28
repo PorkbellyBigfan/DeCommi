@@ -27,4 +27,5 @@ public abstract class BaseEntity {
   @Column(name = "moddate")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
   private LocalDateTime modDate;
+
 }

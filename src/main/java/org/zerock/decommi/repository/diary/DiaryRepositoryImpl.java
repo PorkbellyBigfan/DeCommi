@@ -19,14 +19,13 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import lombok.RequiredArgsConstructor;
-
 @Repository
-@Transactional(readOnly = true) 
-public class DiaryRepositoryImpl extends QuerydslRepositorySupport implements DiaryCustomRepository {
+@Transactional(readOnly = true)
+public class DiaryRepositoryImpl extends QuerydslRepositorySupport implements
+    DiaryCustomRepository {
   @Autowired
   JPAQueryFactory factory;
-  
+
   public DiaryRepositoryImpl() {
     super(Diary.class);
   }
@@ -44,6 +43,5 @@ public class DiaryRepositoryImpl extends QuerydslRepositorySupport implements Di
     // TODO Auto-generated method stub
     return null;
   }
-
 
 }

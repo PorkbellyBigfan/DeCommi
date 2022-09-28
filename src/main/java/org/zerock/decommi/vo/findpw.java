@@ -1,5 +1,5 @@
-package org.zerock.decommi.vo;
+// package org.zerock.decommi.vo;
 
-public class Findpw {
+// public class Findpw {
 
-}
+// }

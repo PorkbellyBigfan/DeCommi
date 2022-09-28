@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class AlarmDTO {
     private Long alarmId;
     private String alarmContent;
+    private Long dino; // diary 의 PK
 
     @Override
     public String toString() {

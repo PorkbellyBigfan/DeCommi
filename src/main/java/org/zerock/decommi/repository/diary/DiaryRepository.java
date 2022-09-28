@@ -15,10 +15,10 @@ import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.stereotype.Repository;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.member.Member;
-import org.zerock.decommi.vo.DiaryPostList;
+import org.zerock.decommi.vo.diaryPostList;
 
 @Repository
-public interface DiaryRepository extends JpaRepository<Diary, Long>, DiaryCustomRepository {
+public interface DiaryRepository extends JpaRepository<Diary, String>, DiaryCustomRepository {
 
   // 번호로 게시글 가져오기
   Diary getByDino(Long dino);
@@ -55,14 +55,13 @@ public interface DiaryRepository extends JpaRepository<Diary, Long>, DiaryCustom
   Optional<List<getDiaryPostList>> getList(Sort sort);
 
   // 댓글카운트, 하트카운트, 북마크카운트, 신고카운트 추가해야됨
-  // @Query("select m.id, d.dino, d.title, d.content, d.openYN, d.replyYN,
-  // d.regDate, d.modDate "
-  // + "from Diary d "
-  // + "left join Member m on m.id = d.writer "
-  // + "where d.title LIKE CONCAT('%',:search,'%') Or "
-  // + "d.content LIKE CONCAT('%',:search,'%') Or "
-  // + "ORDER BY d.dino DESC ")
-  // List<Object[]> getListByTitleOrContent(String search);
+  @Query("select m.id, d.dino, d.title, d.content, d.openYN, d.replyYN, d.regDate, d.modDate "
+      + "from Diary d "
+      + "left join Member m on m.id = d.writer "
+      + "where d.title LIKE CONCAT('%',:search,'%') Or "
+      + "d.content LIKE CONCAT('%',:search,'%') Or "
+      + "ORDER BY d.dino DESC ")
+  List<Object[]> getListByTitleOrContent(String search);
 
   // Dino로 파일 삭제하기
   @Modifying

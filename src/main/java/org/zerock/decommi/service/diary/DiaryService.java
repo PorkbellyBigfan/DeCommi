@@ -20,7 +20,7 @@ import org.zerock.decommi.entity.diary.Report;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.member.Bookmark;
 import org.zerock.decommi.entity.member.Member;
-import org.zerock.decommi.vo.DiaryPostList;
+import org.zerock.decommi.vo.diaryPostList;
 
 public interface DiaryService {
     // 다이어리
@@ -34,26 +34,29 @@ public interface DiaryService {
 
     DiaryDTO getDiaryPostByDino(Long dino);
 
-    List<DiaryPostList> getDiaryPostList();
+    List<diaryPostList> getDiaryPostList();
 
-    //정렬조건
-    //default 는 작성일자 최신이 제일 위로
-    //하트순
-    //북마크순
+    // 정렬조건
+    // default 는 작성일자 최신이 제일 위로
+    // 하트순
+    // 북마크순
 
     // 검색조건 만족하는 다이어리 게시글 리스트
-    // List<Object[]> getSearchDiaryList(String search);
+    List<Object[]> getSearchDiaryList(String search);
 
     // 좋아요태그포함된 다이어리 게시글 리스트
     // List<Object[]> getLikeTagDiaryList();
 
-    // // 댓글
+    // 댓글
     // Long registerReply(ReplyDTO dto);
+
     // String modifyReply(ReplyDTO dto, String id);
+
     // String deleteReply(ReplyDTO dto, String id);
-    // HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable);
-    // HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable
-    // pageable, String id);
+
+    HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable);
+
+    HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable pageable, String id);
 
     // 북마크
     String addBookmark(BookmarkDTO dto);

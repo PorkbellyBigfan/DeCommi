@@ -7,31 +7,35 @@
 // import org.zerock.decommi.entity.diary.File;
 
 // public interface FileService {
-//   void removeFile(Long fid);
-//   void removeUuid(String uuid);
-//   Long registerFile(FileDTO dto);
-//   FileDTO getFileWithFid(Long fid);
-//   List<FileDTO>getFileWithDino(Long dino);
+//     void removeFile(Long fid);
 
+//     void removeUuid(String uuid);
 
-//   Long registerMultipleFile(List<FileDTO> result);
+//     Long registerFile(FileDTO dto);
 
-//   default File dtoToEntity(FileDTO dto){
-//     File file = File.builder()
-//       .uuid(dto.getUuid())
-//       .fname(dto.getImgName())
-//       .fpath(dto.getFpath())
-//       .diary(Diary.builder().dino(dto.getDino()).build())
-//       .build();
-//     return file;
-//   }
-//   default FileDTO entityToDTO(File file){
-//     FileDTO dto = FileDTO.builder()
-//       .dino(file.getDiary().getDino())
-//       .imgName(file.getFname())
-//       .fpath(file.getFpath())
-//       .uuid(file.getUuid())
-//       .build();
-//     return dto;
-//   }
+//     FileDTO getFileWithFid(Long fid);
+
+//     List<FileDTO> getFileWithDino(Long dino);
+
+//     Long registerMultipleFile(List<FileDTO> result);
+
+//     default File dtoToEntity(FileDTO dto) {
+//         File file = File.builder()
+//                 .uuid(dto.getUuid())
+//                 .fname(dto.getImgName())
+//                 .fpath(dto.getPath())
+//                 .diary(Diary.builder().dino(dto.getDino()).build())
+//                 .build();
+//         return file;
+//     }
+
+//     default FileDTO entityToDTO(File file) {
+//         FileDTO dto = FileDTO.builder()
+//                 .dino(file.getDiary().getDino())
+//                 .imgName(file.getFname())
+//                 .path(file.getFpath())
+//                 .uuid(file.getUuid())
+//                 .build();
+//         return dto;
+//     }
 // }

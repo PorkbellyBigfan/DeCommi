@@ -37,7 +37,8 @@ import org.zerock.decommi.dto.UploadResultDTO;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.service.diary.DiaryService;
 import org.zerock.decommi.service.member.MemberService;
-import org.zerock.decommi.vo.DiaryPost;
+// import org.zerock.decommi.vo.DiaryPost;
+import org.zerock.decommi.vo.diaryPost;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -58,12 +59,14 @@ public class DiaryApiController {
         List<String> tagList = dto.getTagList();
         log.info(tagList);
         log.info("dto : " + dto);
-        return new ResponseEntity<>(diaryService.registerDiary(dto, tagList), HttpStatus.OK);
+        return new ResponseEntity<>(diaryService.registerDiary(dto, tagList),
+                HttpStatus.OK);
     }
 
     @RequestMapping(value = "/modify/check", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<DiaryDTO> CheckBeforeDiaryModify(@RequestBody DiaryPost vo) {
-        DiaryDTO diaryPost = diaryService.checkBeforeDiaryModify(vo.getDino(), vo.getWriter());
+    public ResponseEntity<DiaryDTO> CheckBeforeDiaryModify(@RequestBody diaryPost vo) {
+        DiaryDTO diaryPost = diaryService.checkBeforeDiaryModify(vo.getDino(),
+                vo.getWriter());
         return new ResponseEntity<>(diaryPost, HttpStatus.OK);
     }
 
@@ -97,7 +100,8 @@ public class DiaryApiController {
             Path savePath = Paths.get(saveName);
             try {
                 uploadFile.transferTo(savePath);
-                String thumbnailSaveName = uploadPath + File.separator + folderPath + File.separator
+                String thumbnailSaveName = uploadPath + File.separator + folderPath +
+                        File.separator
                         + "s_" + uuid + "_" + fileName;
                 File thumbnailFile = new File(thumbnailSaveName);
                 Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 100, 100);

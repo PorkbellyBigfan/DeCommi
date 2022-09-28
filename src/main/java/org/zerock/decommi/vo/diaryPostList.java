@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class DiaryPostList {
+public class diaryPostList {
   private Long dino;
   private String writer;
   private String title;
@@ -22,7 +22,7 @@ public class DiaryPostList {
   private Long reportCnt;
   private LocalDateTime regDate;
 
-  public DiaryPostList(DiaryRepository.getDiaryPostList dpl) {
+  public diaryPostList(DiaryRepository.getDiaryPostList dpl) {
     this.dino = dpl.getDino();
     this.writer = dpl.getWriter();
     this.title = dpl.getTitle();

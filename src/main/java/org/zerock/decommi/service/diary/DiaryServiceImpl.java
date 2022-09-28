@@ -42,7 +42,7 @@ import org.zerock.decommi.repository.diary.ReplyRepository;
 import org.zerock.decommi.repository.diary.ReportRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
-import org.zerock.decommi.vo.DiaryPostList;
+import org.zerock.decommi.vo.diaryPostList;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -137,7 +137,7 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public void deleteDiary(Long dino) {
-        repository.deleteById(dino);
+        // repository.deleteById(dino);
         repository.deleteFileByDino(dino);
 
     }
@@ -156,10 +156,10 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public List<DiaryPostList> getDiaryPostList() {
+    public List<diaryPostList> getDiaryPostList() {
         Sort sort = sortByDino();
-        List<DiaryPostList> result = repository.getList(sort).get().stream().map(v -> {
-            return new DiaryPostList(v);
+        List<diaryPostList> result = repository.getList(sort).get().stream().map(v -> {
+            return new diaryPostList(v);
         }).collect(Collectors.toList());
         return result;
     }
@@ -252,56 +252,52 @@ public class DiaryServiceImpl implements DiaryService {
     // }
     // }
 
-    // @Override
-    // public HashMap<String, Object> getReplyListByDino(Long dino, Pageable
-    // pageable) {
-    // Page<Reply> replyList = replyRepository.getPageList(pageable, dino);
-    // if (!replyList.isEmpty()) {
-    // List<ReplyDTO> dto = replyList.stream().map((Function<Reply, ReplyDTO>) rt ->
-    // {
-    // log.info(rt);
-    // return replyEntityToDTO(rt);
-    // }).collect(Collectors.toList());
-    // HashMap<String, Object> result = new HashMap<>();
-    // result.put("replyList", dto);
-    // result.put("page", pageable.getPageNumber());
-    // result.put("pageTotalCount", replyList.getTotalPages());
-    // return result;
-    // }
-    // return null;
-    // }
+    @Override
+    public HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable) {
+        Page<Reply> replyList = replyRepository.getPageList(pageable, dino);
+        if (!replyList.isEmpty()) {
+            List<ReplyDTO> dto = replyList.stream().map((Function<Reply, ReplyDTO>) rt -> {
+                log.info(rt);
+                return replyEntityToDTO(rt);
+            }).collect(Collectors.toList());
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("replyList", dto);
+            result.put("page", pageable.getPageNumber());
+            result.put("pageTotalCount", replyList.getTotalPages());
+            return result;
+        }
+        return null;
+    }
 
-    // @Override
-    // public HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable
-    // pageable, String id) {
-    // Page<Reply> replyList = replyRepository.getPageList(pageable, dino);
-    // if (!replyList.isEmpty()) {
-    // List<ReplyDTO> dto = replyList.stream().map((Function<Reply, ReplyDTO>) rt ->
-    // {
-    // return replyEntityToDTO(rt);
-    // }).collect(Collectors.toList());
-    // // 댓글 신고부분 여기에 작성해야함
-    // // =============================
-    // HashMap<String, Object> result = new HashMap<>();
-    // result.put("replyList", dto);
-    // result.put("page", pageable.getPageNumber());
-    // result.put("pageTotalCount", replyList.getTotalPages());
-    // return result;
-    // }
-    // return null;
-    // }
+    @Override
+    public HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable pageable, String id) {
+        Page<Reply> replyList = replyRepository.getPageList(pageable, dino);
+        if (!replyList.isEmpty()) {
+            List<ReplyDTO> dto = replyList.stream().map((Function<Reply, ReplyDTO>) rt -> {
+                return replyEntityToDTO(rt);
+            }).collect(Collectors.toList());
+            // 댓글 신고부분 여기에 작성해야함
+            // =============================
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("replyList", dto);
+            result.put("page", pageable.getPageNumber());
+            result.put("pageTotalCount", replyList.getTotalPages());
+            return result;
+        }
+        return null;
+    }
 
-    // @Transactional
-    // @Override
-    // public List<Object[]> getSearchDiaryList(String search) {
-    // String decode = "";
-    // try{
-    // decode = URLDecoder.decode(search, "UTF-8");
-    // }catch (Exception e){
-    // e.printStackTrace();
-    // }
-    // return repository.getListByTitleOrContent(decode);
-    // }
+    @Transactional
+    @Override
+    public List<Object[]> getSearchDiaryList(String search) {
+        String decode = "";
+        try {
+            decode = URLDecoder.decode(search, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return repository.getListByTitleOrContent(decode);
+    }
 
     private Sort sortByDino() {
         return Sort.by(Sort.Direction.DESC, "dino");

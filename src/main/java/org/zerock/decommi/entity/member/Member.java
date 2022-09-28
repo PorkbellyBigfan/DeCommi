@@ -31,12 +31,13 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "roleSet", "replyList", "likeTagList", "dislikeTagList" })
+@ToString(exclude = { "roleSet", "replyList", "likeTagList" })
 @Table(name = "d_member")
 public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long mid;
+
     @Column(nullable = false)
     private String id;
     @Column(nullable = false)
@@ -67,8 +68,8 @@ public class Member extends BaseEntity {
         roleSet.add(role);
     }
 
-    public void changePw(String pw) {
-        this.pw = pw;
-    }
+    // public void changePw(String pw) {
+    // this.pw = pw;
+    // }
 
 }

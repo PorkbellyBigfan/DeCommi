@@ -1,8 +1,8 @@
-package org.zerock.decommi.vo;
+// package org.zerock.decommi.vo;
 
-import lombok.Data;
+// import lombok.Data;
 
-@Data
-public class Mid {
-    Long mid;
-}
+// @Data
+// public class Mid {
+// Long mid;
+// }
