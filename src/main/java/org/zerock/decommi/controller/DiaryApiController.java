@@ -122,17 +122,17 @@ public class DiaryApiController {
     }
 
     @RequestMapping(value = "/heart", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> HeartDiary(@RequestBody HeartDTO dto) {
+    public ResponseEntity<Boolean> HeartDiary(@RequestBody HeartDTO dto) {
         return new ResponseEntity<>(diaryService.addHeart(dto), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> bookmarDiary(@RequestBody BookmarkDTO dto) {
+    public ResponseEntity<Boolean> bookmarDiary(@RequestBody BookmarkDTO dto) {
         return new ResponseEntity<>(diaryService.addBookmark(dto), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> reportingDiary(@RequestBody ReportDTO dto) {
+    public ResponseEntity<Boolean> reportingDiary(@RequestBody ReportDTO dto) {
         return new ResponseEntity<>(diaryService.addDiaryReport(dto), HttpStatus.OK);
     }
 

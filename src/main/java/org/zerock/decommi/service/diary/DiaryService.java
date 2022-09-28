@@ -56,13 +56,13 @@ public interface DiaryService {
     // pageable, String id);
 
     // 북마크
-    String addBookmark(BookmarkDTO dto);
+    Boolean addBookmark(BookmarkDTO dto);
 
     // 하트
-    String addHeart(HeartDTO dto);
+    Boolean addHeart(HeartDTO dto);
 
     // 신고
-    String addDiaryReport(ReportDTO dto);
+    Boolean addDiaryReport(ReportDTO dto);
 
     // 다이어리
     default Diary dtoToEntity(DiaryDTO dto) {
