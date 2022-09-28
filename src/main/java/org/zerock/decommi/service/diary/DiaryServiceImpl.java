@@ -200,43 +200,43 @@ public class DiaryServiceImpl implements DiaryService {
 
     // 하트
     @Override
-    public String addHeart(HeartDTO dto) {
+    public Boolean addHeart(HeartDTO dto) {
         Optional<Heart> checkHeart = heartRepository.checkHeartLogByMemberIdAndDiaryId(dto.getMid(), dto.getDino());
         Heart entity = heartDTOtoEntity(dto);
         if (checkHeart.isPresent()) {
             heartRepository.delete(checkHeart.get());
-            return "좋아요 취소";
+            return false;
         } else {
             heartRepository.save(entity);
-            return "좋아요";
+            return true;
         }
     }
 
     // 북마크
     @Override
-    public String addBookmark(BookmarkDTO dto) {
+    public Boolean addBookmark(BookmarkDTO dto) {
         Optional<Bookmark> checkBookmark = bookmarkRepository.checkBookmarkLogByMemberIdAndDiary(dto.getMid(),
                 dto.getDino());
         Bookmark entity = bookmarkDTOtoEntity(dto);
         if (checkBookmark.isPresent()) {
             bookmarkRepository.delete(checkBookmark.get());
-            return "북마크 취소";
+            return false;
         } else {
             bookmarkRepository.save(entity);
-            return "북마크 추가";
+            return true;
         }
 
     }
 
     // 신고
     @Override
-    public String addDiaryReport(ReportDTO dto) {
+    public Boolean addDiaryReport(ReportDTO dto) {
         Optional<Report> checkReport = reportRepository.checkReportLogByMemberIdAndDiaryId(dto.getMid(), dto.getDino());
         if (checkReport.isPresent()) {
-            return "이미 신고한 글입니다";
+            return false;
         } else {
             reportRepository.save(reportDTOtoEntity(dto));
-            return "신고가 완료되었습니다";
+            return true;
         }
 
     }

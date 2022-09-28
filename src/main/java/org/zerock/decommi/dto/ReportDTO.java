@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReportDTO {
     private Long reid;
+    private String title;
     private String reportContent;
     private Long dino;
     private Long mid;
