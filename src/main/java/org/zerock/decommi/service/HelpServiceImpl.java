@@ -63,6 +63,5 @@ public class HelpServiceImpl implements HelpService{
             help.changContent(dto.getContent());
             helpRepository.save(help);
         }
-        
     }
 }
