@@ -104,7 +104,7 @@ public class DiaryServiceImpl implements DiaryService {
             return null;
         } else {
             DiaryDTO dto = entityToDTO(isit.get());
-            List<String> tagList = tagRepository.getList(dto.getDino())
+            List<String> tagList = tagRepository.getList(Diary.builder().dino(dto.getDino()).build())
                     .stream()
                     .map(tentity -> tentity.getTagName())
                     .collect(Collectors.toList());
