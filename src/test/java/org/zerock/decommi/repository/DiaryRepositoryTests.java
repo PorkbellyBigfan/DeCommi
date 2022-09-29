@@ -49,6 +49,9 @@ public class DiaryRepositoryTests {
   TagRepository tagRepository;
   @Autowired
   ReplyRepository replyRepository;
+  @Autowired
+  MemberRepository memberRepository;
+  
 
   @Test
   public void insertDiaryDummies() {
@@ -74,7 +77,7 @@ public class DiaryRepositoryTests {
   @Test
   public void insertReply() {
     Diary diary = Diary.builder().dino(1L).build();
-    Member member = Member.builder().mid(4L).build();
+    Member member = Member.builder().mid(3L).build();
     Reply reply = Reply.builder()
         .dino(diary)
         .member(member)
@@ -130,4 +133,31 @@ public class DiaryRepositoryTests {
   // Page<Diary> result = repository.getDiaryListWithTagAndReply(pageable);
   // log.info(result);
   // }
+  
+  //댓글
+  @Test
+  public void fghgfdhgfhgfhgfhgh(){
+    // log.info(replyRepository.getLastestReplyGroupWhereMatchWithDino(1L));
+    Member member = Member.builder().mid(1L).build();
+    Diary diary = Diary.builder().dino(1L).build();
+    // log.info(replyRepository.findByMember(member));
+    // log.info(replyRepository.getReplyByDinoAndMid(diary,member));
+    // log.info(replyRepository.getReplyListByDino(1L));
+    log.info(replyRepository.getLastestReplyGroupWhereMatchWithDino(1L));
+  }
+
+  @Test
+  public void deleteReply(){
+    Optional<Reply> checkReply = replyRepository.getReplyByRnoAndMid(3L, 11L);
+    if(checkReply.isPresent()){
+      System.out.println("삭제 성공공");
+    } else {
+      System.out.println("없다 댓글");
+    }
+}
+
+  @Test
+  public void modifyReply(){
+   
+  }
 }
