@@ -23,7 +23,7 @@ import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.dto.TagDTO;
 import org.zerock.decommi.entity.Help;
-import org.zerock.decommi.entity.HelpRole;
+import org.zerock.decommi.entity.QHelp;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.Heart;
 import org.zerock.decommi.entity.diary.Report;
@@ -40,6 +40,9 @@ import org.zerock.decommi.service.diary.BookmarkService;
 import org.zerock.decommi.service.diary.DiaryService;
 import org.zerock.decommi.service.diary.HeartServiceImpl;
 import org.zerock.decommi.service.member.MemberService;
+
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -214,10 +217,7 @@ public class Repository_ServiceTests {
             .id("id"+1).auth(true).pw("1234").q1("q").build();
             memberRepository.save(member);
 
-            Help help = Help.builder().content("content"+i).title("title"+i).writer(member).build();
-                help.addHelpRole(HelpRole.FQA);
-                if(i>49)
-                help.addHelpRole(HelpRole.NOTICE);
+            Help help = Help.builder().content("content"+i).title("title"+i).writer(member).helpType("QnA").build();
             helpRepository.save(help);
         });
     }
@@ -256,13 +256,36 @@ public class Repository_ServiceTests {
         helpService.modifyHelp(dto);
     }
 
-    @Transactional
+    // @Transactional
     @Test
-    public void getHelpList(){
+    public void getNoticeList(){
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(100).build();
-        PageResultDTO<HelpDTO,Help> resultDTO = helpService.getList(pageRequestDTO);
+        PageResultDTO<HelpDTO,Help> resultDTO = helpService.getNoticeList(pageRequestDTO);
         for (HelpDTO helpDTO : resultDTO.getDtoList()) {
             System.out.println("=================" + helpDTO);
         }
+    }
+
+    @Test
+    public void getFQAList(){
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(150).build();
+        PageResultDTO<HelpDTO,Help> resultDTO = helpService.getQnAList(pageRequestDTO);
+        for (HelpDTO helpDTO : resultDTO.getDtoList()) {
+            System.out.println("=================" + helpDTO);
+        }
+    }
+
+    @Test
+    public void querydslHelp(){
+        Pageable pageable = PageRequest.of(0, 100,Sort.by("hbno").descending());
+
+        //동적인 쿼리를 하기위해 Q도메인필요
+        QHelp qHelp = QHelp.help; //1
+        String keyword = "1";
+        BooleanBuilder builder = new BooleanBuilder();//2 질의하기 위한 객체(BooleanBuilder)
+        BooleanExpression expression = qHelp.title.contains(keyword);//3 질의 식 ,,BooleanExpression-조건을 담기 위한 객체
+        builder.and(expression); // 4 객체가 and로 질의 식을 실행
+        Page<Help> result = helpRepository.findAll(builder, pageable);// 5
+        result.stream().forEach(help -> {System.out.println(help);});
     }
 }

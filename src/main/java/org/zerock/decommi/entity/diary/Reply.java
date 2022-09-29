@@ -1,5 +1,6 @@
 package org.zerock.decommi.entity.diary;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -29,6 +30,7 @@ public class Reply extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rno;
+    @Column(nullable = false)
     private String replyContent;
 
     // 대댓글 구현을 위한 속성들

@@ -13,7 +13,8 @@ import org.zerock.decommi.entity.member.Member;
 
 public interface HelpService {
     Long register(HelpDTO dto);
-    PageResultDTO<HelpDTO,Help>getList(PageRequestDTO requestDTO);
+    PageResultDTO<HelpDTO,Help>getNoticeList(PageRequestDTO requestDTO);
+    PageResultDTO<HelpDTO,Help>getQnAList(PageRequestDTO requestDTO);
     HelpDTO read (Long hbno);
     void modifyHelp (HelpDTO dto);
     void deleteHelp(Long hbno);

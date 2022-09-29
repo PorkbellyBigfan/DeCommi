@@ -1,13 +1,16 @@
 package org.zerock.decommi.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 import org.zerock.decommi.entity.Help;
 
-public interface HelpRepository extends JpaRepository<Help, Long> {
+public interface HelpRepository extends JpaRepository<Help, Long>,QuerydslPredicateExecutor<Help> {
 
     Help findByhbno (Long hbno);
 
@@ -15,6 +18,11 @@ public interface HelpRepository extends JpaRepository<Help, Long> {
 
     //getList 타입별로 만들기,, where절에 타입 확인
 
+    @Query("select hp from Help hp where help_type='NOTICE' ")
+    Page<Help> getNoticeList(Pageable pageable);
+
+    @Query("select hp from Help hp where help_type='QnA' ")
+    Page<Help> getQnAList(Pageable pageable);
 
     // @Query("select hp from Help hp left join b.writer")
     // Object getHelpByDino(@Param("dino") Long dino);

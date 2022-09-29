@@ -39,9 +39,17 @@ public class HelpServiceImpl implements HelpService{
     }
 
     @Override
-    public PageResultDTO<HelpDTO,Help> getList(PageRequestDTO requestDTO) {
+    public PageResultDTO<HelpDTO,Help> getNoticeList(PageRequestDTO requestDTO) {
         Pageable pageable = requestDTO.getPageable(Sort.by("hbno").descending());
-        Page<Help> result = helpRepository.findAll(pageable);
+        Page<Help> result = helpRepository.getNoticeList(pageable);
+        Function<Help, HelpDTO> fn = (entity->entityToDTO(entity));
+        return new PageResultDTO<>(result, fn);
+    }
+
+    @Override
+    public PageResultDTO<HelpDTO, Help> getQnAList(PageRequestDTO requestDTO) {
+        Pageable pageable = requestDTO.getPageable(Sort.by("hbno").descending());
+        Page<Help> result = helpRepository.getQnAList(pageable);
         Function<Help, HelpDTO> fn = (entity->entityToDTO(entity));
         return new PageResultDTO<>(result, fn);
     }
@@ -64,4 +72,6 @@ public class HelpServiceImpl implements HelpService{
             helpRepository.save(help);
         }
     }
+
+    
 }

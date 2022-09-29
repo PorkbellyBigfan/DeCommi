@@ -29,11 +29,16 @@ import lombok.extern.log4j.Log4j2;
 public class HelpController {
     private final HelpService helpService;
 
-    @GetMapping(value = "/list")
-    public ResponseEntity<PageResultDTO<HelpDTO,Help>> list(@ModelAttribute("requestDTO") PageRequestDTO req) {
+    @GetMapping(value = "/Notice")
+    public ResponseEntity<PageResultDTO<HelpDTO,Help>> Noticelist(@ModelAttribute("requestDTO") PageRequestDTO req) {
         log.info("PageRequest:" + req);
-        return new ResponseEntity<>(helpService.getList(req), HttpStatus.OK);
+        return new ResponseEntity<>(helpService.getNoticeList(req), HttpStatus.OK);
+    }
 
+    @GetMapping(value = "/FAQ")
+    public ResponseEntity<PageResultDTO<HelpDTO,Help>> QnAlist(@ModelAttribute("requestDTO") PageRequestDTO req) {
+        log.info("PageRequest:" + req);
+        return new ResponseEntity<>(helpService.getQnAList(req), HttpStatus.OK);
     }
 
     @GetMapping(value = "/read/{hbno}")
