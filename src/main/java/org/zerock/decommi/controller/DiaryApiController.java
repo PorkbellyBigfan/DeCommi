@@ -73,6 +73,10 @@ public class DiaryApiController {
         String diaryPost = diaryService.modifyDiary(dto, dto.getTagList());
         return new ResponseEntity<>(diaryPost, HttpStatus.OK);
     }
+    @RequestMapping(value = "/delete", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces =MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> deleteDiary(@RequestBody DiaryDTO dto){
+        return new ResponseEntity<>(diaryService.deleteDiary(dto), HttpStatus.OK);
+    }
 
     @PostMapping("/write/uploadAjax")
     public ResponseEntity<List<UploadResultDTO>> uploadFile(MultipartFile[] uploadFiles) {

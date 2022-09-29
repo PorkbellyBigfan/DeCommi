@@ -33,7 +33,7 @@ public class DiaryDTO {
 
     private List<String> tagList;
 
-    private List<Reply> replyList;
+    private List<ReplyDTO> replyList;
 
     private LocalDateTime regDate, modDate;
 }

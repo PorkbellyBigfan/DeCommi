@@ -1,6 +1,5 @@
 package org.zerock.decommi.vo;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.zerock.decommi.entity.diary.File;
@@ -43,9 +42,4 @@ public class DiaryPostList {
     // this.bookmarkCnt = dpl.getBookmarkCnt();
     // this.reportCnt = dpl.getReportCnt();
   }
-}
-package org.zerock.decommi.vo;
-
-public class DiaryPostList {
-  
 }

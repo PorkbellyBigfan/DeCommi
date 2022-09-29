@@ -1,6 +1,7 @@
 package org.zerock.decommi.repository;
 
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -112,8 +113,12 @@ public class DiaryRepositoryTests {
   // 다이어리 리스트
   @Test
   public void testGetDiaryPostList() {
-    PageRequestDTO requestDTO = PageRequestDTO.builder().page(1).size(100).type("d").keyword("1").build();
-
+    ArrayList<String> arrList = new ArrayList<String>();
+    arrList.add("test");
+    arrList.add("1");
+    PageRequestDTO requestDTO = PageRequestDTO.builder()
+      .page(1).size(100).type("d")
+      .tagList(arrList).sort("dino").keyword("테스트").build();
     PageResultDTO<DiaryDTO, Diary> resultDTO = diaryService.getDiaryPostList(requestDTO);
     log.info("Search Result :::: " + resultDTO);
   }

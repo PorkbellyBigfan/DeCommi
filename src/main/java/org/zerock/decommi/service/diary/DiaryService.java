@@ -33,12 +33,12 @@ public interface DiaryService {
 
     String modifyDiary(DiaryDTO dto, List<String> tagList);
 
-    void deleteDiary(Long dino);
+    Boolean deleteDiary(DiaryDTO dto);
 
     DiaryDTO getDiaryPostByDino(Long dino);
 
     PageResultDTO<DiaryDTO, Diary> getDiaryPostList(PageRequestDTO requestDTO);
-
+    PageResultDTO<DiaryDTO, Diary> getMyDiaryPostList(PageRequestDTO requestDTO);
     // 정렬조건
     // default 는 작성일자 최신이 제일 위로
     // 하트순
