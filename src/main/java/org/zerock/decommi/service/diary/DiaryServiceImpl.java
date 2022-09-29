@@ -352,7 +352,8 @@ public class DiaryServiceImpl implements DiaryService {
 
         BooleanBuilder conditionBuilder = new BooleanBuilder();
         if (type.contains("d")) {
-            conditionBuilder.or(qDiary.title.contains(keyword)).or(qDiary.content.contains(keyword));
+            conditionBuilder.or(qDiary.title.contains(keyword)).or(qDiary.content.contains(keyword))
+                    .and(qDiary.openYN.isTrue());
         }
         if (type.contains("t")) {
             // 태그검색 구현 못함

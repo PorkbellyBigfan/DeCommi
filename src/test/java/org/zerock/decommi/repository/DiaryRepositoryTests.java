@@ -112,7 +112,7 @@ public class DiaryRepositoryTests {
   // 다이어리 리스트
   @Test
   public void testGetDiaryPostList() {
-    PageRequestDTO requestDTO = PageRequestDTO.builder().page(1).size(100).type("d").keyword("50").build();
+    PageRequestDTO requestDTO = PageRequestDTO.builder().page(1).size(100).type("d").keyword("1").build();
     log.info("=============");
     log.info(requestDTO);
     log.info("=============");
