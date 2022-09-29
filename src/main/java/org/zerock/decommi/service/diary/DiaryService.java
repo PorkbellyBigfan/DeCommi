@@ -9,6 +9,8 @@ import org.zerock.decommi.dto.BookmarkDTO;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.FileDTO;
 import org.zerock.decommi.dto.HeartDTO;
+import org.zerock.decommi.dto.PageRequestDTO;
+import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.dto.ReplyDTO;
 import org.zerock.decommi.dto.ReportDTO;
 import org.zerock.decommi.dto.TagDTO;
@@ -21,6 +23,7 @@ import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.member.Bookmark;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.vo.DiaryPostList;
+import org.zerock.decommi.vo.SearchCondition;
 
 public interface DiaryService {
     // 다이어리
@@ -30,16 +33,16 @@ public interface DiaryService {
 
     String modifyDiary(DiaryDTO dto, List<String> tagList);
 
-    void deleteDiary(Long dino);
+    Boolean deleteDiary(DiaryDTO dto);
 
     DiaryDTO getDiaryPostByDino(Long dino);
 
-    List<DiaryPostList> getDiaryPostList();
-
-    //정렬조건
-    //default 는 작성일자 최신이 제일 위로
-    //하트순
-    //북마크순
+    PageResultDTO<DiaryDTO, Diary> getDiaryPostList(PageRequestDTO requestDTO);
+    PageResultDTO<DiaryDTO, Diary> getMyDiaryPostList(PageRequestDTO requestDTO);
+    // 정렬조건
+    // default 는 작성일자 최신이 제일 위로
+    // 하트순
+    // 북마크순
 
     // 검색조건 만족하는 다이어리 게시글 리스트
     // List<Object[]> getSearchDiaryList(String search);

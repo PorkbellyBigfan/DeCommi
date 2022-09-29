@@ -14,7 +14,7 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
   // 해당 게시글에 있는 태그 리스트를 가져오는 쿼리문
   @Query("select t from Tag t where diary_dino=:dino ")
-  List<Tag> getList(Long dino);
+  List<Tag> getList(Diary dino);
 
   // 게시글번호와 태그이름을 찾음
   Optional<Tag> findByDinoAndTagName(Diary dino, String tagName);

@@ -38,6 +38,8 @@ public class Diary extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long dino;
     @Column(nullable = false)
+    private String writer;
+    @Column(nullable = false)
     private String title;
     @Column(nullable = false)
     private String content;
@@ -45,21 +47,17 @@ public class Diary extends BaseEntity {
     private boolean openYN; // 공개여부
     @Column(nullable = false)
     private boolean replyYN; // 댓글 허용여부
-    @Column(nullable = false)
-    private String writer;
 
     @Builder.Default
     @OneToMany(mappedBy = "dino", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Tag> tagList = new ArrayList<>();
+    
+    @Builder.Default
+    @OneToMany(mappedBy = "dino", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Reply> replyList = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "dino", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<File> files = new ArrayList<>();
 
-    @Builder.Default
-    @OneToMany(mappedBy = "dino", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Reply> replyList = new ArrayList<>();
-
-    // public void changeTitle(String title) {this.title = title;}
-    // public void changeContent(String content) { this.content = content; }
 }
