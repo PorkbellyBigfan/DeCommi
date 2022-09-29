@@ -44,3 +44,8 @@ public class DiaryPostList {
     // this.reportCnt = dpl.getReportCnt();
   }
 }
+package org.zerock.decommi.vo;
+
+public class DiaryPostList {
+  
+}

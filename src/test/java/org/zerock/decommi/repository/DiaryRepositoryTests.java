@@ -113,9 +113,6 @@ public class DiaryRepositoryTests {
   @Test
   public void testGetDiaryPostList() {
     PageRequestDTO requestDTO = PageRequestDTO.builder().page(1).size(100).type("d").keyword("1").build();
-    log.info("=============");
-    log.info(requestDTO);
-    log.info("=============");
 
     PageResultDTO<DiaryDTO, Diary> resultDTO = diaryService.getDiaryPostList(requestDTO);
     log.info("Search Result :::: " + resultDTO);
