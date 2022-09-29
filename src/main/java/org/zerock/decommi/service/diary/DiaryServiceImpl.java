@@ -176,9 +176,10 @@ public class DiaryServiceImpl implements DiaryService {
     @Transactional(readOnly = true)
     @Override
     public PageResultDTO<DiaryDTO, Diary> getDiaryPostList(PageRequestDTO requestDTO) {
-        String sort = requestDTO.getSort();
-        Pageable pageable = requestDTO.getPageable(Sort.by(sort).descending());
+        // String sort = requestDTO.getSort();
+        Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
         BooleanBuilder booleanBuilder = getSearch(requestDTO);
+
         Page<Diary> result = repository.findAll(booleanBuilder, pageable);
         Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
             @Override
@@ -186,6 +187,8 @@ public class DiaryServiceImpl implements DiaryService {
                 return entityToDTO(t);
             }
         };
+        log.info(" service ::: result ::: "+ result);
+        log.info(" service ::: requestDTO :::  "+ requestDTO);
         return new PageResultDTO<>(result, fn);
     }
 
@@ -194,8 +197,8 @@ public class DiaryServiceImpl implements DiaryService {
     @Transactional(readOnly = true)
     @Override
     public PageResultDTO<DiaryDTO, Diary> getMyDiaryPostList(PageRequestDTO requestDTO) {
-        String sort = requestDTO.getSort();
-        Pageable pageable = requestDTO.getPageable(Sort.by(sort).descending());
+        // String sort = requestDTO.getSort();
+        Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
         BooleanBuilder booleanBuilder = searchMyDiary(requestDTO);
         Page<Diary>result = repository.findAll(booleanBuilder, pageable);
         Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>(){
@@ -204,6 +207,8 @@ public class DiaryServiceImpl implements DiaryService {
               return entityToDTO(t);
             }
         };
+        log.info(" service ::: result ::: "+ result);
+        log.info(" service ::: requestDTO :::  "+ requestDTO);
         return new PageResultDTO<>(result, fn);
     }
 

@@ -1,12 +1,19 @@
 package org.zerock.decommi.controller;
 
+import java.io.File;
+import java.net.URLDecoder;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,8 +36,10 @@ public class DiaryViewController {
   private final DiaryService diaryService;
 
   @RequestMapping(value = "/list", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<PageResultDTO<DiaryDTO, Diary>> getDiaryList(@ModelAttribute PageRequestDTO dto) {
-    return new ResponseEntity<>(diaryService.getDiaryPostList(dto), HttpStatus.OK);
+  public ResponseEntity<List<DiaryDTO>> getDiaryList(@ModelAttribute PageRequestDTO dto) {
+    PageRequestDTO.builder().page(10).size(30).type(dto.getType()).keyword(dto.getKeyword()).tagList(dto.getTagList()).build();
+    PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostList(dto);
+    return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
   }
 
   @RequestMapping(value = "/read/{dino}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -42,4 +51,27 @@ public class DiaryViewController {
     return new ResponseEntity<>(result, HttpStatus.OK);
   }
 
+  @GetMapping("/image/{fileName}")
+  public ResponseEntity<byte[]> getFile(@ModelAttribute("fileName") String fileName, String size) {
+    ResponseEntity<byte[]> result = null;
+    try {
+      String srchFileName = URLDecoder.decode(fileName, "UTF-8");
+      File file = new File("c:\testingimage" + File.separator + srchFileName);// window일경우 사용
+      // File file = new File("/Users/hyunseokbyun/Documents/Imagefiles/" +
+      // File.separator + srchFileName);
+      if (size != null && size.equals("1")) {
+        file = new File(file.getParent(), file.getName().substring(2));
+      }
+
+      HttpHeaders header = new HttpHeaders();
+      header.add("Content-Type", Files.probeContentType(file.toPath())); // MIME
+      result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+      log.info("fffffffffffffff" + fileName);
+      log.info(result);
+    } catch (Exception e) {
+      log.error(e.getMessage());
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return result;
+  }
 }

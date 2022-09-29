@@ -117,7 +117,7 @@ public class DiaryRepositoryTests {
     arrList.add("test");
     arrList.add("1");
     PageRequestDTO requestDTO = PageRequestDTO.builder()
-      .page(1).size(100).type("d")
+      .page(1).size(10).type("d")
       .tagList(arrList).sort("dino").keyword("테스트").build();
     PageResultDTO<DiaryDTO, Diary> resultDTO = diaryService.getDiaryPostList(requestDTO);
     log.info("Search Result :::: " + resultDTO);
