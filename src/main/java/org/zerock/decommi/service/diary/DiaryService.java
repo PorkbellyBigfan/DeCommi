@@ -9,6 +9,8 @@ import org.zerock.decommi.dto.BookmarkDTO;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.FileDTO;
 import org.zerock.decommi.dto.HeartDTO;
+import org.zerock.decommi.dto.PageRequestDTO;
+import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.dto.ReplyDTO;
 import org.zerock.decommi.dto.ReportDTO;
 import org.zerock.decommi.dto.TagDTO;
@@ -35,12 +37,12 @@ public interface DiaryService {
 
     DiaryDTO getDiaryPostByDino(Long dino);
 
-    List<DiaryPostList> getDiaryPostList(SearchCondition searchCondition);
+    PageResultDTO<DiaryDTO, Diary> getDiaryPostList(PageRequestDTO requestDTO);
 
-    //정렬조건
-    //default 는 작성일자 최신이 제일 위로
-    //하트순
-    //북마크순
+    // 정렬조건
+    // default 는 작성일자 최신이 제일 위로
+    // 하트순
+    // 북마크순
 
     // 검색조건 만족하는 다이어리 게시글 리스트
     // List<Object[]> getSearchDiaryList(String search);
@@ -57,13 +59,13 @@ public interface DiaryService {
     // pageable, String id);
 
     // 북마크
-    String addBookmark(BookmarkDTO dto);
+    Boolean addBookmark(BookmarkDTO dto);
 
     // 하트
-    String addHeart(HeartDTO dto);
+    Boolean addHeart(HeartDTO dto);
 
     // 신고
-    String addDiaryReport(ReportDTO dto);
+    Boolean addDiaryReport(ReportDTO dto);
 
     // 다이어리
     default Diary dtoToEntity(DiaryDTO dto) {
@@ -199,6 +201,7 @@ public interface DiaryService {
         Report entity = Report.builder().reid(dto.getReid())
                 .dino(Diary.builder().dino(dto.getDino()).build())
                 .mid(Member.builder().mid(dto.getMid()).build())
+                .title(dto.getTitle())
                 .reportContent(dto.getReportContent())
                 .build();
         return entity;
@@ -209,6 +212,7 @@ public interface DiaryService {
         ReportDTO dto = ReportDTO.builder().reid(entity.getReid())
                 .dino(entity.getDino().getDino())
                 .mid(entity.getMid().getMid())
+                .title(entity.getTitle())
                 .reportContent(entity.getReportContent())
                 .build();
         return dto;

@@ -21,6 +21,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Commit;
 import org.zerock.decommi.dto.DiaryDTO;
+import org.zerock.decommi.dto.PageRequestDTO;
+import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.File;
 import org.zerock.decommi.entity.diary.Reply;
@@ -35,6 +37,7 @@ import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.service.diary.DiaryService;
 import org.zerock.decommi.vo.DiaryPostList;
+import org.zerock.decommi.vo.SearchCondition;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -86,14 +89,6 @@ public class DiaryRepositoryTests {
     replyRepository.save(reply);
   }
 
-  @Test
-  public void testGetDiaryPostByDino() {
-    Diary diary = Diary.builder().dino(1L).build();
-    DiaryDTO result = diaryService.getDiaryPostByDino(diary.getDino());
-    log.info(result);
-
-  }
-
   // 댓글 등록2
   @Test
   public void insertReplies() {
@@ -117,11 +112,30 @@ public class DiaryRepositoryTests {
   // 다이어리 리스트
   @Test
   public void testGetDiaryPostList() {
-    List<DiaryPostList> result = repository.getList(Sort.by("dino").descending()).get().stream().map(v -> {
-      return new DiaryPostList(v);
-    }).collect(Collectors.toList());
-    log.info(result);
+    PageRequestDTO requestDTO = PageRequestDTO.builder().page(1).size(100).type("d").keyword("50").build();
+    log.info("=============");
+    log.info(requestDTO);
+    log.info("=============");
+
+    PageResultDTO<DiaryDTO, Diary> resultDTO = diaryService.getDiaryPostList(requestDTO);
+    log.info("Search Result :::: " + resultDTO);
   }
+
+  // @Test
+  // public void testGetDiaryList3(){
+  // SearchCondition searchCondition = new SearchCondition("1", false, null);
+  // List<DiaryPostList> result = repository.getSearch(searchCondition);
+  // log.info(result);
+  // }
+
+  // @Test
+  // public void testGetDiaryPostList() {
+  // List<DiaryPostList> result =
+  // repository.getList(Sort.by("dino").descending()).get().stream().map(v -> {
+  // return new DiaryPostList(v);
+  // }).collect(Collectors.toList());
+  // log.info(result);
+  // }
 
   // @Test
   // @Transactional
