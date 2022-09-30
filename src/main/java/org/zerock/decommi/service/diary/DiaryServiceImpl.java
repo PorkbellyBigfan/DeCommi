@@ -91,15 +91,6 @@ public class DiaryServiceImpl implements DiaryService {
                 tagRepository.save(tag);
             }
         });
-<<<<<<< HEAD
-        // for (String i : tagList) {
-        // Tag tagResult = tagDTOtoEntity(i);
-        // tagResult.updateDiary(result);
-        // tagRepository.save(tagResult);
-        // }
-=======
->>>>>>> d2eeaea3a7aeef1bcf436cc97571708b809e8100
-
         return result.getDino().toString();
     }
 
@@ -158,12 +149,12 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public Boolean deleteDiary(DiaryDTO dto) {
-        Optional<Diary>check = repository.getDiaryByDinoAndId(dto.getDino(), dto.getWriter());
-        if(check.isPresent()){
+        Optional<Diary> check = repository.getDiaryByDinoAndId(dto.getDino(), dto.getWriter());
+        if (check.isPresent()) {
             repository.deleteById(dto.getDino());
             repository.deleteFileByDino(dto.getDino());
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -180,11 +171,6 @@ public class DiaryServiceImpl implements DiaryService {
         dto.setTagList(tagString);
         return dto;
     }
-<<<<<<< HEAD
-
-    @Transactional(readOnly = true)
-=======
->>>>>>> d2eeaea3a7aeef1bcf436cc97571708b809e8100
 
     @Transactional(readOnly = true)
     @Override
@@ -200,58 +186,30 @@ public class DiaryServiceImpl implements DiaryService {
                 return entityToDTO(t);
             }
         };
-        log.info(" service ::: result ::: "+ result);
-        log.info(" service ::: requestDTO :::  "+ requestDTO);
+        log.info(" service ::: result ::: " + result);
+        log.info(" service ::: requestDTO :::  " + requestDTO);
         return new PageResultDTO<>(result, fn);
     }
 
-<<<<<<< HEAD
-    // @Override
-    // public SearchResultDTO<DiaryPostList, Diary> getDiaryPostList(SearchCondition
-    // searchCondition) {
-    // Sort sort = sortByDino();
-    // BooleanBuilder booleanBuilder = getSearch(searchCondition);
-    // return new SearchResultDTO<>(result, fn);
-    // }
-
-    // private BooleanBuilder getSearch(SearchCondition searchCondition){
-    // String keyword = searchCondition.getKeyword();
-    // List<String>tagList = searchCondition.getTagList();
-
-    // BooleanBuilder booleanBuilder = new BooleanBuilder(); //쿼리를 질의하기 위한 객체
-    // QDiary qDiary = QDiary.diary; //관련된 쿼리 객체
-    // BooleanExpression expression = qDiary.dino.gt(0L); //게시글번호가 0 이상인것만 검색
-    // booleanBuilder.and(expression);
-    // BooleanBuilder conditionBuilder = new BooleanBuilder();
-    // if(tagList == null){
-    // conditionBuilder.or(qDiary.title.contains(keyword));
-    // }
-    // return booleanBuilder;
-
-    // }
-
-=======
-
-    //내가 작성한 다이어리 리스트
+    // 내가 작성한 다이어리 리스트
     @Transactional(readOnly = true)
     @Override
     public PageResultDTO<DiaryDTO, Diary> getMyDiaryPostList(PageRequestDTO requestDTO) {
         // String sort = requestDTO.getSort();
         Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
         BooleanBuilder booleanBuilder = searchMyDiary(requestDTO);
-        Page<Diary>result = repository.findAll(booleanBuilder, pageable);
-        Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>(){
+        Page<Diary> result = repository.findAll(booleanBuilder, pageable);
+        Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
             @Override
             public DiaryDTO apply(Diary t) {
-              return entityToDTO(t);
+                return entityToDTO(t);
             }
         };
-        log.info(" service ::: result ::: "+ result);
-        log.info(" service ::: requestDTO :::  "+ requestDTO);
+        log.info(" service ::: result ::: " + result);
+        log.info(" service ::: requestDTO :::  " + requestDTO);
         return new PageResultDTO<>(result, fn);
     }
 
->>>>>>> d2eeaea3a7aeef1bcf436cc97571708b809e8100
     // 하트
     @Override
     public Boolean addHeart(HeartDTO dto) {
@@ -309,7 +267,7 @@ public class DiaryServiceImpl implements DiaryService {
                 setrg = lastestrg.get().get(0) + 1;
             }
             dto.setReplyGroup(setrg);
-            dto.setReplyDepth(0L); //새댓글이라서 뎁스0
+            dto.setReplyDepth(0L); // 새댓글이라서 뎁스0
             dto.setReplyOrder(0L);
             dto.setMid(result.get().getMid());
             Reply reply = replyDTOtoEntity(dto);
@@ -344,8 +302,8 @@ public class DiaryServiceImpl implements DiaryService {
             reply.changeReplyContent(dto.getReplyContent());
             replyRepository.save(reply);
     }
-    
-    //댓글 삭제
+
+    // 댓글 삭제
     @Override
     public String deleteReply(ReplyDTO dto) {
         Optional<Reply> checkReply = replyRepository.getReplyByRnoAndMid(dto.getRno(), dto.getMid());
@@ -357,7 +315,6 @@ public class DiaryServiceImpl implements DiaryService {
         }
     }
 
-    
     @Override
     public HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable) {
         // TODO Auto-generated method stub
@@ -369,7 +326,6 @@ public class DiaryServiceImpl implements DiaryService {
         // TODO Auto-generated method stub
         return null;
     }
-
 
     // 댓글 수정
     // @Override
@@ -449,13 +405,13 @@ public class DiaryServiceImpl implements DiaryService {
     private BooleanBuilder getSearch(PageRequestDTO requestDTO) {
         String type = requestDTO.getType();
         String keyword = requestDTO.getKeyword();
-        String sort =requestDTO.getSort();
-        sort="dino";
+        String sort = requestDTO.getSort();
+        sort = "dino";
         List<String> tagList = requestDTO.getTagList();
         QDiary qDiary = QDiary.diary;
         QTag qTag = QTag.tag;
-        log.info("type : " +type);
-        log.info("tagList : "+ tagList);
+        log.info("type : " + type);
+        log.info("tagList : " + tagList);
 
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue());
@@ -465,27 +421,28 @@ public class DiaryServiceImpl implements DiaryService {
         }
 
         BooleanBuilder conditionBuilder = new BooleanBuilder();
-        if (type.contains("d")) { //"d" stand for Diary
+        if (type.contains("d")) { // "d" stand for Diary
             conditionBuilder
-                .or(qDiary.title.contains(keyword))
-                .or(qDiary.content.contains(keyword));
+                    .or(qDiary.title.contains(keyword))
+                    .or(qDiary.content.contains(keyword))
+                    .and(qDiary.tagList.contains(tagList));
         }
         if (type.contains("t")) { // "t" stand for Tag
             // conditionBuilder
-            //     .or(qDiary.tagList.contains(tagList.stream().map(new Function<String,String>() {
-            //         @Override
-            //         public String apply(String dto) {
-            //             return tagDTOtoEntity(dto);
-            //         }
-            //     }).collect(Collectors.toList())));
+            // .or(qDiary.tagList.contains(tagList.stream().map(new
+            // Function<String,String>() {
+            // @Override
+            // public String apply(String dto) {
+            // return tagDTOtoEntity(dto);
+            // }
+            // }).collect(Collectors.toList())));
         }
         booleanBuilder.and(conditionBuilder);
         return booleanBuilder;
     }
 
-
-    //내가 쓴 글만 확인 할 수 있어야한다.
-    private BooleanBuilder searchMyDiary(PageRequestDTO requestDTO){
+    // 내가 쓴 글만 확인 할 수 있어야한다.
+    private BooleanBuilder searchMyDiary(PageRequestDTO requestDTO) {
         String type = requestDTO.getType();
         String keyword = requestDTO.getKeyword();
         List<String> tagList = requestDTO.getTagList();
@@ -493,30 +450,30 @@ public class DiaryServiceImpl implements DiaryService {
         QDiary qDiary = QDiary.diary;
         QMember qMember = QMember.member;
         BooleanBuilder booleanBuilder = new BooleanBuilder();
-        BooleanExpression expression = 
-            qDiary.dino.gt(0L);
+        BooleanExpression expression = qDiary.dino.gt(0L);
         booleanBuilder.and(expression);
         if (type == null || type.trim().length() == 0) {
             return booleanBuilder;
         }
-        
+
         BooleanBuilder conditionBuilder = new BooleanBuilder();
-        if (type.contains("d")) { //"d" stand for Diary
+        if (type.contains("d")) { // "d" stand for Diary
             conditionBuilder
-                .or(qDiary.title.contains(keyword))
-                .or(qDiary.content.contains(keyword));
+                    .or(qDiary.title.contains(keyword))
+                    .or(qDiary.content.contains(keyword));
         }
         if (type.contains("t")) { // "t" stand for Tag
             // conditionBuilder
-            //     .or(qDiary.tagList.contains(tagList.stream().map(new Function<String,String>() {
-            //         @Override
-            //         public String apply(String dto) {
-            //             return tagDTOtoEntity(dto);
-            //         }
-            //     }).collect(Collectors.toList())));
+            // .or(qDiary.tagList.contains(tagList.stream().map(new
+            // Function<String,String>() {
+            // @Override
+            // public String apply(String dto) {
+            // return tagDTOtoEntity(dto);
+            // }
+            // }).collect(Collectors.toList())));
         }
         booleanBuilder.and(conditionBuilder);
         return booleanBuilder;
-        
+
     }
 }
