@@ -1,5 +1,6 @@
 package org.zerock.decommi.entity.diary;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -29,12 +30,8 @@ public class Reply extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rno;
+    @Column(nullable = false)
     private String replyContent;
-
-    // 대댓글 구현을 위한 속성들
-    private Long replyGroup;
-    private Long replyDepth;
-    private Long replyOrder;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Diary dino;
@@ -42,8 +39,16 @@ public class Reply extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
+    // 대댓글 구현을 위한 속성들
+    @Column(nullable = false)
+    private Long replyGroup;
+    @Column(nullable = false)
+    private Long replyDepth;
+    @Column(nullable = false)
+    private Long replyOrder;
+
+
     public void changeReplyContent(String replyContent) {
         this.replyContent = replyContent;
     }
-
 }

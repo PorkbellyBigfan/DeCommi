@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReplyDTO {
     private Long rno;
-    private String id; // Member id
+    private Long Mid; // Member id
     private Long dino; // Diary dino
 
     private String replyContent;

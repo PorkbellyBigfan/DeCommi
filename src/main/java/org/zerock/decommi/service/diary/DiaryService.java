@@ -51,12 +51,13 @@ public interface DiaryService {
     // List<Object[]> getLikeTagDiaryList();
 
     // // 댓글
-    // Long registerReply(ReplyDTO dto);
-    // String modifyReply(ReplyDTO dto, String id);
-    // String deleteReply(ReplyDTO dto, String id);
-    // HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable);
-    // HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable
-    // pageable, String id);
+    Long registerReply(ReplyDTO dto);
+    Long addReply(ReplyDTO dto); //대댓글?
+    String modifyReply(ReplyDTO dto);
+    String deleteReply(ReplyDTO dto);
+    HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable);
+    HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable
+    pageable, String id);
 
     // 북마크
     Boolean addBookmark(BookmarkDTO dto);
@@ -127,7 +128,7 @@ public interface DiaryService {
     // 댓글
     default Reply replyDTOtoEntity(ReplyDTO dto) {
         Diary diary = Diary.builder().dino(dto.getDino()).build();
-        Member member = Member.builder().id(dto.getId()).build();
+        Member member = Member.builder().mid(dto.getMid()).build();
         Reply reply = Reply.builder()
                 .rno(dto.getRno())
                 .dino(diary)
@@ -145,7 +146,7 @@ public interface DiaryService {
         ReplyDTO dto = ReplyDTO.builder()
                 .rno(reply.getRno())
                 .dino(reply.getDino().getDino())
-                .id(reply.getMember().getId())
+                .Mid(reply.getMember().getMid())
                 .replyContent(reply.getReplyContent())
                 .replyGroup(reply.getReplyGroup())
                 .replyDepth(reply.getReplyDepth())

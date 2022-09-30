@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
@@ -24,6 +25,7 @@ import org.springframework.test.annotation.Commit;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
+import org.zerock.decommi.dto.ReplyDTO;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.File;
 import org.zerock.decommi.entity.diary.Reply;
@@ -55,7 +57,12 @@ public class DiaryRepositoryTests {
   @Autowired
   ReplyRepository replyRepository;
   @Autowired
+<<<<<<< HEAD
   MyDiaryService mdService;
+=======
+  MemberRepository memberRepository;
+  
+>>>>>>> 03084a4ec17af9604264015de1a486e334beaf91
 
   @Test
   public void insertDiaryDummies() {
@@ -81,7 +88,7 @@ public class DiaryRepositoryTests {
   @Test
   public void insertReply() {
     Diary diary = Diary.builder().dino(1L).build();
-    Member member = Member.builder().mid(4L).build();
+    Member member = Member.builder().mid(3L).build();
     Reply reply = Reply.builder()
         .dino(diary)
         .member(member)
@@ -161,4 +168,50 @@ public class DiaryRepositoryTests {
   // Page<Diary> result = repository.getDiaryListWithTagAndReply(pageable);
   // log.info(result);
   // }
+  
+  //댓글
+  @Test
+  public void fghgfdhgfhgfhgfhgh(){
+    // log.info(replyRepository.getLastestReplyGroupWhereMatchWithDino(1L));
+    Member member = Member.builder().mid(1L).build();
+    Diary diary = Diary.builder().dino(1L).build();
+    // log.info(replyRepository.findByMember(member));
+    // log.info(replyRepository.getReplyByDinoAndMid(diary,member));
+    // log.info(replyRepository.getReplyListByDino(1L));
+    log.info(replyRepository.getLastestReplyGroupWhereMatchWithDino(1L));
+  }
+
+  @Test
+  public void deleteReply(){
+    Optional<Reply> checkReply = replyRepository.getReplyByRnoAndMid(3L, 11L);
+    if(checkReply.isPresent()){
+      System.out.println("삭제 성공공");
+    } else {
+      System.out.println("없다 댓글");
+    }
 }
+
+  @Test
+  public void modifyReply(){
+    Optional<Reply> checkReply = replyRepository.getReplyByRnoAndMid(1L, 1L);
+    if(checkReply.isPresent()){
+      Reply reply = checkReply.get();
+      reply.changeReplyContent("수정정정gdffd");
+      replyRepository.save(reply);
+    }
+  }
+
+  @Test
+    void commentPagingTest() {
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Reply> rPage = replyRepository.getPageList(pageable, 1L);
+        for (Reply reply : rPage) {
+          log.info(reply);  
+        }
+    }
+}
+
+// PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(150).build();
+// PageResultDTO<HelpDTO,Help> resultDTO = helpService.getQnAList(pageRequestDTO);
+// for (HelpDTO helpDTO : resultDTO.getDtoList()) {
+//     System.out.println("=================" + helpDTO);

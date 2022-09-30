@@ -15,6 +15,8 @@ import java.util.UUID;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -35,13 +37,16 @@ import org.zerock.decommi.dto.BookmarkDTO;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.HeartDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
+import org.zerock.decommi.dto.ReplyDTO;
 import org.zerock.decommi.dto.ReportDTO;
 import org.zerock.decommi.dto.TagDTO;
 import org.zerock.decommi.dto.UploadResultDTO;
+import org.zerock.decommi.entity.diary.Reply;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.service.diary.DiaryService;
 import org.zerock.decommi.service.member.MemberService;
 import org.zerock.decommi.vo.DiaryPost;
+import org.zerock.decommi.vo.Reply2;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -145,20 +150,54 @@ public class DiaryApiController {
         }
         return folderPath;
     }
-
+    //하트
     @RequestMapping(value = "/heart", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> HeartDiary(@RequestBody HeartDTO dto) {
         return new ResponseEntity<>(diaryService.addHeart(dto), HttpStatus.OK);
     }
-
+    //북마크
     @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> bookmarDiary(@RequestBody BookmarkDTO dto) {
         return new ResponseEntity<>(diaryService.addBookmark(dto), HttpStatus.OK);
     }
-
+    //신고
     @RequestMapping(value = "/report", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> reportingDiary(@RequestBody ReportDTO dto) {
         return new ResponseEntity<>(diaryService.addDiaryReport(dto), HttpStatus.OK);
+    }
+
+    //댓글페이지
+    @RequestMapping(value = "/reply/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HashMap<String, Object>> replyRead(@RequestBody Reply2 reply2){
+        Pageable pageable = PageRequest.of(reply2.getReqPage(), 5);
+        HashMap<String, Object> result = diaryService.getReplyListByDino(reply2.getDino(), pageable);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    //댓글
+    @RequestMapping(value = "/reply/add/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> registerReply(@RequestBody ReplyDTO dto){
+        Long result = diaryService.registerReply(dto);
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
+
+    //대댓글
+    @RequestMapping(value = "/reply/add/reply", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> addReply(@RequestBody ReplyDTO dto){
+    Long result = diaryService.addReply(dto);
+    return new ResponseEntity<>(result,HttpStatus.OK);
+}
+    //댓글삭제
+    @RequestMapping(value = "/reply/remove", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> deleteReply(@RequestBody ReplyDTO dto){
+        return new ResponseEntity<>(diaryService.deleteReply(dto),HttpStatus.OK);
+    }
+
+    //댓글수정
+    @RequestMapping(value = "/reply/modify", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> modifyReply(@RequestBody ReplyDTO dto){
+         String result =diaryService.modifyReply(dto);
+        return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
 }
