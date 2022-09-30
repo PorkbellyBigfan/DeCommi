@@ -13,4 +13,5 @@ public class LikeTagListDTO {
   private Long lid;
   private String likeTagName;
   private Long mid;
+  private Long tagId;
 }

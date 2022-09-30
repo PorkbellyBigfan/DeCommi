@@ -184,7 +184,6 @@ public class DiaryServiceImpl implements DiaryService {
         // String sort = requestDTO.getSort();
         Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
         BooleanBuilder booleanBuilder = getSearch(requestDTO);
-        
 
         Page<Diary> result = repository.findAll(booleanBuilder, pageable);
         Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
@@ -225,20 +224,21 @@ public class DiaryServiceImpl implements DiaryService {
     // 내가 작성한 다이어리 리스트
     // @Transactional(readOnly = true)
     // @Override
-    // public PageResultDTO<DiaryDTO, Diary> getMyDiaryPostList(PageRequestDTO requestDTO) {
-    //     // String sort = requestDTO.getSort();
-    //     Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
-    //     BooleanBuilder booleanBuilder = searchMyDiary(requestDTO);
-    //     Page<Diary> result = repository.findAll(booleanBuilder, pageable);
-    //     Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
-    //         @Override
-    //         public DiaryDTO apply(Diary t) {
-    //             return entityToDTO(t);
-    //         }
-    //     };
-    //     log.info(" service ::: result ::: " + result);
-    //     log.info(" service ::: requestDTO :::  " + requestDTO);
-    //     return new PageResultDTO<>(result, fn);
+    // public PageResultDTO<DiaryDTO, Diary> getMyDiaryPostList(PageRequestDTO
+    // requestDTO) {
+    // // String sort = requestDTO.getSort();
+    // Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
+    // BooleanBuilder booleanBuilder = searchMyDiary(requestDTO);
+    // Page<Diary> result = repository.findAll(booleanBuilder, pageable);
+    // Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
+    // @Override
+    // public DiaryDTO apply(Diary t) {
+    // return entityToDTO(t);
+    // }
+    // };
+    // log.info(" service ::: result ::: " + result);
+    // log.info(" service ::: requestDTO ::: " + requestDTO);
+    // return new PageResultDTO<>(result, fn);
     // }
 
     // 하트
@@ -351,7 +351,7 @@ public class DiaryServiceImpl implements DiaryService {
             return "Could not Delete Reply";
         }
     }
-    
+
     @Override
     public HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable) {
         Page<Reply> replyList = replyRepository.getPageList(pageable, dino);
@@ -382,7 +382,6 @@ public class DiaryServiceImpl implements DiaryService {
     // return null;
     // }
     // 댓
-
 
     // @Override
     // public HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable
@@ -436,7 +435,6 @@ public class DiaryServiceImpl implements DiaryService {
         QDiary qDiary = QDiary.diary;
         QTag qTag = QTag.tag;
 
-
         String type = requestDTO.getType();
         String keyword = requestDTO.getKeyword();
         String sort = requestDTO.getSort();
@@ -444,7 +442,6 @@ public class DiaryServiceImpl implements DiaryService {
         List<String> tagList = requestDTO.getTagList();
         log.info("type : " + type);
         log.info("tagList : " + tagList);
-
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue());
         booleanBuilder.and(expression);
@@ -482,14 +479,14 @@ public class DiaryServiceImpl implements DiaryService {
         QMember qMember = QMember.member;
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         BooleanExpression expression = qDiary.dino.gt(0L);
-        log.info("type : " +type);
-        log.info("tagList : "+ tagList);
+        log.info("type : " + type);
+        log.info("tagList : " + tagList);
 
         // BooleanBuilder booleanBuilder = new BooleanBuilder();
-        // BooleanExpression expression = 
-            qDiary.dino
-            .gt(0L)
-            .and(qDiary.openYN.isTrue());
+        // BooleanExpression expression =
+        qDiary.dino
+                .gt(0L)
+                .and(qDiary.openYN.isTrue());
         booleanBuilder.and(expression);
         if (type == null || type.trim().length() == 0) {
             return booleanBuilder;
@@ -515,7 +512,5 @@ public class DiaryServiceImpl implements DiaryService {
         return booleanBuilder;
 
     }
-
-
 
 }
