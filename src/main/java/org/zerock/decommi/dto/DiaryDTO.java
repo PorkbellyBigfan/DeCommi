@@ -25,8 +25,11 @@ public class DiaryDTO {
     private String content;
     private boolean openYN;
     private boolean replyYN;
-
     private String writer; // Member의 Primary key :id
+    private Long replyCnt;
+    private Long heartCnt;
+    private Long bookmarkCnt;
+    private Long reportCnt;
 
     @Builder.Default
     private List<FileDTO> fileDTOList = new ArrayList<>();
