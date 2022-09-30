@@ -91,14 +91,11 @@ public class DiaryServiceImpl implements DiaryService {
                 tagRepository.save(tag);
             }
         });
-<<<<<<< HEAD
         // for (String i : tagList) {
         // Tag tagResult = tagDTOtoEntity(i);
         // tagResult.updateDiary(result);
         // tagRepository.save(tagResult);
         // }
-=======
->>>>>>> d2eeaea3a7aeef1bcf436cc97571708b809e8100
 
         return result.getDino().toString();
     }
@@ -180,11 +177,8 @@ public class DiaryServiceImpl implements DiaryService {
         dto.setTagList(tagString);
         return dto;
     }
-<<<<<<< HEAD
 
-    @Transactional(readOnly = true)
-=======
->>>>>>> d2eeaea3a7aeef1bcf436cc97571708b809e8100
+//    @Transactional(readOnly = true)
 
     @Transactional(readOnly = true)
     @Override
@@ -205,7 +199,6 @@ public class DiaryServiceImpl implements DiaryService {
         return new PageResultDTO<>(result, fn);
     }
 
-<<<<<<< HEAD
     // @Override
     // public SearchResultDTO<DiaryPostList, Diary> getDiaryPostList(SearchCondition
     // searchCondition) {
@@ -230,7 +223,6 @@ public class DiaryServiceImpl implements DiaryService {
 
     // }
 
-=======
 
     //내가 작성한 다이어리 리스트
     @Transactional(readOnly = true)
@@ -251,7 +243,6 @@ public class DiaryServiceImpl implements DiaryService {
         return new PageResultDTO<>(result, fn);
     }
 
->>>>>>> d2eeaea3a7aeef1bcf436cc97571708b809e8100
     // 하트
     @Override
     public Boolean addHeart(HeartDTO dto) {
@@ -320,6 +311,7 @@ public class DiaryServiceImpl implements DiaryService {
         }
     }
 
+    //대댓글
     @Override
     public Long addReply(ReplyDTO dto) {
         Optional<Member> result = memberRepository.findById(dto.getMid());
@@ -334,16 +326,21 @@ public class DiaryServiceImpl implements DiaryService {
         return entity.getRno();
     }
 
+    //수정
     @Override
-    public void modifyReply(ReplyDTO dto) {
+    public String modifyReply(ReplyDTO dto) {
         // Optional<Member> result = memberRepository.findById(dto.getMid());
+        Optional<Reply> checkReply = replyRepository.getReplyByRnoAndMid(dto.getRno(), dto.getMid());
         log.info("modify...." + dto);
-        Optional<Reply> result = replyRepository.findById(dto.getRno());
-        if(result.isPresent()){
-            Reply reply = result.get();
+        if(checkReply.isPresent()){
+            Reply reply = checkReply.get();
             reply.changeReplyContent(dto.getReplyContent());
             replyRepository.save(reply);
-    }
+            return "수정 성공";
+    } else {
+            return "실패";
+        }
+}
     
     //댓글 삭제
     @Override
@@ -360,7 +357,7 @@ public class DiaryServiceImpl implements DiaryService {
     
     @Override
     public HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable) {
-        // TODO Auto-generated method stub
+        
         return null;
     }
 

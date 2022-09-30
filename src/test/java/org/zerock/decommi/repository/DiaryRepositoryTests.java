@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
@@ -24,6 +25,7 @@ import org.springframework.test.annotation.Commit;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
+import org.zerock.decommi.dto.ReplyDTO;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.File;
 import org.zerock.decommi.entity.diary.Reply;
@@ -174,6 +176,25 @@ public class DiaryRepositoryTests {
 
   @Test
   public void modifyReply(){
-   
+    Optional<Reply> checkReply = replyRepository.getReplyByRnoAndMid(1L, 1L);
+    if(checkReply.isPresent()){
+      Reply reply = checkReply.get();
+      reply.changeReplyContent("수정정정gdffd");
+      replyRepository.save(reply);
+    }
   }
+
+  @Test
+    void commentPagingTest() {
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Reply> rPage = replyRepository.getPageList(pageable, 1L);
+        for (Reply reply : rPage) {
+          log.info(reply);  
+        }
+    }
 }
+
+// PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(150).build();
+// PageResultDTO<HelpDTO,Help> resultDTO = helpService.getQnAList(pageRequestDTO);
+// for (HelpDTO helpDTO : resultDTO.getDtoList()) {
+//     System.out.println("=================" + helpDTO);
