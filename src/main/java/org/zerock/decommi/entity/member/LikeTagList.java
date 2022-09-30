@@ -22,7 +22,8 @@ import lombok.ToString;
 public class LikeTagList {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long lid; //likeTagId
+  private Long lid; // likeTagId
   private String likeTagName;
-  private Long mid;  
+  private Long mid;
+  private Long tagId;
 }

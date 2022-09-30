@@ -9,6 +9,7 @@ import org.zerock.decommi.dto.BookmarkDTO;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.FileDTO;
 import org.zerock.decommi.dto.HeartDTO;
+import org.zerock.decommi.dto.LikeTagListDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.dto.ReplyDTO;
@@ -21,6 +22,7 @@ import org.zerock.decommi.entity.diary.Reply;
 import org.zerock.decommi.entity.diary.Report;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.member.Bookmark;
+import org.zerock.decommi.entity.member.LikeTagList;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.vo.DiaryPostList;
 import org.zerock.decommi.vo.SearchCondition;
@@ -38,26 +40,19 @@ public interface DiaryService {
     DiaryDTO getDiaryPostByDino(Long dino);
 
     PageResultDTO<DiaryDTO, Diary> getDiaryPostList(PageRequestDTO requestDTO);
-    
-    // 정렬조건
-    // default 는 작성일자 최신이 제일 위로
-    // 하트순
-    // 북마크순
-
-    // 검색조건 만족하는 다이어리 게시글 리스트
-    // List<Object[]> getSearchDiaryList(String search);
-
-    // 좋아요태그포함된 다이어리 게시글 리스트
-    // List<Object[]> getLikeTagDiaryList();
 
     // // 댓글
     Long registerReply(ReplyDTO dto);
-    Long addReply(ReplyDTO dto); //대댓글?
+
+    Long addReply(ReplyDTO dto); // 대댓글?
+
     String modifyReply(ReplyDTO dto);
+
     String deleteReply(ReplyDTO dto);
+
     HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable);
-    HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable
-    pageable, String id);
+
+    HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable pageable, String id);
 
     // 북마크
     Boolean addBookmark(BookmarkDTO dto);
@@ -218,4 +213,5 @@ public interface DiaryService {
                 .build();
         return dto;
     }
+
 }

@@ -31,12 +31,14 @@ import org.zerock.decommi.entity.diary.File;
 import org.zerock.decommi.entity.diary.Reply;
 // import org.zerock.decommi.entity.diary.DiaryTag;
 import org.zerock.decommi.entity.diary.Tag;
+import org.zerock.decommi.entity.member.LikeTagList;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.entity.member.MemberRole;
 import org.zerock.decommi.repository.diary.DiaryRepository;
 import org.zerock.decommi.repository.diary.ReplyRepository;
 // import org.zerock.decommi.repository.diary.DiaryTagRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
+import org.zerock.decommi.repository.member.LikeTagListRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.service.diary.DiaryService;
 import org.zerock.decommi.service.diary.MyDiaryService;
@@ -58,8 +60,11 @@ public class DiaryRepositoryTests {
   ReplyRepository replyRepository;
   @Autowired
   MyDiaryService mdService;
+  @Autowired
   MemberRepository memberRepository;
-  
+
+  @Autowired
+  LikeTagListRepository likeTagListRepository;
 
   @Test
   public void insertDiaryDummies() {
@@ -124,20 +129,21 @@ public class DiaryRepositoryTests {
     arrList.add("test");
     arrList.add("1");
     PageRequestDTO requestDTO = PageRequestDTO.builder()
-      .page(1).size(10).type("d")
-      .tagList(arrList).sort("dino").keyword("테스트").build();
+        .page(1).size(10).type("d")
+        .tagList(arrList).sort("dino").keyword("테스트").build();
     PageResultDTO<DiaryDTO, Diary> resultDTO = diaryService.getDiaryPostList(requestDTO);
     log.info("Search Result :::: " + resultDTO);
   }
-  //마이 다이어리 리스트
+
+  // 마이 다이어리 리스트
   @Test
-  public void testGetMyDiaryPostList(){
+  public void testGetMyDiaryPostList() {
     ArrayList<String> arrList = new ArrayList<String>();
     arrList.add("test");
     arrList.add("1");
     PageRequestDTO requestDTO = PageRequestDTO.builder()
-      .page(1).size(10).type("d")
-      .tagList(arrList).sort("dino").id("2@2.2").keyword("테스트").build();
+        .page(1).size(10).type("d")
+        .tagList(arrList).sort("dino").id("2@2.2").keyword("테스트").build();
     PageResultDTO<DiaryDTO, Diary> resultDTO = mdService.getMyDiaryPostList(requestDTO);
     log.info("Search Result :::: " + resultDTO);
   }
@@ -165,10 +171,10 @@ public class DiaryRepositoryTests {
   // Page<Diary> result = repository.getDiaryListWithTagAndReply(pageable);
   // log.info(result);
   // }
-  
-  //댓글
+
+  // 댓글
   @Test
-  public void fghgfdhgfhgfhgfhgh(){
+  public void fghgfdhgfhgfhgfhgh() {
     // log.info(replyRepository.getLastestReplyGroupWhereMatchWithDino(1L));
     Member member = Member.builder().mid(1L).build();
     Diary diary = Diary.builder().dino(1L).build();
@@ -179,19 +185,19 @@ public class DiaryRepositoryTests {
   }
 
   @Test
-  public void deleteReply(){
+  public void deleteReply() {
     Optional<Reply> checkReply = replyRepository.getReplyByRnoAndMid(3L, 11L);
-    if(checkReply.isPresent()){
+    if (checkReply.isPresent()) {
       System.out.println("삭제 성공공");
     } else {
       System.out.println("없다 댓글");
     }
-}
+  }
 
   @Test
-  public void modifyReply(){
+  public void modifyReply() {
     Optional<Reply> checkReply = replyRepository.getReplyByRnoAndMid(1L, 1L);
-    if(checkReply.isPresent()){
+    if (checkReply.isPresent()) {
       Reply reply = checkReply.get();
       reply.changeReplyContent("수정정정gdffd");
       replyRepository.save(reply);
@@ -199,16 +205,25 @@ public class DiaryRepositoryTests {
   }
 
   @Test
-    void commentPagingTest() {
-        Pageable pageable = PageRequest.of(0, 10);
-        Page<Reply> rPage = replyRepository.getPageList(pageable, 1L);
-        for (Reply reply : rPage) {
-          log.info(reply);  
-        }
+  void commentPagingTest() {
+    Pageable pageable = PageRequest.of(0, 10);
+    Page<Reply> rPage = replyRepository.getPageList(pageable, 1L);
+    for (Reply reply : rPage) {
+      log.info(reply);
     }
+  }
+
+  @Test
+  void testGetLikeTagList() {
+    Member member = Member.builder().mid(1L).build();
+    List<LikeTagList> result = likeTagListRepository.getLikeTagList(member.getMid());
+    log.info(result);
+  }
 }
 
-// PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(150).build();
-// PageResultDTO<HelpDTO,Help> resultDTO = helpService.getQnAList(pageRequestDTO);
+// PageRequestDTO pageRequestDTO =
+// PageRequestDTO.builder().page(1).size(150).build();
+// PageResultDTO<HelpDTO,Help> resultDTO =
+// helpService.getQnAList(pageRequestDTO);
 // for (HelpDTO helpDTO : resultDTO.getDtoList()) {
-//     System.out.println("=================" + helpDTO);
+// System.out.println("=================" + helpDTO);
