@@ -57,12 +57,9 @@ public class DiaryRepositoryTests {
   @Autowired
   ReplyRepository replyRepository;
   @Autowired
-<<<<<<< HEAD
   MyDiaryService mdService;
-=======
   MemberRepository memberRepository;
   
->>>>>>> 03084a4ec17af9604264015de1a486e334beaf91
 
   @Test
   public void insertDiaryDummies() {
