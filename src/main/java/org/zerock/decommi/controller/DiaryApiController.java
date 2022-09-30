@@ -1,8 +1,6 @@
 package org.zerock.decommi.controller;
 
 import java.io.File;
-import java.net.URLDecoder;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -20,9 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,20 +27,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.decommi.dto.BookmarkDTO;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.HeartDTO;
-import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.ReplyDTO;
 import org.zerock.decommi.dto.ReportDTO;
-import org.zerock.decommi.dto.TagDTO;
 import org.zerock.decommi.dto.UploadResultDTO;
-import org.zerock.decommi.entity.diary.Reply;
-import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.service.diary.DiaryService;
-import org.zerock.decommi.service.member.MemberService;
-import org.zerock.decommi.vo.DiaryPost;
 import org.zerock.decommi.vo.Reply2;
 
 import lombok.RequiredArgsConstructor;
@@ -184,7 +172,7 @@ public class DiaryApiController {
     //대댓글
     @RequestMapping(value = "/reply/add/reply", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Long> addReply(@RequestBody ReplyDTO dto){
-    Long result = diaryService.addReply(dto);
+    Long result = diaryService.addNewReply(dto);
     return new ResponseEntity<>(result,HttpStatus.OK);
 }
     //댓글삭제

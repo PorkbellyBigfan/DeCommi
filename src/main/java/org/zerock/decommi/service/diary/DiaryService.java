@@ -52,7 +52,7 @@ public interface DiaryService {
 
     // // 댓글
     Long registerReply(ReplyDTO dto);
-    Long addReply(ReplyDTO dto); //대댓글?
+    Long addNewReply(ReplyDTO dto); //대댓글?
     String modifyReply(ReplyDTO dto);
     String deleteReply(ReplyDTO dto);
     HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable);
