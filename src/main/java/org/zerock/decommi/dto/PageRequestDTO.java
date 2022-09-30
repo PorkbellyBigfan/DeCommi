@@ -19,7 +19,7 @@ public class PageRequestDTO { // which page, 어떤 페이지를 요청
   private String type;
   private String keyword;
   private String sort;
-  private String id; //(마이 다이어리 리스트)를 위해서 본인인지 확인하려고 컨트롤러에 있는 Header에 담겨있는 id 와 매칭검사할 예정
+  private String id; //(마이 다이어리 리스트)를 위해서 본인인지 확인하려고 컨트롤러에 DiaryDTO에 담겨있는 id 와 매칭검사할 예정
   private List<String>tagList;
 
 

@@ -57,7 +57,6 @@ public class DiaryViewController {
     try {
       String srchFileName = URLDecoder.decode(fileName, "UTF-8");
       File file = new File("c:\testingimage" + File.separator + srchFileName);// window일경우 사용
-      // File file = new File("/Users/hyunseokbyun/Documents/Imagefiles/" +
       // File.separator + srchFileName);
       if (size != null && size.equals("1")) {
         file = new File(file.getParent(), file.getName().substring(2));

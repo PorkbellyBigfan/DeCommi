@@ -34,6 +34,7 @@ import org.zerock.decommi.dto.ReplyDTO;
 import org.zerock.decommi.dto.ReportDTO;
 import org.zerock.decommi.dto.UploadResultDTO;
 import org.zerock.decommi.service.diary.DiaryService;
+import org.zerock.decommi.vo.DiaryPost;
 import org.zerock.decommi.vo.Reply2;
 
 import lombok.RequiredArgsConstructor;

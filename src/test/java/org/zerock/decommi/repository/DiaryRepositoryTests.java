@@ -39,6 +39,7 @@ import org.zerock.decommi.repository.diary.ReplyRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.service.diary.DiaryService;
+import org.zerock.decommi.service.diary.MyDiaryService;
 import org.zerock.decommi.vo.DiaryPostList;
 import org.zerock.decommi.vo.SearchCondition;
 
@@ -56,6 +57,7 @@ public class DiaryRepositoryTests {
   @Autowired
   ReplyRepository replyRepository;
   @Autowired
+  MyDiaryService mdService;
   MemberRepository memberRepository;
   
 
@@ -125,6 +127,18 @@ public class DiaryRepositoryTests {
       .page(1).size(10).type("d")
       .tagList(arrList).sort("dino").keyword("테스트").build();
     PageResultDTO<DiaryDTO, Diary> resultDTO = diaryService.getDiaryPostList(requestDTO);
+    log.info("Search Result :::: " + resultDTO);
+  }
+  //마이 다이어리 리스트
+  @Test
+  public void testGetMyDiaryPostList(){
+    ArrayList<String> arrList = new ArrayList<String>();
+    arrList.add("test");
+    arrList.add("1");
+    PageRequestDTO requestDTO = PageRequestDTO.builder()
+      .page(1).size(10).type("d")
+      .tagList(arrList).sort("dino").id("2@2.2").keyword("테스트").build();
+    PageResultDTO<DiaryDTO, Diary> resultDTO = mdService.getMyDiaryPostList(requestDTO);
     log.info("Search Result :::: " + resultDTO);
   }
 
