@@ -28,27 +28,31 @@ public interface DiaryRepository extends JpaRepository<Diary, Long>, QuerydslPre
   @Query("select d from Diary d where writer=:id and dino=:dino")
   Optional<Diary> getDiaryByDinoAndId(Long dino, String id);
 
-  @Query("SELECT COUNT(r.rno) as replyCnt, COUNT(h.hid) as heartCnt, COUNT(b.bid) as bookmarkCnt, COUNT(rp.reid)as reportCnt from Diary d "
-      +
-      "left join Reply r on r.dino = d " +
-      "left join Heart h on h.dino = d " +
-      "left join Report rp on rp.dino = d " +
-      "left join Bookmark b on b.dino = d ")
-  Optional<Diary> getCounterByDino(Long dino);
+  // @Query("SELECT COUNT(r.rno) as replyCnt, COUNT(h.hid) as heartCnt,
+  // COUNT(b.bid) as bookmarkCnt, COUNT(rp.reid)as reportCnt from Diary d "
+  // +
+  // "left join Reply r on r.dino = d " +
+  // "left join Heart h on h.dino = d " +
+  // "left join Report rp on rp.dino = d " +
+  // "left join Bookmark b on b.dino = d ")
+  // Optional<Diary> getCounterByDino(Long dino);
 
   // 댓글카운트, 하트카운트, 북마크카운트, 신고카운트 추가해야됨
-  @Query("SELECT m.id as writer, d.dino as dino, d.title as title, d.content as content, d.regDate as regDate, "
-      + "d.openYN as openYN, d.replyYN as replyYN, COUNT(r.rno) as replyCnt , COUNT(h.hid) as heartCnt, COUNT(rp.reid) as reportCnt, COUNT(b.bid) as bookmarkCnt "
-      + "from Diary d "
-      + "left join Member m on m.id = d.writer "
-      + "left join Tag t on t.dino = d "
-      + "left join Reply r on r.dino = d "
-      + "left join Heart h on h.dino = d "
-      + "left join Bookmark b on b.dino = d "
-      + "left join Report rp on rp.dino = d "
-      + "where d.openYN = 1L "
-      + "group by d.dino ")
-  Optional<List<getDiaryPostList>> getList(Sort sort);
+  // @Query("SELECT m.id as writer, d.dino as dino, d.title as title, d.content as
+  // content, d.regDate as regDate, "
+  // + "d.openYN as openYN, d.replyYN as replyYN, COUNT(r.rno) as replyCnt ,
+  // COUNT(h.hid) as heartCnt, COUNT(rp.reid) as reportCnt, COUNT(b.bid) as
+  // bookmarkCnt "
+  // + "from Diary d "
+  // + "left join Member m on m.id = d.writer "
+  // + "left join Tag t on t.dino = d "
+  // + "left join Reply r on r.dino = d "
+  // + "left join Heart h on h.dino = d "
+  // + "left join Bookmark b on b.dino = d "
+  // + "left join Report rp on rp.dino = d "
+  // + "where d.openYN = 1L "
+  // + "group by d.dino ")
+  // Optional<List<getDiaryPostList>> getList(Sort sort);
 
   // Dino로 파일 삭제하기
   @Modifying

@@ -54,18 +54,16 @@ public class DiaryApiController {
     @RequestMapping(value = "/write", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> register(@RequestBody DiaryDTO dto) {
         List<String> tagList = dto.getTagList();
-        log.info("controller dto.getTagList() : " + dto.getTagList());
-        log.info("controller tagList : "+ tagList);
-        log.info("dto : " + dto);
         return new ResponseEntity<>(diaryService.registerDiary(dto), HttpStatus.OK);
     }
+
     @ResponseBody
     @PostMapping("/write/image")
     public Map<String, Object> uploadImage(@RequestParam Map<String, Object> paramMap, MultipartRequest request)
             throws Exception {
         MultipartFile uploadFile = request.getFile("upload");
         // windows 일경우 이 경로 사용
-        String uploadDir = "c:\\testingimage\\"; 
+        String uploadDir = "c:\\testingimage\\";
         // String uploadDir = "/Users/hyunseokbyun/Documents/Imagefiles/";
         String uploadId = UUID.randomUUID().toString() + "."
                 + FilenameUtils.getExtension(uploadFile.getOriginalFilename());
@@ -86,8 +84,9 @@ public class DiaryApiController {
         String diaryPost = diaryService.modifyDiary(dto, dto.getTagList());
         return new ResponseEntity<>(diaryPost, HttpStatus.OK);
     }
-    @RequestMapping(value = "/delete", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces =MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Boolean> deleteDiary(@RequestBody DiaryDTO dto){
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> deleteDiary(@RequestBody DiaryDTO dto) {
         return new ResponseEntity<>(diaryService.deleteDiary(dto), HttpStatus.OK);
     }
 
@@ -128,8 +127,6 @@ public class DiaryApiController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-
-
     private String makeFolder() {
         String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         String folderPath = str.replace("/", File.separator);
@@ -139,54 +136,58 @@ public class DiaryApiController {
         }
         return folderPath;
     }
-    //하트
+
+    // 하트
     @RequestMapping(value = "/heart", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> HeartDiary(@RequestBody HeartDTO dto) {
         return new ResponseEntity<>(diaryService.addHeart(dto), HttpStatus.OK);
     }
-    //북마크
+
+    // 북마크
     @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> bookmarDiary(@RequestBody BookmarkDTO dto) {
         return new ResponseEntity<>(diaryService.addBookmark(dto), HttpStatus.OK);
     }
-    //신고
+
+    // 신고
     @RequestMapping(value = "/report", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> reportingDiary(@RequestBody ReportDTO dto) {
         return new ResponseEntity<>(diaryService.addDiaryReport(dto), HttpStatus.OK);
     }
 
-    //댓글페이지
+    // 댓글페이지
     @RequestMapping(value = "/reply/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HashMap<String, Object>> replyRead(@RequestBody Reply2 reply2){
+    public ResponseEntity<HashMap<String, Object>> replyRead(@RequestBody Reply2 reply2) {
         Pageable pageable = PageRequest.of(reply2.getReqPage(), 5);
         HashMap<String, Object> result = diaryService.getReplyListByDino(reply2.getDino(), pageable);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    //댓글
+    // 댓글
     @RequestMapping(value = "/reply/add/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Long> registerReply(@RequestBody ReplyDTO dto){
+    public ResponseEntity<Long> registerReply(@RequestBody ReplyDTO dto) {
         Long result = diaryService.registerReply(dto);
-        return new ResponseEntity<>(result,HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    //대댓글
+    // 대댓글
     @RequestMapping(value = "/reply/add/reply", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Long> addReply(@RequestBody ReplyDTO dto){
-    Long result = diaryService.addNewReply(dto);
-    return new ResponseEntity<>(result,HttpStatus.OK);
-}
-    //댓글삭제
-    @RequestMapping(value = "/reply/remove", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> deleteReply(@RequestBody ReplyDTO dto){
-        return new ResponseEntity<>(diaryService.deleteReply(dto),HttpStatus.OK);
+    public ResponseEntity<Long> addReply(@RequestBody ReplyDTO dto) {
+        Long result = diaryService.addNewReply(dto);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    //댓글수정
+    // 댓글삭제
+    @RequestMapping(value = "/reply/remove", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> deleteReply(@RequestBody ReplyDTO dto) {
+        return new ResponseEntity<>(diaryService.deleteReply(dto), HttpStatus.OK);
+    }
+
+    // 댓글수정
     @RequestMapping(value = "/reply/modify", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> modifyReply(@RequestBody ReplyDTO dto){
-         String result =diaryService.modifyReply(dto);
-        return new ResponseEntity<>(result,HttpStatus.OK);
+    public ResponseEntity<String> modifyReply(@RequestBody ReplyDTO dto) {
+        String result = diaryService.modifyReply(dto);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 }

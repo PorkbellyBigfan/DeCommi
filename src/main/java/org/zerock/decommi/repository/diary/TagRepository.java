@@ -11,7 +11,7 @@ import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.Tag;
 
 @Repository
-public interface TagRepository extends JpaRepository<Tag, Long>, QuerydslPredicateExecutor<Tag> {
+public interface TagRepository extends JpaRepository<Tag, Long> {
 
   // 해당 게시글에 있는 태그 리스트를 가져오는 쿼리문
   @Query("select t from Tag t where diary_dino=:dino ")

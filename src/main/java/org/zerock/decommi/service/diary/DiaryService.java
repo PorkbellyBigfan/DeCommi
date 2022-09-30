@@ -3,13 +3,11 @@ package org.zerock.decommi.service.diary;
 import java.util.HashMap;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.zerock.decommi.dto.BookmarkDTO;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.FileDTO;
 import org.zerock.decommi.dto.HeartDTO;
-import org.zerock.decommi.dto.LikeTagListDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.dto.ReplyDTO;
@@ -22,10 +20,7 @@ import org.zerock.decommi.entity.diary.Reply;
 import org.zerock.decommi.entity.diary.Report;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.member.Bookmark;
-import org.zerock.decommi.entity.member.LikeTagList;
 import org.zerock.decommi.entity.member.Member;
-import org.zerock.decommi.vo.DiaryPostList;
-import org.zerock.decommi.vo.SearchCondition;
 
 public interface DiaryService {
     // 다이어리

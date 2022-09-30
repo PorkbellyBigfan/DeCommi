@@ -28,14 +28,11 @@ import org.zerock.decommi.dto.TagDTO;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.File;
 import org.zerock.decommi.entity.diary.Heart;
-import org.zerock.decommi.entity.diary.QDiary;
-import org.zerock.decommi.entity.diary.QTag;
 import org.zerock.decommi.entity.diary.Reply;
 import org.zerock.decommi.entity.diary.Report;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.member.Bookmark;
 import org.zerock.decommi.entity.member.Member;
-import org.zerock.decommi.entity.member.QMember;
 import org.zerock.decommi.repository.diary.BookmarkRepository;
 import org.zerock.decommi.repository.diary.DiaryRepository;
 import org.zerock.decommi.repository.diary.FileRepository;
@@ -176,6 +173,8 @@ public class DiaryServiceImpl implements DiaryService {
         return dto;
     }
 
+    // @Transactional(readOnly = true)
+
     @Transactional(readOnly = true)
     @Override
     public PageResultDTO<DiaryDTO, Diary> getDiaryPostList(PageRequestDTO requestDTO) {
@@ -190,8 +189,6 @@ public class DiaryServiceImpl implements DiaryService {
                 return entityToDTO(t);
             }
         };
-        log.info(" service ::: result ::: " + result);
-        log.info(" service ::: requestDTO :::  " + requestDTO);
         return new PageResultDTO<>(result, fn);
     }
 
@@ -217,26 +214,6 @@ public class DiaryServiceImpl implements DiaryService {
     // }
     // return booleanBuilder;
 
-    // }
-
-    // 내가 작성한 다이어리 리스트
-    // @Transactional(readOnly = true)
-    // @Override
-    // public PageResultDTO<DiaryDTO, Diary> getMyDiaryPostList(PageRequestDTO
-    // requestDTO) {
-    // // String sort = requestDTO.getSort();
-    // Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
-    // BooleanBuilder booleanBuilder = searchMyDiary(requestDTO);
-    // Page<Diary> result = repository.findAll(booleanBuilder, pageable);
-    // Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
-    // @Override
-    // public DiaryDTO apply(Diary t) {
-    // return entityToDTO(t);
-    // }
-    // };
-    // log.info(" service ::: result ::: " + result);
-    // log.info(" service ::: requestDTO ::: " + requestDTO);
-    // return new PageResultDTO<>(result, fn);
     // }
 
     // 하트
@@ -308,19 +285,19 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     // 대댓글
-    @Override
-    public Long addNewReply(ReplyDTO dto) {
-        Optional<Member> result = memberRepository.findById(dto.getMid());
-        dto.setReplyGroup(dto.getReplyGroup());
-        dto.setReplyDepth(dto.getReplyDepth());
-        dto.setReplyOrder(dto.getReplyOrder());
-        dto.setMid(result.get().getMid());
+    // @Override
+    // public Long addReply(ReplyDTO dto) {
+    // Optional<Member> result = memberRepository.findById(dto.getMid());
+    // dto.setReplyGroup(dto.getReplyGroup());
+    // dto.setReplyDepth(dto.getReplyDepth());
+    // dto.setReplyOrder(dto.getReplyOrder());
+    // dto.setMid(result.get().getMid());
 
-        Reply entity = replyDTOtoEntity(dto);
+    // Reply entity = replyDTOtoEntity(dto);
 
-        replyRepository.save(entity);
-        return entity.getRno();
-    }
+    // replyRepository.save(entity);
+    // return entity.getRno();
+    // }
 
     // 수정
     @Override
@@ -332,7 +309,7 @@ public class DiaryServiceImpl implements DiaryService {
             Reply reply = checkReply.get();
             reply.changeReplyContent(dto.getReplyContent());
             replyRepository.save(reply);
-            return "수정";
+            return "수정 성공";
         } else {
             return "실패";
         }
@@ -352,26 +329,89 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable) {
-        Page<Reply> replyList = replyRepository.getPageList(pageable, dino);
-        if (!replyList.isEmpty()) {
-            List<ReplyDTO> dto = replyList.stream().map((Function<Reply, ReplyDTO>) rt -> {
-                log.info(rt);
-                return replyEntityToDTO(rt);
-            }).collect(Collectors.toList());
-            HashMap<String, Object> result = new HashMap<>();
-            result.put("replyList", dto);
-            result.put("page", pageable.getPageNumber());
-            result.put("pageTotalCount", replyList.getTotalPages());
-            return result;
-        }
+
         return null;
     }
+
+    @Override
+    public HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable pageable, String id) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    // 댓글 수정
+    // @Override
+    // public String modifyReply(ReplyDTO dto, String id) {
+    // // TODO Auto-generated method stub
+    // return null;
+    // }
+    // 댓
+
+    // @Override
+    // public HashMap<String, Object> getReplyListByDino(Long dino, Pageable
+    // pageable) {
+    // Page<Reply> replyList = replyRepository.getPageList(pageable, dino);
+    // if (!replyList.isEmpty()) {
+    // List<ReplyDTO> dto = replyList.stream().map((Function<Reply, ReplyDTO>) rt ->
+    // {
+    // log.info(rt);
+    // return replyEntityToDTO(rt);
+    // }).collect(Collectors.toList());
+    // HashMap<String, Object> result = new HashMap<>();
+    // result.put("replyList", dto);
+    // result.put("page", pageable.getPageNumber());
+    // result.put("pageTotalCount", replyList.getTotalPages());
+    // return result;
+    // }
+    // return null;
+    // }
 
     // @Override
     // public HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable
     // pageable, String id) {
-    // // TODO Auto-generated method stub
+    // Page<Reply> replyList = replyRepository.getPageList(pageable, dino);
+    // if (!replyList.isEmpty()) {
+    // List<ReplyDTO> dto = replyList.stream().map((Function<Reply, ReplyDTO>) rt ->
+    // {
+    // return replyEntityToDTO(rt);
+    // }).collect(Collectors.toList());
+    // // 댓글 신고부분 여기에 작성해야함
+    // // =============================
+    // HashMap<String, Object> result = new HashMap<>();
+    // result.put("replyList", dto);
+    // result.put("page", pageable.getPageNumber());
+    // result.put("pageTotalCount", replyList.getTotalPages());
+    // return result;
+    // }
     // return null;
+    // }
+
+    // private BooleanBuilder getSearch(SearchCondition searchCondition) {
+    // String search = searchCondition.getSearch();
+    // String type = searchCondition.getType();
+    // boolean searchType = searchCondition.isSearchType();
+    // List<String> tagList = searchCondition.getTagList();
+
+    // BooleanBuilder booleanBuilder = new BooleanBuilder(); // 쿼리 질의를 위한 객체 생성
+    // QDiary qDiary = QDiary.diary;// 관련된 테이블에 대한 쿼리 객체
+    // BooleanExpression expression = qDiary.dino.gt(0L); // dino가 0 보다 큰 게시글만 조회
+    // booleanBuilder.and(expression);
+    // if (type == null || type.trim().length() == 0) {
+    // return booleanBuilder;
+    // }
+    // BooleanBuilder conditionBuilder = new BooleanBuilder();
+    // if (type.contains("t")) {
+    // conditionBuilder.or(qDiary.title.contains(search));
+    // }
+    // if (type.contains("c")) {
+    // conditionBuilder.or(qDiary.content.contains(search));
+    // }
+    // booleanBuilder.and(conditionBuilder);
+
+    // return booleanBuilder;
+    // }
+    // private Sort sortByDino() {
+    // return Sort.by(Sort.Direction.DESC, "dino");
     // }
 
     private BooleanBuilder getSearch(PageRequestDTO requestDTO) {
@@ -380,53 +420,13 @@ public class DiaryServiceImpl implements DiaryService {
         String keyword = requestDTO.getKeyword();
         String sort = requestDTO.getSort();
         sort = "dino";
+        QDiary qDiry = QDiary.diary;
         List<String> tagList = requestDTO.getTagList();
-        QDiary qDiary = QDiary.diary;
-        log.info("type : " + type);
-        log.info("tagList : " + tagList);
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
-        BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue());
-        booleanBuilder.and(expression);
-        if (type == null || type.trim().length() == 0) {
-            return booleanBuilder;
-        }
-
-        BooleanBuilder conditionBuilder = new BooleanBuilder();
-        if (type.contains("d")) { // "d" stand for Diary
-            conditionBuilder
-                    .or(qDiary.title.contains(keyword))
-                    // .or(qDiary.tagList.contains(keyword))
-                    .or(qDiary.content.contains(keyword));
-        }
-        if (type.contains("t")) { // "t" stand for Tag
-            // conditionBuilder
-            // .or(qDiary.tagList.contains(tagList.stream().map(new
-            // Function<String,String>() {
-            // @Override
-            // public String apply(String dto) {
-            // return tagDTOtoEntity(dto);
-            // }
-            // }).collect(Collectors.toList())));
-        }
-        booleanBuilder.and(conditionBuilder);
-        return booleanBuilder;
-    }
-
-    // 내가 쓴 글만 확인 할 수 있어야한다.
-    private BooleanBuilder searchMyDiary(PageRequestDTO requestDTO) {
-        String type = requestDTO.getType();
-        String keyword = requestDTO.getKeyword();
-        List<String> tagList = requestDTO.getTagList();
-
-        QDiary qDiary = QDiary.diary;
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
-        BooleanExpression expression = qDiary.dino.gt(0L);
         log.info("type : " + type);
         log.info("tagList : " + tagList);
 
-        // BooleanBuilder booleanBuilder = new BooleanBuilder();
-        // BooleanExpression expression =
-        qDiary.dino
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        BooleanExpression expression = qDiary.dino
                 .gt(0L)
                 .and(qDiary.openYN.isTrue());
         booleanBuilder.and(expression);
@@ -452,7 +452,6 @@ public class DiaryServiceImpl implements DiaryService {
         }
         booleanBuilder.and(conditionBuilder);
         return booleanBuilder;
-
     }
 
 }
