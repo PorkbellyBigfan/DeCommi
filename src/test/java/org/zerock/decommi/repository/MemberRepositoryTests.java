@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.zerock.decommi.entity.member.LikeTagList;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.entity.member.MemberRole;
 import org.zerock.decommi.repository.member.MemberRepository;
@@ -47,5 +48,12 @@ public class MemberRepositoryTests {
       Member member = result.get();
       System.out.println("findByEmail : " + member);
     }
+  }
+
+  @Test
+  public void testEditLikeTagList(){
+    Member member = Member.builder().mid(1L).build();
+    Tag tag = Tag.builder().tagId()
+    LikeTagList likeTagList = LikeTagList.builder().lid(0L).likeTagName("1").mid(member.getMid()).tagId(null).build();
   }
 }

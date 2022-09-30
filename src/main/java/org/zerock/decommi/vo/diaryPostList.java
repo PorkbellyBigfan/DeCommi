@@ -12,34 +12,34 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class DiaryPostList {
-  private Long dino;
-  private String writer;
-  private String title;
-  private String content;
-  private boolean openYN;
-  private boolean replyYN;
-  // private Long replyCnt;
-  // private Long heartCnt;
-  // private Long bookmarkCnt;
-  // private Long reportCnt;
-  private List<String> tagList;
-  private List<Reply> replyList;
-  private List<File> files;
+    private Long dino;
+    private String writer;
+    private String title;
+    private String content;
+    private boolean openYN;
+    private boolean replyYN;
+    // private Long replyCnt;
+    // private Long heartCnt;
+    // private Long bookmarkCnt;
+    // private Long reportCnt;
+    private List<String> tagList;
+    private List<Reply> replyList;
+    private List<File> files;
 
-  public DiaryPostList(DiaryRepository.getDiaryPostList dpl) {
-    this.dino = dpl.getDino();
-    this.writer = dpl.getWriter();
-    this.title = dpl.getTitle();
-    this.content = dpl.getContent();
-    this.openYN = dpl.isOpenYN();
-    this.replyYN = dpl.isReplyYN();
-    this.tagList = dpl.getTagList();
-    this.replyList = dpl.getReplyList();
-    this.files = dpl.getFiles();
+    public DiaryPostList(DiaryRepository.getDiaryPostList dpl) {
+        this.dino = dpl.getDino();
+        this.writer = dpl.getWriter();
+        this.title = dpl.getTitle();
+        this.content = dpl.getContent();
+        this.openYN = dpl.isOpenYN();
+        this.replyYN = dpl.isReplyYN();
+        this.tagList = dpl.getTagList();
+        this.replyList = dpl.getReplyList();
+        this.files = dpl.getFiles();
 
-    // this.replyCnt = dpl.getReplyCnt();
-    // this.heartCnt = dpl.getHeartCnt();
-    // this.bookmarkCnt = dpl.getBookmarkCnt();
-    // this.reportCnt = dpl.getReportCnt();
-  }
+        // this.replyCnt = dpl.getReplyCnt();
+        // this.heartCnt = dpl.getHeartCnt();
+        // this.bookmarkCnt = dpl.getBookmarkCnt();
+        // this.reportCnt = dpl.getReportCnt();
+    }
 }
