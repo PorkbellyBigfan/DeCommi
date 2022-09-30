@@ -32,8 +32,8 @@ public class HeartServiceImpl implements HeartService{
     public HashMap<String, Object> getListDino(Long dino) {
         List<MemberDTO> member = new ArrayList<>();
         
-        List<DiaryDTO> result = heartRepository.getList(dino).get().stream()
-            .map((Function<? super Heart, ? extends DiaryDTO>)v->{ //Heart를 DiaryDTO로 바꿈?
+        List<DiaryDTO> result = heartRepository.getList(dino).get().stream() //문제시 수정
+            .map((Function<? super Heart, ? extends DiaryDTO>)v->{ 
                 DiaryDTO list = diaryService.entityToDTO(diaryRepository.getByDino(v.getDino()));
                 member.add(memberService.entityToDTO(memberRepository.findByEmail(list.getWriter()).get()));
                 return list;

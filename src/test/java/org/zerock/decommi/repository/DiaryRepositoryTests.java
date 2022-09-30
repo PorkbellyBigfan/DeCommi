@@ -219,6 +219,60 @@ public class DiaryRepositoryTests {
     List<LikeTagList> result = likeTagListRepository.getLikeTagList(member.getMid());
     log.info(result);
   }
+
+  @Test
+  void registReply() {
+    Member member = Member.builder().mid(5L).build();
+    Diary diary = Diary.builder().dino(1L).build();
+    Optional<Reply> checkMember = replyRepository.getReplyByDinoAndMid(diary, member);
+    if (!checkMember.isPresent()) {
+      log.info(checkMember);
+      Optional<List<Long>> lastestrg = replyRepository.getLastestReplyGroupWhereMatchWithDino(diary.getDino());
+      Long setrg = 1L;
+      if (lastestrg.get().size() != 0) {
+        setrg = lastestrg.get().get(0) + 1;
+      }
+      log.info(setrg);
+      Reply reply = Reply.builder().replyContent("sfdkjfk")
+          .replyGroup(setrg)
+          .replyDepth(0L)
+          .replyOrder(0L)
+          .build();
+      log.info(reply);
+      replyRepository.save(reply);
+
+    } else {
+      // return checkMember.get().getRno();
+    }
+
+  }
+
+  @Test
+  void addNewReply() {
+    Member member = Member.builder().mid(6L).build();
+    Diary diary = Diary.builder().dino(1L).build();
+    Reply reply = Reply.builder().dino(diary).member(member).replyGroup(1L).replyDepth(1L)
+        .replyContent("대댓글").replyOrder(0L).build();
+    replyRepository.save(reply);
+  }
+
+  @Test
+  void replyPagingTest() {
+    Pageable pageable = PageRequest.of(0, 10);
+    Page<Reply> rPage = replyRepository.getPageList(pageable, 1L);
+    for (Reply reply : rPage) {
+      log.info(reply);
+    }
+  }
+
+  @Test
+  void getReplyListByDino() {
+    Pageable pageable = PageRequest.of(0, 1);
+    Page<Reply> rPage = replyRepository.getPageList(pageable, 1L);
+    if (!rPage.isEmpty()) {
+      log.info(rPage);
+    }
+  }
 }
 
 // PageRequestDTO pageRequestDTO =
