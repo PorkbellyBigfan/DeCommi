@@ -31,12 +31,14 @@ import org.zerock.decommi.entity.diary.File;
 import org.zerock.decommi.entity.diary.Reply;
 // import org.zerock.decommi.entity.diary.DiaryTag;
 import org.zerock.decommi.entity.diary.Tag;
+import org.zerock.decommi.entity.member.LikeTagList;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.entity.member.MemberRole;
 import org.zerock.decommi.repository.diary.DiaryRepository;
 import org.zerock.decommi.repository.diary.ReplyRepository;
 // import org.zerock.decommi.repository.diary.DiaryTagRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
+import org.zerock.decommi.repository.member.LikeTagListRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.service.diary.DiaryService;
 import org.zerock.decommi.service.diary.MyDiaryService;
@@ -58,7 +60,10 @@ public class DiaryRepositoryTests {
   ReplyRepository replyRepository;
   @Autowired
   MyDiaryService mdService;
+  @Autowired
   MemberRepository memberRepository;
+  @Autowired
+  LikeTagListRepository likeTagListRepository;
   
 
   @Test
@@ -142,6 +147,12 @@ public class DiaryRepositoryTests {
     log.info("Search Result :::: " + resultDTO);
   }
 
+  @Test
+  void testGetLikeTagList() {
+    Member member = Member.builder().mid(1L).build();
+    List<LikeTagList> result = likeTagListRepository.getLikeTagList(member.getMid());
+    log.info(result);
+  }
   // @Test
   // public void testGetDiaryList3(){
   // SearchCondition searchCondition = new SearchCondition("1", false, null);
