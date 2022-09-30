@@ -453,6 +453,7 @@ public class DiaryServiceImpl implements DiaryService {
         if (type.contains("d")) { // "d" stand for Diary
             conditionBuilder
                     .or(qDiary.title.contains(keyword))
+                    // .or(qDiary.tagList.contains(keyword))
                     .or(qDiary.content.contains(keyword));
         }
         if (type.contains("t")) { // "t" stand for Tag

@@ -112,17 +112,24 @@ public class MyDiaryServiceImpl implements MyDiaryService {
 
     // 선호태그리스트에 태그 추가
     @Override
-    public void addLikeTagList(LikeTagListDTO dto) {
+    public Boolean editLikeTagList(LikeTagListDTO dto) {
+        Optional<LikeTagList> checking = likeTagListRepository.checkLikeTagListByMid(dto.getMid());
+        
         LikeTagList entity = likeTagListDTOtoEntity(dto);
-        likeTagListRepository.save(entity);
+        if(checking.isPresent()){
+            return false;
+        }else{
+            likeTagListRepository.save(entity);
+            return true;
+        }
 
     }
 
     // 선호태그리스트에 태그 삭제
-    @Override
-    public void deleteLikeTagList(LikeTagListDTO dto) {
-        LikeTagList entity = likeTagListDTOtoEntity(dto);
-        likeTagListRepository.delete(entity);
-    }
+    // @Override
+    // public void deleteLikeTagList(LikeTagListDTO dto) {
+    //     LikeTagList entity = likeTagListDTOtoEntity(dto);
+    //     likeTagListRepository.delete(entity);
+    // }
 
 }

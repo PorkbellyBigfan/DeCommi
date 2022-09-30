@@ -11,25 +11,27 @@ import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.member.LikeTagList;
 import org.zerock.decommi.entity.member.Member;
+import org.zerock.decommi.repository.diary.TagRepository;
 
 public interface MyDiaryService {
   PageResultDTO<DiaryDTO, Diary> getMyDiaryPostList(PageRequestDTO requestDTO);
 
   List<LikeTagListDTO> LikeTagList(Long mid);
 
-  void addLikeTagList(LikeTagListDTO dto);
+  Boolean editLikeTagList(LikeTagListDTO dto);
 
-  void deleteLikeTagList(LikeTagListDTO dto);
+  // Boolean deleteLikeTagList(LikeTagListDTO dto);
 
   // 선호태그리스트
   default LikeTagList likeTagListDTOtoEntity(LikeTagListDTO dto) {
     Member member = Member.builder().mid(dto.getMid()).build();
     Tag tagList = Tag.builder().tagId(dto.getTagId()).build();
+    Tag tagName = Tag.builder().tagId(dto.getTagId()).tagName(dto.getLikeTagName()).build();
     LikeTagList likeTagList = LikeTagList.builder()
         .lid(dto.getLid())
-        .likeTagName(dto.getLikeTagName())
         .mid(member.getMid())
         .tagId(tagList.getTagId())
+        .tagName(tagName.getTagName())
         .build();
     return likeTagList;
   }
@@ -37,7 +39,7 @@ public interface MyDiaryService {
   default LikeTagListDTO likeTagListEntitytoDTO(LikeTagList likeTagList) {
     LikeTagListDTO dto = LikeTagListDTO.builder()
         .lid(likeTagList.getLid())
-        .likeTagName(likeTagList.getLikeTagName())
+        .likeTagName(likeTagList.getTagName())
         .mid(likeTagList.getMid())
         .tagId(likeTagList.getTagId())
         .build();

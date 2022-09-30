@@ -24,4 +24,7 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
   @Query("select t from Tag t where tag_name like %:keyword%")
   Optional<List<Tag>> getAidListByHashTagName(String keyword);
 
+  // @Query("select tag_name from Tag t where tag_id=:tag_id")
+  // Optional<Tag> getTagNameByTagId(Long tagId);
+
 }

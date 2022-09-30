@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
+import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.File;
 import org.zerock.decommi.entity.diary.Reply;
@@ -21,6 +22,9 @@ public interface DiaryRepository extends JpaRepository<Diary, Long>, QuerydslPre
 
   // 번호로 게시글 조회
   Diary findByDino(Long dino);
+
+  
+  // List<Diary> getDiaryPostListByTagName(String TagName);
 
   // 글작성자와 게시글 번호 가져오기
   @Query("select d from Diary d where writer=:id and dino=:dino")
