@@ -442,8 +442,6 @@ public class DiaryServiceImpl implements DiaryService {
         String sort = requestDTO.getSort();
         sort = "dino";
         List<String> tagList = requestDTO.getTagList();
-        QDiary qDiary = QDiary.diary;
-        QTag qTag = QTag.tag;
         log.info("type : " + type);
         log.info("tagList : " + tagList);
 
