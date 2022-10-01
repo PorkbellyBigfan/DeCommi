@@ -37,17 +37,18 @@ public interface DiaryService {
     PageResultDTO<DiaryDTO, Diary> getDiaryPostList(PageRequestDTO requestDTO);
 
     // // 댓글
-    Long registerReply(ReplyDTO dto);
+    // Long registerReply(ReplyDTO dto);
 
-    Long addNewReply(ReplyDTO dto); // 대댓글?
+    // Long addNewReply(ReplyDTO dto); // 대댓글?
 
-    String modifyReply(ReplyDTO dto);
+    // String modifyReply(ReplyDTO dto);
 
-    String deleteReply(ReplyDTO dto);
+    // String deleteReply(ReplyDTO dto);
 
-    HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable);
+    // HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable);
 
-    HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable pageable, String id);
+    // HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable
+    // pageable, String id);
 
     // 북마크
     Boolean addBookmark(BookmarkDTO dto);
