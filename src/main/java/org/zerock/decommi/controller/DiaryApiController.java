@@ -74,8 +74,8 @@ public class DiaryApiController {
     }
 
     @RequestMapping(value = "/modify/check", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<DiaryDTO> CheckBeforeDiaryModify(@RequestBody DiaryPost vo) {
-        DiaryDTO diaryPost = diaryService.checkBeforeDiaryModify(vo.getDino(), vo.getWriter());
+    public ResponseEntity<DiaryDTO> CheckBeforeDiaryModify(@RequestBody DiaryDTO dto) {
+        DiaryDTO diaryPost = diaryService.checkBeforeDiaryModify(dto.getDino(), dto.getWriter());
         return new ResponseEntity<>(diaryPost, HttpStatus.OK);
     }
 

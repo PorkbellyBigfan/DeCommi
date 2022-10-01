@@ -7,9 +7,11 @@ import org.zerock.decommi.entity.diary.File;
 import org.zerock.decommi.entity.diary.Reply;
 import org.zerock.decommi.repository.diary.DiaryRepository;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class DiaryPost {
     private Long dino;
     private String writer;

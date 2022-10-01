@@ -35,6 +35,9 @@ public interface DiaryService {
     DiaryDTO getDiaryPostByDino(Long dino);
 
     PageResultDTO<DiaryDTO, Diary> getDiaryPostList(PageRequestDTO requestDTO);
+    // 추가예정
+    // PageResultDTO<DiaryDTO, Diary> getDiaryPostListByTagName(PageRequestDTO
+    // requestDTO);
 
     // // 댓글
     // Long registerReply(ReplyDTO dto);
