@@ -342,6 +342,7 @@ public class DiaryServiceImpl implements DiaryService {
     private BooleanBuilder getSearch(PageRequestDTO requestDTO) {
         String type = requestDTO.getType();
         String keyword = requestDTO.getKeyword();
+        List<String> tagList = requestDTO.getTagList();
         QDiary qDiary = QDiary.diary;
 
         BooleanBuilder booleanBuilder = new BooleanBuilder();
@@ -358,15 +359,14 @@ public class DiaryServiceImpl implements DiaryService {
                     .or(qDiary.content.contains(keyword));
         }
         if (type.contains("t")) { // "t" stand for Tag
+            tagList.forEach(new Consumer<String>() {
+                @Override
+                public void accept(String t) {
+                    conditionBuilder.or(qDiary.tagList.contains(Tag.builder().tagName(t).build()));
+                }
+            });
             // conditionBuilder
-            // .or(qDiary.tagList.contains(tagList.stream().map(new
-            // Function<String,String>() {
-            // @Override
-            // public String apply(String dto) {
-            // return tagDTOtoEntity(dto);
-            // }
-            // }).collect(Collectors.toList())));
-            return null;
+            // .or(qDiary.tagList.contains());
         }
         booleanBuilder.and(conditionBuilder);
         return booleanBuilder;

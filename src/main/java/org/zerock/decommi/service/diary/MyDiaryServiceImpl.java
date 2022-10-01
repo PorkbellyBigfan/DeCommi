@@ -63,12 +63,12 @@ public class MyDiaryServiceImpl implements MyDiaryService {
   private BooleanBuilder searchMyDiary(PageRequestDTO requestDTO) {
     String type = requestDTO.getType();
     String keyword = requestDTO.getKeyword();
-    String writer = requestDTO.getId();
+    String id = requestDTO.getId();
     List<String> tagList = requestDTO.getTagList();
 
     QDiary qDiary = QDiary.diary;
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.writer.eq(writer));
+    BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.writer.eq(id));
     booleanBuilder.and(expression);
     if (type == null || type.trim().length() == 0) {
       return booleanBuilder;
