@@ -1,4 +1,4 @@
-package org.zerock.decommi.security.dto;
+package org.zerock.decommi.service.security.dto;
 
 import java.util.Collection;
 import java.util.Map;

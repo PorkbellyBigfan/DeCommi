@@ -12,13 +12,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.zerock.decommi.security.filter.ApiCheckFilter;
-import org.zerock.decommi.security.filter.ApiLoginFilter;
-import org.zerock.decommi.security.handler.ApiLoginFailHandler;
-import org.zerock.decommi.security.handler.DecommiAccessDeniedHandler;
-import org.zerock.decommi.security.handler.DecommiLoginSuccessHandler;
-import org.zerock.decommi.security.handler.DecommiLogoutSuccessHandler;
-import org.zerock.decommi.security.util.JWTUtil;
+import org.zerock.decommi.service.security.filter.ApiCheckFilter;
+import org.zerock.decommi.service.security.filter.ApiLoginFilter;
+import org.zerock.decommi.service.security.handler.ApiLoginFailHandler;
+import org.zerock.decommi.service.security.handler.DecommiAccessDeniedHandler;
+import org.zerock.decommi.service.security.handler.DecommiLoginSuccessHandler;
+import org.zerock.decommi.service.security.handler.DecommiLogoutSuccessHandler;
+import org.zerock.decommi.service.security.util.JWTUtil;
 
 import lombok.RequiredArgsConstructor;
 

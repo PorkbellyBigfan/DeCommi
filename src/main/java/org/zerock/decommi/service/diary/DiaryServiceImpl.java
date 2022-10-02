@@ -227,69 +227,95 @@ public class DiaryServiceImpl implements DiaryService {
 
     }
 
-    // 댓글 등록 //이해가 잘 가지 않음
-    // @Override
-    // public Long registerReply(ReplyDTO dto) {
-    // Optional<Member> result = memberRepository.findById(dto.getId());
-    // Optional<Reply> checkMember = replyRepository.getReplyByDinoAndId(
-    // Diary.builder().dino(dto.getDino()).build(),
-    // Member.builder().id(dto.getId()).build());
-    // if (!checkMember.isPresent()) {
-    // // Optional<List<Long>> lastestrg =
-    // // replyRepository.getLastestReplyGroupWhereMatchWithDino(dto.getDino());
-    // Long setrg = 1L; // set ReplyGroup = rg
-    // // if (lastestrg.get().size() != 0) {
-    // // setrg = lastestrg.get().get(0) + 1;
-    // // }
-    // dto.setReplyGroup(setrg);
-    // dto.setReplyDepth(0L);
-    // dto.setReplyOrder(0L);
-    // dto.setId(result.get().getId());
-    // Reply reply = replyDTOtoEntity(dto);
-    // replyRepository.save(reply);
-    // return -1L;
-    // } else {
-    // return checkMember.get().getRno();
-    // }
-    // }
+    @Override
+    public Long registerReply(ReplyDTO dto) {
+        Optional<Member> result = memberRepository.findById(dto.getMid());
+        Optional<Reply> checkMember = replyRepository.getReplyByDinoAndMid(
+                Diary.builder().dino(dto.getDino()).build(),
+                Member.builder().mid(dto.getMid()).build());
+        if (!checkMember.isPresent()) {
+            Optional<List<Long>> lastestrg = replyRepository.getLastestReplyGroupWhereMatchWithDino(dto.getDino());
+            Long setrg = 1L; // set ReplyGroup = rg
+            if (lastestrg.get().size() != 0) {
+                setrg = lastestrg.get().get(0) + 1;
+            }
+            dto.setReplyGroup(setrg);
+            dto.setReplyDepth(0L); // 새댓글이라서 뎁스0
+            dto.setReplyOrder(0L);
+            dto.setMid(result.get().getMid());
+            Reply reply = replyDTOtoEntity(dto);
+            replyRepository.save(reply);
+            return -1L;
+        } else {
+            return checkMember.get().getRno();
+        }
+    }
 
-    // 댓글 수정
-    // @Override
-    // public String modifyReply(ReplyDTO dto, String id) {
-    // // TODO Auto-generated method stub
-    // return null;
-    // }
+    // 대댓글
+    @Override
+    public Long addNewReply(ReplyDTO dto) {
+        Optional<Member> result = memberRepository.findById(dto.getMid());
+        dto.setReplyGroup(dto.getReplyGroup());
+        dto.setReplyDepth(dto.getReplyDepth());
+        dto.setReplyOrder(dto.getReplyOrder());
+        dto.setMid(result.get().getMid());
+
+        Reply entity = replyDTOtoEntity(dto);
+
+        replyRepository.save(entity);
+        return entity.getRno();
+    }
+
+    // 수정
+    @Override
+    public String modifyReply(ReplyDTO dto) {
+        // Optional<Member> result = memberRepository.findById(dto.getMid());
+        Optional<Reply> checkReply = replyRepository.getReplyByRnoAndMid(dto.getRno(), dto.getMid());
+        log.info("modify...." + dto);
+        if (checkReply.isPresent()) {
+            Reply reply = checkReply.get();
+            reply.changeReplyContent(dto.getReplyContent());
+            replyRepository.save(reply);
+            return "수정";
+        } else {
+            return "실패";
+        }
+    }
+
     // 댓글 삭제
-    // @Override
-    // public String deleteReply(ReplyDTO dto, String id) {
-    // Optional<Reply> checkReply =
-    // replyRepository.getReplyByRnoAndId(dto.getRno(), dto.getId());
-    // if(checkReply.isPresent()){
-    // replyRepository.delete(checkReply.get());
-    // return "Deleted Successfully";
-    // } else {
-    // return "Could not Delete Reply";
-    // }
-    // }
+    @Override
+    public String deleteReply(ReplyDTO dto) {
+        Optional<Reply> checkReply = replyRepository.getReplyByRnoAndMid(dto.getRno(), dto.getMid());
+        if (checkReply.isPresent()) {
+            replyRepository.delete(checkReply.get());
+            return "Deleted Successfully";
+        } else {
+            return "Could not Delete Reply";
+        }
+    }
 
-    // @Override
-    // public HashMap<String, Object> getReplyListByDino(Long dino, Pageable
-    // pageable) {
-    // Page<Reply> replyList = replyRepository.getPageList(pageable, dino);
-    // if (!replyList.isEmpty()) {
-    // List<ReplyDTO> dto = replyList.stream().map((Function<Reply, ReplyDTO>) rt ->
-    // {
-    // log.info(rt);
-    // return replyEntityToDTO(rt);
-    // }).collect(Collectors.toList());
-    // HashMap<String, Object> result = new HashMap<>();
-    // result.put("replyList", dto);
-    // result.put("page", pageable.getPageNumber());
-    // result.put("pageTotalCount", replyList.getTotalPages());
-    // return result;
-    // }
-    // return null;
-    // }
+    @Override
+    public HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable) {
+        Page<Reply> replyList = replyRepository.getPageList(pageable, dino);
+        if (!replyList.isEmpty()) {
+            List<ReplyDTO> dto = replyList.stream().map((Function<Reply, ReplyDTO>) rt -> {
+                log.info(rt);
+                return replyEntityToDTO(rt);
+            }).collect(Collectors.toList());
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("replyList", dto);
+            result.put("page", pageable.getPageNumber());
+            result.put("pageTotalCount", replyList.getTotalPages());
+            return result;
+        }
+        return null;
+    }
+
+    @Override
+    public HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable pageable, String id) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
     // @Override
     // public HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable

@@ -9,13 +9,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class HelpBoardDTO {
-    private int hbno;
+public class HelpDTO {
+    private Long hbno;
     private String title;
     private String content;
+    private Long writer;
 
-    private Enum hbType[];
-
-    private String memberemail;
+    private String helpType;
 
 }

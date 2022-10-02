@@ -1,4 +1,4 @@
-package org.zerock.decommi.security.handler;
+package org.zerock.decommi.service.security.handler;
 
 import java.io.IOException;
 

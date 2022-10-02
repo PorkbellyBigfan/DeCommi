@@ -1,4 +1,4 @@
-package org.zerock.decommi.security.filter;
+package org.zerock.decommi.service.security.filter;
 
 import java.io.IOException;
 

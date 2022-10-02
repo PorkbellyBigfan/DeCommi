@@ -1,4 +1,4 @@
-package org.zerock.decommi.security.filter;
+package org.zerock.decommi.service.security.filter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.zerock.decommi.security.util.JWTUtil;
+import org.zerock.decommi.service.security.util.JWTUtil;
 
 import lombok.extern.log4j.Log4j2;
 import net.minidev.json.JSONObject;

@@ -1,4 +1,4 @@
-package org.zerock.decommi.security.util;
+package org.zerock.decommi.service.security.util;
 
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
