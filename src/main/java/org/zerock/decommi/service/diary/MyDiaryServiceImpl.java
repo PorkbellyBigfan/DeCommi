@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -20,6 +21,7 @@ import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.dto.TagDTO;
 import org.zerock.decommi.entity.diary.Diary;
+import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.diary.QDiary;
 import org.zerock.decommi.entity.member.LikeTagList;
 import org.zerock.decommi.entity.member.Member;
@@ -65,34 +67,26 @@ public class MyDiaryServiceImpl implements MyDiaryService {
     String keyword = requestDTO.getKeyword();
     String id = requestDTO.getId();
     List<String> tagList = requestDTO.getTagList();
-
     QDiary qDiary = QDiary.diary;
+
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.writer.eq(id));
     booleanBuilder.and(expression);
     if (type == null || type.trim().length() == 0) {
       return booleanBuilder;
     }
-
     BooleanBuilder conditionBuilder = new BooleanBuilder();
-    if (type.contains("d")) { // "d" stand for Diary
-      conditionBuilder
-          .or(qDiary.title.contains(keyword))
-          .or(qDiary.content.contains(keyword));
-    }
-    if (type.contains("t")) { // "t" stand for Tag
-      // conditionBuilder
-      // .or(qDiary.tagList.contains(tagList.stream().map(new
-      // Function<String,String>() {
-      // @Override
-      // public String apply(String dto) {
-      // return tagDTOtoEntity(dto);
-      // }
-      // }).collect(Collectors.toList())));
-    }
+    conditionBuilder
+        .or(qDiary.title.contains(keyword))
+        .or(qDiary.content.contains(keyword));
+    tagList.forEach(new Consumer<String>() {
+      @Override
+      public void accept(String t) {
+        conditionBuilder.or(qDiary.tagList.contains(Tag.builder().tagName(t).build()));
+      }
+    });
     booleanBuilder.and(conditionBuilder);
     return booleanBuilder;
-
   }
 
   // 선호태그리스트
