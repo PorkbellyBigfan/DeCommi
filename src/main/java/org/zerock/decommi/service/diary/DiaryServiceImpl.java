@@ -362,23 +362,6 @@ public class DiaryServiceImpl implements DiaryService {
             }
         });
         booleanBuilder.and(conditionBuilder);
-
-        // if (type.contains("d")) {
-        // conditionBuilder
-        // .or(qDiary.title.contains(keyword))
-        // .or(qDiary.content.contains(keyword));
-        // }
-        // if (type.contains("t")) { // "t" stand for Tag
-        // tagList.forEach(new Consumer<String>() {
-        // @Override
-        // public void accept(String t) {
-        // conditionBuilder.or(qDiary.tagList.contains(Tag.builder().tagName(t).build()));
-        // }
-        // });
-        // // conditionBuilder
-        // // .or(qDiary.tagList.contains());
-        // }
-        booleanBuilder.and(conditionBuilder);
         return booleanBuilder;
     }
 }
