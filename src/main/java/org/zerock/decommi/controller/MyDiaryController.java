@@ -32,7 +32,7 @@ public class MyDiaryController {
   @RequestMapping(value = "/list", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<DiaryDTO>> getMyDiaryList(@RequestBody PageRequestDTO dto) {
     PageRequestDTO.builder()
-        .page(10).size(30).type(dto.getType()).id(dto.getId()).keyword(dto.getKeyword())
+        .page(10).size(30).type(dto.getType()).writer(dto.getWriter()).keyword(dto.getKeyword())
         .tagList(dto.getTagList()).build();
     PageResultDTO<DiaryDTO, Diary> result = mdService.getMyDiaryPostList(dto);
     return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
