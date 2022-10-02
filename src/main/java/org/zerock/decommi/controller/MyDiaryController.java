@@ -45,6 +45,8 @@ public class MyDiaryController {
         .page(10).size(30).type(dto.getType()).writer(dto.getWriter()).keyword(dto.getKeyword())
         .tagList(dto.getTagList()).build();
     PageResultDTO<DiaryDTO, Diary> result = mdService.getMyDiaryPostList(dto);
+    log.info("dto ::::: " + dto);
+    log.info("result ::::::" + result);
     return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
   }
 
