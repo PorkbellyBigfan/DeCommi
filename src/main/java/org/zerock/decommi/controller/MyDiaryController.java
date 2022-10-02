@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +30,7 @@ public class MyDiaryController {
   // private final String secretKey = "decommi1q2w3e4r!";
 
   @RequestMapping(value = "/list", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<DiaryDTO>> getMyDiaryList(@ModelAttribute PageRequestDTO dto) {
+  public ResponseEntity<List<DiaryDTO>> getMyDiaryList(@RequestBody PageRequestDTO dto) {
     PageRequestDTO.builder()
         .page(10).size(30).type(dto.getType()).id(dto.getId()).keyword(dto.getKeyword())
         .tagList(dto.getTagList()).build();
