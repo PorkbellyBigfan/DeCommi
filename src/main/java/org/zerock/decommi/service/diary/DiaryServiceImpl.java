@@ -351,16 +351,19 @@ public class DiaryServiceImpl implements DiaryService {
         if (type == null || type.trim().length() == 0) {
             return booleanBuilder;
         }
+
         BooleanBuilder conditionBuilder = new BooleanBuilder();
-        conditionBuilder
-                .or(qDiary.title.contains(keyword))
-                .or(qDiary.content.contains(keyword));
-        tagList.forEach(new Consumer<String>() {
-            @Override
-            public void accept(String t) {
-                conditionBuilder.or(qDiary.tagList.contains(Tag.builder().tagName(t).build()));
-            }
-        });
+        if (type.contains("s")) { // s : stand for Search
+            conditionBuilder
+                    .or(qDiary.title.contains(keyword))
+                    .or(qDiary.content.contains(keyword));
+            tagList.forEach(new Consumer<String>() {
+                @Override
+                public void accept(String t) {
+                    conditionBuilder.or(qDiary.tagList.contains(Tag.builder().tagName(t).build()));
+                }
+            });
+        }
         booleanBuilder.and(conditionBuilder);
         return booleanBuilder;
     }
