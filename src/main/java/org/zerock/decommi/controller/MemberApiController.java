@@ -50,6 +50,19 @@ public class MemberApiController {
 
     return new ResponseEntity<Map<String, Long>>(mapForResult, HttpStatus.OK);
   }
+  //회원정보수정 눌렀을때 비밀번호를 확인
+  @RequestMapping(value = "pwCheck", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Boolean>pwCheck(@RequestBody MemberDTO dto){
+    //email : 현재 로그인하고있는 회원의 email
+    //pw    : 회원정보수정 눌렀을때 사용자가 입력한 비밀번호 
+    String email = dto.getEmail();
+    String pw = dto.getPw();
+    //사용자가 입력한 비밀번호가 해당 계정의 암호화되어있는 비밀번호와 일치하는 지 확인하는 매서드
+    //일치하면 true 반환 , 일치하지 않을시 false 반환
+    Boolean result = service.pwCheck(email, pw); 
+    return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+  }
+
 
   // 회원가입
   @RequestMapping(value = "/signup", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -75,4 +88,6 @@ public class MemberApiController {
   //   return new ResponseEntity<>(service.getPageList(dto), HttpStatus.OK);
   // }
 
+
+  
 }

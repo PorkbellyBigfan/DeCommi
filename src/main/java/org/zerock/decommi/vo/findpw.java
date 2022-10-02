@@ -1,5 +1,11 @@
 package org.zerock.decommi.vo;
 
-public class Findpw {
+import lombok.Data;
 
+@Data
+public class Findpw {
+  String email;
+  String q1;
+  String q2;
+  String q3;
 }

@@ -1,5 +1,9 @@
 package org.zerock.decommi.vo;
 
-public class Setpw {
+import lombok.Data;
 
+@Data
+public class Setpw {
+  Long mid;
+  String pw;
 }

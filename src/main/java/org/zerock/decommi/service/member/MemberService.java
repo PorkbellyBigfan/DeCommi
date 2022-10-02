@@ -8,16 +8,29 @@ import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.entity.member.MemberRole;
+import org.zerock.decommi.vo.Findpw;
+import org.zerock.decommi.vo.Setpw;
 
 public interface MemberService {
 
     MemberDTO getMemberDTO(String email); // MemberDTO 가져오기
-    MemberDTO emailCheck(String email); // 이메일 체크
-    // String findId(MemberDTO id); //아이디 찾기
-    String signUp(MemberDTO dto); // 회원가입
+
     List<MemberDTO> getList(); // 멤버 리스트 조회
 
+    MemberDTO emailCheck(String email); // 이메일 체크
     
+    //비밀번호확인
+    Boolean pwCheck(String email, String pw);
+
+    
+    // String findId(MemberDTO id); //아이디 찾기
+    String signUp(MemberDTO dto); // 회원가입
+
+    Boolean findEmail(MemberDTO email); // 이메일 찾기
+
+    Long findPw(Findpw vo); // 비밀번호 찾기
+
+    Boolean changePw(Setpw vo); // 비밀번호 변경
 
     PageResultDTO<MemberDTO, Member> getPageList(PageRequestDTO dto);
     // void removeUuid(String uuid); //파일 고유아이디 삭제
@@ -45,7 +58,7 @@ public interface MemberService {
     default Member dtoToEntity(MemberDTO dto) {
         Member member = Member.builder()
                 .mid(dto.getMid())
-                .id(dto.getId())    
+                .id(dto.getId())
                 .pw(dto.getPw())
                 .email(dto.getEmail())
                 .fromSocial(dto.isFromSocial())

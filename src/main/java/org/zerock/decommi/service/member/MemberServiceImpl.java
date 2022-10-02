@@ -17,6 +17,8 @@ import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.repository.member.MemberRepository;
+import org.zerock.decommi.vo.Findpw;
+import org.zerock.decommi.vo.Setpw;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -39,6 +41,7 @@ public class MemberServiceImpl implements MemberService {
     }
     return dto;
   }
+
 
   @Override
   public MemberDTO getMemberDTO(String email) {
@@ -79,5 +82,38 @@ public class MemberServiceImpl implements MemberService {
       }
     };
     return new PageResultDTO<>(result, fn);
+  }
+
+  @Override
+  public Boolean findEmail(MemberDTO email) {
+    Optional<Member> result = repository.findByEmail(email.getEmail());
+    if (result.isEmpty()) {
+      return false;
+    }
+    return true;
+  }
+  @Override
+  public Long findPw(Findpw vo) {
+    Long result = repository.findMidByEmailAndQ(vo.getEmail(), vo.getQ1(), vo.getQ2(), vo.getQ3());
+    if (result == null) {
+      return null;
+    } else {
+      return result;
+    }
+  }
+  @Override
+  public Boolean changePw(Setpw vo) {
+    repository.changePwByMid(vo.getMid(), encoder.encode(vo.getPw()));
+    return true;
+  }
+
+  @Override
+  public Boolean pwCheck(String email, String pw) {
+    Optional<Member> member = repository.findByEmail(email);
+    if(encoder.matches(pw, member.get().getPw())){
+      return true;
+    }else{
+      return false;
+    }
   }
 }
