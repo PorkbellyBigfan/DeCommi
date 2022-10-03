@@ -85,4 +85,4 @@ Controller/ReplyController
 -TagRepository.java 수정
   @Query("select t.TagName from Tag t where diary_dino=:dino")
   Optional<List<String>> OptionalfindByDiarys(Long dino);
-//추가
+//추가.
