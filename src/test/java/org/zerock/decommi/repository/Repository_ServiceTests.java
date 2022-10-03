@@ -194,7 +194,6 @@ public class Repository_ServiceTests {
         // for (Bookmark bookmark : result) {
         // log.info(bookmark);
         // }
-
         Member member = Member.builder().mid(2L).build();
         List<Bookmark> result = bookmarkRepository.getFolderList(member.getMid());
         log.info(result);
