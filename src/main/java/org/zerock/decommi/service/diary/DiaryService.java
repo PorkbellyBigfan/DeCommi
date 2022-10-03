@@ -40,7 +40,7 @@ public interface DiaryService {
     // requestDTO);
 
     // // 댓글
-    Long registerReply(ReplyDTO dto);
+    String registerReply(ReplyDTO dto);
 
     Long addNewReply(ReplyDTO dto); // 대댓글?
 
