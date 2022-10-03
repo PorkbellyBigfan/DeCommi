@@ -229,29 +229,21 @@ public class DiaryServiceImpl implements DiaryService {
 
     // 댓글 등록
     @Override
-    public Long registerReply(ReplyDTO dto) {
+    public String registerReply(ReplyDTO dto) {
         Optional<Member> result = memberRepository.findById(dto.getMid());
-        Optional<Reply> checkMember = replyRepository.getReplyByDinoAndMid(
-                Diary.builder().dino(dto.getDino()).build(),
-                Member.builder().mid(dto.getMid()).build());
-        if (!checkMember.isPresent()) {
-            Optional<List<Long>> lastestrg = replyRepository.getLastestReplyGroupWhereMatchWithDino(dto.getDino());
-
-            // rno 안쓰는 이유는 대 댓글때문임.
-            Long setrg = 1L; // set ReplyGroup = rg //처음 등록된 댓글은 setrg = 1L
-            if (lastestrg.get().size() != 0) { // 처음 등록된 댓글이 아닐 경우
-                setrg = lastestrg.get().get(0) + 1; // setrg += 1
-            }
-            dto.setReplyGroup(setrg);
-            dto.setReplyDepth(0L); // 새댓글이라서 뎁스0
-            dto.setReplyOrder(0L);
-            dto.setMid(result.get().getMid());
-            Reply reply = replyDTOtoEntity(dto);
-            replyRepository.save(reply);
-            return -1L;
-        } else {
-            return checkMember.get().getRno();
+        Optional<List<Long>> lastestrg = replyRepository.getLastestReplyGroupWhereMatchWithDino(dto.getDino());
+        // rno 안쓰는 이유는 대 댓글때문임.
+        Long setrg = 1L; // set ReplyGroup = rg //처음 등록된 댓글은 setrg = 1L
+        if (lastestrg.get().size() != 0) { // 처음 등록된 댓글이 아닐 경우
+            setrg = lastestrg.get().get(0) + 1; // setrg += 1
         }
+        dto.setReplyGroup(setrg);
+        dto.setReplyDepth(0L); // 새댓글이라서 뎁스0
+        dto.setReplyOrder(0L);
+        dto.setMid(result.get().getMid());
+        Reply reply = replyDTOtoEntity(dto);
+        replyRepository.save(reply);
+        return reply.getDino().toString();
     }
 
     // 대댓글
