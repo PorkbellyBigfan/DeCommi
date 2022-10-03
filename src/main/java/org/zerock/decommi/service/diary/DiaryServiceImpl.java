@@ -169,12 +169,13 @@ public class DiaryServiceImpl implements DiaryService {
         return dto;
     }
 
-    @Transactional(readOnly = true)
+    // @Transactional(readOnly = true)
     @Override
     public PageResultDTO<DiaryDTO, Diary> getDiaryPostList(PageRequestDTO requestDTO) {
         Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
         BooleanBuilder booleanBuilder = getSearch(requestDTO);
         Page<Diary> result = repository.findAll(booleanBuilder, pageable);
+        log.info(result);
         Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
             @Override
             public DiaryDTO apply(Diary t) {
@@ -325,6 +326,8 @@ public class DiaryServiceImpl implements DiaryService {
             conditionBuilder
                     .or(qDiary.title.contains(keyword))
                     .or(qDiary.content.contains(keyword));
+        }
+        if (type.contains("t")) {
             tagList.forEach(new Consumer<String>() {
                 @Override
                 public void accept(String t) {
