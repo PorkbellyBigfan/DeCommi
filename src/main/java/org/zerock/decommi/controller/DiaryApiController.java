@@ -166,7 +166,9 @@ public class DiaryApiController {
     // 댓글
     @RequestMapping(value = "/reply/add/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Long> registerReply(@RequestBody ReplyDTO dto) {
+        log.info("==========================등록" + dto);
         Long result = diaryService.registerReply(dto);
+        log.info("결과==============================================" + result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
