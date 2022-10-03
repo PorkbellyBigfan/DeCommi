@@ -29,19 +29,13 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
     @Query("select r from Reply r where r.rno=:rno and member_mid=:mid")
     Optional<Reply> getReplyByRnoAndMid(Long rno, Long mid);
 
-
-    //그룹별정렬??
+    // 그룹별정렬??
     @Query("select replyGroup from Reply where dino_dino=:dino ORDER BY reply_group desc ")
     Optional<List<Long>> getLastestReplyGroupWhereMatchWithDino(Long dino);
 
-
-
     // 페이징 처리된 댓글리스트
-    @Query(value = "select r from Reply r where dino_dino=:dino order by reply_group asc, reply_order asc, reply_depth desc "
-     ,countQuery = "select count(r) from Reply r where dino_dino=:dino order by reply_group asc, reply_order asc, reply_depth desc ")
+    @Query(value = "select r from Reply r where dino_dino=:dino order by reply_group asc, reply_order asc, reply_depth desc ", countQuery = "select count(r) from Reply r where dino_dino=:dino order by reply_group asc, reply_order asc, reply_depth desc ")
     Page<Reply> getPageList(Pageable pageable, Long dino);
-
-    
 
     // 댓글 리스트
     // @Query("select r from Reply r where diary_dino=:dino order by reply_group

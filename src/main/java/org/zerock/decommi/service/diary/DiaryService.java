@@ -50,8 +50,6 @@ public interface DiaryService {
 
     HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable);
 
-    HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable pageable, String id);
-
     // 북마크
     Boolean addBookmark(BookmarkDTO dto);
 
@@ -139,7 +137,7 @@ public interface DiaryService {
         ReplyDTO dto = ReplyDTO.builder()
                 .rno(reply.getRno())
                 .dino(reply.getDino().getDino())
-                .Mid(reply.getMember().getMid())
+                .mid(reply.getMember().getMid())
                 .replyContent(reply.getReplyContent())
                 .replyGroup(reply.getReplyGroup())
                 .replyDepth(reply.getReplyDepth())

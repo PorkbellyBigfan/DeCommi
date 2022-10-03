@@ -236,9 +236,11 @@ public class DiaryServiceImpl implements DiaryService {
                 Member.builder().mid(dto.getMid()).build());
         if (!checkMember.isPresent()) {
             Optional<List<Long>> lastestrg = replyRepository.getLastestReplyGroupWhereMatchWithDino(dto.getDino());
-            Long setrg = 1L; // set ReplyGroup = rg
-            if (lastestrg.get().size() != 0) {
-                setrg = lastestrg.get().get(0) + 1;
+
+            // rno 안쓰는 이유는 대 댓글때문임.
+            Long setrg = 1L; // set ReplyGroup = rg //처음 등록된 댓글은 setrg = 1L
+            if (lastestrg.get().size() != 0) { // 처음 등록된 댓글이 아닐 경우
+                setrg = lastestrg.get().get(0) + 1; // setrg += 1
             }
             dto.setReplyGroup(setrg);
             dto.setReplyDepth(0L); // 새댓글이라서 뎁스0
@@ -312,54 +314,6 @@ public class DiaryServiceImpl implements DiaryService {
         }
         return null;
     }
-
-    // @Override
-    // public HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable
-    // pageable, String id) {
-    // Page<Reply> replyList = replyRepository.getPageList(pageable, dino);
-    // if (!replyList.isEmpty()) {
-    // List<ReplyDTO> dto = replyList.stream().map((Function<Reply, ReplyDTO>) rt ->
-    // {
-    // return replyEntityToDTO(rt);
-    // }).collect(Collectors.toList());
-    // // 댓글 신고부분 여기에 작성해야함
-    // // =============================
-    // HashMap<String, Object> result = new HashMap<>();
-    // result.put("replyList", dto);
-    // result.put("page", pageable.getPageNumber());
-    // result.put("pageTotalCount", replyList.getTotalPages());
-    // return result;
-    // }
-    // return null;
-    // }
-
-    // private BooleanBuilder getSearch(SearchCondition searchCondition) {
-    // String search = searchCondition.getSearch();
-    // String type = searchCondition.getType();
-    // boolean searchType = searchCondition.isSearchType();
-    // List<String> tagList = searchCondition.getTagList();
-
-    // BooleanBuilder booleanBuilder = new BooleanBuilder(); // 쿼리 질의를 위한 객체 생성
-    // QDiary qDiary = QDiary.diary;// 관련된 테이블에 대한 쿼리 객체
-    // BooleanExpression expression = qDiary.dino.gt(0L); // dino가 0 보다 큰 게시글만 조회
-    // booleanBuilder.and(expression);
-    // if (type == null || type.trim().length() == 0) {
-    // return booleanBuilder;
-    // }
-    // BooleanBuilder conditionBuilder = new BooleanBuilder();
-    // if (type.contains("t")) {
-    // conditionBuilder.or(qDiary.title.contains(search));
-    // }
-    // if (type.contains("c")) {
-    // conditionBuilder.or(qDiary.content.contains(search));
-    // }
-    // booleanBuilder.and(conditionBuilder);
-
-    // return booleanBuilder;
-    // }
-    // private Sort sortByDino() {
-    // return Sort.by(Sort.Direction.DESC, "dino");
-    // }
 
     private BooleanBuilder getSearch(PageRequestDTO requestDTO) {
         String type = requestDTO.getType();
