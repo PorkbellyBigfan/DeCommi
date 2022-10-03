@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class Setpw {
-  Long mid;
-  String pw;
+    Long mid;
+    String pw;
 }
