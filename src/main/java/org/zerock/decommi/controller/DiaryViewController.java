@@ -47,7 +47,7 @@ public class DiaryViewController {
     PageRequestDTO.builder().page(10).size(30).type(dto.getType()).keyword(dto.getKeyword()).tagList(dto.getTagList())
         .build();
     PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostList(dto);
-    log.info("RequestDTO dto:::::::::::::::::::" + dto);
+    log.info("RequestDTO dto:::::" + dto);
     return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
   }
 
