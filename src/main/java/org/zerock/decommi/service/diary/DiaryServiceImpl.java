@@ -314,6 +314,7 @@ public class DiaryServiceImpl implements DiaryService {
         List<String> tagList = requestDTO.getTagList();
         QDiary qDiary = QDiary.diary;
 
+        log.info("service class tagList ::::::" + tagList);
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue());
         booleanBuilder.and(expression);
@@ -322,16 +323,22 @@ public class DiaryServiceImpl implements DiaryService {
         }
 
         BooleanBuilder conditionBuilder = new BooleanBuilder();
-        if (type.contains("s")) { // s : stand for Search
+        if (type.contains("d")) {
+            // conditionBuilder
+            // .or(qDiary.title.contains(keyword))
+            // .or(qDiary.content.contains(keyword));
+        }
+        if (type.contains("t")) { // "t" stand for Tag
             conditionBuilder
                     .or(qDiary.title.contains(keyword))
                     .or(qDiary.content.contains(keyword));
-        }
-        if (type.contains("t")) {
             tagList.forEach(new Consumer<String>() {
                 @Override
                 public void accept(String t) {
-                    conditionBuilder.or(qDiary.tagList.contains(Tag.builder().tagName(t).build()));
+                    Optional<Tag> temp = tagRepository.findByTagName(t);
+                    if (temp.isPresent()) {
+                        conditionBuilder.and(qDiary.tagList.contains(temp.get()));
+                    }
                 }
             });
         }
