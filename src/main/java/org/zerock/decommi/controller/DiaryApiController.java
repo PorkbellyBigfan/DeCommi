@@ -155,46 +155,39 @@ public class DiaryApiController {
         return new ResponseEntity<>(diaryService.addDiaryReport(dto), HttpStatus.OK);
     }
 
-    // // 댓글페이지
-    // @RequestMapping(value = "/reply/", method = RequestMethod.POST, consumes =
-    // MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    // public ResponseEntity<HashMap<String, Object>> replyRead(@RequestBody Reply2
-    // reply2) {
-    // Pageable pageable = PageRequest.of(reply2.getReqPage(), 5);
-    // HashMap<String, Object> result =
-    // diaryService.getReplyListByDino(reply2.getDino(), pageable);
-    // return new ResponseEntity<>(result, HttpStatus.OK);
-    // }
+    // 댓글페이지
+    @RequestMapping(value = "/reply/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HashMap<String, Object>> replyRead(@RequestBody Reply2 reply2) {
+        Pageable pageable = PageRequest.of(reply2.getReqPage(), 5);
+        HashMap<String, Object> result = diaryService.getReplyListByDino(reply2.getDino(), pageable);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
-    // // 댓글
-    // @RequestMapping(value = "/reply/add/", method = RequestMethod.POST, consumes
-    // = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    // public ResponseEntity<Long> registerReply(@RequestBody ReplyDTO dto) {
-    // Long result = diaryService.registerReply(dto);
-    // return new ResponseEntity<>(result, HttpStatus.OK);
-    // }
+    // 댓글
+    @RequestMapping(value = "/reply/add/", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> registerReply(@RequestBody ReplyDTO dto) {
+        Long result = diaryService.registerReply(dto);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
-    // // 대댓글
-    // @RequestMapping(value = "/reply/add/reply", method = RequestMethod.POST,
-    // consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    // public ResponseEntity<Long> addReply(@RequestBody ReplyDTO dto) {
-    // Long result = diaryService.addNewReply(dto);
-    // return new ResponseEntity<>(result, HttpStatus.OK);
-    // }
+    // 대댓글
+    @RequestMapping(value = "/reply/add/reply", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> addReply(@RequestBody ReplyDTO dto) {
+        Long result = diaryService.addNewReply(dto);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
-    // // 댓글삭제
-    // @RequestMapping(value = "/reply/remove", method = RequestMethod.POST,
-    // consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    // public ResponseEntity<String> deleteReply(@RequestBody ReplyDTO dto) {
-    // return new ResponseEntity<>(diaryService.deleteReply(dto), HttpStatus.OK);
-    // }
+    // 댓글삭제
+    @RequestMapping(value = "/reply/remove", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> deleteReply(@RequestBody ReplyDTO dto) {
+        return new ResponseEntity<>(diaryService.deleteReply(dto), HttpStatus.OK);
+    }
 
-    // // 댓글수정
-    // @RequestMapping(value = "/reply/modify", method = RequestMethod.POST,
-    // consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    // public ResponseEntity<String> modifyReply(@RequestBody ReplyDTO dto) {
-    // String result = diaryService.modifyReply(dto);
-    // return new ResponseEntity<>(result, HttpStatus.OK);
-    // }
+    // 댓글수정
+    @RequestMapping(value = "/reply/modify", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> modifyReply(@RequestBody ReplyDTO dto) {
+        String result = diaryService.modifyReply(dto);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
 }
