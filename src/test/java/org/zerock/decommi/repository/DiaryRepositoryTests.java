@@ -130,8 +130,8 @@ public class DiaryRepositoryTests {
     arrList.add("test");
     arrList.add("1");
     PageRequestDTO requestDTO = PageRequestDTO.builder()
-        .page(1).size(10).type("d")
-        .tagList(arrList).sort("dino").keyword("테스트").build();
+        .page(1).size(10).type("s")
+        .tagList(arrList).sort("dino").keyword("test").build();
     PageResultDTO<DiaryDTO, Diary> resultDTO = diaryService.getDiaryPostList(requestDTO);
     log.info("Search Result :::: " + resultDTO);
   }
@@ -143,8 +143,8 @@ public class DiaryRepositoryTests {
     arrList.add("test");
     arrList.add("1");
     PageRequestDTO requestDTO = PageRequestDTO.builder()
-        .page(1).size(10).type("t")
-        .tagList(arrList).sort("dino").id("2@2.2").keyword("테스트").build();
+        .page(1).size(10).type("s")
+        .tagList(arrList).sort("dino").writer("2@2.2").keyword("테스트").build();
     PageResultDTO<DiaryDTO, Diary> resultDTO = mdService.getMyDiaryPostList(requestDTO);
     log.info("Search Result :::: " + resultDTO);
   }
