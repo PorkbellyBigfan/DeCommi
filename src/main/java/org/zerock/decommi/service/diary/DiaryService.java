@@ -50,8 +50,6 @@ public interface DiaryService {
 
     HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable);
 
-    HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable pageable, String id);
-
     // 북마크
     Boolean addBookmark(BookmarkDTO dto);
 
@@ -173,6 +171,7 @@ public interface DiaryService {
     default Bookmark bookmarkDTOtoEntity(BookmarkDTO dto) {
         Bookmark entity = Bookmark.builder()
                 .dino(dto.getDino())
+//                .bfolderName(dto.getBfolderName())
                 .bid(dto.getBid())
                 .mid(dto.getMid())
                 .build();
@@ -183,6 +182,7 @@ public interface DiaryService {
     default BookmarkDTO bookmarkEntityToDto(Bookmark entity) {
         BookmarkDTO dto = BookmarkDTO.builder()
                 .dino(entity.getDino())
+//                .bfolderName(entity.getBfolderName())
                 .bid(entity.getBid())
                 .mid(entity.getMid())
                 .build();

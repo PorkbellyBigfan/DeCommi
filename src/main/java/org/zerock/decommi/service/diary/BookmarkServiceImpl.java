@@ -7,6 +7,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.zerock.decommi.dto.BookmarkDTO;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.MemberDTO;
 import org.zerock.decommi.entity.member.Bookmark;
@@ -25,6 +26,17 @@ public class BookmarkServiceImpl implements BookmarkService {
     private final DiaryService diaryService;
     private final MemberRepository memberRepository;
     private final MemberService memberService;
+
+    @Override
+    public List<BookmarkDTO> getBookFolderList(Long mid) {
+        List<Bookmark> result = bookmarkRepository.getFolderList(mid);
+        return result.stream().map(new Function<Bookmark, BookmarkDTO>() {
+            @Override
+            public BookmarkDTO apply(Bookmark t) {
+                return EntityToDto(t);
+            }
+        }).collect(Collectors.toList());
+    }
 
     @Override
     public HashMap<String, Object> getListDino(Long dino) {

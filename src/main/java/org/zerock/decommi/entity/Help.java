@@ -39,7 +39,7 @@ public class Help extends BaseEntity {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "mid")
     private Member writer;
 
     private String helpType;

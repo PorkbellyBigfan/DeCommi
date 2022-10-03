@@ -227,6 +227,7 @@ public class DiaryServiceImpl implements DiaryService {
 
     }
 
+    //댓글 등록
     @Override
     public Long registerReply(ReplyDTO dto) {
         Optional<Member> result = memberRepository.findById(dto.getMid());
@@ -294,6 +295,7 @@ public class DiaryServiceImpl implements DiaryService {
         }
     }
 
+    //댓글리스트
     @Override
     public HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable) {
         Page<Reply> replyList = replyRepository.getPageList(pageable, dino);
@@ -308,12 +310,6 @@ public class DiaryServiceImpl implements DiaryService {
             result.put("pageTotalCount", replyList.getTotalPages());
             return result;
         }
-        return null;
-    }
-
-    @Override
-    public HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable pageable, String id) {
-        // TODO Auto-generated method stub
         return null;
     }
 

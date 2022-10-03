@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BookmarkDTO {
     private Long bid;
-    // private String bfolderName;
+    private String bfolderName;
     // private boolean isBookmark;
 
     private Long dino;

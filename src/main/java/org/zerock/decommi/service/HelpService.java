@@ -12,7 +12,7 @@ public interface HelpService {
     PageResultDTO<HelpDTO,Help>getQnAList(PageRequestDTO requestDTO);
     HelpDTO read (Long hbno);
     void modifyHelp (HelpDTO dto);
-    void deleteHelp(Long hbno);
+    void deleteHelp(HelpDTO dto);
 
     default Help dtoToEntity (HelpDTO dto){
         Help help = Help.builder()

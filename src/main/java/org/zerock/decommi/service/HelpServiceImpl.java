@@ -3,6 +3,8 @@ package org.zerock.decommi.service;
 import java.util.Optional;
 import java.util.function.Function;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.springframework.data.domain.Sort;
 import org.zerock.decommi.entity.Help;
+import org.zerock.decommi.entity.QHelp;
 import org.zerock.decommi.repository.HelpRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 
@@ -41,7 +44,8 @@ public class HelpServiceImpl implements HelpService {
     @Override
     public PageResultDTO<HelpDTO, Help> getNoticeList(PageRequestDTO requestDTO) {
         Pageable pageable = requestDTO.getPageable(Sort.by("hbno").descending());
-        Page<Help> result = helpRepository.getNoticeList(pageable);
+        BooleanBuilder booleanBuilder = getSearch(requestDTO);
+        Page < Help > result = helpRepository.getNoticeList(pageable,booleanBuilder);
         Function<Help, HelpDTO> fn = (entity -> entityToDTO(entity));
         return new PageResultDTO<>(result, fn);
     }
@@ -49,28 +53,54 @@ public class HelpServiceImpl implements HelpService {
     @Override
     public PageResultDTO<HelpDTO, Help> getQnAList(PageRequestDTO requestDTO) {
         Pageable pageable = requestDTO.getPageable(Sort.by("hbno").descending());
-        Page<Help> result = helpRepository.getQnAList(pageable);
+        BooleanBuilder booleanBuilder = getSearch(requestDTO);
+        Page<Help> result = helpRepository.getQnAList(pageable,booleanBuilder);
         Function<Help, HelpDTO> fn = (entity -> entityToDTO(entity));
         return new PageResultDTO<>(result, fn);
     }
 
     @Override
-    public void deleteHelp(Long hbno) {
-        log.info("delete....." + hbno);
-        helpRepository.deleteById(hbno);
-
+    public void deleteHelp(HelpDTO dto) {
+        Optional<Help> checkHelp = helpRepository.getHelpByMid(dto.getWriter(), dto.getHbno());
+        if (checkHelp.isPresent()) {
+            log.info("delete....." + dto);
+            helpRepository.delete(checkHelp.get());
+        }
     }
 
     @Override
     public void modifyHelp(HelpDTO dto) {
         log.info("modify...." + dto);
-        Optional<Help> result = helpRepository.findById(dto.getHbno());
-        if (result.isPresent()) {
-            Help help = result.get();
+        Optional<Help> checkHelp = helpRepository.getHelpByMid(dto.getWriter(), dto.getHbno());
+        if (checkHelp.isPresent()) {
+            Help help = checkHelp.get();
             help.changTitle(dto.getTitle());
             help.changContent(dto.getContent());
             helpRepository.save(help);
         }
-    }
 
+        }
+        private BooleanBuilder getSearch (PageRequestDTO requestDTO){// Querydsl 처리
+            String type = requestDTO.getType();
+            String keyword = requestDTO.getKeyword();
+
+            BooleanBuilder booleanBuilder = new BooleanBuilder();
+            QHelp qHelp = QHelp.help;// 관련된 테이블에 대한 쿼리 객체
+            BooleanExpression expression = qHelp.hbno.gt(0L);// gno>0 조건만 생성
+            booleanBuilder.and(expression);
+            if (type == null || type.trim().length() == 0)
+                return booleanBuilder;// 검색 조건이 없는 경우
+
+            // 검색 조건 작성
+            BooleanBuilder conditionBuilder = new BooleanBuilder();
+            if (type.contains("t"))
+                conditionBuilder.or(qHelp.title.contains(keyword));
+            if (type.contains("c"))
+                conditionBuilder.or(qHelp.content.contains(keyword));
+            if (type.contains("w"))
+                conditionBuilder.or(qHelp.writer.email.contains(keyword));
+            booleanBuilder.and(conditionBuilder); // 모든 조건 통합
+
+            return booleanBuilder;
+    }
 }

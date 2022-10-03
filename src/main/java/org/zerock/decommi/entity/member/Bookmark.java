@@ -28,8 +28,7 @@ public class Bookmark extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bid;
-    // private String bfolderName;
-    // private boolean isBookmark;
+    private String bfolderName;
 
     private Long dino;
     private Long mid;

@@ -62,9 +62,9 @@ public class HelpController {
     }
 
     @PostMapping(value = "/delete/{hbno}",produces = MediaType.TEXT_PLAIN_VALUE)
-    public ResponseEntity<String> remove(@PathVariable("hbno") Long hbno){//프론트에 주는타입 ,,@ 주소에서 받는내용(쿼리스트링)
-        log.info("remove......"+hbno);
-        helpService.deleteHelp(hbno);
+    public ResponseEntity<String> remove(@PathVariable("hbno") HelpDTO dto){//프론트에 주는타입 ,,@ 주소에서 받는내용(쿼리스트링)
+        log.info("remove......"+dto);
+        helpService.deleteHelp(dto);
         return new ResponseEntity<>("removed",HttpStatus.OK);
     }
     
