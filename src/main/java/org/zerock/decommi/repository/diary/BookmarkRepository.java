@@ -12,7 +12,7 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
     @Query("select b from Bookmark b where mid=:mid and dino=:dino")
     Optional<Bookmark> checkBookmarkLogByMemberIdAndDiary(Long mid, Long dino);
 
-    @Query("select b.mid as mid ,b.bfolderName as bfolderName from Bookmark b where mid=:mid")
+    @Query("select b.mid, b.bfolderName from Bookmark b where mid=:mid")
     List<Bookmark> getFolderList(Long mid);
 
     @Query("select b from Bookmark b where mid=:mid")

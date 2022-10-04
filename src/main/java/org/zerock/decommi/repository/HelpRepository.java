@@ -2,10 +2,7 @@ package org.zerock.decommi.repository;
 
 import java.util.Optional;
 
-<<<<<<< HEAD
-=======
 import com.querydsl.core.BooleanBuilder;
->>>>>>> 6545e88baf82b73847e9f828c1e0334f3f393a8d
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

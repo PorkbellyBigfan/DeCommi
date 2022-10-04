@@ -198,10 +198,11 @@ public class Repository_ServiceTests {
         // for (Bookmark bookmark : result) {
         // log.info(bookmark);
         // }
-        Member member = Member.builder().mid(2L).build();
+        Member member = Member.builder().mid(14L).build();
         List<Bookmark> result = bookmarkRepository.getFolderList(member.getMid());
-        log.info(result);
-
+        for (Bookmark bookmarks : result) {
+            log.info(bookmarks);
+        }
     }
 
     // ReportTests
@@ -320,8 +321,6 @@ public class Repository_ServiceTests {
         });
     }
 
-    // @Test
-    // public void helplog(){
-    // helpRepository.getHelpByMid(2L);
-    // }
+    // 북마크 = 폴더리스트 클릭시 폴더 안 리스트
+    // 고객센터 = 타입나누기, 프론트에서 타입 지정가능?, QnA 답글 어떻게 할지
 }

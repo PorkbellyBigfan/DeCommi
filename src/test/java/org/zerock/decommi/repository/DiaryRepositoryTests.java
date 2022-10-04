@@ -152,6 +152,7 @@ public class DiaryRepositoryTests {
   @Test
   void testGetLikeTagList() {
     Member member = Member.builder().mid(1L).build();
+    
     List<LikeTagList> result = likeTagListRepository.getLikeTagList(member.getMid());
     log.info(result);
   }
