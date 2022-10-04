@@ -36,7 +36,7 @@ public class DiaryViewController {
   private final DiaryService diaryService;
 
   @RequestMapping(value = "/list", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<DiaryDTO>> getDiaryList(@ModelAttribute PageRequestDTO dto) {
+  public ResponseEntity<List<DiaryDTO>> getDiaryList(@RequestBody PageRequestDTO dto) {
     // <String> type : null 값이면 검색조건없이 모든 게시글 리스트 반환,
     // <String> type : 's'를 보내주면 검색조건 결과 만족하는 리스트 반환
     // <String> keyword : 검색문자열 title, 또는 content에 해당 문자열이 들어있는 결과 리스트 반환
