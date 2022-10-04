@@ -39,5 +39,5 @@ public class MemberDTO {
 
     @Builder.Default
     private Set<String> roleSet = new HashSet<>();
-  
+
 }
