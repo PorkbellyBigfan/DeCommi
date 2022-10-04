@@ -19,31 +19,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.annotation.Commit;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
-import org.zerock.decommi.dto.ReplyDTO;
 import org.zerock.decommi.entity.diary.Diary;
-import org.zerock.decommi.entity.diary.File;
 import org.zerock.decommi.entity.diary.Reply;
-// import org.zerock.decommi.entity.diary.DiaryTag;
-import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.member.LikeTagList;
 import org.zerock.decommi.entity.member.Member;
-import org.zerock.decommi.entity.member.MemberRole;
 import org.zerock.decommi.repository.diary.DiaryRepository;
 import org.zerock.decommi.repository.diary.ReplyRepository;
-// import org.zerock.decommi.repository.diary.DiaryTagRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.LikeTagListRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.service.diary.DiaryService;
 import org.zerock.decommi.service.diary.MyDiaryService;
-import org.zerock.decommi.vo.DiaryPostList;
-import org.zerock.decommi.vo.SearchCondition;
+import org.zerock.decommi.service.member.LikeTagListService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -62,9 +52,10 @@ public class DiaryRepositoryTests {
   MyDiaryService mdService;
   @Autowired
   MemberRepository memberRepository;
-
   @Autowired
   LikeTagListRepository likeTagListRepository;
+  @Autowired
+  LikeTagListService likeTagListService;
 
   @Test
   public void insertDiaryDummies() {
@@ -152,7 +143,7 @@ public class DiaryRepositoryTests {
   @Test
   void testGetLikeTagList() {
     Member member = Member.builder().mid(1L).build();
-    List<LikeTagList> result = likeTagListRepository.getLikeTagList(member.getMid());
+    Optional<List<LikeTagList>> result = likeTagListService.getLikeTagList(member.getMid());
     log.info(result);
   }
   // @Test

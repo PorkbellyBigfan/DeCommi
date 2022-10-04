@@ -33,11 +33,9 @@ public class MemberDTO {
     private List<Reply> replyList;
     private List<Tag> likeTagList;
 
-    // 여기에 선호태그 비선호태그 넣으면 될것 같음
-
     private LocalDateTime regDate, modDate;
 
     @Builder.Default
     private Set<String> roleSet = new HashSet<>();
-  
+
 }

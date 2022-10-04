@@ -193,16 +193,16 @@ public class AdminServiceImpl implements AdminService {
     }
 
     // 태그 리스트
-    @Override
-    public List<String> getTag(Long dino) {
-        Optional<List<String>> hashs = tagRepository.OptionalfindByDiarys(dino);
-        if (hashs.isPresent()) {
-            List<String> result = hashs.get();
-            return result;
-        } else {
-            return null;
-        }
-    }
+    // @Override
+    // public List<String> getTag(Long dino) {
+    //     Optional<List<String>> hashs = tagRepository.OptionalfindByDiarys(dino);
+    //     if (hashs.isPresent()) {
+    //         List<String> result = hashs.get();
+    //         return result;
+    //     } else {
+    //         return null;
+    //     }
+    // }
 
     // 태그 수정
     @Override

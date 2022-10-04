@@ -40,7 +40,7 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class MyDiaryServiceImpl implements MyDiaryService {
   private final DiaryRepository repository;
-  private final LikeTagListRepository likeTagListRepository;
+  private final TagRepository tagRepository;
   private final DiaryService diaryService;
 
   // 내가 작성한 다이어리 리스트
@@ -48,7 +48,7 @@ public class MyDiaryServiceImpl implements MyDiaryService {
   @Override
   public PageResultDTO<DiaryDTO, Diary> getMyDiaryPostList(PageRequestDTO requestDTO) {
     Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
-    BooleanBuilder booleanBuilder = searchMyDiary(requestDTO);
+    BooleanBuilder booleanBuilder = getMyDiaryList(requestDTO);
     Page<Diary> result = repository.findAll(booleanBuilder, pageable);
     Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
       @Override
@@ -56,13 +56,11 @@ public class MyDiaryServiceImpl implements MyDiaryService {
         return diaryService.entityToDTO(t);
       }
     };
-    log.info(" service ::: result ::: " + result);
-    log.info(" service ::: requestDTO ::: " + requestDTO);
     return new PageResultDTO<>(result, fn);
   }
 
   // 내가 쓴 글만 확인 할 수 있어야한다.
-  private BooleanBuilder searchMyDiary(PageRequestDTO requestDTO) {
+  private BooleanBuilder getMyDiaryList(PageRequestDTO requestDTO) {
     String type = requestDTO.getType();
     String keyword = requestDTO.getKeyword();
     String writer = requestDTO.getWriter();
@@ -84,47 +82,15 @@ public class MyDiaryServiceImpl implements MyDiaryService {
       tagList.forEach(new Consumer<String>() {
         @Override
         public void accept(String t) {
-          conditionBuilder.or(qDiary.tagList.contains(Tag.builder().tagName(t).build()));
+          Optional<Tag> temp = tagRepository.findByTagName(t);
+          if (temp.isPresent()) {
+            conditionBuilder.and(qDiary.tagList.contains(temp.get()));
+          }
         }
       });
     }
     booleanBuilder.and(conditionBuilder);
     return booleanBuilder;
   }
-
-  // 선호태그리스트
-
-  // 선호태그리스트 목록 가져오기
-  @Override
-  public List<LikeTagListDTO> LikeTagList(Long mid) {
-    List<LikeTagList> result = likeTagListRepository.getLikeTagList(mid);
-    return result.stream().map(new Function<LikeTagList, LikeTagListDTO>() {
-      @Override
-      public LikeTagListDTO apply(LikeTagList t) {
-        return likeTagListEntitytoDTO(t);
-      }
-    }).collect(Collectors.toList());
-  }
-
-  // 선호태그리스트에 태그 추가 또는 삭제
-  @Override
-  public Boolean editLikeTagList(LikeTagListDTO dto) {
-    Optional<LikeTagList> checking = likeTagListRepository.checkLikeTagListByMid(dto.getMid());
-    LikeTagList entity = likeTagListDTOtoEntity(dto);
-    if (checking.isPresent()) {
-      return false; // 이미 리스트에 있으면 삭제
-    } else {
-      likeTagListRepository.save(entity);
-      return true; // 리스트에 없는 태그면
-    }
-
-  }
-
-  // 선호태그리스트에 태그 삭제
-  // @Override
-  // public void deleteLikeTagList(LikeTagListDTO dto) {
-  // LikeTagList entity = likeTagListDTOtoEntity(dto);
-  // likeTagListRepository.delete(entity);
-  // }
 
 }

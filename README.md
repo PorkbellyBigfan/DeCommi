@@ -81,6 +81,6 @@ Admin/serviceㅡ
 -vo 파일 이름들 대문자로 수정
 
 - TagRepository.java 수정
-  @Query("select t.TagName from Tag t where diary_dino=:dino")
-  Optional<List<String>> OptionalfindByDiarys(Long dino);
+- @Query("select t.TagName from Tag t where diary_dino=:dino")
+Optional<List<String>> OptionalfindByDiarys(Long dino);
 //추가.
