@@ -17,6 +17,8 @@ import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.service.member.MemberService;
+import org.zerock.decommi.vo.Findpw;
+import org.zerock.decommi.vo.Setpw;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -28,7 +30,14 @@ import lombok.extern.log4j.Log4j2;
 public class MemberApiController {
   private final MemberService service;
 
-  // 멤버 하나 가져오기
+  // 회원가입
+  @RequestMapping(value = "/signup", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<String> signUp(@RequestBody MemberDTO dto) {
+    log.info("member/signup : " + dto);
+    String email = service.signUp(dto);
+    return new ResponseEntity<>(email, HttpStatus.OK);
+  }
+  
   @RequestMapping(value = "/getAuth", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Map<String, Object>> getAuth(@RequestBody Map<String, Object> mapObj,
       @RequestHeader("token") String token) {
@@ -50,8 +59,9 @@ public class MemberApiController {
 
     return new ResponseEntity<Map<String, Long>>(mapForResult, HttpStatus.OK);
   }
-  //회원정보수정 눌렀을때 비밀번호를 확인
-  @RequestMapping(value = "pwCheck", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+
+  //회원정보수정 눌렀을때 비밀번호를 확인(입력한 비밀번호가 DB에 저장되어있는 회원의 비밀번호와 일치하는지)
+  @RequestMapping(value = "/checkpw", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Boolean>pwCheck(@RequestBody MemberDTO dto){
     //email : 현재 로그인하고있는 회원의 email
     //pw    : 회원정보수정 눌렀을때 사용자가 입력한 비밀번호 
@@ -62,31 +72,31 @@ public class MemberApiController {
     Boolean result = service.pwCheck(email, pw); 
     return new ResponseEntity<Boolean>(result, HttpStatus.OK);
   }
-
-
-  // 회원가입
-  @RequestMapping(value = "/signup", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<String> signUp(@RequestBody MemberDTO dto) {
-    log.info("member/signup : " + dto);
-    String email = service.signUp(dto);
-    return new ResponseEntity<>(email, HttpStatus.OK);
+  //비밀번호 재설정
+  @RequestMapping(value = "/setpw", method = RequestMethod.POST,consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Boolean> setpw(@RequestBody Setpw vo){
+    log.info(vo);
+    return new ResponseEntity<>(service.changePw(vo), HttpStatus.OK);
   }
 
-  // @RequestMapping(value = "/getlist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  // public ResponseEntity<List<MemberDTO>> getList(
-  //     @RequestHeader("token") String token) {
-  //   List<MemberDTO> result = service.getList();
-  //   log.info(result);
-  //   return new ResponseEntity<>(result, HttpStatus.OK);
-  // }
+  
+  //로그인시 이메일 까먹었을때
+  @RequestMapping(value ="findemail", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Boolean> findemail(@RequestBody MemberDTO email){
+    log.info(email);
+    return new ResponseEntity<>(service.findEmail(email), HttpStatus.OK);
+  }
+  //로그인시 비밀번호 까먹었을때
+  @RequestMapping(value = "/findpw", method = RequestMethod.POST,consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Long> findpw(@RequestBody Findpw vo){
+    log.info(vo);
+    log.info(service.findPw(vo));
+    return new ResponseEntity<>(service.findPw(vo), HttpStatus.OK);
+  }
 
-  // @RequestMapping(value = "/get-page-list", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  // public ResponseEntity<PageResultDTO<MemberDTO, Member>> getPagingList(
-  //     @RequestBody PageRequestDTO dto,
-  //     @RequestHeader("token") String token) {
-  //   log.info("PageRequestDTO page: " + dto.getPage());
-  //   return new ResponseEntity<>(service.getPageList(dto), HttpStatus.OK);
-  // }
+
+
+
 
 
   

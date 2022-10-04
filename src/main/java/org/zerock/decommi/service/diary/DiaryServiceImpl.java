@@ -171,7 +171,7 @@ public class DiaryServiceImpl implements DiaryService {
         Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
         BooleanBuilder booleanBuilder = getList(requestDTO);
         Page<Diary> result = repository.findAll(booleanBuilder, pageable);
-        log.info(result);
+        log.info("service Class 공개된 다이어리 모두 가져오기 :::"+result);
         Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
             @Override
             public DiaryDTO apply(Diary t) {
@@ -186,13 +186,14 @@ public class DiaryServiceImpl implements DiaryService {
         Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
         BooleanBuilder booleanBuilder = getSearch(requestDTO);
         Page<Diary> result = repository.findAll(booleanBuilder, pageable);
-        log.info(result);
+        log.info("service class  검색조건을 만족하는 다이어리 리스트 가져오기 :::: "+result);
         Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
             @Override
             public DiaryDTO apply(Diary t) {
                 return entityToDTO(t);
             }
         };
+        log.info("service Controller ::::::"+result);
         return new PageResultDTO<>(result, fn);
     }
 
@@ -353,9 +354,7 @@ public class DiaryServiceImpl implements DiaryService {
     // return booleanBuilder;
     // }
     private BooleanBuilder getList(PageRequestDTO requestDTO) {
-        List<String> tagList = requestDTO.getTagList();
         QDiary qDiary = QDiary.diary;
-        log.info("service class tagList ::::::" + tagList);
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue());
         booleanBuilder.and(expression);
@@ -367,10 +366,7 @@ public class DiaryServiceImpl implements DiaryService {
         String keyword = requestDTO.getKeyword();
         List<String> tagList = requestDTO.getTagList();
         QDiary qDiary = QDiary.diary;
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
-        BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue());
-        booleanBuilder.and(expression);
-
+        // BooleanBuilder booleanBuilder = new BooleanBuilder();
         BooleanBuilder conditionBuilder = new BooleanBuilder();
         if (type.contains("s")) { // "t" stand for Tag
             conditionBuilder
@@ -386,7 +382,7 @@ public class DiaryServiceImpl implements DiaryService {
                 }
             });
         }
-        booleanBuilder.and(conditionBuilder);
-        return booleanBuilder;
+        conditionBuilder.and(qDiary.openYN.isTrue());
+        return conditionBuilder;
     }
 }
