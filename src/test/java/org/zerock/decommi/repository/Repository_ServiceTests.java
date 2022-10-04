@@ -2,6 +2,7 @@ package org.zerock.decommi.repository;
 
 import static org.mockito.ArgumentMatchers.anyList;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -199,6 +200,21 @@ public class Repository_ServiceTests {
         log.info(result);
 
     }
+
+    @Test
+    public void getListDino() {
+        log.info(bookmarkRepository.getList(2L, "folderName6"));
+    }
+
+    // @Test
+    // public void getListDino2() {
+    // List<M>
+    // HashMap<String, Object> result = bookmarkService.getListDino(2L,
+    // "folderName6");
+    // if (((Optional<Member>) result).isPresent()) {
+
+    // }
+    // }
 
     // ReportTests
     @Test

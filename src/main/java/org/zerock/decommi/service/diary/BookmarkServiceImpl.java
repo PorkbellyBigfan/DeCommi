@@ -39,9 +39,9 @@ public class BookmarkServiceImpl implements BookmarkService {
     }
 
     @Override
-    public HashMap<String, Object> getListDino(Long dino) {
+    public HashMap<String, Object> getListDino(Long dino, String bfolderName) {
         List<MemberDTO> member = new ArrayList<>();
-        List<DiaryDTO> result = bookmarkRepository.getList(dino).get().stream()
+        List<DiaryDTO> result = bookmarkRepository.getList(dino, bfolderName).get().stream()
                 .map((Function<? super Bookmark, ? extends DiaryDTO>) v -> {
                     DiaryDTO list = diaryService.entityToDTO(diaryRepository.getByDino(v.getDino()));
                     member.add(memberService.entityToDTO(memberRepository.findByEmail(list.getWriter()).get()));

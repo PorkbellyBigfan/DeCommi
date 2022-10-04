@@ -7,7 +7,7 @@ import org.zerock.decommi.dto.BookmarkDTO;
 import org.zerock.decommi.entity.member.Bookmark;
 
 public interface BookmarkService {
-    HashMap<String, Object> getListDino(Long dino);
+    HashMap<String, Object> getListDino(Long dino, String bfolderName);
 
     List<BookmarkDTO> getBookFolderList(Long mid);
 

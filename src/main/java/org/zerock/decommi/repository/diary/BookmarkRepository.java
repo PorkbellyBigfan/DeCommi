@@ -15,7 +15,7 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
     @Query("select b.mid as mid ,b.bfolderName as bfolderName from Bookmark b where mid=:mid")
     List<Bookmark> getFolderList(Long mid);
 
-    @Query("select b from Bookmark b where mid=:mid")
-    Optional<List<Bookmark>> getList(Long mid);
+    @Query("select b from Bookmark b where mid=:mid and bfolderName=:bfolderName")
+    Optional<List<Bookmark>> getList(Long mid, String bfolderName);
 
 }
