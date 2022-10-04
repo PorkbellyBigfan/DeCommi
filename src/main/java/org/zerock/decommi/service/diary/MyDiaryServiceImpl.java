@@ -42,13 +42,14 @@ public class MyDiaryServiceImpl implements MyDiaryService {
   private final DiaryRepository repository;
   private final LikeTagListRepository likeTagListRepository;
   private final DiaryService diaryService;
+  private final TagRepository tagRepository;
 
   // 내가 작성한 다이어리 리스트
   @Transactional(readOnly = true)
   @Override
   public PageResultDTO<DiaryDTO, Diary> getMyDiaryPostList(PageRequestDTO requestDTO) {
     Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
-    BooleanBuilder booleanBuilder = searchMyDiary(requestDTO);
+    BooleanBuilder booleanBuilder = getMyDiaryList(requestDTO);
     Page<Diary> result = repository.findAll(booleanBuilder, pageable);
     Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
       @Override
@@ -56,41 +57,60 @@ public class MyDiaryServiceImpl implements MyDiaryService {
         return diaryService.entityToDTO(t);
       }
     };
-    log.info(" service ::: result ::: " + result);
-    log.info(" service ::: requestDTO ::: " + requestDTO);
     return new PageResultDTO<>(result, fn);
   }
 
+  @Override
+  public PageResultDTO<DiaryDTO, Diary> getSearchMyDiaryPostList(PageRequestDTO requestDTO) {
+    Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
+    BooleanBuilder booleanBuilder = getSearchMyDiary(requestDTO);
+    Page<Diary> result = repository.findAll(booleanBuilder, pageable);
+    Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
+      @Override
+      public DiaryDTO apply(Diary t) {
+        return diaryService.entityToDTO(t);
+      }
+    };
+    return new PageResultDTO<>(result, fn);
+  }
   // 내가 쓴 글만 확인 할 수 있어야한다.
-  private BooleanBuilder searchMyDiary(PageRequestDTO requestDTO) {
-    String type = requestDTO.getType();
-    String keyword = requestDTO.getKeyword();
+  private BooleanBuilder getMyDiaryList(PageRequestDTO requestDTO) {
     String writer = requestDTO.getWriter();
-    List<String> tagList = requestDTO.getTagList();
     QDiary qDiary = QDiary.diary;
-
     log.info(writer);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.writer.eq(writer));
     booleanBuilder.and(expression);
-    if (type == null || type.trim().length() == 0) {
-      return booleanBuilder;
-    }
+    return booleanBuilder;
+  }
+  private BooleanBuilder getSearchMyDiary(PageRequestDTO requestDTO) {
+    String type = requestDTO.getType();
+    String writer = requestDTO.getWriter();
+    String keyword = requestDTO.getKeyword();
+    List<String> tagList = requestDTO.getTagList();
+    QDiary qDiary = QDiary.diary;
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.writer.eq(writer));
+    booleanBuilder.and(expression);
+
     BooleanBuilder conditionBuilder = new BooleanBuilder();
-    if (type.contains("s")) { // s : stand for Search
-      conditionBuilder
-          .or(qDiary.title.contains(keyword))
-          .or(qDiary.content.contains(keyword));
-      tagList.forEach(new Consumer<String>() {
-        @Override
-        public void accept(String t) {
-          conditionBuilder.or(qDiary.tagList.contains(Tag.builder().tagName(t).build()));
-        }
-      });
+    if (type.contains("s")) { // "t" stand for Tag
+        conditionBuilder
+                .or(qDiary.title.contains(keyword))
+                .or(qDiary.content.contains(keyword));
+        tagList.forEach(new Consumer<String>() {
+            @Override
+            public void accept(String t) {
+                Optional<Tag> temp = tagRepository.findByTagName(t);
+                if (temp.isPresent()) {
+                    conditionBuilder.and(qDiary.tagList.contains(temp.get()));
+                }
+            }
+        });
     }
     booleanBuilder.and(conditionBuilder);
     return booleanBuilder;
-  }
+}
 
   // 선호태그리스트
 

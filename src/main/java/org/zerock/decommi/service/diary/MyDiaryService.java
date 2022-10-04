@@ -13,9 +13,9 @@ import org.zerock.decommi.entity.member.Member;
 
 public interface MyDiaryService {
   PageResultDTO<DiaryDTO, Diary> getMyDiaryPostList(PageRequestDTO requestDTO);
+  PageResultDTO<DiaryDTO, Diary> getSearchMyDiaryPostList(PageRequestDTO requestDTO);
 
   List<LikeTagListDTO> LikeTagList(Long mid);
-
   Boolean editLikeTagList(LikeTagListDTO dto);
 
   // Boolean deleteLikeTagList(LikeTagListDTO dto);
