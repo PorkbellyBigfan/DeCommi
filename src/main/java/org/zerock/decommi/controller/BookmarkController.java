@@ -15,7 +15,7 @@ import org.zerock.decommi.vo.Mid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class BookmarkController {
     private final BookmarkService service;

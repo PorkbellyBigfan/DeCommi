@@ -17,7 +17,7 @@ import org.zerock.decommi.vo.Mid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class HeartController {
     private final HeartService service;

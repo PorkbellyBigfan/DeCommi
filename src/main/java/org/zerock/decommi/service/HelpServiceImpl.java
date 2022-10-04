@@ -60,6 +60,10 @@ public class HelpServiceImpl implements HelpService {
     }
 
     @Override
+    // public void deleteHelp(Long hbno) {
+    //     log.info(hbno);
+    //     helpRepository.deleteById(hbno);
+
     public void deleteHelp(HelpDTO dto) {
         Optional<Help> checkHelp = helpRepository.getHelpByMid(dto.getWriter(), dto.getHbno());
         if (checkHelp.isPresent()) {
@@ -71,6 +75,9 @@ public class HelpServiceImpl implements HelpService {
     @Override
     public void modifyHelp(HelpDTO dto) {
         log.info("modify...." + dto);
+        // Optional<Help> result = helpRepository.findById(dto.getHbno());
+        // if(result.isPresent()){
+        //     Help help = result.get();
         Optional<Help> checkHelp = helpRepository.getHelpByMid(dto.getWriter(), dto.getHbno());
         if (checkHelp.isPresent()) {
             Help help = checkHelp.get();

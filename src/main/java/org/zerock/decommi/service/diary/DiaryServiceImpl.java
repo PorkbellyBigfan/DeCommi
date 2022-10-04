@@ -42,7 +42,7 @@ import org.zerock.decommi.repository.diary.ReplyRepository;
 import org.zerock.decommi.repository.diary.ReportRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
-import org.zerock.decommi.vo.DiaryPost;
+// import org.zerock.decommi.vo.DiaryPost;
 import org.zerock.decommi.vo.DiaryPostList;
 import org.zerock.decommi.vo.SearchCondition;
 

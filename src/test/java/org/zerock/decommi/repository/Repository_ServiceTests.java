@@ -33,8 +33,12 @@ import org.zerock.decommi.entity.diary.Heart;
 import org.zerock.decommi.entity.diary.Report;
 import org.zerock.decommi.entity.member.Bookmark;
 import org.zerock.decommi.entity.member.Member;
-import org.zerock.decommi.repository.HelpRepository;
-import org.zerock.decommi.repository.diary.*;
+import org.zerock.decommi.repository.diary.BookmarkRepository;
+import org.zerock.decommi.repository.diary.DiaryRepository;
+import org.zerock.decommi.repository.diary.HeartRepository;
+import org.zerock.decommi.repository.diary.ReplyRepository;
+import org.zerock.decommi.repository.diary.ReportRepository;
+import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.service.HelpService;
 import org.zerock.decommi.service.diary.BookmarkService;
@@ -195,10 +199,11 @@ public class Repository_ServiceTests {
         // for (Bookmark bookmark : result) {
         // log.info(bookmark);
         // }
-        Member member = Member.builder().mid(2L).build();
+        Member member = Member.builder().mid(14L).build();
         List<Bookmark> result = bookmarkRepository.getFolderList(member.getMid());
-        log.info(result);
-
+        for (Bookmark bookmarks : result) {
+            log.info(bookmarks);
+        }
     }
 
     @Test
@@ -332,8 +337,6 @@ public class Repository_ServiceTests {
         });
     }
 
-    // @Test
-    // public void helplog(){
-    // helpRepository.getHelpByMid(2L);
-    // }
+    // 북마크 = 폴더리스트 클릭시 폴더 안 리스트
+    // 고객센터 = 타입나누기, 프론트에서 타입 지정가능?, QnA 답글 어떻게 할지
 }
