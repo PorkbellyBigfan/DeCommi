@@ -98,16 +98,5 @@ public class MemberApiController {
     log.info(service.findPw(vo));
     return new ResponseEntity<>(service.findPw(vo), HttpStatus.OK);
   }
-
-
-  //선호태그 리스트 목록 
-  @RequestMapping(value = "/liketaglist", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Optional<List<LikeTagList>>> getLikeTagList(@RequestBody Long mid) {
-    Optional<List<LikeTagList>>result = likeTagListService.getLikeTagList(mid);
-    return new ResponseEntity<>(result, HttpStatus.OK);
-  }
-
-
-
   
 }

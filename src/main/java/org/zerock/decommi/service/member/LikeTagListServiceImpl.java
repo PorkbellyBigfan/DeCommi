@@ -21,28 +21,14 @@ import lombok.extern.log4j.Log4j2;
 public class LikeTagListServiceImpl implements LikeTagListService{
   private final LikeTagListRepository likeTagListRepository;
   private final LikeTagListService likeTagListService;
-  // 선호태그리스트 목록 가져오기
-  // @Override
-  // public List<LikeTagListDTO> getLikeTagList(Long mid) {
-  //   List<LikeTagList> result = likeTagListRepository.getLikeTagList(mid);
-  //   return result.stream().map(new Function<LikeTagList, LikeTagListDTO>() {
-  //     @Override
-  //     public LikeTagListDTO apply(LikeTagList t) {
-  //       return likeTagListEntitytoDTO(t);
-  //     }
-  //   }).collect(Collectors.toList());
-  // }
-  @Override
-  public Optional<List<LikeTagList>> getLikeTagList(Long mid) {
-    Optional<List<LikeTagList>> result = likeTagListRepository.getLikeTagList(mid);
-    if(result.isPresent()){
-      return result;
-    }else{
-      return null;
-    }
-  }
   
 
+  
+  @Override
+  public List<LikeTagList> getLikeTagList(Long mid) {
+    // TODO Auto-generated method stub
+    return null;
+  }
   // 선호태그리스트에 태그 추가 또는 삭제
   @Override
   public Boolean editLikeTagList(LikeTagListDTO dto) {

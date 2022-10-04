@@ -38,8 +38,7 @@ public interface DiaryService {
     // 추가예정
     // PageResultDTO<DiaryDTO, Diary> getDiaryPostListByTagName(PageRequestDTO
     // requestDTO);
-
-    // // 댓글
+    
     String registerReply(ReplyDTO dto);
 
     Long addNewReply(ReplyDTO dto); // 대댓글?
