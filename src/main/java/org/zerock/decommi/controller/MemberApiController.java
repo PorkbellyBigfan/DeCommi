@@ -3,19 +3,24 @@ package org.zerock.decommi.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.zerock.decommi.dto.LikeTagListDTO;
 import org.zerock.decommi.dto.MemberDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
+import org.zerock.decommi.entity.member.LikeTagList;
 import org.zerock.decommi.entity.member.Member;
+import org.zerock.decommi.service.member.LikeTagListService;
 import org.zerock.decommi.service.member.MemberService;
 import org.zerock.decommi.vo.Findpw;
 import org.zerock.decommi.vo.Setpw;
@@ -29,6 +34,7 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class MemberApiController {
   private final MemberService service;
+  private final LikeTagListService likeTagListService;
 
   // 회원가입
   @RequestMapping(value = "/signup", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -78,7 +84,6 @@ public class MemberApiController {
     log.info(vo);
     return new ResponseEntity<>(service.changePw(vo), HttpStatus.OK);
   }
-
   
   //로그인시 이메일 까먹었을때
   @RequestMapping(value ="findemail", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -95,7 +100,12 @@ public class MemberApiController {
   }
 
 
-
+  //선호태그 리스트 목록 
+  @RequestMapping(value = "/liketaglist", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Optional<List<LikeTagList>>> getLikeTagList(@RequestBody Long mid) {
+    Optional<List<LikeTagList>>result = likeTagListService.getLikeTagList(mid);
+    return new ResponseEntity<>(result, HttpStatus.OK);
+  }
 
 
 

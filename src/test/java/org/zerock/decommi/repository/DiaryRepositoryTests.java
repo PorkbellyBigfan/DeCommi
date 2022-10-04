@@ -33,6 +33,7 @@ import org.zerock.decommi.repository.member.LikeTagListRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.service.diary.DiaryService;
 import org.zerock.decommi.service.diary.MyDiaryService;
+import org.zerock.decommi.service.member.LikeTagListService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -51,9 +52,10 @@ public class DiaryRepositoryTests {
   MyDiaryService mdService;
   @Autowired
   MemberRepository memberRepository;
-
   @Autowired
   LikeTagListRepository likeTagListRepository;
+  @Autowired
+  LikeTagListService likeTagListService;
 
   @Test
   public void insertDiaryDummies() {
@@ -141,7 +143,7 @@ public class DiaryRepositoryTests {
   @Test
   void testGetLikeTagList() {
     Member member = Member.builder().mid(1L).build();
-    List<LikeTagList> result = likeTagListRepository.getLikeTagList(member.getMid());
+    Optional<List<LikeTagList>> result = likeTagListService.getLikeTagList(member.getMid());
     log.info(result);
   }
   // @Test

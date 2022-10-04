@@ -40,9 +40,8 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class MyDiaryServiceImpl implements MyDiaryService {
   private final DiaryRepository repository;
-  private final LikeTagListRepository likeTagListRepository;
-  private final DiaryService diaryService;
   private final TagRepository tagRepository;
+  private final DiaryService diaryService;
 
   // 내가 작성한 다이어리 리스트
   @Transactional(readOnly = true)
@@ -60,91 +59,38 @@ public class MyDiaryServiceImpl implements MyDiaryService {
     return new PageResultDTO<>(result, fn);
   }
 
-  @Override
-  public PageResultDTO<DiaryDTO, Diary> getSearchMyDiaryPostList(PageRequestDTO requestDTO) {
-    Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
-    BooleanBuilder booleanBuilder = getSearchMyDiary(requestDTO);
-    Page<Diary> result = repository.findAll(booleanBuilder, pageable);
-    Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
-      @Override
-      public DiaryDTO apply(Diary t) {
-        return diaryService.entityToDTO(t);
-      }
-    };
-    return new PageResultDTO<>(result, fn);
-  }
   // 내가 쓴 글만 확인 할 수 있어야한다.
   private BooleanBuilder getMyDiaryList(PageRequestDTO requestDTO) {
+    String type = requestDTO.getType();
+    String keyword = requestDTO.getKeyword();
     String writer = requestDTO.getWriter();
+    List<String> tagList = requestDTO.getTagList();
     QDiary qDiary = QDiary.diary;
+
     log.info(writer);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.writer.eq(writer));
     booleanBuilder.and(expression);
-    return booleanBuilder;
-  }
-  private BooleanBuilder getSearchMyDiary(PageRequestDTO requestDTO) {
-    String type = requestDTO.getType();
-    String writer = requestDTO.getWriter();
-    String keyword = requestDTO.getKeyword();
-    List<String> tagList = requestDTO.getTagList();
-    QDiary qDiary = QDiary.diary;
-    BooleanBuilder booleanBuilder = new BooleanBuilder();
-    BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.writer.eq(writer));
-    booleanBuilder.and(expression);
-
+    if (type == null || type.trim().length() == 0) {
+      return booleanBuilder;
+    }
     BooleanBuilder conditionBuilder = new BooleanBuilder();
-    if (type.contains("s")) { // "t" stand for Tag
-        conditionBuilder
-                .or(qDiary.title.contains(keyword))
-                .or(qDiary.content.contains(keyword));
-        tagList.forEach(new Consumer<String>() {
-            @Override
-            public void accept(String t) {
-                Optional<Tag> temp = tagRepository.findByTagName(t);
-                if (temp.isPresent()) {
-                    conditionBuilder.and(qDiary.tagList.contains(temp.get()));
-                }
-            }
-        });
+    if (type.contains("s")) { // s : stand for Search
+      conditionBuilder
+          .or(qDiary.title.contains(keyword))
+          .or(qDiary.content.contains(keyword));
+      tagList.forEach(new Consumer<String>() {
+        @Override
+        public void accept(String t) {
+          Optional<Tag> temp = tagRepository.findByTagName(t);
+          if (temp.isPresent()) {
+            conditionBuilder.and(qDiary.tagList.contains(temp.get()));
+          }
+        }
+      });
     }
     booleanBuilder.and(conditionBuilder);
     return booleanBuilder;
-}
-
-  // 선호태그리스트
-
-  // 선호태그리스트 목록 가져오기
-  @Override
-  public List<LikeTagListDTO> LikeTagList(Long mid) {
-    List<LikeTagList> result = likeTagListRepository.getLikeTagList(mid);
-    return result.stream().map(new Function<LikeTagList, LikeTagListDTO>() {
-      @Override
-      public LikeTagListDTO apply(LikeTagList t) {
-        return likeTagListEntitytoDTO(t);
-      }
-    }).collect(Collectors.toList());
   }
-
-  // 선호태그리스트에 태그 추가 또는 삭제
-  @Override
-  public Boolean editLikeTagList(LikeTagListDTO dto) {
-    Optional<LikeTagList> checking = likeTagListRepository.checkLikeTagListByMid(dto.getMid());
-    LikeTagList entity = likeTagListDTOtoEntity(dto);
-    if (checking.isPresent()) {
-      return false; // 이미 리스트에 있으면 삭제
-    } else {
-      likeTagListRepository.save(entity);
-      return true; // 리스트에 없는 태그면
-    }
-
-  }
-
-  // 선호태그리스트에 태그 삭제
-  // @Override
-  // public void deleteLikeTagList(LikeTagListDTO dto) {
-  // LikeTagList entity = likeTagListDTOtoEntity(dto);
-  // likeTagListRepository.delete(entity);
-  // }
 
 }
