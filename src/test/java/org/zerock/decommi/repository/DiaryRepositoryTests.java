@@ -24,7 +24,6 @@ import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.Reply;
-import org.zerock.decommi.entity.member.LikeTagList;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.repository.diary.DiaryRepository;
 import org.zerock.decommi.repository.diary.ReplyRepository;
@@ -33,7 +32,6 @@ import org.zerock.decommi.repository.member.LikeTagListRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.service.diary.DiaryService;
 import org.zerock.decommi.service.diary.MyDiaryService;
-import org.zerock.decommi.service.member.LikeTagListService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -54,8 +52,6 @@ public class DiaryRepositoryTests {
   MemberRepository memberRepository;
   @Autowired
   LikeTagListRepository likeTagListRepository;
-  @Autowired
-  LikeTagListService likeTagListService;
 
   @Test
   public void insertDiaryDummies() {
@@ -140,12 +136,6 @@ public class DiaryRepositoryTests {
     log.info("Search Result :::: " + resultDTO);
   }
 
-  @Test
-  void testGetLikeTagList() {
-    Member member = Member.builder().mid(1L).build();
-    Optional<List<LikeTagList>> result = likeTagListService.getLikeTagList(member.getMid());
-    log.info(result);
-  }
   // @Test
   // public void testGetDiaryList3(){
   // SearchCondition searchCondition = new SearchCondition("1", false, null);

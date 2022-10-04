@@ -23,7 +23,6 @@ import org.zerock.decommi.dto.TagDTO;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.diary.QDiary;
-import org.zerock.decommi.entity.member.LikeTagList;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.repository.diary.DiaryRepository;
 import org.zerock.decommi.repository.diary.TagRepository;

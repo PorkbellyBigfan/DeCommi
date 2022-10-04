@@ -17,7 +17,6 @@ import org.zerock.decommi.dto.MemberDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.entity.diary.Diary;
-import org.zerock.decommi.entity.member.LikeTagList;
 import org.zerock.decommi.service.diary.DiaryService;
 import org.zerock.decommi.service.diary.MyDiaryService;
 import org.zerock.decommi.service.member.MemberService;
