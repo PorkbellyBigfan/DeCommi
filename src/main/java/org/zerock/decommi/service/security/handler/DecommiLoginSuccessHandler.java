@@ -1,4 +1,4 @@
-package org.zerock.decommi.security.handler;
+package org.zerock.decommi.service.security.handler;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.zerock.decommi.security.dto.DecommiAuthMemberDTO;
+import org.zerock.decommi.service.security.dto.DecommiAuthMemberDTO;
 
 import lombok.extern.log4j.Log4j2;
 

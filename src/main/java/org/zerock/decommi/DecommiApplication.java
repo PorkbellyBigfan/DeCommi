@@ -21,5 +21,4 @@ public class DecommiApplication {
 	public JPAQueryFactory jpaQueryFactory(EntityManager em) {
 		return new JPAQueryFactory(em);
 	}
-
 }

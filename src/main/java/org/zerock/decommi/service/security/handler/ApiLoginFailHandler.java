@@ -1,4 +1,4 @@
-package org.zerock.decommi.security.handler;
+package org.zerock.decommi.service.security.handler;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,6 +30,5 @@ public class ApiLoginFailHandler implements AuthenticationFailureHandler {
     json.put("message", message);
     PrintWriter out = response.getWriter();
     out.print(json);
-
   }
 }

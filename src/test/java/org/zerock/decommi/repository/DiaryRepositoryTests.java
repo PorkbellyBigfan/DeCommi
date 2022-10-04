@@ -1,10 +1,12 @@
 package org.zerock.decommi.repository;
 
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
@@ -21,20 +23,27 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Commit;
 import org.zerock.decommi.dto.DiaryDTO;
+import org.zerock.decommi.dto.PageRequestDTO;
+import org.zerock.decommi.dto.PageResultDTO;
+import org.zerock.decommi.dto.ReplyDTO;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.File;
 import org.zerock.decommi.entity.diary.Reply;
 // import org.zerock.decommi.entity.diary.DiaryTag;
 import org.zerock.decommi.entity.diary.Tag;
+import org.zerock.decommi.entity.member.LikeTagList;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.entity.member.MemberRole;
 import org.zerock.decommi.repository.diary.DiaryRepository;
 import org.zerock.decommi.repository.diary.ReplyRepository;
 // import org.zerock.decommi.repository.diary.DiaryTagRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
+import org.zerock.decommi.repository.member.LikeTagListRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.service.diary.DiaryService;
+import org.zerock.decommi.service.diary.MyDiaryService;
 import org.zerock.decommi.vo.DiaryPostList;
+import org.zerock.decommi.vo.SearchCondition;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -49,21 +58,29 @@ public class DiaryRepositoryTests {
   TagRepository tagRepository;
   @Autowired
   ReplyRepository replyRepository;
+  @Autowired
+  MyDiaryService mdService;
+  @Autowired
+  MemberRepository memberRepository;
+
+  @Autowired
+  LikeTagListRepository likeTagListRepository;
 
   @Test
   public void insertDiaryDummies() {
-    IntStream.rangeClosed(1, 50).forEach(i -> {
+    IntStream.rangeClosed(1, 10).forEach(i -> {
       Long mno = (long) (Math.random() * 20) + 1;
       Random randomBoolean = new Random();
-      Member member = Member.builder().email("user" + mno + "@decommi.com").id("user" + i).build();
+      Member member = Member.builder().email("user" + mno +
+          "@decommi.com").id("user" + i).build();
       Diary d = Diary.builder()
-          .title("title" + i)
+          .title("test" + i)
           .content("content" + i)
           .writer(member.getId())
           .openYN(randomBoolean.nextBoolean())
           .replyYN(randomBoolean.nextBoolean())
           .files(null)
-          .tags(null)
+          .tagList(null)
           .replyList(null)
           .build();
       repository.save(d);
@@ -74,7 +91,7 @@ public class DiaryRepositoryTests {
   @Test
   public void insertReply() {
     Diary diary = Diary.builder().dino(1L).build();
-    Member member = Member.builder().mid(4L).build();
+    Member member = Member.builder().mid(3L).build();
     Reply reply = Reply.builder()
         .dino(diary)
         .member(member)
@@ -84,14 +101,6 @@ public class DiaryRepositoryTests {
         .replyOrder(0L)
         .build();
     replyRepository.save(reply);
-  }
-
-  @Test
-  public void testGetDiaryPostByDino() {
-    Diary diary = Diary.builder().dino(1L).build();
-    DiaryDTO result = diaryService.getDiaryPostByDino(diary.getDino());
-    log.info(result);
-
   }
 
   // 댓글 등록2
@@ -117,11 +126,50 @@ public class DiaryRepositoryTests {
   // 다이어리 리스트
   @Test
   public void testGetDiaryPostList() {
-    List<DiaryPostList> result = repository.getList(Sort.by("dino").descending()).get().stream().map(v -> {
-      return new DiaryPostList(v);
-    }).collect(Collectors.toList());
+    ArrayList<String> arrList = new ArrayList<String>();
+    arrList.add("test");
+    arrList.add("1");
+    PageRequestDTO requestDTO = PageRequestDTO.builder()
+        .page(1).size(10).type("d")
+        .tagList(arrList).sort("dino").keyword("테스트").build();
+    PageResultDTO<DiaryDTO, Diary> resultDTO = diaryService.getDiaryPostList(requestDTO);
+    log.info("Search Result :::: " + resultDTO);
+  }
+
+  // 마이 다이어리 리스트
+  @Test
+  public void testGetMyDiaryPostList() {
+    ArrayList<String> arrList = new ArrayList<String>();
+    arrList.add("test");
+    arrList.add("1");
+    PageRequestDTO requestDTO = PageRequestDTO.builder()
+        .page(1).size(10).type("t")
+        .tagList(arrList).sort("dino").id("2@2.2").keyword("테스트").build();
+    PageResultDTO<DiaryDTO, Diary> resultDTO = mdService.getMyDiaryPostList(requestDTO);
+    log.info("Search Result :::: " + resultDTO);
+  }
+
+  @Test
+  void testGetLikeTagList() {
+    Member member = Member.builder().mid(1L).build();
+    List<LikeTagList> result = likeTagListRepository.getLikeTagList(member.getMid());
     log.info(result);
   }
+  // @Test
+  // public void testGetDiaryList3(){
+  // SearchCondition searchCondition = new SearchCondition("1", false, null);
+  // List<DiaryPostList> result = repository.getSearch(searchCondition);
+  // log.info(result);
+  // }
+
+  // @Test
+  // public void testGetDiaryPostList() {
+  // List<DiaryPostList> result =
+  // repository.getList(Sort.by("dino").descending()).get().stream().map(v -> {
+  // return new DiaryPostList(v);
+  // }).collect(Collectors.toList());
+  // log.info(result);
+  // }
 
   // @Test
   // @Transactional
@@ -130,4 +178,107 @@ public class DiaryRepositoryTests {
   // Page<Diary> result = repository.getDiaryListWithTagAndReply(pageable);
   // log.info(result);
   // }
+
+  // 댓글
+  @Test
+  public void fghgfdhgfhgfhgfhgh() {
+    // log.info(replyRepository.getLastestReplyGroupWhereMatchWithDino(1L));
+    Member member = Member.builder().mid(1L).build();
+    Diary diary = Diary.builder().dino(1L).build();
+    // log.info(replyRepository.findByMember(member));
+    // log.info(replyRepository.getReplyByDinoAndMid(diary,member));
+    // log.info(replyRepository.getReplyListByDino(1L));
+    log.info(replyRepository.getLastestReplyGroupWhereMatchWithDino(1L));
+  }
+
+  @Test
+  public void deleteReply() {
+    Optional<Reply> checkReply = replyRepository.getReplyByRnoAndMid(3L, 11L);
+    if (checkReply.isPresent()) {
+      System.out.println("삭제 성공공");
+    } else {
+      System.out.println("없다 댓글");
+    }
+  }
+
+  @Test
+  public void modifyReply() {
+    Optional<Reply> checkReply = replyRepository.getReplyByRnoAndMid(1L, 1L);
+    if (checkReply.isPresent()) {
+      Reply reply = checkReply.get();
+      reply.changeReplyContent("수정정정gdffd");
+      replyRepository.save(reply);
+    }
+  }
+
+  @Test
+  void commentPagingTest() {
+    Pageable pageable = PageRequest.of(0, 10);
+    Page<Reply> rPage = replyRepository.getPageList(pageable, 1L);
+    for (Reply reply : rPage) {
+      log.info(reply);
+    }
+  }
+
+  @Test
+  void registReply() {
+    Member member = Member.builder().mid(5L).build();
+    Diary diary = Diary.builder().dino(1L).build();
+    Optional<Reply> checkMember = replyRepository.getReplyByDinoAndMid(diary,
+        member);
+    if (!checkMember.isPresent()) {
+      log.info(checkMember);
+      Optional<List<Long>> lastestrg = replyRepository.getLastestReplyGroupWhereMatchWithDino(diary.getDino());
+      Long setrg = 1L;
+      if (lastestrg.get().size() != 0) {
+        setrg = lastestrg.get().get(0) + 1;
+      }
+      log.info(setrg);
+      Reply reply = Reply.builder().replyContent("sfdkjfk")
+          .replyGroup(setrg)
+          .replyDepth(0L)
+          .replyOrder(0L)
+          .build();
+      log.info(reply);
+      replyRepository.save(reply);
+
+    } else {
+      // return checkMember.get().getRno();
+    }
+
+  }
+
+  @Test
+  void addNewReply() {
+    Member member = Member.builder().mid(6L).build();
+    Diary diary = Diary.builder().dino(1L).build();
+    Reply reply = Reply.builder().dino(diary).member(member).replyGroup(1L).replyDepth(1L)
+        .replyContent("대댓글").replyOrder(0L).build();
+    replyRepository.save(reply);
+  }
+
+  @Test
+  void replyPagingTest() {
+    Pageable pageable = PageRequest.of(0, 10);
+    Page<Reply> rPage = replyRepository.getPageList(pageable, 1L);
+    for (Reply reply : rPage) {
+      log.info(reply);
+    }
+  }
+
+  @Test
+  void getReplyListByDino() {
+    Pageable pageable = PageRequest.of(0, 1);
+    Page<Reply> rPage = replyRepository.getPageList(pageable, 1L);
+    if (!rPage.isEmpty()) {
+      log.info(rPage);
+    }
+  }
 }
+
+// PageRequestDTO pageRequestDTO =
+// PageRequestDTO.builder().page(1).size(150).build();
+// PageResultDTO<HelpDTO,Help> resultDTO =
+// helpService.getQnAList(pageRequestDTO);
+// for (HelpDTO helpDTO : resultDTO.getDtoList()) {
+// System.out.println("=================" + helpDTO);

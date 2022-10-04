@@ -1,4 +1,4 @@
-package org.zerock.decommi.security.filter;
+package org.zerock.decommi.service.security.filter;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -17,8 +17,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.util.StreamUtils;
 import org.zerock.decommi.dto.ApiSessionDTO;
-import org.zerock.decommi.security.dto.DecommiAuthMemberDTO;
-import org.zerock.decommi.security.util.JWTUtil;
+import org.zerock.decommi.service.security.dto.DecommiAuthMemberDTO;
+import org.zerock.decommi.service.security.util.JWTUtil;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

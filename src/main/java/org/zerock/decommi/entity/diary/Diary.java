@@ -31,12 +31,14 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "tags", "files", "replyList" })
+@ToString(exclude = { "tagList", "files", "replyList" })
 @Table(name = "d_diary")
 public class Diary extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long dino;
+    @Column(nullable = false)
+    private String writer;
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
@@ -45,21 +47,17 @@ public class Diary extends BaseEntity {
     private boolean openYN; // 공개여부
     @Column(nullable = false)
     private boolean replyYN; // 댓글 허용여부
-    @Column(nullable = false)
-    private String writer;
 
     @Builder.Default
     @OneToMany(mappedBy = "dino", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Tag> tags = new ArrayList<>();
+    private List<Tag> tagList = new ArrayList<>();
+    
+    @Builder.Default
+    @OneToMany(mappedBy = "dino", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Reply> replyList = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "dino", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<File> files = new ArrayList<>();
 
-    @Builder.Default
-    @OneToMany(mappedBy = "dino", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Reply> replyList = new ArrayList<>();
-
-    // public void changeTitle(String title) {this.title = title;}
-    // public void changeContent(String content) { this.content = content; }
 }

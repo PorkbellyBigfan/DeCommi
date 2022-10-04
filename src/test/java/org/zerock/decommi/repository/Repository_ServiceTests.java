@@ -5,7 +5,9 @@ import static org.mockito.ArgumentMatchers.anyList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.function.Function;
 
 import javax.transaction.Transactional;
 
@@ -16,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.zerock.decommi.dto.BookmarkDTO;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.HelpDTO;
 import org.zerock.decommi.dto.MemberDTO;
@@ -27,6 +30,7 @@ import org.zerock.decommi.entity.QHelp;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.Heart;
 import org.zerock.decommi.entity.diary.Report;
+import org.zerock.decommi.entity.member.Bookmark;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.repository.diary.BookmarkRepository;
 import org.zerock.decommi.repository.diary.DiaryRepository;
@@ -53,43 +57,30 @@ import lombok.extern.log4j.Log4j2;
 public class Repository_ServiceTests {
     @Autowired
     HeartServiceImpl himpl;
-
     @Autowired
     MemberRepository memberRepository;
-
     @Autowired
     MemberService memberService;
-
     @Autowired
     ReplyRepository replyRepository;
-
     @Autowired
     DiaryRepository diaryRepository;
-
     @Autowired
     DiaryService diaryService;
-
     @Autowired
     TagRepository tagRepository;
-
     @Autowired
     HeartRepository heartRepository;
-
     @Autowired
     BookmarkRepository bookmarkRepository;
-
     @Autowired
     BookmarkService bookmarkService;
-
     @Autowired
     ReportRepository reportRepository;
-
     @Autowired
     HelpRepository helpRepository;
-
     @Autowired
     HelpService helpService;
-
 
     // MemberTests
     @Test
@@ -181,11 +172,12 @@ public class Repository_ServiceTests {
         log.info(diaryRepository.getDiaryByDinoAndId(1L, "di1"));
     }
 
-    @Test
-    public void deleteDiary() {
-        DiaryDTO dto = DiaryDTO.builder().dino(2L).writer("user2@decommi.com").build();
-        diaryService.deleteDiary(dto.getDino());
-    }
+    // @Test
+    // public void deleteDiary() {
+    // DiaryDTO dto =
+    // DiaryDTO.builder().dino(2L).writer("user2@decommi.com").build();
+    // diaryService.deleteDiary(dto.getDino());
+    // }
 
     // HeartTests
     @Test
@@ -200,6 +192,17 @@ public class Repository_ServiceTests {
     }
 
     // BookmarkTests
+    @Test
+    public void getFolderList() {
+        // List<Bookmark> result = bookmarkRepository.getFolderList(2L);
+        // for (Bookmark bookmark : result) {
+        // log.info(bookmark);
+        // }
+        Member member = Member.builder().mid(2L).build();
+        List<Bookmark> result = bookmarkRepository.getFolderList(member.getMid());
+        log.info(result);
+
+    }
 
     // ReportTests
     @Test
@@ -208,84 +211,117 @@ public class Repository_ServiceTests {
         log.info(reportRepository.checkReportLogByMemberIdAndDiaryId(1L, 1L));
     }
 
-
-    //Help
+    // Help
     @Test
-    public void insertHelp(){
-        IntStream.rangeClosed(1, 50).forEach(i->{
-            Member member = Member.builder().email("user"+ i +"@decommi.com").fromSocial(false)
-            .id("id"+1).auth(true).pw("1234").q1("q").build();
-            memberRepository.save(member);
-
-            Help help = Help.builder().content("content"+i).title("title"+i).writer(member).helpType("QnA").build();
+    public void insertHelp() {
+        IntStream.rangeClosed(1, 20).forEach(i -> {
+            Member member = Member.builder().mid(20L).build();
+            Help help = Help.builder().content("content" + i).title("title" + i).writer(member).helpType("NOTICE")
+                    .build();
             helpRepository.save(help);
         });
     }
-    
+
     @Transactional
     @Test
-    public void read(){
+    public void read() {
         log.info(helpRepository.findByhbno(1L));
     }
 
     @Test
-    public void register(){
+    public void register() {
         HelpDTO dto = HelpDTO.builder().title("어렵다").content("배개배배배백엔드드드")
-        .writer(49L).build();
-        // .roleSet("ROLE_NOTICE")
+                .writer(20L).helpType("NOTICE").build();
         helpService.register(dto);
     }
 
     @Transactional
     @Test
-    public void testRead(){
+    public void testRead() {
         Optional<Help> result = helpRepository.findById(1L);
         log.info(result);
     }
 
+    // @Test
+    // public void deleteByIdhhhh() {
+    // helpService.deleteHelp(404L);
+    // }
+
     @Test
-    public void deleteByIdhhhh(){
-         helpService.deleteHelp(404L);
+    public void modifyHelp() {
+        Optional<Help> checkHelp = helpRepository.getHelpByMid(21L, 2L);
+        if (checkHelp.isPresent()) {
+            Help help = checkHelp.get();
+            help.changContent("수정수정gggggg");
+            help.changTitle("수정정?");
+            helpRepository.save(help);
+        }
     }
 
     @Test
-    public void modifyHelp(){
-        HelpDTO dto = HelpDTO.builder().hbno(47L)
-            .title("변경경경dsfddsfgfdg").content("변경경경경dfgdfg")
-            .build();
-        helpService.modifyHelp(dto);
+    public void deleteHelp() {
+        Optional<Help> checkHelp = helpRepository.getHelpByMid(21L, 1L);
+        if (checkHelp.isPresent()) {
+            System.out.println("삭제 성공");
+        } else {
+            System.out.println("삭제 실패");
+        }
     }
 
     // @Transactional
     @Test
-    public void getNoticeList(){
+    public void getNoticeList() {
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(100).build();
-        PageResultDTO<HelpDTO,Help> resultDTO = helpService.getNoticeList(pageRequestDTO);
+        PageResultDTO<HelpDTO, Help> resultDTO = helpService.getNoticeList(pageRequestDTO);
         for (HelpDTO helpDTO : resultDTO.getDtoList()) {
             System.out.println("=================" + helpDTO);
         }
     }
 
     @Test
-    public void getFQAList(){
+    public void getFQAList() {
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(150).build();
-        PageResultDTO<HelpDTO,Help> resultDTO = helpService.getQnAList(pageRequestDTO);
+        PageResultDTO<HelpDTO, Help> resultDTO = helpService.getQnAList(pageRequestDTO);
         for (HelpDTO helpDTO : resultDTO.getDtoList()) {
             System.out.println("=================" + helpDTO);
         }
     }
 
     @Test
-    public void querydslHelp(){
-        Pageable pageable = PageRequest.of(0, 100,Sort.by("hbno").descending());
+    public void querydslHelp() {
+        Pageable pageable = PageRequest.of(0, 100, Sort.by("hbno").descending());
 
-        //동적인 쿼리를 하기위해 Q도메인필요
-        QHelp qHelp = QHelp.help; //1
+        // 동적인 쿼리를 하기위해 Q도메인필요
+        QHelp qHelp = QHelp.help; // 1
         String keyword = "1";
-        BooleanBuilder builder = new BooleanBuilder();//2 질의하기 위한 객체(BooleanBuilder)
-        BooleanExpression expression = qHelp.title.contains(keyword);//3 질의 식 ,,BooleanExpression-조건을 담기 위한 객체
+        BooleanBuilder builder = new BooleanBuilder();// 2 질의하기 위한 객체(BooleanBuilder)
+        BooleanExpression expression = qHelp.title.contains(keyword);// 3 질의 식 ,,BooleanExpression-조건을 담기 위한 객체
         builder.and(expression); // 4 객체가 and로 질의 식을 실행
         Page<Help> result = helpRepository.findAll(builder, pageable);// 5
-        result.stream().forEach(help -> {System.out.println(help);});
+        result.stream().forEach(help -> {
+            System.out.println(help);
+        });
     }
+
+    @Test
+    public void insertBookmarkDummies() {
+        IntStream.rangeClosed(1, 20).forEach(i -> {
+            Long mno = (long) (Math.random() * 20) + 1;
+            Long dino = (long) (Math.random() * 10) + 1;
+            Member writer = Member.builder().mid(mno).build();
+            Diary diary = Diary.builder().dino(dino).build();
+
+            Bookmark bookmark = Bookmark.builder()
+                    .bfolderName("folderName " + i)
+                    .mid(writer.getMid())
+                    .dino(diary.getDino())
+                    .build();
+            bookmarkRepository.save(bookmark);
+        });
+    }
+
+    // @Test
+    // public void helplog(){
+    // helpRepository.getHelpByMid(2L);
+    // }
 }

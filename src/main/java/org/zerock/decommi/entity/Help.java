@@ -39,21 +39,16 @@ public class Help extends BaseEntity {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "mid")
     private Member writer;
 
-    // @ElementCollection(fetch = FetchType.LAZY)
-    // @Builder.Default
-    // private Set<HelpRole> roleSet = new HashSet<>();
-
-    // @Enumerated(EnumType.STRING)
     private String helpType;
 
+    public void changTitle(String title) {
+        this.title = title;
+    }
 
-    // public void addHelpRole(HelpRole role) {
-    // roleSet.add(role);
-    // }
-    public void changTitle(String title){this.title=title;}
-    public void changContent(String content){this.content=content;}
+    public void changContent(String content) {
+        this.content = content;
+    }
 }
-    

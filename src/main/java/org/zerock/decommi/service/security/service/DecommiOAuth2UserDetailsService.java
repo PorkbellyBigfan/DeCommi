@@ -1,4 +1,4 @@
-package org.zerock.decommi.security.service;
+package org.zerock.decommi.service.security.service;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.entity.member.MemberRole;
 import org.zerock.decommi.repository.member.MemberRepository;
-import org.zerock.decommi.security.dto.DecommiAuthMemberDTO;
+import org.zerock.decommi.service.security.dto.DecommiAuthMemberDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

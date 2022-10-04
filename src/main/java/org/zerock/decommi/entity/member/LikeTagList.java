@@ -1,15 +1,10 @@
 package org.zerock.decommi.entity.member;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.zerock.decommi.entity.common.BaseEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,14 +18,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name = "d_bookmark")
-public class Bookmark extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bid;
-    private String bfolderName;
-
-    private Long dino;
-    private Long mid;
-
+@Table(name = "d_liketaglist")
+public class LikeTagList {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long lid; // likeTagId
+  private String tagName;
+  private Long tagId;
+  private Long mid;
 }

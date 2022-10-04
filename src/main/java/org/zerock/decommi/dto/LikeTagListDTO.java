@@ -9,10 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReportDTO {
-    private Long reid;
-    private String title;
-    private String reportContent;
-    private Long dino;
-    private Long mid;
+public class LikeTagListDTO {
+  private Long lid;
+  private String likeTagName;
+  private Long mid;
+  private Long tagId;
 }

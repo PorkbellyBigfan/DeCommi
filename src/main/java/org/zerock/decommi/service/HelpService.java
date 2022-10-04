@@ -1,10 +1,5 @@
 package org.zerock.decommi.service;
 
-import java.util.stream.Collectors;
-
-import javax.persistence.EnumType;
-
-import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.HelpDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
@@ -17,7 +12,7 @@ public interface HelpService {
     PageResultDTO<HelpDTO,Help>getQnAList(PageRequestDTO requestDTO);
     HelpDTO read (Long hbno);
     void modifyHelp (HelpDTO dto);
-    void deleteHelp(Long hbno);
+    void deleteHelp(HelpDTO dto);
 
     default Help dtoToEntity (HelpDTO dto){
         Help help = Help.builder()

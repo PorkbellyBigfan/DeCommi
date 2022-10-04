@@ -8,6 +8,8 @@ import org.zerock.decommi.dto.BookmarkDTO;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.FileDTO;
 import org.zerock.decommi.dto.HeartDTO;
+import org.zerock.decommi.dto.PageRequestDTO;
+import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.dto.ReplyDTO;
 import org.zerock.decommi.dto.ReportDTO;
 import org.zerock.decommi.dto.TagDTO;
@@ -19,44 +21,43 @@ import org.zerock.decommi.entity.diary.Report;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.member.Bookmark;
 import org.zerock.decommi.entity.member.Member;
-import org.zerock.decommi.vo.DiaryPostList;
 
 public interface DiaryService {
     // 다이어리
-    String registerDiary(DiaryDTO dto, List<String> tagList);
+    String registerDiary(DiaryDTO dto);
 
     DiaryDTO checkBeforeDiaryModify(Long dino, String id);
 
     String modifyDiary(DiaryDTO dto, List<String> tagList);
 
-    void deleteDiary(Long dino);
+    Boolean deleteDiary(DiaryDTO dto);
 
     DiaryDTO getDiaryPostByDino(Long dino);
 
-    List<DiaryPostList> getDiaryPostList();
-
-    // 검색조건 만족하는 다이어리 게시글 리스트
-    // List<Object[]> getSearchDiaryList(String search);
-
-    // 좋아요태그포함된 다이어리 게시글 리스트
-    // List<Object[]> getLikeTagDiaryList();
+    PageResultDTO<DiaryDTO, Diary> getDiaryPostList(PageRequestDTO requestDTO);
+    // 추가예정
+    // PageResultDTO<DiaryDTO, Diary> getDiaryPostListByTagName(PageRequestDTO
+    // requestDTO);
 
     // // 댓글
-    // Long registerReply(ReplyDTO dto);
-    // String modifyReply(ReplyDTO dto, String id);
-    // String deleteReply(ReplyDTO dto, String id);
-    // HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable);
-    // HashMap<String, Object> getReplyListByDinoWithId(Long dino, Pageable
-    // pageable, String id);
+    Long registerReply(ReplyDTO dto);
+
+    Long addNewReply(ReplyDTO dto); // 대댓글?
+
+    String modifyReply(ReplyDTO dto);
+
+    String deleteReply(ReplyDTO dto);
+
+    HashMap<String, Object> getReplyListByDino(Long dino, Pageable pageable);
 
     // 북마크
-    String addBookmark(BookmarkDTO dto);
+    Boolean addBookmark(BookmarkDTO dto);
 
     // 하트
-    String addHeart(HeartDTO dto);
+    Boolean addHeart(HeartDTO dto);
 
     // 신고
-    String addDiaryReport(ReportDTO dto);
+    Boolean addDiaryReport(ReportDTO dto);
 
     // 다이어리
     default Diary dtoToEntity(DiaryDTO dto) {
@@ -118,7 +119,7 @@ public interface DiaryService {
     // 댓글
     default Reply replyDTOtoEntity(ReplyDTO dto) {
         Diary diary = Diary.builder().dino(dto.getDino()).build();
-        Member member = Member.builder().id(dto.getId()).build();
+        Member member = Member.builder().mid(dto.getMid()).build();
         Reply reply = Reply.builder()
                 .rno(dto.getRno())
                 .dino(diary)
@@ -136,7 +137,7 @@ public interface DiaryService {
         ReplyDTO dto = ReplyDTO.builder()
                 .rno(reply.getRno())
                 .dino(reply.getDino().getDino())
-                .id(reply.getMember().getId())
+                .Mid(reply.getMember().getMid())
                 .replyContent(reply.getReplyContent())
                 .replyGroup(reply.getReplyGroup())
                 .replyDepth(reply.getReplyDepth())
@@ -170,6 +171,7 @@ public interface DiaryService {
     default Bookmark bookmarkDTOtoEntity(BookmarkDTO dto) {
         Bookmark entity = Bookmark.builder()
                 .dino(dto.getDino())
+//                .bfolderName(dto.getBfolderName())
                 .bid(dto.getBid())
                 .mid(dto.getMid())
                 .build();
@@ -180,6 +182,7 @@ public interface DiaryService {
     default BookmarkDTO bookmarkEntityToDto(Bookmark entity) {
         BookmarkDTO dto = BookmarkDTO.builder()
                 .dino(entity.getDino())
+//                .bfolderName(entity.getBfolderName())
                 .bid(entity.getBid())
                 .mid(entity.getMid())
                 .build();
@@ -192,6 +195,7 @@ public interface DiaryService {
         Report entity = Report.builder().reid(dto.getReid())
                 .dino(Diary.builder().dino(dto.getDino()).build())
                 .mid(Member.builder().mid(dto.getMid()).build())
+                .title(dto.getTitle())
                 .reportContent(dto.getReportContent())
                 .build();
         return entity;
@@ -202,8 +206,10 @@ public interface DiaryService {
         ReportDTO dto = ReportDTO.builder().reid(entity.getReid())
                 .dino(entity.getDino().getDino())
                 .mid(entity.getMid().getMid())
+                .title(entity.getTitle())
                 .reportContent(entity.getReportContent())
                 .build();
         return dto;
     }
+
 }
