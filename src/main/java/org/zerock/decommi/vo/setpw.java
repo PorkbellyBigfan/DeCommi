@@ -5,5 +5,6 @@ import lombok.Data;
 @Data
 public class Setpw {
     Long mid;
-    String pw;
+    String currentPw;
+    String changePw;
 }

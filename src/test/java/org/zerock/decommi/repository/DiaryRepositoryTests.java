@@ -28,6 +28,7 @@ import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.repository.diary.DiaryRepository;
 import org.zerock.decommi.repository.diary.ReplyRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
+import org.zerock.decommi.repository.member.LikeTagListRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.service.diary.DiaryService;
 import org.zerock.decommi.service.diary.MyDiaryService;
@@ -49,6 +50,8 @@ public class DiaryRepositoryTests {
   MyDiaryService mdService;
   @Autowired
   MemberRepository memberRepository;
+  @Autowired
+  LikeTagListRepository likeTagListRepository;
 
   @Test
   public void insertDiaryDummies() {
@@ -133,28 +136,17 @@ public class DiaryRepositoryTests {
     log.info("Search Result :::: " + resultDTO);
   }
 
-  // @Test
-  // public void testGetDiaryList3(){
-  // SearchCondition searchCondition = new SearchCondition("1", false, null);
-  // List<DiaryPostList> result = repository.getSearch(searchCondition);
-  // log.info(result);
-  // }
+  // 모든 태그리스트 출력
+  @Test
+  public void getAllTagList() {
+    log.info(tagRepository.getAllTagName());
+  }
 
   // @Test
-  // public void testGetDiaryPostList() {
-  // List<DiaryPostList> result =
-  // repository.getList(Sort.by("dino").descending()).get().stream().map(v -> {
-  // return new DiaryPostList(v);
-  // }).collect(Collectors.toList());
-  // log.info(result);
-  // }
+  // public void getAllLikeTagListByMid() {
+  //   Member member = Member.builder().mid(3L).build();
+  //   log.info(likeTagListRepository.getAllLikeTagListByMid(member));
 
-  // @Test
-  // @Transactional
-  // public void testGetDiaryList2() {
-  // Pageable pageable = PageRequest.of(0, 5, Sort.by("dino").descending());
-  // Page<Diary> result = repository.getDiaryListWithTagAndReply(pageable);
-  // log.info(result);
   // }
 
   // 댓글

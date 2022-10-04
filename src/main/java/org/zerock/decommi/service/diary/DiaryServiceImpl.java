@@ -228,7 +228,7 @@ public class DiaryServiceImpl implements DiaryService {
     // 댓글 등록
     @Override
     public String registerReply(ReplyDTO dto) {
-        Optional<Member> result = memberRepository.findById(dto.getMid());
+        Optional<Member> result = memberRepository.findByMid(dto.getMid());
         Optional<List<Long>> lastestrg = replyRepository.getLastestReplyGroupWhereMatchWithDino(dto.getDino());
         // rno 안쓰는 이유는 대 댓글때문임.
         Long setrg = 1L; // set ReplyGroup = rg //처음 등록된 댓글은 setrg = 1L
@@ -247,7 +247,7 @@ public class DiaryServiceImpl implements DiaryService {
     // 대댓글
     @Override
     public Long addNewReply(ReplyDTO dto) {
-        Optional<Member> result = memberRepository.findById(dto.getMid());
+        Optional<Member> result = memberRepository.findByMid(dto.getMid());
         dto.setReplyGroup(dto.getReplyGroup());
         dto.setReplyDepth(dto.getReplyDepth());
         dto.setReplyOrder(dto.getReplyOrder());
