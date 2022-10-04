@@ -42,9 +42,6 @@ import org.zerock.decommi.repository.diary.ReplyRepository;
 import org.zerock.decommi.repository.diary.ReportRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
-import org.zerock.decommi.vo.DiaryPost;
-import org.zerock.decommi.vo.DiaryPostList;
-import org.zerock.decommi.vo.SearchCondition;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -169,9 +166,23 @@ public class DiaryServiceImpl implements DiaryService {
         return dto;
     }
 
-    // @Transactional(readOnly = true)
     @Override
     public PageResultDTO<DiaryDTO, Diary> getDiaryPostList(PageRequestDTO requestDTO) {
+        Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
+        BooleanBuilder booleanBuilder = getList(requestDTO);
+        Page<Diary> result = repository.findAll(booleanBuilder, pageable);
+        log.info(result);
+        Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
+            @Override
+            public DiaryDTO apply(Diary t) {
+                return entityToDTO(t);
+            }
+        };
+        return new PageResultDTO<>(result, fn);
+    }
+
+    @Override
+    public PageResultDTO<DiaryDTO, Diary> getSearchDiaryPostList(PageRequestDTO requestDTO) {
         Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
         BooleanBuilder booleanBuilder = getSearch(requestDTO);
         Page<Diary> result = repository.findAll(booleanBuilder, pageable);
@@ -308,27 +319,60 @@ public class DiaryServiceImpl implements DiaryService {
         return null;
     }
 
+    // private BooleanBuilder getSearch(PageRequestDTO requestDTO) {
+    // String type = requestDTO.getType();
+    // String keyword = requestDTO.getKeyword();
+    // List<String> tagList = requestDTO.getTagList();
+    // QDiary qDiary = QDiary.diary;
+
+    // log.info("service class tagList ::::::" + tagList);
+    // BooleanBuilder booleanBuilder = new BooleanBuilder();
+    // BooleanExpression expression =
+    // qDiary.dino.gt(0L).and(qDiary.openYN.isTrue());
+    // booleanBuilder.and(expression);
+    // if (type == null || type.trim().length() == 0) {
+    // return booleanBuilder;
+    // }
+
+    // BooleanBuilder conditionBuilder = new BooleanBuilder();
+    // if (type.contains("s")) { // "t" stand for Tag
+    // conditionBuilder
+    // .or(qDiary.title.contains(keyword))
+    // .or(qDiary.content.contains(keyword));
+    // tagList.forEach(new Consumer<String>() {
+    // @Override
+    // public void accept(String t) {
+    // Optional<Tag> temp = tagRepository.findByTagName(t);
+    // if (temp.isPresent()) {
+    // conditionBuilder.and(qDiary.tagList.contains(temp.get()));
+    // }
+    // }
+    // });
+    // }
+    // booleanBuilder.and(conditionBuilder);
+    // return booleanBuilder;
+    // }
+    private BooleanBuilder getList(PageRequestDTO requestDTO) {
+        List<String> tagList = requestDTO.getTagList();
+        QDiary qDiary = QDiary.diary;
+        log.info("service class tagList ::::::" + tagList);
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue());
+        booleanBuilder.and(expression);
+        return booleanBuilder;
+    }
+
     private BooleanBuilder getSearch(PageRequestDTO requestDTO) {
         String type = requestDTO.getType();
         String keyword = requestDTO.getKeyword();
         List<String> tagList = requestDTO.getTagList();
         QDiary qDiary = QDiary.diary;
-
-        log.info("service class tagList ::::::" + tagList);
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue());
         booleanBuilder.and(expression);
-        if (type == null || type.trim().length() == 0) {
-            return booleanBuilder;
-        }
 
         BooleanBuilder conditionBuilder = new BooleanBuilder();
-        if (type.contains("d")) {
-            // conditionBuilder
-            // .or(qDiary.title.contains(keyword))
-            // .or(qDiary.content.contains(keyword));
-        }
-        if (type.contains("t")) { // "t" stand for Tag
+        if (type.contains("s")) { // "t" stand for Tag
             conditionBuilder
                     .or(qDiary.title.contains(keyword))
                     .or(qDiary.content.contains(keyword));

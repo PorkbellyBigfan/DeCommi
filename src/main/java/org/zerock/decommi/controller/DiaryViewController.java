@@ -22,8 +22,6 @@ import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.service.diary.DiaryService;
-import org.zerock.decommi.vo.DiaryPostList;
-import org.zerock.decommi.vo.SearchCondition;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -35,22 +33,15 @@ import lombok.extern.log4j.Log4j2;
 public class DiaryViewController {
   private final DiaryService diaryService;
 
+
+  // getDiaryList 와 getSearchDiaryList로 나뉨
   @RequestMapping(value = "/list", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<DiaryDTO>> getDiaryList(@ModelAttribute PageRequestDTO dto) {
-    // <String> type : null 값이면 검색조건없이 모든 게시글 리스트 반환,
-    // <String> type : 's'를 보내주면 검색조건 결과 만족하는 리스트 반환
-    // <String> keyword : 검색문자열 title, 또는 content에 해당 문자열이 들어있는 결과 리스트 반환
-    // <String> keyword : 없을시 반환안함.
-    // List<String> tagList : 게시글에 해당 태그가 포함된 결과반환 여러개가 될 수 있고 하나가 될 수 있다. 해당 태그가
-    // 하나라도 존재하는 결과 반환
-    //
-    log.info("Controller 프론트에서 보내주는 검색조건 dto:::::" + dto);
+  public ResponseEntity<List<DiaryDTO>> getDiaryList(@RequestBody PageRequestDTO dto) {
+    log.info("Controller dto:::::" + dto);
     log.info("controller dto tagList : " + dto.getTagList());
     log.info("controller dto type : " + dto.getType());
     log.info("controller dto keyword : " + dto.getKeyword());
-    PageRequestDTO.builder().page(dto.getPage()).size(5).type(dto.getType()).keyword(dto.getKeyword())
-        .tagList(dto.getTagList())
-        .build();
+    PageRequestDTO.builder().page(dto.getPage()).size(5).build();
     PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostList(dto);
     return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
   }
@@ -68,10 +59,9 @@ public class DiaryViewController {
     log.info("controller dto tagList : " + dto.getTagList());
     log.info("controller dto type : " + dto.getType());
     log.info("controller dto keyword : " + dto.getKeyword());
-    PageRequestDTO.builder().page(dto.getPage()).size(5).type(dto.getType()).keyword(dto.getKeyword())
-        .tagList(dto.getTagList())
-        .build();
-    PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostList(dto);
+    PageRequestDTO.builder().page(dto.getPage()).size(5)
+        .type(dto.getType()).keyword(dto.getKeyword()).tagList(dto.getTagList()).build();
+    PageResultDTO<DiaryDTO, Diary> result = diaryService.getSearchDiaryPostList(dto);
     return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
   }
 

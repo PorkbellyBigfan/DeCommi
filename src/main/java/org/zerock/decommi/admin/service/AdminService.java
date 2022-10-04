@@ -22,7 +22,7 @@ public interface AdminService {
     Boolean UserDeleter(MemberDTO dto);
 
     // 태그 관리
-    List<String> getTag(Long tagId);
+    // List<String> getTag(Long tagId);
 
     Boolean tagModify(TagDTO dto);
 
