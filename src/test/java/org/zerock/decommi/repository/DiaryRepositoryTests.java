@@ -28,7 +28,6 @@ import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.repository.diary.DiaryRepository;
 import org.zerock.decommi.repository.diary.ReplyRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
-import org.zerock.decommi.repository.member.LikeTagListRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.service.diary.DiaryService;
 import org.zerock.decommi.service.diary.MyDiaryService;
@@ -50,8 +49,6 @@ public class DiaryRepositoryTests {
   MyDiaryService mdService;
   @Autowired
   MemberRepository memberRepository;
-  @Autowired
-  LikeTagListRepository likeTagListRepository;
 
   @Test
   public void insertDiaryDummies() {

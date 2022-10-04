@@ -26,7 +26,6 @@ import org.zerock.decommi.entity.diary.QDiary;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.repository.diary.DiaryRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
-import org.zerock.decommi.repository.member.LikeTagListRepository;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;

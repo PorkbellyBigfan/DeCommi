@@ -18,9 +18,7 @@ import org.zerock.decommi.dto.LikeTagListDTO;
 import org.zerock.decommi.dto.MemberDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
-import org.zerock.decommi.entity.member.LikeTagList;
 import org.zerock.decommi.entity.member.Member;
-import org.zerock.decommi.service.member.LikeTagListService;
 import org.zerock.decommi.service.member.MemberService;
 import org.zerock.decommi.vo.Findpw;
 import org.zerock.decommi.vo.Setpw;
@@ -34,7 +32,6 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class MemberApiController {
   private final MemberService service;
-  private final LikeTagListService likeTagListService;
 
   // 회원가입
   @RequestMapping(value = "/signup", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,7 +40,7 @@ public class MemberApiController {
     String email = service.signUp(dto);
     return new ResponseEntity<>(email, HttpStatus.OK);
   }
-  
+
   @RequestMapping(value = "/getAuth", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Map<String, Object>> getAuth(@RequestBody Map<String, Object> mapObj,
       @RequestHeader("token") String token) {
@@ -66,37 +63,39 @@ public class MemberApiController {
     return new ResponseEntity<Map<String, Long>>(mapForResult, HttpStatus.OK);
   }
 
-  //회원정보수정 눌렀을때 비밀번호를 확인(입력한 비밀번호가 DB에 저장되어있는 회원의 비밀번호와 일치하는지)
+  // 회원정보수정 눌렀을때 비밀번호를 확인(입력한 비밀번호가 DB에 저장되어있는 회원의 비밀번호와 일치하는지)
   @RequestMapping(value = "/checkpw", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Boolean>pwCheck(@RequestBody MemberDTO dto){
-    //email : 현재 로그인하고있는 회원의 email
-    //pw    : 회원정보수정 눌렀을때 사용자가 입력한 비밀번호 
+  public ResponseEntity<Boolean> pwCheck(@RequestBody MemberDTO dto) {
+    // email : 현재 로그인하고있는 회원의 email
+    // pw : 회원정보수정 눌렀을때 사용자가 입력한 비밀번호
     String email = dto.getEmail();
     String pw = dto.getPw();
-    //사용자가 입력한 비밀번호가 해당 계정의 암호화되어있는 비밀번호와 일치하는 지 확인하는 매서드
-    //일치하면 true 반환 , 일치하지 않을시 false 반환
-    Boolean result = service.pwCheck(email, pw); 
+    // 사용자가 입력한 비밀번호가 해당 계정의 암호화되어있는 비밀번호와 일치하는 지 확인하는 매서드
+    // 일치하면 true 반환 , 일치하지 않을시 false 반환
+    Boolean result = service.pwCheck(email, pw);
     return new ResponseEntity<Boolean>(result, HttpStatus.OK);
   }
-  //비밀번호 재설정
-  @RequestMapping(value = "/setpw", method = RequestMethod.POST,consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Boolean> setpw(@RequestBody Setpw vo){
+
+  // 비밀번호 재설정
+  @RequestMapping(value = "/setpw", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Boolean> setpw(@RequestBody Setpw vo) {
     log.info(vo);
     return new ResponseEntity<>(service.changePw(vo), HttpStatus.OK);
   }
-  
-  //로그인시 이메일 까먹었을때
-  @RequestMapping(value ="findemail", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Boolean> findemail(@RequestBody MemberDTO email){
+
+  // 로그인시 이메일 까먹었을때
+  @RequestMapping(value = "findemail", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Boolean> findemail(@RequestBody MemberDTO email) {
     log.info(email);
     return new ResponseEntity<>(service.findEmail(email), HttpStatus.OK);
   }
-  //로그인시 비밀번호 까먹었을때
-  @RequestMapping(value = "/findpw", method = RequestMethod.POST,consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Long> findpw(@RequestBody Findpw vo){
+
+  // 로그인시 비밀번호 까먹었을때
+  @RequestMapping(value = "/findpw", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Long> findpw(@RequestBody Findpw vo) {
     log.info(vo);
     log.info(service.findPw(vo));
     return new ResponseEntity<>(service.findPw(vo), HttpStatus.OK);
   }
-  
+
 }
