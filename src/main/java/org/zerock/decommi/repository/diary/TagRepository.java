@@ -36,7 +36,7 @@ public interface TagRepository extends JpaRepository<Tag, Long>, QuerydslPredica
   @Query("select t.tagName from Tag t where diary_dino=:dino")
   Optional<List<String>> OptionalfindByDiarys(Long dino);
 
-  // @Query("select tag_name from Tag t where tag_id=:tag_id")
-  // Optional<Tag> getTagNameByTagId(Long tagId);
+  @Query("select t.tagName from Tag t where t.tagName =:tagname ")
+  Optional<String> checkTagName(String tagName);
 
 }

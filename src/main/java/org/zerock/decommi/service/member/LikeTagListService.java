@@ -29,7 +29,6 @@ public interface LikeTagListService {
     LikeTagList likeTagList = LikeTagList.builder()
         .lid(dto.getLid())
         .mid(dto.getMid())
-        .tagId(dto.getTagId())
         .tagName(dto.getTagName())
         .build();
     return likeTagList;

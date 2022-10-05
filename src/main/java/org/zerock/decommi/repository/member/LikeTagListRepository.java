@@ -16,7 +16,7 @@ public interface LikeTagListRepository extends JpaRepository<LikeTagList, Long> 
   LikeTagList getByMid(Long mid);
 
   @Query("select l from LikeTagList l where mid=:mid ")
-  Optional<List<LikeTagList>>checkLikeTagListByMid(Long mid);
+  Optional<LikeTagList>checkLikeTagListByMidAndLid(Long mid, Long lid);
 
   @Query("select l from LikeTagList l where mid=:mid ")
   Optional<List<LikeTagList>> getLikeTagList(Long mid);
