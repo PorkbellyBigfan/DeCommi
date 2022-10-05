@@ -36,8 +36,7 @@ public interface DiaryService {
 
     PageResultDTO<DiaryDTO, Diary> getDiaryPostList(PageRequestDTO requestDTO);
     // 추가예정
-    // PageResultDTO<DiaryDTO, Diary> getDiaryPostListByTagName(PageRequestDTO
-    // requestDTO);
+    PageResultDTO<DiaryDTO, Diary> getDiaryPostListByTagName(PageRequestDTO requestDTO, String tagName);
     
     String registerReply(ReplyDTO dto);
 
