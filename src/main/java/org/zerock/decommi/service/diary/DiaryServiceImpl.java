@@ -293,10 +293,6 @@ public class DiaryServiceImpl implements DiaryService {
         Optional<Reply> checkReply = replyRepository.getReplyByRnoAndMid(dto.getRno(), dto.getMid());
         log.info("service checkReply ======================================="+checkReply);
         if (checkReply.isPresent()) {
-<<<<<<< HEAD
-=======
-        
->>>>>>> 099b90bb0146ea7debc32e294db22c7d098aba22
             replyRepository.delete(checkReply.get());
             return "Deleted Successfully";
         } else {
