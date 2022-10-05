@@ -140,12 +140,6 @@ public class DiaryRepositoryTests {
     log.info("Search Result :::: " + resultDTO);
   }
 
-  @Test
-  void testGetLikeTagList() {
-    Member member = Member.builder().mid(1L).build();
-    Optional<List<LikeTagList>> result = likeTagListService.getLikeTagList(member.getMid());
-    log.info(result);
-  }
   // @Test
   // public void testGetDiaryList3(){
   // SearchCondition searchCondition = new SearchCondition("1", false, null);
