@@ -211,7 +211,6 @@ public class DiaryServiceImpl implements DiaryService {
             bookmarkRepository.save(entity);
             return true;
         }
-
     }
 
     // 신고

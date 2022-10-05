@@ -208,7 +208,7 @@ public class Repository_ServiceTests {
 
     @Test
     public void getListDino() {
-        log.info(bookmarkRepository.getList(2L, "folderName6"));
+        log.info(bookmarkRepository.getBookmarList(2L, "folderName6"));
     }
 
     // @Test
