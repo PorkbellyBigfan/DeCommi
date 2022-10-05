@@ -38,8 +38,13 @@ public class LikeTagListServiceImpl implements LikeTagListService {
   @Override
   public Boolean addLikeTagList(LikeTagListDTO dto) {
     LikeTagList result = dtoToEntity(dto);
+    likeTagListRepository.save(result);
+    log.info(result);
     Optional<List<LikeTagList>> checking = likeTagListRepository.checkLikeTagListByMid(dto.getMid());
-    log.info(checking);
+    if(checking.isPresent()){
+      log.info("checking is present result ::::"+result);
+      log.info("checking"+checking);
+    }
     return true;
   }
   
