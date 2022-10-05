@@ -24,40 +24,36 @@ import lombok.extern.log4j.Log4j2;
 public class LikeTagListServiceImpl implements LikeTagListService {
   private final LikeTagListRepository likeTagListRepository;
   private final TagRepository tagRepository;
-  private final MemberRepository memberRepository;
 
-  // @Override
-  // public Optional<List<LikeTagList>> getLikeTagList(Long mid) {
-  //   // TODO Auto-generated method stub
-  //   return null;
-  // }
+
   @Override
-  public Optional<List<LikeTagList>> getLikeTagList(Long mid) {
-    Optional<List<LikeTagList>> result = likeTagListRepository.getLikeTagList(mid);
-    return result;
+  public Optional<List<String>> getLikeTagList(Long mid) {
+    Optional<List<String>> result = likeTagListRepository.getLikeTagList(mid);
+    if(result.isPresent()){
+      return result;
+    }else{
+      return null;
+    }
   }
+
+
   // 선호태그리스트에 태그 추가 또는 삭제
-  @Override
-  public Boolean addLikeTagList(LikeTagListDTO dto) {
+  // @Override
+  // public Boolean editLikeTagList(LikeTagListDTO dto) {
+  //   Optional<LikeTagList> checkLikeTagList = likeTagListRepository.checkLikeTagListByMidAndLid(dto.getMid(), dto.getLid());
+  //   LikeTagList entity = dtoToEntity(dto);
+  //   if(checkLikeTagList.isPresent()){
+  //     likeTagListRepository.delete(checkLikeTagList.get());
+  //     return false;
+  //   }else{
+  //     if(tagRepository.checkTagName(dto.getTagName()).isPresent()){
+  //       dto.setTagName(dto.getTagName());
+  //       likeTagListRepository.save(entity);
+  //       return true;
+  //     }else{
+  //       return false;
+  //     }
+  //   }
+  // }
 
-    Optional<LikeTagList> checkLikeTagList = likeTagListRepository.checkLikeTagListByMidAndLid(dto.getMid(), dto.getLid());
-    LikeTagList entity = dtoToEntity(dto);
-    if(checkLikeTagList.isPresent()){
-      likeTagListRepository.delete(checkLikeTagList.get());
-      return false;
-    }else{
-      likeTagListRepository.save(entity);
-    }
-
-
-
-    if(tagRepository.checkTagName(dto.getTagName()).isPresent()){
-      dto.setTagName(dto.getTagName());
-    }else{
-      return false;
-    }
-    
-    return true;
-  }
-  
 }
