@@ -24,19 +24,21 @@ import lombok.extern.log4j.Log4j2;
 public class LikeTagListServiceImpl implements LikeTagListService {
   private final LikeTagListRepository likeTagListRepository;
   private final TagRepository tagRepository;
-  private final MemberRepository memberRepository;
 
-  // @Override
-  // public Optional<List<LikeTagList>> getLikeTagList(Long mid) {
-  //   // TODO Auto-generated method stub
-  //   return null;
-  // }
+
   @Override
-  public Optional<List<LikeTagList>> getLikeTagList(Long mid) {
-    Optional<List<LikeTagList>> result = likeTagListRepository.getLikeTagList(mid);
-    return result;
+  public Optional<List<String>> getLikeTagList(Long mid) {
+    Optional<List<String>> result = likeTagListRepository.getLikeTagList(mid);
+    if(result.isPresent()){
+      return result;
+    }else{
+      return null;
+    }
   }
+
+
   // 선호태그리스트에 태그 추가 또는 삭제
+<<<<<<< HEAD
   // @Override
   // public Boolean addLikeTagList(LikeTagListDTO dto) {
 
@@ -60,4 +62,24 @@ public class LikeTagListServiceImpl implements LikeTagListService {
     // return true;
   // }
   
+=======
+  @Override
+  public Boolean editLikeTagList(LikeTagListDTO dto) {
+    Optional<List<LikeTagList>> checkLikeTagList = likeTagListRepository.checkLikeTagListByMidAndLid(dto.getMid());
+    LikeTagList entity = dtoToEntity(dto);
+    dto.setTagName(dto.getTagName());
+    if(checkLikeTagList.isPresent()){
+      likeTagListRepository.deleteAll(checkLikeTagList.get());
+      return false;
+    }else{
+      if(tagRepository.checkTagName(dto.getTagName()).isPresent()){
+        likeTagListRepository.save(entity);
+        return true;
+      }else{
+        return false;
+      }
+    }
+  }
+
+>>>>>>> 099b90bb0146ea7debc32e294db22c7d098aba22
 }

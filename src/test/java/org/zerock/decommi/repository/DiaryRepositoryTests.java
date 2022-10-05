@@ -253,17 +253,12 @@ public class DiaryRepositoryTests {
 
   @Test
   void testEditLikeTagList(){
-    Member member = Member.builder().mid(13L).build();
-    LikeTagListDTO dto = LikeTagListDTO.builder().mid(member.getMid()).tagName("test").build();
-    log.info(likeTagListService.addLikeTagList(dto));
+    
+  }
+  @Test
+  void testGetLikeTagList(){
+    log.info(likeTagListService.getLikeTagList(1L));
   }
 
 
 }
-
-// PageRequestDTO pageRequestDTO =
-// PageRequestDTO.builder().page(1).size(150).build();
-// PageResultDTO<HelpDTO,Help> resultDTO =
-// helpService.getQnAList(pageRequestDTO);
-// for (HelpDTO helpDTO : resultDTO.getDtoList()) {
-// System.out.println("=================" + helpDTO);
