@@ -256,7 +256,7 @@ public class DiaryServiceImpl implements DiaryService {
     public Long addNewReply(ReplyDTO dto) {
         Optional<Member> result = memberRepository.findByMid(dto.getMid());
         dto.setReplyGroup(dto.getReplyGroup());
-        dto.setReplyDepth(1L);
+        dto.setReplyDepth(dto.getReplyDepth());
         dto.setReplyOrder(dto.getReplyOrder());
         dto.setMid(result.get().getMid());
         Reply entity = replyDTOtoEntity(dto);
@@ -287,10 +287,12 @@ public class DiaryServiceImpl implements DiaryService {
 
     // 댓글 삭제
     @Override
+    @Transactional
     public String deleteReply(ReplyDTO dto) {
+        log.info("service dto --=-----------------------" + dto);
         Optional<Reply> checkReply = replyRepository.getReplyByRnoAndMid(dto.getRno(), dto.getMid());
+        log.info("service checkReply ======================================="+checkReply);
         if (checkReply.isPresent()) {
-            
             replyRepository.delete(checkReply.get());
             return "Deleted Successfully";
         } else {

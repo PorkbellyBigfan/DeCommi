@@ -86,7 +86,7 @@ public class DiaryApiController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> deleteDiary(@RequestBody DiaryDTO dto) {
-        // log.info("controller ::: delete ::::: "+dto);
+        log.info("controller ::: delete ::::: "+dto);
         return new ResponseEntity<>(diaryService.deleteDiary(dto), HttpStatus.OK);
     }
 
