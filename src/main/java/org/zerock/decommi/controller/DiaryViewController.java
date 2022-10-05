@@ -54,8 +54,10 @@ public class DiaryViewController {
         .tagList(dto.getTagList())
         .build();
     PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostList(dto);
+    log.info(result);
     result.getDtoList().forEach(v -> {
       log.info(v.getTitle());
+      log.info(v);
     });
     return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
   }
