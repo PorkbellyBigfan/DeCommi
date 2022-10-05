@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LikeTagListDTO {
   private Long lid;
-  private String likeTagName;
+  private String tagName;
   private Long mid;
   private Long tagId;
 }

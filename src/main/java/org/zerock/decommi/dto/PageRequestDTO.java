@@ -24,7 +24,7 @@ public class PageRequestDTO { // which page, 어떤 페이지를 요청
 
   public PageRequestDTO() {
     page = 1;
-    size = 10;
+    size = 5;
   }
 
   public Pageable getPageable(Sort sort) {

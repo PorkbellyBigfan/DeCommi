@@ -43,11 +43,11 @@ public class Member extends BaseEntity {
     private String pw;
     @Column(nullable = false)
     private String email;
-    @Column
+    @Column(nullable = false)
     private String q1;
-    @Column
+    @Column(nullable = false)
     private String q2;
-    @Column
+    @Column(nullable = false)
     private String q3;
     @Column
     private boolean auth;
