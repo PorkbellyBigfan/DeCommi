@@ -287,10 +287,11 @@ public class DiaryServiceImpl implements DiaryService {
 
     // 댓글 삭제
     @Override
+    @Transactional
     public String deleteReply(ReplyDTO dto) {
         Optional<Reply> checkReply = replyRepository.getReplyByRnoAndMid(dto.getRno(), dto.getMid());
         if (checkReply.isPresent()) {
-            
+        
             replyRepository.delete(checkReply.get());
             return "Deleted Successfully";
         } else {

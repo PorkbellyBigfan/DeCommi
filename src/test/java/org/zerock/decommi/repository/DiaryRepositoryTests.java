@@ -262,10 +262,3 @@ public class DiaryRepositoryTests {
 
 
 }
-
-// PageRequestDTO pageRequestDTO =
-// PageRequestDTO.builder().page(1).size(150).build();
-// PageResultDTO<HelpDTO,Help> resultDTO =
-// helpService.getQnAList(pageRequestDTO);
-// for (HelpDTO helpDTO : resultDTO.getDtoList()) {
-// System.out.println("=================" + helpDTO);

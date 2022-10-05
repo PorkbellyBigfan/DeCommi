@@ -38,22 +38,22 @@ public class LikeTagListServiceImpl implements LikeTagListService {
 
 
   // 선호태그리스트에 태그 추가 또는 삭제
-  // @Override
-  // public Boolean editLikeTagList(LikeTagListDTO dto) {
-  //   Optional<LikeTagList> checkLikeTagList = likeTagListRepository.checkLikeTagListByMidAndLid(dto.getMid(), dto.getLid());
-  //   LikeTagList entity = dtoToEntity(dto);
-  //   if(checkLikeTagList.isPresent()){
-  //     likeTagListRepository.delete(checkLikeTagList.get());
-  //     return false;
-  //   }else{
-  //     if(tagRepository.checkTagName(dto.getTagName()).isPresent()){
-  //       dto.setTagName(dto.getTagName());
-  //       likeTagListRepository.save(entity);
-  //       return true;
-  //     }else{
-  //       return false;
-  //     }
-  //   }
-  // }
+  @Override
+  public Boolean editLikeTagList(LikeTagListDTO dto) {
+    Optional<List<LikeTagList>> checkLikeTagList = likeTagListRepository.checkLikeTagListByMidAndLid(dto.getMid());
+    LikeTagList entity = dtoToEntity(dto);
+    dto.setTagName(dto.getTagName());
+    if(checkLikeTagList.isPresent()){
+      likeTagListRepository.deleteAll(checkLikeTagList.get());
+      return false;
+    }else{
+      if(tagRepository.checkTagName(dto.getTagName()).isPresent()){
+        likeTagListRepository.save(entity);
+        return true;
+      }else{
+        return false;
+      }
+    }
+  }
 
 }

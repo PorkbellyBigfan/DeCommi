@@ -5,6 +5,7 @@ import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.entity.diary.Diary;
+import org.zerock.decommi.entity.member.LikeTagList;
 import org.zerock.decommi.service.diary.DiaryService;
 
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,7 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class DiaryViewController {
   private final DiaryService diaryService;
+
 
 
   @RequestMapping(value = "/list", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

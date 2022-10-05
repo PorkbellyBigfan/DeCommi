@@ -24,6 +24,5 @@ public class LikeTagList {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long lid; // likeTagId
   private String tagName;
-  private Long tagId;
   private Long mid;
 }

@@ -19,6 +19,7 @@ import org.zerock.decommi.dto.MemberDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.entity.member.Member;
+import org.zerock.decommi.service.member.LikeTagListService;
 import org.zerock.decommi.service.member.MemberService;
 import org.zerock.decommi.vo.Findpw;
 import org.zerock.decommi.vo.Setpw;
@@ -32,6 +33,7 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class MemberApiController {
   private final MemberService service;
+  private final LikeTagListService likeTagListService;
 
   // 회원가입
   @RequestMapping(value = "/signup", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -100,5 +102,15 @@ public class MemberApiController {
     return new ResponseEntity<>(service.findPw(vo), HttpStatus.OK);
   }
 
-  
+
+  //선호태그 리스트 출력
+  @RequestMapping(value = "/liketaglist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Optional<List<String>>> getLikeTagList(@RequestBody Long mid){
+    return new ResponseEntity<>(likeTagListService.getLikeTagList(mid), HttpStatus.OK);
+  }
+  //선호태그 변경
+  @RequestMapping(value = "/editliketaglist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Boolean> reportingDiary(@RequestBody LikeTagListDTO dto) {
+    return new ResponseEntity<>(likeTagListService.editLikeTagList(dto), HttpStatus.OK);
+  }
 }
