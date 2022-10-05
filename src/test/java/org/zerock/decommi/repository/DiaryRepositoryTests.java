@@ -251,12 +251,12 @@ public class DiaryRepositoryTests {
     }
   }
 
-  @Test
-  void testEditLikeTagList(){
-    Member member = Member.builder().mid(13L).build();
-    LikeTagListDTO dto = LikeTagListDTO.builder().mid(member.getMid()).tagName("test").build();
-    likeTagListService.editLikeTagList(dto);
-  }
+  // @Test
+  // void testEditLikeTagList(){
+  //   Member member = Member.builder().mid(13L).build();
+  //   LikeTagListDTO dto = LikeTagListDTO.builder().mid(member.getMid()).tagName("test").build();
+  //   likeTagListService.editLikeTagList(dto);
+  // }
 
 
 }

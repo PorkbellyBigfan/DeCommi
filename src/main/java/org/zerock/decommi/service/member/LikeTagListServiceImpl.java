@@ -22,7 +22,6 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class LikeTagListServiceImpl implements LikeTagListService {
   private final LikeTagListRepository likeTagListRepository;
-  private final LikeTagListService likeTagListService;
   private final MemberRepository memberRepository;
 
   // @Override
@@ -33,10 +32,9 @@ public class LikeTagListServiceImpl implements LikeTagListService {
 
   // 선호태그리스트에 태그 추가 또는 삭제
   @Override
-  public Boolean editLikeTagList(LikeTagListDTO dto) {
-    Optional<Member> mid = memberRepository.findByMid(dto.getMid());
-    log.info(mid);
-    Optional<List<LikeTagList>> checking = likeTagListRepository.checkLikeTagListByMid(mid.get().getMid());
+  public Boolean addLikeTagList(LikeTagListDTO dto) {
+    LikeTagList result = dtoToEntity(dto);
+    Optional<List<LikeTagList>> checking = likeTagListRepository.checkLikeTagListByMid(dto.getMid());
     log.info(checking);
     return true;
   }
