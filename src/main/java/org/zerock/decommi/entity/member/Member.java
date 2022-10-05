@@ -43,11 +43,11 @@ public class Member extends BaseEntity {
     private String pw;
     @Column(nullable = false)
     private String email;
-    @Column(nullable = false)
+
     private String q1;
-    @Column(nullable = false)
+
     private String q2;
-    @Column(nullable = false)
+
     private String q3;
     @Column
     private boolean auth;
@@ -68,7 +68,7 @@ public class Member extends BaseEntity {
     }
 
     // public void changePw(String pw) {
-    //     this.pw = pw;
+    // this.pw = pw;
     // }
 
 }

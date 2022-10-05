@@ -42,7 +42,6 @@ public class MemberServiceImpl implements MemberService {
     return dto;
   }
 
-
   @Override
   public MemberDTO getMemberDTO(String email) {
     MemberDTO dto = entityToDTO(repository.getReferenceById(email));
@@ -53,8 +52,10 @@ public class MemberServiceImpl implements MemberService {
   @Transactional
   @Override
   public String signUp(MemberDTO dto) {
+    log.info("service class 사용자가 입력한 dto" + dto);
     dto.setPw(encoder.encode(dto.getPw()));
     Member member = dtoToEntity(dto);
+    log.info("service class 사용자가 입력한 dto가 변환된 member entity" + member);
     repository.save(member);
     return member.getEmail();
   }
@@ -92,6 +93,7 @@ public class MemberServiceImpl implements MemberService {
     }
     return true;
   }
+
   @Override
   public Long findPw(Findpw vo) {
     Long result = repository.findMidByEmailAndQ(vo.getEmail(), vo.getQ1(), vo.getQ2(), vo.getQ3());
@@ -101,15 +103,16 @@ public class MemberServiceImpl implements MemberService {
       return result;
     }
   }
+
   @Override
   public Boolean changePw(Setpw vo) {
     Optional<Member> member = repository.findByMid(vo.getMid());
-    log.info("service member :::"+member);
-    log.info("service ::: "+vo);
-    if(encoder.matches(vo.getCurrentPw(), member.get().getPw())){
+    log.info("service member :::" + member);
+    log.info("service ::: " + vo);
+    if (encoder.matches(vo.getCurrentPw(), member.get().getPw())) {
       repository.changePwByMid(vo.getMid(), encoder.encode(vo.getChangePw()));
       return true;
-    }else{
+    } else {
       return false;
     }
   }
@@ -117,9 +120,9 @@ public class MemberServiceImpl implements MemberService {
   @Override
   public Boolean pwCheck(String email, String pw) {
     Optional<Member> member = repository.findByEmail(email);
-    if(encoder.matches(pw, member.get().getPw())){
+    if (encoder.matches(pw, member.get().getPw())) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
