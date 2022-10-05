@@ -29,7 +29,11 @@ public class LikeTagListServiceImpl implements LikeTagListService {
   //   // TODO Auto-generated method stub
   //   return null;
   // }
-
+  @Override
+  public Optional<List<LikeTagList>> getLikeTagList(Long mid) {
+    Optional<List<LikeTagList>> result = likeTagListRepository.getLikeTagList(mid);
+    return result;
+  }
   // 선호태그리스트에 태그 추가 또는 삭제
   @Override
   public Boolean addLikeTagList(LikeTagListDTO dto) {

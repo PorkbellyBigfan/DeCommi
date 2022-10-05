@@ -43,6 +43,6 @@ public interface MemberRepository extends JpaRepository<Member, String> {
   @Transactional
   @Modifying(clearAutomatically = true)
   @Query("update Member m set m.pw=:pw where m.mid=:mid")
-  Long changePwByMid(Long mid, String pw);
+  int changePwByMid(Long mid, String pw);
 
 }

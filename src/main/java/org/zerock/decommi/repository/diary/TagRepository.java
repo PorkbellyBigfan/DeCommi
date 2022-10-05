@@ -22,6 +22,9 @@ public interface TagRepository extends JpaRepository<Tag, Long>, QuerydslPredica
 
   Optional<Tag> findByTagName(String tagName);
 
+  @Query("select distinct(t.tagId) from Tag t where t.tagName=:tagName ")
+  Optional<Long> findTagIdByTagName(String tagName);
+
   // 게시글번호와 태그이름을 찾음
   Optional<Tag> findByDinoAndTagName(Diary dino, String tagName);
 

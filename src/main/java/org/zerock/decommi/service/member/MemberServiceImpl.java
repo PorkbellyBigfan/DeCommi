@@ -104,6 +104,8 @@ public class MemberServiceImpl implements MemberService {
   @Override
   public Boolean changePw(Setpw vo) {
     Optional<Member> member = repository.findByMid(vo.getMid());
+    log.info("service member :::"+member);
+    log.info("service ::: "+vo);
     if(encoder.matches(vo.getCurrentPw(), member.get().getPw())){
       repository.changePwByMid(vo.getMid(), encoder.encode(vo.getChangePw()));
       return true;

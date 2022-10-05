@@ -1,6 +1,7 @@
 package org.zerock.decommi.service.member;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.zerock.decommi.dto.LikeTagListDTO;
 import org.zerock.decommi.entity.member.LikeTagList;
@@ -21,6 +22,7 @@ public interface LikeTagListService {
   // 추가의 경우 문제가 생길 것 같다. 태그 테이블(DB)에 존재하지 않는 태그를 선호태그로 추가하려는 걸 막을 수 없다.
 
   Boolean addLikeTagList(LikeTagListDTO dto);
+  Optional<List<LikeTagList>>getLikeTagList(Long mid);
 
   // 선호태그리스트
   default LikeTagList dtoToEntity(LikeTagListDTO dto) {

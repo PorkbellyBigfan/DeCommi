@@ -73,13 +73,15 @@ public class MemberApiController {
     // 사용자가 입력한 비밀번호가 해당 계정의 암호화되어있는 비밀번호와 일치하는 지 확인하는 매서드
     // 일치하면 true 반환 , 일치하지 않을시 false 반환
     Boolean result = service.pwCheck(email, pw);
+    log.info("service checkpw :::: "+dto);
+    log.info("service checkpw result ::"+result);
     return new ResponseEntity<Boolean>(result, HttpStatus.OK);
   }
 
   // 비밀번호 재설정
   @RequestMapping(value = "/setpw", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Boolean> setpw(@RequestBody Setpw vo) {
-    log.info(vo);
+    log.info(" 사용자가 입력한 값들 vo ::::: "+vo);
     return new ResponseEntity<>(service.changePw(vo), HttpStatus.OK);
   }
 

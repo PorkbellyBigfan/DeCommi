@@ -140,10 +140,12 @@ public class DiaryServiceImpl implements DiaryService {
         }
         return modifiedDiary.getDino().toString();
     }
-
+    @Transactional
     @Override
     public Boolean deleteDiary(DiaryDTO dto) {
         Optional<Diary> check = repository.getDiaryByDinoAndId(dto.getDino(), dto.getWriter());
+        log.info(dto);
+        log.info(check);
         if (check.isPresent()) {
             repository.deleteById(dto.getDino());
             repository.deleteFileByDino(dto.getDino());
@@ -165,13 +167,13 @@ public class DiaryServiceImpl implements DiaryService {
         dto.setTagList(tagString);
         return dto;
     }
-
+    
+    @Transactional
     @Override
     public PageResultDTO<DiaryDTO, Diary> getDiaryPostList(PageRequestDTO requestDTO) {
         Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
         BooleanBuilder booleanBuilder = getSearch(requestDTO);
         Page<Diary> result = repository.findAll(booleanBuilder, pageable);
-        log.info("service Class 공개된 다이어리 모두 가져오기 :::"+result);
         Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
             @Override
             public DiaryDTO apply(Diary t) {
@@ -241,6 +243,11 @@ public class DiaryServiceImpl implements DiaryService {
         dto.setMid(result.get().getMid());
         Reply reply = replyDTOtoEntity(dto);
         replyRepository.save(reply);
+        log.info("reply rno "+reply.getRno());
+        log.info("reply.getReplyContent()"+reply.getReplyContent());
+        log.info("reply.getReplyDepth()"+reply.getReplyDepth());
+        log.info("reply.getReplyGroup()"+reply.getReplyGroup());
+        log.info("reply.getReplyOrder()"+reply.getReplyOrder());
         return reply.getDino().toString();
     }
 
@@ -249,12 +256,15 @@ public class DiaryServiceImpl implements DiaryService {
     public Long addNewReply(ReplyDTO dto) {
         Optional<Member> result = memberRepository.findByMid(dto.getMid());
         dto.setReplyGroup(dto.getReplyGroup());
-        dto.setReplyDepth(dto.getReplyDepth());
+        dto.setReplyDepth(1L);
         dto.setReplyOrder(dto.getReplyOrder());
         dto.setMid(result.get().getMid());
-
         Reply entity = replyDTOtoEntity(dto);
-
+        log.info("대댓글 사용자 입력값 :::::"+dto);
+        log.info("대댓글 entity :::::"+entity);
+        log.info("entity.getRno()"+entity.getRno());
+        log.info("entity.getReplyGroup()"+entity.getReplyGroup());
+        log.info("entity.getReplyDepth()"+entity.getReplyDepth());
         replyRepository.save(entity);
         return entity.getRno();
     }
@@ -280,6 +290,7 @@ public class DiaryServiceImpl implements DiaryService {
     public String deleteReply(ReplyDTO dto) {
         Optional<Reply> checkReply = replyRepository.getReplyByRnoAndMid(dto.getRno(), dto.getMid());
         if (checkReply.isPresent()) {
+            
             replyRepository.delete(checkReply.get());
             return "Deleted Successfully";
         } else {
