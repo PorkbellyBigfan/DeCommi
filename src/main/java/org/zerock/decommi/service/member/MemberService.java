@@ -44,8 +44,8 @@ public interface MemberService {
                 .fromSocial(member.isFromSocial())
                 .auth(member.isAuth())
                 .q1(member.getQ1())
-                .q1(member.getQ2())
-                .q1(member.getQ3())
+                .q2(member.getQ2())
+                .q3(member.getQ3())
                 .roleSet(member.getRoleSet().stream().map(
                         role -> new String("ROLE_" + role.name()))
                         .collect(Collectors.toSet()))
@@ -64,8 +64,8 @@ public interface MemberService {
                 .fromSocial(dto.isFromSocial())
                 .auth(dto.isAuth())
                 .q1(dto.getQ1())
-                .q1(dto.getQ2())
-                .q1(dto.getQ3())
+                .q2(dto.getQ2())
+                .q3(dto.getQ3())
                 .roleSet(dto.getRoleSet().stream().map(
                         t -> {
                             if (t.equals("ROLE_MEMBER"))
