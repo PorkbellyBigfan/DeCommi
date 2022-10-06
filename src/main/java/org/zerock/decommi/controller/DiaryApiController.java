@@ -67,7 +67,7 @@ public class DiaryApiController {
         String uploadId = UUID.randomUUID().toString() + "."
                 + FilenameUtils.getExtension(uploadFile.getOriginalFilename());
         uploadFile.transferTo(new File(uploadDir + uploadId));
-        paramMap.put("url", "./diary/image/" + uploadId);
+        paramMap.put("url", "/decommi/diary/image/" + uploadId);
         log.info("ckckckkkkkkkkkkkkkkkkkkkk" + paramMap);
         return paramMap;
     }
