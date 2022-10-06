@@ -22,15 +22,13 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "writer")
+@ToString
 @Table(name = "d_todo")
-public class ToDo extends BaseEntity {
+public class Todo extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long todoId;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
-    private Member writer;
+    private String writer;
     private String todoTitle;
     private String todoContent;
     private boolean todoStatus;

@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ToDoDTO {
-    private Long todoid;
+public class TodoDTO {
+    private Long todoId;
 
     private String todoTitle;
     private String todoContent;
     private boolean todoStatus;
 
-    private String id; // Member 엔티티의 PK email
+    private String writer; // Member 엔티티의 PK email
 }

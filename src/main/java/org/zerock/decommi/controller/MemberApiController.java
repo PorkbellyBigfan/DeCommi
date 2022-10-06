@@ -111,7 +111,7 @@ public class MemberApiController {
 
   // 선호태그 변경
   @RequestMapping(value = "/editliketaglist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Boolean> reportingDiary(@RequestBody LikeTagListDTO dto) {
-    return new ResponseEntity<>(likeTagListService.editLikeTagList(dto), HttpStatus.OK);
+  public ResponseEntity<Boolean> reportingDiary(@RequestBody String tagName, String email) {
+    return new ResponseEntity<>(likeTagListService.editLikeTagList(tagName, email), HttpStatus.OK);
   }
 }

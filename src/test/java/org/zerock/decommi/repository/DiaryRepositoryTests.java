@@ -257,7 +257,7 @@ public class DiaryRepositoryTests {
   }
   @Test
   void testGetLikeTagList(){
-    log.info(likeTagListService.getLikeTagList(1L));
+    log.info(likeTagListService.getLikeTagList("porkbellyweb@gmail.com"));
   }
 
 
