@@ -21,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.zerock.decommi.dto.BookmarkDTO;
 import org.zerock.decommi.dto.DiaryDTO;
+import org.zerock.decommi.dto.Help2DTO;
 import org.zerock.decommi.dto.HelpDTO;
 import org.zerock.decommi.dto.MemberDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
@@ -233,40 +234,45 @@ public class Repository_ServiceTests {
     public void insertHelp() {
         IntStream.rangeClosed(1, 20).forEach(i -> {
             Member member = Member.builder().mid(20L).build();
-            Help help = Help.builder().content("content" + i).title("title" + i).writer(member).helpType("NOTICE")
+            Help help = Help.builder().content("content" + i).title("title" + i).writer(member)
                     .build();
             helpRepository.save(help);
         });
     }
 
-    @Transactional
     @Test
-    public void read() {
-        log.info(helpRepository.findByhbno(1L));
+    public void Noticeregister() {
+        HelpDTO dto = HelpDTO.builder().title("Notice").content("배개배배배백엔드드드")
+                .writer(20L).build();
+        helpService.Noticeregister(dto);
     }
 
     @Test
-    public void register() {
-        HelpDTO dto = HelpDTO.builder().title("어렵다").content("배개배배배백엔드드드")
-                .writer(20L).helpType("NOTICE").build();
-        helpService.register(dto);
+    public void QnAregister() {
+        Help2DTO dto = Help2DTO.builder().title("QnA").content("배개배배배백엔드드드")
+                .writer(20L).build();
+        helpService.QnAregister(dto);
     }
 
     @Transactional
     @Test
     public void testRead() {
-        Optional<Help> result = helpRepository.findById(1L);
+        Optional<Help> result = helpRepository.findById(23L);
         log.info(result);
     }
 
-    // @Test
-    // public void deleteByIdhhhh() {
-    // helpService.deleteHelp(404L);
-    // }
+    @Test
+    public void deleteByIdhhhh() {
+        Optional<Help> checkHelp = helpRepository.getHelpByMid(23L, 20L);
+        if(checkHelp.isPresent()){
+            helpRepository.delete(checkHelp.get());
+
+        }
+    }
 
     @Test
     public void modifyHelp() {
-        Optional<Help> checkHelp = helpRepository.getHelpByMid(21L, 2L);
+        Optional<Help> checkHelp = helpRepository.getHelpByMid(1L, 20L);
         if (checkHelp.isPresent()) {
             Help help = checkHelp.get();
             help.changContent("수정수정gggggg");
@@ -277,7 +283,7 @@ public class Repository_ServiceTests {
 
     @Test
     public void deleteHelp() {
-        Optional<Help> checkHelp = helpRepository.getHelpByMid(21L, 1L);
+        Optional<Help> checkHelp = helpRepository.getHelpByMid(1L, 20L);
         if (checkHelp.isPresent()) {
             System.out.println("삭제 성공");
         } else {
@@ -285,7 +291,7 @@ public class Repository_ServiceTests {
         }
     }
 
-    // @Transactional
+    @Transactional
     @Test
     public void getNoticeList() {
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(100).build();
@@ -295,14 +301,14 @@ public class Repository_ServiceTests {
         }
     }
 
-    @Test
-    public void getFQAList() {
-        PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(150).build();
-        PageResultDTO<HelpDTO, Help> resultDTO = helpService.getQnAList(pageRequestDTO);
-        for (HelpDTO helpDTO : resultDTO.getDtoList()) {
-            System.out.println("=================" + helpDTO);
-        }
-    }
+    // @Test
+    // public void getFQAList() {
+    //     PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(150).build();
+    //     PageResultDTO<HelpDTO, Help> resultDTO = helpService.getQnAList(pageRequestDTO);
+    //     for (HelpDTO helpDTO : resultDTO.getDtoList()) {
+    //         System.out.println("=================" + helpDTO);
+    //     }
+    // }
 
     @Test
     public void querydslHelp() {
@@ -336,7 +342,4 @@ public class Repository_ServiceTests {
             bookmarkRepository.save(bookmark);
         });
     }
-
-    // 북마크 = 폴더리스트 클릭시 폴더 안 리스트
-    // 고객센터 = 타입나누기, 프론트에서 타입 지정가능?, QnA 답글 어떻게 할지
 }

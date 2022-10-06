@@ -1,5 +1,6 @@
 package org.zerock.decommi.service;
 
+import org.zerock.decommi.dto.Help2DTO;
 import org.zerock.decommi.dto.HelpDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
@@ -7,7 +8,8 @@ import org.zerock.decommi.entity.Help;
 import org.zerock.decommi.entity.member.Member;
 
 public interface HelpService {
-    Long register(HelpDTO dto);
+    Long Noticeregister(HelpDTO dto);
+    Long QnAregister(Help2DTO dto);
     PageResultDTO<HelpDTO,Help>getNoticeList(PageRequestDTO requestDTO);
     PageResultDTO<HelpDTO,Help>getQnAList(PageRequestDTO requestDTO);
     HelpDTO read (Long hbno);
@@ -32,6 +34,30 @@ public interface HelpService {
             .content(entity.getContent())
             .helpType(entity.getHelpType())    
             .writer(entity.getWriter().getMid())
+            .build();
+        return dto;
+    }
+
+    default Help dtoToEntity2 (Help2DTO dto){
+        Help help = Help.builder()
+            .hbno(dto.getHbno())
+            .title(dto.getTitle())
+            .content(dto.getContent())
+            .writer(Member.builder().mid(dto.getWriter()).build())
+            .helpType(dto.getHelpType())
+            .answer(dto.getAnswer())
+            .build();
+        return help;
+    }
+
+    default Help2DTO entityToDTO2 (Help entity){
+        Help2DTO dto = Help2DTO.builder()
+            .hbno(entity.getHbno())
+            .title(entity.getTitle())
+            .content(entity.getContent())
+            .helpType(entity.getHelpType())    
+            .writer(entity.getWriter().getMid())
+            .answer(entity.getAnswer())
             .build();
         return dto;
     }

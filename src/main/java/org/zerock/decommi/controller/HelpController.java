@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.zerock.decommi.service.HelpService;
+import org.zerock.decommi.dto.Help2DTO;
 import org.zerock.decommi.dto.HelpDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
@@ -25,32 +26,47 @@ import lombok.extern.log4j.Log4j2;
 @Controller
 @RequiredArgsConstructor
 @Log4j2
-@RequestMapping("/api/help")
+@RequestMapping("/help")
 public class HelpController {
     private final HelpService helpService;
 
-    @GetMapping(value = "/Notice")
+// token보내주기
+    @GetMapping(value = "/notice")
     public ResponseEntity<PageResultDTO<HelpDTO,Help>> Noticelist(@ModelAttribute("requestDTO") PageRequestDTO req) {
         log.info("PageRequest:" + req);
         return new ResponseEntity<>(helpService.getNoticeList(req), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/FAQ")
+    @GetMapping(value = "/qna")
     public ResponseEntity<PageResultDTO<HelpDTO,Help>> QnAlist(@ModelAttribute("requestDTO") PageRequestDTO req) {
         log.info("PageRequest:" + req);
         return new ResponseEntity<>(helpService.getQnAList(req), HttpStatus.OK);
     }
 
+    //token보내주기
+    //Long타입으로 게시판 number 보내주기
     @GetMapping(value = "/read/{hbno}")
     public ResponseEntity<HelpDTO> read(@PathVariable("hbno") Long hbno) {
         log.info("read....num: " + hbno);
         return new ResponseEntity<>(helpService.read(hbno), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/write")
-    public ResponseEntity<Long> register(@RequestBody HelpDTO dto) {
-        log.info("register... dto: " + dto);
-        Long hbno = helpService.register(dto);
+    // private Long hbno;
+    // private String title;
+    // private String content;
+    // private Long writer;
+    //body = {bhno:long타입으로 게시글번호 보내주기 , title:string , content:string, writer:long }
+    @PostMapping(value = "/Nwrite")
+    public ResponseEntity<Long> Noticeregister(@RequestBody HelpDTO dto) {
+        log.info("Notice register... dto: " + dto);
+        Long hbno = helpService.Noticeregister(dto);
+        return new ResponseEntity<>(hbno, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/Qwrite")
+    public ResponseEntity<Long> QnAregister(@RequestBody Help2DTO dto) {
+        log.info("QnA register... dto: " + dto);
+        Long hbno = helpService.QnAregister(dto);
         return new ResponseEntity<>(hbno, HttpStatus.OK);
     }
 

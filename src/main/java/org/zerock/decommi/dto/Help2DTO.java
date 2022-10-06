@@ -9,11 +9,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class HelpDTO {
+public class Help2DTO {
     private Long hbno;
     private String title;
     private String content;
     private Long writer;
     private String helpType;
+    private String answer;
 
 }

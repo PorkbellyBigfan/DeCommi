@@ -9,13 +9,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.zerock.decommi.dto.HelpDTO;
+import org.zerock.decommi.dto.Help2DTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.springframework.data.domain.Sort;
 import org.zerock.decommi.entity.Help;
 import org.zerock.decommi.entity.QHelp;
 import org.zerock.decommi.repository.HelpRepository;
-import org.zerock.decommi.repository.member.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -25,12 +25,21 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class HelpServiceImpl implements HelpService {
     private final HelpRepository helpRepository;
-    private final MemberRepository memberRepository;
 
     @Override
-    public Long register(HelpDTO dto) {
+    public Long Noticeregister(HelpDTO dto) {
         log.info("register..." + dto);
+        dto.setHelpType("NOTICE");
         Help help = dtoToEntity(dto);
+        helpRepository.save(help);
+        return help.getHbno();
+    }
+
+    @Override
+    public Long QnAregister(Help2DTO dto) {
+        log.info("register..." + dto);
+        dto.setHelpType("QNA");
+        Help help = dtoToEntity2(dto);
         helpRepository.save(help);
         return help.getHbno();
     }
@@ -48,6 +57,14 @@ public class HelpServiceImpl implements HelpService {
         Page < Help > result = helpRepository.getNoticeList(pageable,booleanBuilder);
         Function<Help, HelpDTO> fn = (entity -> entityToDTO(entity));
         return new PageResultDTO<>(result, fn);
+        // Page<Help> result = helpRepository.findAll(booleanBuilder, pageable);
+        // Function<Help,HelpDTO> fn = new Function<Help,HelpDTO>() {
+        //     @Override
+        //     public HelpDTO apply(Help t) {
+        //         return entityToDTO(t);
+        //     }
+        // };
+        // return new PageResultDTO<>(result, fn);
     }
 
     @Override
@@ -85,8 +102,7 @@ public class HelpServiceImpl implements HelpService {
             help.changContent(dto.getContent());
             helpRepository.save(help);
         }
-
-        }
+}
         private BooleanBuilder getSearch (PageRequestDTO requestDTO){// Querydsl 처리
             String type = requestDTO.getType();
             String keyword = requestDTO.getKeyword();
@@ -104,8 +120,6 @@ public class HelpServiceImpl implements HelpService {
                 conditionBuilder.or(qHelp.title.contains(keyword));
             if (type.contains("c"))
                 conditionBuilder.or(qHelp.content.contains(keyword));
-            if (type.contains("w"))
-                conditionBuilder.or(qHelp.writer.email.contains(keyword));
             booleanBuilder.and(conditionBuilder); // 모든 조건 통합
 
             return booleanBuilder;

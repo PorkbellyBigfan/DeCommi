@@ -22,11 +22,10 @@ public interface HelpRepository extends JpaRepository<Help, Long>,QuerydslPredic
     @Query("select hp from Help hp where hp.hbno=:hbno and mid=:mid")
     Optional<Help> getHelpByMid(Long hbno,Long mid);
 
-
     @Query("select hp from Help hp where help_type='NOTICE' ")
     Page<Help> getNoticeList(Pageable pageable, BooleanBuilder booleanBuilder);
 
-    @Query("select hp from Help hp where help_type='QnA' ")
+    @Query("select hp from Help hp where help_type='QNA' ")
     Page<Help> getQnAList(Pageable pageable, BooleanBuilder booleanBuilder);
 
     // @Query("select hp from Help hp left join b.writer")
