@@ -105,8 +105,8 @@ public class MemberApiController {
 
   // 선호태그 리스트 출력
   @RequestMapping(value = "/liketaglist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Optional<List<String>>> getLikeTagList(@RequestBody Long mid) {
-    return new ResponseEntity<>(likeTagListService.getLikeTagList(mid), HttpStatus.OK);
+  public ResponseEntity<Optional<List<String>>> getLikeTagList(@RequestBody String email) {
+    return new ResponseEntity<>(likeTagListService.getLikeTagList(email), HttpStatus.OK);
   }
 
   // 선호태그 변경

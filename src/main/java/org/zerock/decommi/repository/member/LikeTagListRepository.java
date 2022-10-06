@@ -13,11 +13,11 @@ import org.zerock.decommi.entity.member.Member;
 @Repository
 public interface LikeTagListRepository extends JpaRepository<LikeTagList, Long> {
 
-  LikeTagList getByMid(Long mid);
+  LikeTagList getByEmail(String email);
 
-  @Query("select l from LikeTagList l where mid=:mid ")
-  Optional<List<LikeTagList>>checkLikeTagListByMidAndLid(Long mid);
+  @Query("select l from LikeTagList l where l.email=:email ")
+  Optional<List<LikeTagList>>checkLikeTagListByEmail(String email);
 
-  @Query("select l.tagName from LikeTagList l where l.mid=:mid ")
-  Optional<List<String>> getLikeTagList(Long mid);
+  @Query("select l.tagName from LikeTagList l where l.email=:email ")
+  Optional<List<String>> getLikeTagList(String email);
 }

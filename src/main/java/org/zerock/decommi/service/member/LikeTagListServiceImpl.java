@@ -27,8 +27,8 @@ public class LikeTagListServiceImpl implements LikeTagListService {
 
 
   @Override
-  public Optional<List<String>> getLikeTagList(Long mid) {
-    Optional<List<String>> result = likeTagListRepository.getLikeTagList(mid);
+  public Optional<List<String>> getLikeTagList(String email) {
+    Optional<List<String>> result = likeTagListRepository.getLikeTagList(email);
     if(result.isPresent()){
       return result;
     }else{
@@ -40,7 +40,7 @@ public class LikeTagListServiceImpl implements LikeTagListService {
   // 선호태그리스트에 태그 추가 또는 삭제
   @Override
   public Boolean editLikeTagList(LikeTagListDTO dto) {
-    Optional<List<LikeTagList>> checkLikeTagList = likeTagListRepository.checkLikeTagListByMidAndLid(dto.getMid());
+    Optional<List<LikeTagList>> checkLikeTagList = likeTagListRepository.checkLikeTagListByEmail(dto.getEmail());
     LikeTagList entity = dtoToEntity(dto);
     dto.setTagName(dto.getTagName());
     if(checkLikeTagList.isPresent()){

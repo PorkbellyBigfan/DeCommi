@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class LikeTagListDTO {
   private Long lid;
   private String tagName;
-  private Long mid;
+  private String email;
 }
