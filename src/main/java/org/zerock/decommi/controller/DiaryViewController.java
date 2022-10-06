@@ -46,19 +46,19 @@ public class DiaryViewController {
     // List<String> tagList : 게시글에 해당 태그가 포함된 결과반환 여러개가 될 수 있고 하나가 될 수 있다. 해당 태그가
     // 하나라도 존재하는 결과 반환
     //
-    log.info("Controller 프론트에서 보내주는 검색조건 dto:::::" + dto);
-    log.info("controller dto tagList : " + dto.getTagList());
-    log.info("controller dto type : " + dto.getType());
-    log.info("controller dto keyword : " + dto.getKeyword());
+    // log.info("Controller Class 프론트에서 보내주는 검색조건 dto:::::" + dto);
+    log.info("Controller dto tagList :::::::::: " + dto.getTagList());
+    log.info("Controller dto type :::::::::: " + dto.getType());
+    log.info("Controller dto keyword ::::::::: " + dto.getKeyword());
     PageRequestDTO.builder().page(dto.getPage()).size(5).type(dto.getType()).keyword(dto.getKeyword())
         .tagList(dto.getTagList())
         .build();
     PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostList(dto);
-    log.info(result);
-    result.getDtoList().forEach(v -> {
-      log.info(v.getTitle());
-      log.info(v);
-    });
+    // log.info(result);
+    // result.getDtoList().forEach(v -> {
+    //   log.info(v.getTitle());
+    //   log.info(v);
+    // });
     return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
   }
 
