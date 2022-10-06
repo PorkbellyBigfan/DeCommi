@@ -249,7 +249,7 @@ public class Repository_ServiceTests {
 
     @Test
     public void QnAregister() {
-        Help2DTO dto = Help2DTO.builder().title("QnA").content("배개배배배백엔드드드")
+        HelpDTO dto = HelpDTO.builder().title("QnA").content("배개배배배백엔드드드")
                 .writer(20L).build();
         helpService.QnAregister(dto);
     }
@@ -272,7 +272,7 @@ public class Repository_ServiceTests {
 
     @Test
     public void modifyHelp() {
-        Optional<Help> checkHelp = helpRepository.getHelpByMid(1L, 20L);
+        Optional<Help> checkHelp = helpRepository.getHelpByMid(2L, 21L);
         if (checkHelp.isPresent()) {
             Help help = checkHelp.get();
             help.changContent("수정수정gggggg");

@@ -44,8 +44,6 @@ public class Help extends BaseEntity {
 
     private String helpType;
 
-    private String answer;
-
     public void changTitle(String title) {
         this.title = title;
     }

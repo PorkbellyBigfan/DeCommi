@@ -9,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.zerock.decommi.dto.HelpDTO;
-import org.zerock.decommi.dto.Help2DTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.springframework.data.domain.Sort;
@@ -36,10 +35,10 @@ public class HelpServiceImpl implements HelpService {
     }
 
     @Override
-    public Long QnAregister(Help2DTO dto) {
+    public Long QnAregister(HelpDTO dto) {
         log.info("register..." + dto);
         dto.setHelpType("QNA");
-        Help help = dtoToEntity2(dto);
+        Help help = dtoToEntity(dto);
         helpRepository.save(help);
         return help.getHbno();
     }

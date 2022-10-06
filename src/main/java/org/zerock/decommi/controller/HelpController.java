@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.zerock.decommi.service.HelpService;
-import org.zerock.decommi.dto.Help2DTO;
 import org.zerock.decommi.dto.HelpDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
@@ -64,7 +63,7 @@ public class HelpController {
     }
 
     @PostMapping(value = "/Qwrite")
-    public ResponseEntity<Long> QnAregister(@RequestBody Help2DTO dto) {
+    public ResponseEntity<Long> QnAregister(@RequestBody HelpDTO dto) {
         log.info("QnA register... dto: " + dto);
         Long hbno = helpService.QnAregister(dto);
         return new ResponseEntity<>(hbno, HttpStatus.OK);
