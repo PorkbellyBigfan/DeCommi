@@ -58,10 +58,8 @@ public class MemberApiController {
   public ResponseEntity<Map<String, Long>> emailCheck(@RequestBody Map<String, Object> mapObj) {
     String email = mapObj.get("email").toString();
     MemberDTO dto = service.emailCheck(email);
-
     Map<String, Long> mapForResult = new HashMap<>();
     mapForResult.put("result", (dto == null) ? 0L : 1L);
-
     return new ResponseEntity<Map<String, Long>>(mapForResult, HttpStatus.OK);
   }
   // 아이디
@@ -69,10 +67,8 @@ public class MemberApiController {
   public ResponseEntity<Map<String, Long>> idCheck(@RequestBody Map<String, Object> mapObj) {
     String id = mapObj.get("id").toString();
     MemberDTO dto = service.idCheck(id);
-
     Map<String, Long> mapForResult = new HashMap<>();
     mapForResult.put("result", (dto == null) ? 0L : 1L);
-
     return new ResponseEntity<Map<String, Long>>(mapForResult, HttpStatus.OK);
   }
 
