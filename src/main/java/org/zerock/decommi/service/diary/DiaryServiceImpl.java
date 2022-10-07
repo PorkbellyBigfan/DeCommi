@@ -192,30 +192,29 @@ public class DiaryServiceImpl implements DiaryService {
     @Transactional
     @Override
     public HashMap<String, Object> getSearchDiaryPostList(PageRequestDTO requestDTO) {
-        //정렬
-        Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
-        //검색조건
         BooleanBuilder booleanBuilder = getSearch(requestDTO);
         QDiary qDiary = QDiary.diary;
         QTag qTag = QTag.tag;
         List<Diary> result = factory.select(qDiary)
-            .from(qDiary).join(qTag).on(qTag.dino.dino.eq(qDiary.dino))
-            .where(booleanBuilder).orderBy(qDiary.dino.desc()).fetch();
-        //로그
+                .from(qDiary).join(qTag).on(qDiary.dino.eq(qTag.dino.dino))
+                .where(booleanBuilder).orderBy(qDiary.dino.desc()).fetch();
+        // 로그
         log.info("------------------");
-        result.forEach(v->{
-            log.info(v.getDino());});
+        result.forEach(v -> {
+            log.info(v.getDino());
+        });
         log.info("------------------");
         // Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
-        //     @Override
-        //     public DiaryDTO apply(Diary t) {
-        //         return entityToDTO(t);
-        //     }
+        // @Override
+        // public DiaryDTO apply(Diary t) {
+        // return entityToDTO(t);
+        // }
         // };
         HashMap<String, Object> hash = new HashMap<>();
         hash.put("dto", result);
         // hash.put("page", pageable.getPageNumber());
-        hash.put("totalPage", result.size());
+        hash.put("page", requestDTO.getPage());
+        hash.put("totalPage", requestDTO.getSize());
         return hash;
     }
 
@@ -236,18 +235,13 @@ public class DiaryServiceImpl implements DiaryService {
 
     private BooleanBuilder getSearch(PageRequestDTO requestDTO) {
         String type = requestDTO.getType();
-        log.info("service class ::: requestDTO 에서 보내준 type:::" + type);
         String keyword = requestDTO.getKeyword();
-        log.info("service class ::: requestDTO 에서 보내준 keyword:::" + keyword);
         List<String> tagList = requestDTO.getTagList();
-        log.info("service class ::: requestDTO 에서 보내준 tagList:::" + tagList);
         QDiary qDiary = QDiary.diary;
         QTag qTag = QTag.tag;
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue());
-        log.info(expression);
         booleanBuilder.and(expression);
-        log.info(booleanBuilder);
         if (type == null || type.trim().length() == 0) {
             return booleanBuilder;
         }
@@ -256,17 +250,9 @@ public class DiaryServiceImpl implements DiaryService {
             conditionBuilder
                     .or(qDiary.title.contains(keyword))
                     .or(qDiary.content.contains(keyword));
-            // ================================================================================================================
             tagList.forEach(new Consumer<String>() {
                 @Override
                 public void accept(String t) {
-                    // Optional<List<Tag>> temp = tagRepository.findByTagName(t);
-                    // log.info("this is temp ::::"+temp);
-                    // if (temp.isPresent()) {
-                    // temp.get().forEach(s->{
-                    // conditionBuilder.and(qDiary.tagList.contains(s));
-                    // });
-                    // }
                     conditionBuilder.or(qTag.tagName.contains(t));
                 }
             });
@@ -275,32 +261,34 @@ public class DiaryServiceImpl implements DiaryService {
         return booleanBuilder;
     }
 
-    // private BooleanBuilder getSearchByTagName(PageRequestDTO requestDTO, String
-    // tagName) {
-    // QDiary qDiary = QDiary.diary;
-    // BooleanBuilder booleanBuilder = new BooleanBuilder();
-    // Optional<List<Tag>> temp = tagRepository.findByTagName(tagName);
-    // BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue())
-    // .and(qDiary.tagList.contains(temp.get()));
-    // booleanBuilder.and(expression);
-    // return booleanBuilder;
-    // }
+    private BooleanBuilder getSearchByTagName(PageRequestDTO requestDTO, String tagName) {
+        QDiary qDiary = QDiary.diary;
+        QTag qTag = QTag.tag;
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue());
+        Optional<List<Tag>> temp = tagRepository.findByTagName(tagName);
+        BooleanBuilder conditionBuilder = new BooleanBuilder();
+        if(temp.isPresent()){
+            
+        }
+        booleanBuilder.and(expression);
+        return booleanBuilder;
+    }
 
-    // @Transactional
-    // @Override
-    // public PageResultDTO<DiaryDTO, Diary>
-    // getDiaryPostListByTagName(PageRequestDTO requestDTO, String tagName) {
-    // Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
-    // BooleanBuilder booleanBuilder = getSearchByTagName(requestDTO, tagName);
-    // Page<Diary> result = repository.findAll(booleanBuilder, pageable);
-    // Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
-    // @Override
-    // public DiaryDTO apply(Diary t) {
-    // return entityToDTO(t);
-    // }
-    // };
-    // return new PageResultDTO<>(result, fn);
-    // }
+    @Transactional
+    @Override
+    public PageResultDTO<DiaryDTO, Diary> getDiaryPostListByTagName(PageRequestDTO requestDTO, String tagName) {
+        Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
+        BooleanBuilder booleanBuilder = getSearchByTagName(requestDTO, tagName);
+        Page<Diary> result = repository.findAll(booleanBuilder, pageable);
+        Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
+            @Override
+            public DiaryDTO apply(Diary t) {
+                return entityToDTO(t);
+            }
+        };
+        return new PageResultDTO<>(result, fn);
+    }
 
     // 하트
     @Override
@@ -435,6 +423,5 @@ public class DiaryServiceImpl implements DiaryService {
         }
         return null;
     }
-
 
 }

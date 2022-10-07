@@ -61,16 +61,16 @@ public class DiaryRepositoryTests {
   @Test
   @Transactional
   public void testGetSearchDiaryPostList(){
-    ArrayList<String> tagList = new ArrayList<String>();
-    tagList.add("안녕");
+    // ArrayList<String> tagList = new ArrayList<String>();
+    // tagList.add("안녕");
     // tagList.add("1");
     PageRequestDTO requestDTO = PageRequestDTO.builder()
-        .page(1).size(10).type("s").tagList(tagList).sort("dino").keyword("안녕").build();
+        .page(1).size(10).type("s").keyword("안녕").build();
     HashMap<String, Object> result = diaryService.getSearchDiaryPostList(requestDTO);
     log.info(diaryService.getSearchDiaryPostList(requestDTO));
     log.info("HashMap::::"+result);
   }
-  
+
   @Test
   @Transactional
   public void testGetDiaryPostList(){

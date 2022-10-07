@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import org.zerock.decommi.entity.common.BaseEntity;
 import org.zerock.decommi.entity.member.Member;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,6 +43,7 @@ public class Tag extends BaseEntity {
     // private Long tagGroup;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonManagedReference
     @JoinColumn(name = "diary_dino", referencedColumnName = "dino")
     private Diary dino;
 

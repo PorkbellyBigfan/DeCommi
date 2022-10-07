@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import org.zerock.decommi.entity.common.BaseEntity;
 import org.zerock.decommi.entity.member.Member;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -50,6 +52,7 @@ public class Diary extends BaseEntity {
 
     @Builder.Default
     @OneToMany(mappedBy = "dino", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonBackReference
     private List<Tag> tagList = new ArrayList<>();
     
     @Builder.Default

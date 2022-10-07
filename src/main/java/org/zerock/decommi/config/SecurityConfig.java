@@ -90,5 +90,9 @@ public class SecurityConfig {
   public JWTUtil jwtUtil() {
     return new JWTUtil();
   }
+  @Bean
+	public JPAQueryFactory jpaQueryFactory(EntityManager em) {
+		return new JPAQueryFactory(em);
+	}
 
 }
