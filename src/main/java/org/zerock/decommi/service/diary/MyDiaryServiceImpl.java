@@ -59,32 +59,13 @@ public class MyDiaryServiceImpl implements MyDiaryService {
     };
     return new PageResultDTO<>(result, fn);
   }
-  @Transactional
-    @Override
-    public HashMap<String, Object> getSearchMyDiaryPostList(PageRequestDTO requestDTO) {
-        //검색조건
-        BooleanBuilder booleanBuilder = getSearchMyDiary(requestDTO);
-        QDiary qDiary = QDiary.diary;
-        QTag qTag = QTag.tag;
-        List<Diary> result = factory.select(qDiary)
-            .from(qDiary).join(qTag).on(qTag.dino.dino.eq(qDiary.dino))
-            .where(booleanBuilder).orderBy(qDiary.dino.desc()).fetch();
-        //로그
-        log.info("------------------");
-        result.forEach(v->{
-            log.info(v.getDino());});
-        log.info("------------------");
-        HashMap<String, Object> hash = new HashMap<>();
-        hash.put("dto", result);
-        hash.put("totalPage", result.size());
-        return hash;
-    }
 
 
   // 내가 쓴 글만 확인 할 수 있어야한다.
   private BooleanBuilder getMyDiaryList(PageRequestDTO requestDTO) {
     String type = requestDTO.getType();
     String writer = requestDTO.getWriter();
+    String keyword = requestDTO.getKeyword();
     QDiary qDiary = QDiary.diary;
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.writer.eq(writer));
@@ -92,42 +73,12 @@ public class MyDiaryServiceImpl implements MyDiaryService {
     if (type == null || type.trim().length() == 0) {
       return booleanBuilder;
     }
-    return booleanBuilder;
-  }
-
-  private BooleanBuilder getSearchMyDiary(PageRequestDTO requestDTO) {
-    String type = requestDTO.getType();
-    log.info("service class ::: requestDTO 에서 보내준 type:::" + type);
-    String keyword = requestDTO.getKeyword();
-    log.info("service class ::: requestDTO 에서 보내준 keyword:::" + keyword);
-    List<String> tagList = requestDTO.getTagList();
-    log.info("service class ::: requestDTO 에서 보내준 tagList:::" + tagList);
-    String writer = requestDTO.getWriter();
-    QDiary qDiary = QDiary.diary;
-    QTag qTag = QTag.tag;
-    BooleanBuilder booleanBuilder = new BooleanBuilder();
-    BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.writer.eq(writer));
-    log.info(expression);
-    booleanBuilder.and(expression);
-    log.info(booleanBuilder);
-    if (type == null || type.trim().length() == 0) {
-        return booleanBuilder;
-    }
     BooleanBuilder conditionBuilder = new BooleanBuilder();
     if (type.contains("s")) { // "t" stand for Tag
-        conditionBuilder
-                .or(qDiary.title.contains(keyword))
-                .or(qDiary.content.contains(keyword));
-        // ================================================================================================================
-        tagList.forEach(new Consumer<String>() {
-            @Override
-            public void accept(String t) {
-                conditionBuilder.or(qTag.tagName.contains(t));
-            }
-        });
-    }
+            conditionBuilder.or(qDiary.title.contains(keyword)).or(qDiary.content.contains(keyword));
     booleanBuilder.and(conditionBuilder);
+    }
     return booleanBuilder;
-}
+  }
 
 }

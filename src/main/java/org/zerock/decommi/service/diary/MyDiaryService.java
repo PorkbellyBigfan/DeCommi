@@ -9,5 +9,7 @@ import org.zerock.decommi.entity.diary.Diary;
 
 public interface MyDiaryService {
   PageResultDTO<DiaryDTO, Diary> getMyDiaryPostList(PageRequestDTO requestDTO);
-  HashMap<String, Object> getSearchMyDiaryPostList(PageRequestDTO requestDTO);
+  
+  // 구현실패
+  // HashMap<String, Object> getSearchMyDiaryPostList(PageRequestDTO requestDTO);
 }

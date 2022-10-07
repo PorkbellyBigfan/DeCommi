@@ -21,7 +21,7 @@ public interface TagRepository extends JpaRepository<Tag, Long>, QuerydslPredica
   @Query("select t from Tag t where diary_dino=:dino ")
   List<Tag> getList(Diary dino);
 
-  Optional<List<Tag>> findByTagName(String tagName);
+  Optional<Tag> findByTagName(String tagName);
   // Optional<List<Tag>> findByTagName2(String tagName);
 
   @Query("select distinct(t.tagId) from Tag t where t.tagName=:tagName ")

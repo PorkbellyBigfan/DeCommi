@@ -15,4 +15,7 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
     @Query("select b from Bookmark b where mid=:mid")
     Optional<List<Bookmark>> getList(Long mid);
 
+    @Query(value = "SELECT COUNT(b.bid) FROM d_bookmark as b WHERE b.dino_dino =:dino ", nativeQuery = true)
+    Long getBookmarkCntByDino(Long dino);
+
 }

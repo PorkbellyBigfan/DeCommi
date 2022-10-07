@@ -52,7 +52,6 @@ public class Diary extends BaseEntity {
 
     @Builder.Default
     @OneToMany(mappedBy = "dino", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JsonBackReference
     private List<Tag> tagList = new ArrayList<>();
     
     @Builder.Default

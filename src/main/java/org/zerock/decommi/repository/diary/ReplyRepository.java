@@ -37,6 +37,11 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
     @Query(value = "select r from Reply r where dino_dino=:dino order by reply_group asc, reply_order asc, reply_depth desc ", countQuery = "select count(r) from Reply r where dino_dino=:dino order by reply_group asc, reply_order asc, reply_depth desc ")
     Page<Reply> getPageList(Pageable pageable, Long dino);
 
+    // @Query("select count(r.rno) from Reply r where r.dino =:dino ")
+    // Long getReplyCntByDino(Long dino);
+
+    @Query(value = "SELECT COUNT(d_reply.rno) FROM d_reply WHERE d_reply.dino_dino =:dino ", nativeQuery = true)
+    Long getReplyCntByDino(Long dino);
     // 댓글 리스트
     // @Query("select r from Reply r where diary_dino=:dino order by reply_group
     // asc, reply_order asc, reply_depth desc")

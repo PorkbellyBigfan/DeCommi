@@ -37,8 +37,7 @@ public class DiaryViewController {
 
   @RequestMapping(value = "/list", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<DiaryDTO>> getDiaryList(@RequestBody PageRequestDTO dto) {
-    PageRequestDTO.builder().page(dto.getPage()).size(5).type(dto.getType()).keyword(dto.getKeyword())
-        .tagList(dto.getTagList()).build();
+    PageRequestDTO.builder().page(dto.getPage()).size(5).type(dto.getType()).keyword(dto.getKeyword()).build();
     PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostList(dto);
     log.info("===============================");
     // log.info(" controller class dto::::"+dto);
@@ -46,40 +45,40 @@ public class DiaryViewController {
     return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
   }
 
-  @RequestMapping(value = "/list/search", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<HashMap<String, Object>> getSearchDiaryList(@RequestBody PageRequestDTO dto) {
-    HashMap<String, Object> result = diaryService.getSearchDiaryPostList(dto);
-    log.info("===============================");
-    log.info("controller class dto :::"+dto);
-    log.info("dto's type ::: "+dto.getType());
-    // log.info("controller class result :::"+result);
-    log.info("result ' s dto ::: "+ result.get("dto"));
-    log.info("result ' s page ::: "+ result.get("page"));
-    log.info("result ' s size ::: "+ result.get("totalPage"));
-    log.info("===============================");
-    return new ResponseEntity<>(result,HttpStatus.OK);
-    // return null;
-  }
-
-  //태그를 눌렀을때 그 해당 태그를 포함하고있는 게시글 리스트반환 여기서 String tagName은 해당 태그의 tagName임.
-  // @RequestMapping(value = "/list/bytagname", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  // public ResponseEntity<List<DiaryDTO>>getDiaryLisyByTagName(@RequestBody PageRequestDTO dto, String tagName){
-  //   PageRequestDTO.builder().page(dto.getPage()).size(5).tagList(dto.getTagList()).build();
-  //   PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostListByTagName(dto, tagName);
-  //   result.getDtoList().forEach(v -> {
-  //     log.info(v.getTitle());
-  //   });
-  //   return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
+  // 구현 못함
+  // @RequestMapping(value = "/list/search", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  // public ResponseEntity<HashMap<String, Object>> getSearchDiaryList(@RequestBody PageRequestDTO dto) {
+  //   HashMap<String, Object> result = diaryService.getSearchDiaryPostList(dto);
+  //   log.info("===============================");
+  //   log.info("controller class dto :::"+dto);
+  //   log.info("dto's type ::: "+dto.getType());
+  //   // log.info("controller class result :::"+result);
+  //   log.info("result ' s dto ::: "+ result.get("dto"));
+  //   log.info("result ' s page ::: "+ result.get("page"));
+  //   log.info("result ' s size ::: "+ result.get("totalPage"));
+  //   log.info("===============================");
+  //   return new ResponseEntity<>(result,HttpStatus.OK);
+  //   // return null;
   // }
 
-
-
+  //태그를 눌렀을때 그 해당 태그를 포함하고있는 게시글 리스트반환 여기서 String tagName은 해당 태그의 tagName임.
+  @RequestMapping(value = "/list/bytagname", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<DiaryDTO>>getDiaryLisyByTagName(@RequestBody PageRequestDTO dto, String tagName){
+    PageRequestDTO.builder().page(dto.getPage()).size(5).tagList(dto.getTagList()).build();
+    PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostListByTagName(dto, tagName);
+    result.getDtoList().forEach(v -> {
+      log.info(v.getTitle());
+    });
+    return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
+  }
 
   @RequestMapping(value = "/read/{dino}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Object> DiaryRead(@ModelAttribute("dino") Long dino) {
     HashMap<String, Object> result = new HashMap<>();
     DiaryDTO diaryPost = diaryService.getDiaryPostByDino(dino);
+    log.info("=======================================");
     log.info("diaryPost" + diaryPost);
+    log.info("=======================================");
     result.put("diaryPost", diaryPost);
     return new ResponseEntity<>(result, HttpStatus.OK);
   }

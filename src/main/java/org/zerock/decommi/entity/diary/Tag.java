@@ -43,7 +43,6 @@ public class Tag extends BaseEntity {
     // private Long tagGroup;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonManagedReference
     @JoinColumn(name = "diary_dino", referencedColumnName = "dino")
     private Diary dino;
 
