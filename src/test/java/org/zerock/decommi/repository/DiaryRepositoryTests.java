@@ -3,6 +3,7 @@ package org.zerock.decommi.repository;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -57,6 +58,26 @@ public class DiaryRepositoryTests {
   @Autowired
   LikeTagListService likeTagListService;
 
+  @Test
+  @Transactional
+  public void testGetSearchDiaryPostList(){
+    ArrayList<String> tagList = new ArrayList<String>();
+    tagList.add("안녕");
+    // tagList.add("1");
+    PageRequestDTO requestDTO = PageRequestDTO.builder()
+        .page(1).size(10).type("s").tagList(tagList).sort("dino").keyword("안녕").build();
+    HashMap<String, Object> result = diaryService.getSearchDiaryPostList(requestDTO);
+    log.info(diaryService.getSearchDiaryPostList(requestDTO));
+    log.info("HashMap::::"+result);
+  }
+  
+  @Test
+  @Transactional
+  public void testGetDiaryPostList(){
+    PageRequestDTO requestDTO = PageRequestDTO.builder().page(1).size(5).build();
+    PageResultDTO result = diaryService.getDiaryPostList(requestDTO);
+    log.info(result);
+  }
 
 
   @Test
@@ -116,18 +137,6 @@ public class DiaryRepositoryTests {
     });
   }
 
-  // 다이어리 리스트
-  @Test
-  public void testGetDiaryPostList() {
-    ArrayList<String> tagList = new ArrayList<String>();
-    tagList.add("test");
-    tagList.add("1");
-    PageRequestDTO requestDTO = PageRequestDTO.builder()
-        .page(1).size(10).type("t")
-        .tagList(tagList).sort("dino").keyword("test").build();
-    PageResultDTO<DiaryDTO, Diary> resultDTO = diaryService.getDiaryPostList(requestDTO);
-    log.info("Search Result :::: " + resultDTO);
-  }
 
   // 마이 다이어리 리스트
   // @Test

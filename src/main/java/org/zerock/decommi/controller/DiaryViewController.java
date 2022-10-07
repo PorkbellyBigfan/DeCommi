@@ -35,33 +35,20 @@ import lombok.extern.log4j.Log4j2;
 public class DiaryViewController {
   private final DiaryService diaryService;
 
-
-
   @RequestMapping(value = "/list", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<DiaryDTO>> getDiaryList(@RequestBody PageRequestDTO dto) {
-    // <String> type : null 값이면 검색조건없이 모든 게시글 리스트 반환,
-    // <String> type : 's'를 보내주면 검색조건 결과 만족하는 리스트 반환
-    // <String> keyword : 검색문자열 title, 또는 content에 해당 문자열이 들어있는 결과 리스트 반환
-    // <String> keyword : 없을시 반환안함.
-    // List<String> tagList : 게시글에 해당 태그가 포함된 결과반환 여러개가 될 수 있고 하나가 될 수 있다. 해당 태그가
-    // 하나라도 존재하는 결과 반환
-    //
-    // log.info("Controller Class 프론트에서 보내주는 검색조건 dto:::::" + dto);
-    log.info("Controller dto tagList :::::::::: " + dto.getTagList());
-    log.info("Controller dto type :::::::::: " + dto.getType());
-    log.info("Controller dto keyword ::::::::: " + dto.getKeyword());
     PageRequestDTO.builder().page(dto.getPage()).size(5).type(dto.getType()).keyword(dto.getKeyword())
-        .tagList(dto.getTagList())
-        .build();
+        .tagList(dto.getTagList()).build();
     PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostList(dto);
-    // log.info(result);
-    // result.getDtoList().forEach(v -> {
-    //   log.info(v.getTitle());
-    //   log.info(v);
-    // });
     return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
   }
 
+  @RequestMapping(value = "/list/search", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<HashMap<String, Object>> getSearchDiaryList(@RequestBody PageRequestDTO dto) {
+    HashMap<String, Object> result = diaryService.getSearchDiaryPostList(dto);
+    return new ResponseEntity<HashMap<String,Object>>(result, HttpStatus.OK);
+  }
+  
   //태그를 눌렀을때 그 해당 태그를 포함하고있는 게시글 리스트반환 여기서 String tagName은 해당 태그의 tagName임.
   // @RequestMapping(value = "/list/bytagname", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   // public ResponseEntity<List<DiaryDTO>>getDiaryLisyByTagName(@RequestBody PageRequestDTO dto, String tagName){
@@ -73,25 +60,8 @@ public class DiaryViewController {
   //   return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
   // }
 
-  @RequestMapping(value = "/list/search", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<DiaryDTO>> getSearchDiaryList(@RequestBody PageRequestDTO dto) {
-    // <String> type : null 값이면 검색조건없이 모든 게시글 리스트 반환,
-    // <String> type : 's'를 보내주면 검색조건 결과 만족하는 리스트 반환
-    // <String> keyword : 검색문자열 title, 또는 content에 해당 문자열이 들어있는 결과 리스트 반환
-    // <String> keyword : 없을시 반환안함.
-    // List<String> tagList : 게시글에 해당 태그가 포함된 결과반환 여러개가 될 수 있고 하나가 될 수 있다. 해당 태그가
-    // 하나라도 존재하는 결과 반환
-    PageRequestDTO.builder().page(dto.getPage()).size(5).type(dto.getType()).keyword(dto.getKeyword())
-    .tagList(dto.getTagList())
-    .build();
-    PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostList(dto);
-    log.info("controller result ::: "+result);
-    log.info("controller dto ::: "+dto);
-    log.info("controller dto tagList : " + dto.getTagList());
-    log.info("controller dto type : " + dto.getType());
-    log.info("controller dto keyword : " + dto.getKeyword());
-    return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
-  }
+
+
 
   @RequestMapping(value = "/read/{dino}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Object> DiaryRead(@ModelAttribute("dino") Long dino) {

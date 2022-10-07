@@ -1,5 +1,7 @@
 package org.zerock.decommi.config;
 
+import javax.persistence.EntityManager;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +21,8 @@ import org.zerock.decommi.security.handler.DecommiAccessDeniedHandler;
 import org.zerock.decommi.security.handler.DecommiLoginSuccessHandler;
 import org.zerock.decommi.security.handler.DecommiLogoutSuccessHandler;
 import org.zerock.decommi.security.util.JWTUtil;
+
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
 
