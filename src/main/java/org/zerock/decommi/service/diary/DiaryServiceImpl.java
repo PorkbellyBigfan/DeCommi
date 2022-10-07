@@ -90,6 +90,7 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     public DiaryDTO checkBeforeDiaryModify(Long dino, String id) {
         Optional<Diary> isit = repository.getDiaryByDinoAndId(dino, id);
+        log.info("service class check before modify  dino ::: "+isit.get().getDino()+ "writer ::: "+isit.get().getWriter());
         if (!isit.isPresent()) {
             return null;
         } else {
@@ -353,9 +354,9 @@ public class DiaryServiceImpl implements DiaryService {
         }
         BooleanBuilder conditionBuilder = new BooleanBuilder();
         if (type.contains("s")) { // "t" stand for Tag
-            conditionBuilder
-                    .or(qDiary.title.contains(keyword))
-                    .or(qDiary.content.contains(keyword));
+            // conditionBuilder
+            //         .or(qDiary.title.contains(keyword))
+            //         .or(qDiary.content.contains(keyword));
             // 여기서부터 문제인데
             // tagList란 사용자가 브라우저에서 추가한 태그리스트들인데 타입은 List<String>이다
             // List<String> 인 tagList 가 qDiary.tagList에 같은 이름을 가지고 있는 tag들이 있는지 확인하는 과정에서
@@ -368,20 +369,21 @@ public class DiaryServiceImpl implements DiaryService {
             // 각각의 실행마다 t라는 문자열을 가진 Optional<Tag> 객체가 실제 DB에 존재하는지 확인하고 만약 존재한다면
             // conditionalBuilder에 조건을 추가할 것이다.
             // ================================================================================================================
-            tagList.forEach(new Consumer<String>() {
-                @Override
-                public void accept(String t) {
-                    // 여기서 가져온 객체는 Tag의 pk인 tag_id를 반환하지 않을까? 실제 문자열이
-                    // contains(temp.get().getTagName())이 되어야 정상이아닌가?
-                    // 그전에 그렇게 할거면 이렇게 삥 둘러올 필요가 없었을 것이다.
-                    // 애초에 그것이 가능하다면 qDiary.tagList.contains(tagList.stream().map()~~~) 으로 해결이 가능
-                    // 했었을것.
-                    Optional<Tag> temp = tagRepository.findByTagName(t);
-                    if (temp.isPresent()) {
-                        conditionBuilder.and(qDiary.tagList.contains(temp.get()));
-                    }
-                }
-            });
+            // tagList.forEach(new Consumer<String>() {
+            //     @Override
+            //     public void accept(String t) {
+            //         // 여기서 가져온 객체는 Tag의 pk인 tag_id를 반환하지 않을까? 실제 문자열이
+            //         // contains(temp.get().getTagName())이 되어야 정상이아닌가?
+            //         // 그전에 그렇게 할거면 이렇게 삥 둘러올 필요가 없었을 것이다.
+            //         // 애초에 그것이 가능하다면 qDiary.tagList.contains(tagList.stream().map()~~~) 으로 해결이 가능
+            //         // 했었을것.
+            //         Optional<Tag> temp = tagRepository.findByTagName(t);
+            //         log.info("this is temp ::::"+temp);
+            //         if (temp.isPresent()) {
+            //             conditionBuilder.and(qDiary.tagList.contains(temp.get()));
+            //         }
+            //     }
+            // });
         }
         booleanBuilder.and(conditionBuilder);
         return booleanBuilder;
