@@ -40,33 +40,22 @@ public class LikeTagListServiceImpl implements LikeTagListService {
   public Boolean editLikeTagList(String tagName, String email) {
     log.info("사용자의 email ::" + email);
     log.info("사용자가 선택한 tagName " + tagName);
-    Optional<LikeTagList> checkLikeTag = likeTagListRepository.checkLikeTagListByEmailAndTagName(email, tagName);
     LikeTagListDTO dto = LikeTagListDTO.builder().email(email).tagName(tagName).build();
     LikeTagList entity = dtoToEntity(dto);
+    likeTagListRepository.save(entity);// 여기서 lid 생성됨
+
+    Optional<LikeTagList> checkLikeTag = likeTagListRepository.checkLikeTagListByEmailAndTagName(email, tagName);
     log.info("checkLikeTag ::::: " + checkLikeTag);
-    log.info("dto :::::" + dto);
-    log.info("entity :::::" + entity);
     if (checkLikeTag.isPresent()) {
       // 존재할경우 likeTagList 테이블에서 해당 태그이름의 행을 삭제
-      log.info("checkLikeTag ::::::: " + checkLikeTag.get());
-      likeTagListRepository.delete(checkLikeTag.get());
-      return false;
+      likeTagListRepository.delete(entity);
+      log.info("삭제하고 난 다음의 likeTagList ::::" + getLikeTagList(email));
+      return true;
     } else {
-      // 존재하지 않을경우 likeTagList에 해당 tagName 추가
-      // 추가하기전에 해당 tagName이 tagRepository에 존재하는지 확인
-      if (tagRepository.checkTagName(tagName).isPresent()) {
-        // 만일 tagRepository에 해당 tagName이 존재한다고하면 likeTagList 테이블에 해당 태그 추가
-        likeTagListRepository.save(entity);
-        return true;
-      } else {
-        // 방법1. 만일 tagRepository에 해당 tagName이 존재하지 않는다고하면, 해당 태그를 생성후 likeTagList 테이블에
-        // 저장하는 방법이있다.
-        // 하지만 fk값떄문에 문제 생길 위험 있음
-        Tag.builder().tagName(tagName).build();
-        likeTagListRepository.save(entity);
-        return true;
-        // 방법2. 종료
-      }
+      likeTagListRepository.save(entity);
+      log.info(getLikeTagList(email));
+      log.info("checkLikeTag" + checkLikeTag);
+      return true;
     }
   }
 
