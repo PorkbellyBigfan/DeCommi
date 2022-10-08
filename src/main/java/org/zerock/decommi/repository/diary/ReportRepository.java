@@ -12,4 +12,7 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
 
     @Query("select r from Report r where mid_mid=:mid and dino_dino=:dino")
     Optional<Report> checkReportLogByMemberIdAndDiaryId(Long mid, Long dino);
+
+    @Query(value = "SELECT COUNT(r.reid) FROM d_report as r WHERE r.dino_dino =:dino ", nativeQuery = true)
+    Long getReportCntByDino(Long dino);
 }

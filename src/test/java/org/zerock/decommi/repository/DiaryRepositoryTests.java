@@ -3,6 +3,7 @@ package org.zerock.decommi.repository;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -32,7 +33,7 @@ import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.LikeTagListRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.service.diary.DiaryService;
-import org.zerock.decommi.service.diary.MyDiaryService;
+// import org.zerock.decommi.service.diary.MyDiaryService;
 import org.zerock.decommi.service.member.LikeTagListService;
 
 import lombok.extern.log4j.Log4j2;
@@ -48,8 +49,8 @@ public class DiaryRepositoryTests {
   TagRepository tagRepository;
   @Autowired
   ReplyRepository replyRepository;
-  @Autowired
-  MyDiaryService mdService;
+  // @Autowired
+  // MyDiaryService mdService;
   @Autowired
   MemberRepository memberRepository;
   @Autowired
@@ -57,6 +58,31 @@ public class DiaryRepositoryTests {
   @Autowired
   LikeTagListService likeTagListService;
 
+<<<<<<< HEAD
+=======
+  @Test
+  @Transactional
+  public void testGetSearchDiaryPostList(){
+    // ArrayList<String> tagList = new ArrayList<String>();
+    // tagList.add("안녕");
+    // tagList.add("1");
+    PageRequestDTO requestDTO = PageRequestDTO.builder()
+        .page(1).size(10).type("s").keyword("안녕").build();
+    HashMap<String, Object> result = diaryService.getSearchDiaryPostList(requestDTO);
+    log.info(diaryService.getSearchDiaryPostList(requestDTO));
+    log.info("HashMap::::"+result);
+  }
+
+  @Test
+  @Transactional
+  public void testGetDiaryPostList(){
+    PageRequestDTO requestDTO = PageRequestDTO.builder().page(1).size(5).build();
+    PageResultDTO result = diaryService.getDiaryPostList(requestDTO);
+    log.info(result);
+  }
+
+
+>>>>>>> 3e2119acf2e3ecd47958869726e0c0cfcefb7cc0
   @Test
   public void insertDiaryDummies() {
     IntStream.rangeClosed(1, 10).forEach(i -> {
@@ -114,6 +140,7 @@ public class DiaryRepositoryTests {
     });
   }
 
+<<<<<<< HEAD
   @Test
   public void testGetDiaryPostListByTagName() {
     PageRequestDTO dto = PageRequestDTO.builder().page(1).size(10).build();
@@ -134,19 +161,21 @@ public class DiaryRepositoryTests {
     PageResultDTO<DiaryDTO, Diary> resultDTO = diaryService.getDiaryPostList(requestDTO);
     log.info("Search Result :::: " + resultDTO);
   }
+=======
+>>>>>>> 3e2119acf2e3ecd47958869726e0c0cfcefb7cc0
 
   // 마이 다이어리 리스트
-  @Test
-  public void testGetMyDiaryPostList() {
-    ArrayList<String> arrList = new ArrayList<String>();
-    arrList.add("test");
-    arrList.add("1");
-    PageRequestDTO requestDTO = PageRequestDTO.builder()
-        .page(1).size(10).type("t")
-        .tagList(arrList).sort("dino").writer("2@2.2").keyword("테스트").build();
-    PageResultDTO<DiaryDTO, Diary> resultDTO = mdService.getMyDiaryPostList(requestDTO);
-    log.info("Search Result :::: " + resultDTO);
-  }
+  // @Test
+  // public void testGetMyDiaryPostList() {
+  //   ArrayList<String> arrList = new ArrayList<String>();
+  //   arrList.add("test");
+  //   arrList.add("1");
+  //   PageRequestDTO requestDTO = PageRequestDTO.builder()
+  //       .page(1).size(10).type("t")
+  //       .tagList(arrList).sort("dino").writer("2@2.2").keyword("테스트").build();
+  //   PageResultDTO<DiaryDTO, Diary> resultDTO = mdService.getMyDiaryPostList(requestDTO);
+  //   log.info("Search Result :::: " + resultDTO);
+  // }
 
   // 모든 태그리스트 출력
   @Test

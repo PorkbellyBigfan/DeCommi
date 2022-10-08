@@ -35,7 +35,10 @@ public interface DiaryService {
     DiaryDTO getDiaryPostByDino(Long dino);
 
     PageResultDTO<DiaryDTO, Diary> getDiaryPostList(PageRequestDTO requestDTO);
-    // 추가예정
+
+    // 결국 태그 검색 구현 못함
+    // HashMap<String, Object> getSearchDiaryPostList(PageRequestDTO requestDTO);
+
     PageResultDTO<DiaryDTO, Diary> getDiaryPostListByTagName(PageRequestDTO requestDTO, String tagName);
     
     String registerReply(ReplyDTO dto);

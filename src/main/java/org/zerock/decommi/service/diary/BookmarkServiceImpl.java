@@ -32,7 +32,7 @@ public class BookmarkServiceImpl implements BookmarkService {
         List<DiaryDTO> result = bookmarkRepository.getList(dino).get().stream()
                 .map((Function<? super Bookmark, ? extends DiaryDTO>) v -> {
                     DiaryDTO list = diaryService.entityToDTO(diaryRepository.getByDino(v.getDino()));
-                    member.add(memberService.entityToDTO(memberRepository.findByEmail(list.getWriter()).get()));
+                    member.add(memberService.entityToDTO(memberRepository.findByUserId(list.getWriter()).get()));
                     return list;
                 }).collect(Collectors.toList());
 

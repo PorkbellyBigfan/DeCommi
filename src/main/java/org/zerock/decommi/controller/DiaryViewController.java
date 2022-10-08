@@ -37,21 +37,9 @@ public class DiaryViewController {
 
   @RequestMapping(value = "/list", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<DiaryDTO>> getDiaryList(@RequestBody PageRequestDTO dto) {
-    // <String> type : null 값이면 검색조건없이 모든 게시글 리스트 반환,
-    // <String> type : 's'를 보내주면 검색조건 결과 만족하는 리스트 반환
-    // <String> keyword : 검색문자열 title, 또는 content에 해당 문자열이 들어있는 결과 리스트 반환
-    // <String> keyword : 없을시 반환안함.
-    // List<String> tagList : 게시글에 해당 태그가 포함된 결과반환 여러개가 될 수 있고 하나가 될 수 있다. 해당 태그가
-    // 하나라도 존재하는 결과 반환
-    //
-    // log.info("Controller Class 프론트에서 보내주는 검색조건 dto:::::" + dto);
-    log.info("Controller dto tagList :::::::::: " + dto.getTagList());
-    log.info("Controller dto type :::::::::: " + dto.getType());
-    log.info("Controller dto keyword ::::::::: " + dto.getKeyword());
-    PageRequestDTO.builder().page(dto.getPage()).size(5).type(dto.getType()).keyword(dto.getKeyword())
-        .tagList(dto.getTagList())
-        .build();
+    PageRequestDTO.builder().page(dto.getPage()).size(5).type(dto.getType()).keyword(dto.getKeyword()).build();
     PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostList(dto);
+<<<<<<< HEAD
     // log.info(result);
     // result.getDtoList().forEach(v -> {
     // log.info(v.getTitle());
@@ -61,6 +49,31 @@ public class DiaryViewController {
   }
 
   // 태그를 눌렀을때 그 해당 태그를 포함하고있는 게시글 리스트반환 여기서 String tagName은 해당 태그의 tagName임.
+=======
+    log.info("===============================");
+    // log.info(" controller class dto::::"+dto);
+    log.info("===============================");
+    return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
+  }
+
+  // 구현 못함
+  // @RequestMapping(value = "/list/search", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  // public ResponseEntity<HashMap<String, Object>> getSearchDiaryList(@RequestBody PageRequestDTO dto) {
+  //   HashMap<String, Object> result = diaryService.getSearchDiaryPostList(dto);
+  //   log.info("===============================");
+  //   log.info("controller class dto :::"+dto);
+  //   log.info("dto's type ::: "+dto.getType());
+  //   // log.info("controller class result :::"+result);
+  //   log.info("result ' s dto ::: "+ result.get("dto"));
+  //   log.info("result ' s page ::: "+ result.get("page"));
+  //   log.info("result ' s size ::: "+ result.get("totalPage"));
+  //   log.info("===============================");
+  //   return new ResponseEntity<>(result,HttpStatus.OK);
+  //   // return null;
+  // }
+
+  //태그를 눌렀을때 그 해당 태그를 포함하고있는 게시글 리스트반환 여기서 String tagName은 해당 태그의 tagName임.
+>>>>>>> 3e2119acf2e3ecd47958869726e0c0cfcefb7cc0
   @RequestMapping(value = "/list/bytagname", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<DiaryDTO>> getDiaryLisyByTagName(@RequestBody PageRequestDTO dto, String tagName) {
 
@@ -72,6 +85,7 @@ public class DiaryViewController {
     return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
   }
 
+<<<<<<< HEAD
   @RequestMapping(value = "/list/search", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<DiaryDTO>> getSearchDiaryList(@RequestBody PageRequestDTO dto) {
     // <String> type : null 값이면 검색조건없이 모든 게시글 리스트 반환,
@@ -92,11 +106,15 @@ public class DiaryViewController {
     return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
   }
 
+=======
+>>>>>>> 3e2119acf2e3ecd47958869726e0c0cfcefb7cc0
   @RequestMapping(value = "/read/{dino}", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Object> DiaryRead(@ModelAttribute("dino") Long dino) {
     HashMap<String, Object> result = new HashMap<>();
     DiaryDTO diaryPost = diaryService.getDiaryPostByDino(dino);
+    log.info("=======================================");
     log.info("diaryPost" + diaryPost);
+    log.info("=======================================");
     result.put("diaryPost", diaryPost);
     return new ResponseEntity<>(result, HttpStatus.OK);
   }

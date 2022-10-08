@@ -41,6 +41,17 @@ public class MemberServiceImpl implements MemberService {
     }
     return dto;
   }
+  @Override
+  public MemberDTO idCheck(String id) {
+    log.info("idCheck   : " + idCheck(id));
+    MemberDTO dto = null; // 기존에 있던 dto 털어주기
+    Optional<Member> result = repository.findByUserId(id);// 아이디가 기존에 있던 것인지 체크
+    if (result.isPresent()) {
+      Member member = result.get();
+      dto = entityToDTO(member); // 만약 아이디가 존재한다면 기존의 데이터 가져오기
+    }
+    return dto;
+  }
 
   @Override
   public MemberDTO getMemberDTO(String email) {
