@@ -57,8 +57,6 @@ public class DiaryRepositoryTests {
   @Autowired
   LikeTagListService likeTagListService;
 
-
-
   @Test
   public void insertDiaryDummies() {
     IntStream.rangeClosed(1, 10).forEach(i -> {
@@ -116,6 +114,14 @@ public class DiaryRepositoryTests {
     });
   }
 
+  @Test
+  public void testGetDiaryPostListByTagName() {
+    PageRequestDTO dto = PageRequestDTO.builder().page(1).size(10).build();
+    String tagName = "1";
+    PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostListByTagName(dto, tagName);
+    log.info(result);
+  }
+
   // 다이어리 리스트
   @Test
   public void testGetDiaryPostList() {
@@ -150,8 +156,8 @@ public class DiaryRepositoryTests {
 
   // @Test
   // public void getAllLikeTagListByMid() {
-  //   Member member = Member.builder().mid(3L).build();
-  //   log.info(likeTagListRepository.getAllLikeTagListByMid(member));
+  // Member member = Member.builder().mid(3L).build();
+  // log.info(likeTagListRepository.getAllLikeTagListByMid(member));
 
   // }
 
@@ -252,13 +258,13 @@ public class DiaryRepositoryTests {
   }
 
   @Test
-  void testEditLikeTagList(){
-    
-  }
-  @Test
-  void testGetLikeTagList(){
-    log.info(likeTagListService.getLikeTagList("porkbellyweb@gmail.com"));
+  void testEditLikeTagList() {
+
   }
 
+  @Test
+  void testGetLikeTagList() {
+    log.info(likeTagListService.getLikeTagList("porkbellyweb@gmail.com"));
+  }
 
 }
