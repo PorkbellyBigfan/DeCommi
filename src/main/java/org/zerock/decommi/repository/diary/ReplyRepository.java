@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.zerock.decommi.entity.diary.Diary;
@@ -53,4 +54,10 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
     // count(r) from Reply r where diary_dino=:dino order by reply_group asc,
     // reply_order asc, reply_depth desc ")
     // Page<Reply> getReplyPageList(Pageable pageable, Long dino);
+
+    // 작성자 mid 로 댓글 삭제
+    @Modifying
+    @Query("delete from Reply r where member_mid=:mid ")
+    void deleteReplyByMid(Long mid);
+
 }

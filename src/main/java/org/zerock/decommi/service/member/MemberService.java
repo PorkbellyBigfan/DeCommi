@@ -18,12 +18,12 @@ public interface MemberService {
     List<MemberDTO> getList(); // 멤버 리스트 조회
 
     MemberDTO emailCheck(String email); // 이메일 체크
+
     MemberDTO idCheck(String id); // 아이디 체크
-    
-    //비밀번호확인
+
+    // 비밀번호확인
     Boolean pwCheck(String email, String pw);
 
-    
     // String findId(MemberDTO id); //아이디 찾기
     String signUp(MemberDTO dto); // 회원가입
 
@@ -33,8 +33,7 @@ public interface MemberService {
 
     Boolean changePw(Setpw vo); // 비밀번호 변경
 
-    PageResultDTO<MemberDTO, Member> getPageList(PageRequestDTO dto);
-    // void removeUuid(String uuid); //파일 고유아이디 삭제
+    Boolean deleteMember(MemberDTO dto);
 
     default MemberDTO entityToDTO(Member member) {
         MemberDTO memberDTO = MemberDTO.builder()
