@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.Reply;
 import org.zerock.decommi.entity.member.Member;
@@ -57,6 +58,7 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
     // 작성자 mid 로 댓글 삭제
     @Modifying
+    @Transactional
     @Query("delete from Reply r where member_mid=:mid ")
     void deleteReplyByMid(Long mid);
 

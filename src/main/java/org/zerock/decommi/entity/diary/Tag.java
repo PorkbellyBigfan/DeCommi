@@ -1,5 +1,7 @@
 package org.zerock.decommi.entity.diary;
 
+import java.util.Optional;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,12 +38,6 @@ public class Tag extends BaseEntity {
     @Column(nullable = false)
     private String tagName;
 
-    // // 하위태그를 위한 컬럼
-    // @Column(nullable = false)
-    // private boolean isSubTag;
-    // @Column(nullable = false)
-    // private Long tagGroup;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diary_dino", referencedColumnName = "dino")
     private Diary dino;
@@ -49,7 +45,8 @@ public class Tag extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    public void updateDiary(Diary tagList) {
+    public void updateDiary(Diary tagList, Member member) {
         this.dino = tagList;
+        this.member = member;
     }
 }

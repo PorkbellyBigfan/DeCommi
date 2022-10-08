@@ -37,7 +37,7 @@ public class DiaryViewController {
 
   @RequestMapping(value = "/list", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<DiaryDTO>> getDiaryList(@RequestBody PageRequestDTO dto) {
-    PageRequestDTO.builder().page(dto.getPage()).size(5).search(dto.isSearch()).keyword(dto.getKeyword()).build();
+    PageRequestDTO.builder().page(dto.getPage()).size(5).keyword(dto.getKeyword()).build();
     PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostList(dto);
     log.info("===============================");
     log.info(" controller class dto::::" + dto);

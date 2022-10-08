@@ -22,6 +22,7 @@ import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.entity.member.QMember;
 import org.zerock.decommi.repository.diary.DiaryRepository;
 import org.zerock.decommi.repository.diary.ReplyRepository;
+import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.service.diary.DiaryService;
 import org.zerock.decommi.vo.Findpw;
@@ -37,7 +38,7 @@ public class MemberServiceImpl implements MemberService {
   private final MemberRepository repository;
   private final DiaryRepository diaryRepository;
   private final ReplyRepository replyRepository;
-  private final DiaryService diaryService;
+  private final TagRepository tagRepository;
   private final PasswordEncoder encoder;
   // @PersistenceContext
   // EntityManager em;
@@ -158,8 +159,9 @@ public class MemberServiceImpl implements MemberService {
     Optional<Member> checkMember = repository.findByMid(dto.getMid());
     log.info("탈퇴하려고하는 멤버의 entity : " + checkMember);
     if (checkMember.isPresent()) {
-      diaryRepository.deleteDiaryByWriter(dto.getId());
+      tagRepository.deleteTagByMid(dto.getMid());
       replyRepository.deleteReplyByMid(dto.getMid());
+      diaryRepository.deleteDiaryByWriter(checkMember.get().getId());
       repository.delete(checkMember.get());
       return true;
     } else {

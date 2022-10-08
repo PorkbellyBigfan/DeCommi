@@ -76,11 +76,12 @@ public class DiaryServiceImpl implements DiaryService {
         });
         log.info("result.getDino() : " + result.getDino());
         List<String> tagList = dto.getTagList();
+        Member writer = memberRepository.findByUserId2(dto.getWriter());
         tagList.forEach(new Consumer<String>() {
             @Override
             public void accept(String dto) {
                 Tag tag = tagDTOtoEntity(dto);
-                tag.updateDiary(result);
+                tag.updateDiary(result, writer);
                 tagRepository.save(tag);
             }
         });
@@ -129,11 +130,12 @@ public class DiaryServiceImpl implements DiaryService {
         });
 
         // 태그가 있을때만 TagDTO를 Tag로
+        Member writer = memberRepository.findByUserId2(dto.getWriter());
         for (String i : tagList) {
             Optional<Tag> tagTemp = tagRepository.findByDinoAndTagName(modifiedDiary, i);
             if (!tagTemp.isPresent()) {
                 Tag tagResult = tagDTOtoEntity(i);
-                tagResult.updateDiary(modifiedDiary);
+                tagResult.updateDiary(modifiedDiary, writer);
                 tagRepository.save(tagResult);
             }
         }

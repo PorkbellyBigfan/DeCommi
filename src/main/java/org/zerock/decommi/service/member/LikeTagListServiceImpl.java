@@ -38,23 +38,24 @@ public class LikeTagListServiceImpl implements LikeTagListService {
   // 선호태그리스트에 태그 추가 또는 삭제
   @Override
   public Boolean editLikeTagList(String tagName, String email) {
-    log.info("사용자의 email ::" + email);
-    log.info("사용자가 선택한 tagName " + tagName);
-    LikeTagListDTO dto = LikeTagListDTO.builder().email(email).tagName(tagName).build();
-    LikeTagList entity = dtoToEntity(dto);
-    likeTagListRepository.save(entity);// 여기서 lid 생성됨
+    // log.info("사용자의 email ::" + email);
+    // log.info("사용자가 선택한 tagName " + tagName);
+    // LikeTagListDTO dto =
+    // LikeTagListDTO.builder().email(email).tagName(tagName).build();
+    // LikeTagList entity = dtoToEntity(dto);
+    // likeTagListRepository.save(entity);// 여기서 lid 생성됨
+    // log.info("dto :::::" + dto);
+    // log.info("entity :::::" + entity);
 
     Optional<LikeTagList> checkLikeTag = likeTagListRepository.checkLikeTagListByEmailAndTagName(email, tagName);
     log.info("checkLikeTag ::::: " + checkLikeTag);
     if (checkLikeTag.isPresent()) {
-      // 존재할경우 likeTagList 테이블에서 해당 태그이름의 행을 삭제
-      likeTagListRepository.delete(entity);
-      log.info("삭제하고 난 다음의 likeTagList ::::" + getLikeTagList(email));
-      return true;
+      // // 존재할경우 likeTagList 테이블에서 해당 태그이름의 행을 삭제
+      likeTagListRepository.delete(checkLikeTag.get());
+      return false;
     } else {
-      likeTagListRepository.save(entity);
+      likeTagListRepository.delete(LikeTagList.builder().email(email).tagName(tagName).build());
       log.info(getLikeTagList(email));
-      log.info("checkLikeTag" + checkLikeTag);
       return true;
     }
   }
