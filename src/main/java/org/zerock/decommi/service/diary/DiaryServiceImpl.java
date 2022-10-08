@@ -341,36 +341,28 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     private BooleanBuilder getSearch(PageRequestDTO requestDTO) {
-        String type = requestDTO.getType();
-        log.info("service class ::: requestDTO 에서 보내준 type:::" + type);
         String keyword = requestDTO.getKeyword();
         log.info("service class ::: requestDTO 에서 보내준 keyword:::" + keyword);
-        List<String> tagList = requestDTO.getTagList();
-        log.info("service class ::: requestDTO 에서 보내준 tagList:::" + tagList);
         QDiary qDiary = QDiary.diary;
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue());
-        log.info(expression);
         booleanBuilder.and(expression);
-        log.info(booleanBuilder);
-        if (type == null || type.trim().length() == 0) {
+        if (keyword == null) {
             return booleanBuilder;
         }
         BooleanBuilder conditionBuilder = new BooleanBuilder();
-        if (type.contains("s")) { // "t" stand for Tag
-            conditionBuilder
-                    .or(qDiary.title.contains(keyword))
-                    .or(qDiary.content.contains(keyword));
-            // tagList.forEach(new Consumer<String>() {
-            //     @Override
-            //     public void accept(String t) {
-            //         Optional<Tag> temp = tagRepository.findByTagName(t);
-            //         if (temp.isPresent()) {
-            //             conditionBuilder.and(qDiary.tagList.contains(temp.get()));
-            //         }
-            //     }
-            // });
-        }
+        conditionBuilder
+                .or(qDiary.title.contains(keyword))
+                .or(qDiary.content.contains(keyword));
+        // tagList.forEach(new Consumer<String>() {
+        // @Override
+        // public void accept(String t) {
+        // Optional<Tag> temp = tagRepository.findByTagName(t);
+        // if (temp.isPresent()) {
+        // conditionBuilder.and(qDiary.tagList.contains(temp.get()));
+        // }
+        // }
+        // });
         booleanBuilder.and(conditionBuilder);
         return booleanBuilder;
     }

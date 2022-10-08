@@ -60,24 +60,20 @@ public class MyDiaryServiceImpl implements MyDiaryService {
     return new PageResultDTO<>(result, fn);
   }
 
-
   // 내가 쓴 글만 확인 할 수 있어야한다.
   private BooleanBuilder getMyDiaryList(PageRequestDTO requestDTO) {
-    String type = requestDTO.getType();
     String writer = requestDTO.getWriter();
     String keyword = requestDTO.getKeyword();
     QDiary qDiary = QDiary.diary;
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.writer.eq(writer));
     booleanBuilder.and(expression);
-    if (type == null || type.trim().length() == 0) {
+    if (keyword == null) {
       return booleanBuilder;
     }
     BooleanBuilder conditionBuilder = new BooleanBuilder();
-    if (type.contains("s")) { // "t" stand for Tag
-            conditionBuilder.or(qDiary.title.contains(keyword)).or(qDiary.content.contains(keyword));
+    conditionBuilder.or(qDiary.title.contains(keyword)).or(qDiary.content.contains(keyword));
     booleanBuilder.and(conditionBuilder);
-    }
     return booleanBuilder;
   }
 
