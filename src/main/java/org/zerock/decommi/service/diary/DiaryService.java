@@ -40,7 +40,7 @@ public interface DiaryService {
     // HashMap<String, Object> getSearchDiaryPostList(PageRequestDTO requestDTO);
 
     PageResultDTO<DiaryDTO, Diary> getDiaryPostListByTagName(PageRequestDTO requestDTO, String tagName);
-    
+
     String registerReply(ReplyDTO dto);
 
     Long addNewReply(ReplyDTO dto); // 대댓글?

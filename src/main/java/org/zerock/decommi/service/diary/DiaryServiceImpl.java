@@ -76,11 +76,12 @@ public class DiaryServiceImpl implements DiaryService {
         });
         log.info("result.getDino() : " + result.getDino());
         List<String> tagList = dto.getTagList();
+        Member writer = memberRepository.findByUserId2(dto.getWriter());
         tagList.forEach(new Consumer<String>() {
             @Override
             public void accept(String dto) {
                 Tag tag = tagDTOtoEntity(dto);
-                tag.updateDiary(result);
+                tag.updateDiary(result, writer);
                 tagRepository.save(tag);
             }
         });
@@ -129,11 +130,12 @@ public class DiaryServiceImpl implements DiaryService {
         });
 
         // 태그가 있을때만 TagDTO를 Tag로
+        Member writer = memberRepository.findByUserId2(dto.getWriter());
         for (String i : tagList) {
             Optional<Tag> tagTemp = tagRepository.findByDinoAndTagName(modifiedDiary, i);
             if (!tagTemp.isPresent()) {
                 Tag tagResult = tagDTOtoEntity(i);
-                tagResult.updateDiary(modifiedDiary);
+                tagResult.updateDiary(modifiedDiary, writer);
                 tagRepository.save(tagResult);
             }
         }
@@ -341,36 +343,28 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     private BooleanBuilder getSearch(PageRequestDTO requestDTO) {
-        String type = requestDTO.getType();
-        log.info("service class ::: requestDTO 에서 보내준 type:::" + type);
         String keyword = requestDTO.getKeyword();
         log.info("service class ::: requestDTO 에서 보내준 keyword:::" + keyword);
-        List<String> tagList = requestDTO.getTagList();
-        log.info("service class ::: requestDTO 에서 보내준 tagList:::" + tagList);
         QDiary qDiary = QDiary.diary;
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue());
-        log.info(expression);
         booleanBuilder.and(expression);
-        log.info(booleanBuilder);
-        if (type == null || type.trim().length() == 0) {
+        if (keyword == null) {
             return booleanBuilder;
         }
         BooleanBuilder conditionBuilder = new BooleanBuilder();
-        if (type.contains("s")) { // "t" stand for Tag
-            conditionBuilder
-                    .or(qDiary.title.contains(keyword))
-                    .or(qDiary.content.contains(keyword));
-            // tagList.forEach(new Consumer<String>() {
-            //     @Override
-            //     public void accept(String t) {
-            //         Optional<Tag> temp = tagRepository.findByTagName(t);
-            //         if (temp.isPresent()) {
-            //             conditionBuilder.and(qDiary.tagList.contains(temp.get()));
-            //         }
-            //     }
-            // });
-        }
+        conditionBuilder
+                .or(qDiary.title.contains(keyword))
+                .or(qDiary.content.contains(keyword));
+        // tagList.forEach(new Consumer<String>() {
+        // @Override
+        // public void accept(String t) {
+        // Optional<Tag> temp = tagRepository.findByTagName(t);
+        // if (temp.isPresent()) {
+        // conditionBuilder.and(qDiary.tagList.contains(temp.get()));
+        // }
+        // }
+        // });
         booleanBuilder.and(conditionBuilder);
         return booleanBuilder;
     }

@@ -36,6 +36,10 @@ public interface MemberRepository extends JpaRepository<Member, String> {
   Optional<Member> findByUserId(String id);
 
   @EntityGraph(attributePaths = { "roleSet" }, type = EntityGraphType.LOAD)
+  @Query("select m from Member m where m.id=:id")
+  Member findByUserId2(String id);
+
+  @EntityGraph(attributePaths = { "roleSet" }, type = EntityGraphType.LOAD)
   @Query(value = "select m from Member m ", countQuery = "select count(m) from Member m")
   Page<Member> getPageList(Pageable pageable);
 

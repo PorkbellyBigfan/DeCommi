@@ -22,6 +22,7 @@ import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.service.member.LikeTagListService;
 import org.zerock.decommi.service.member.MemberService;
 import org.zerock.decommi.vo.Findpw;
+import org.zerock.decommi.vo.LikeTagList;
 import org.zerock.decommi.vo.Setpw;
 
 import lombok.RequiredArgsConstructor;
@@ -62,6 +63,7 @@ public class MemberApiController {
     mapForResult.put("result", (dto == null) ? 0L : 1L);
     return new ResponseEntity<Map<String, Long>>(mapForResult, HttpStatus.OK);
   }
+
   // 아이디
   @RequestMapping(value = "/idCheck", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Map<String, Long>> idCheck(@RequestBody Map<String, Object> mapObj) {
@@ -109,6 +111,13 @@ public class MemberApiController {
     return new ResponseEntity<>(service.findPw(vo), HttpStatus.OK);
   }
 
+  // 회원탈퇴
+  @RequestMapping(value = "/deleteMember", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Boolean> deletemember(@RequestBody MemberDTO dto) {
+    log.info("controller class :::탈퇴하려고하는 회원 dto : " + dto);
+    return new ResponseEntity<>(service.deleteMember(dto), HttpStatus.OK);
+  }
+
   // 선호태그 리스트 출력
   @RequestMapping(value = "/liketaglist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Optional<List<String>>> getLikeTagList(@RequestBody String email) {
@@ -117,7 +126,8 @@ public class MemberApiController {
 
   // 선호태그 변경
   @RequestMapping(value = "/editliketaglist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Boolean> reportingDiary(@RequestBody String tagName, String email) {
-    return new ResponseEntity<>(likeTagListService.editLikeTagList(tagName, email), HttpStatus.OK);
+  public ResponseEntity<Boolean> reportingDiary(@RequestBody LikeTagList vo) {
+    log.info("vo 변수들" + vo.getEmail() + "tagName :::" + vo.getTagName());
+    return new ResponseEntity<>(likeTagListService.editLikeTagList(vo.getTagName(), vo.getEmail()), HttpStatus.OK);
   }
 }

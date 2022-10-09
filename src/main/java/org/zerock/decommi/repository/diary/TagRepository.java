@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.member.LikeTagList;
@@ -40,5 +42,10 @@ public interface TagRepository extends JpaRepository<Tag, Long>, QuerydslPredica
 
   @Query("select distinct(t.tagName) from Tag t where t.tagName =:tagName ")
   Optional<String> checkTagName(String tagName);
+
+  @Modifying
+  @Transactional
+  @Query("delete from Tag t where member_mid=:mid ")
+  void deleteTagByMid(Long mid);
 
 }

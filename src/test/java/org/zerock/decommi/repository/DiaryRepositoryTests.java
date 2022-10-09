@@ -22,6 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.LikeTagListDTO;
+import org.zerock.decommi.dto.MemberDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.entity.diary.Diary;
@@ -35,6 +36,7 @@ import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.service.diary.DiaryService;
 // import org.zerock.decommi.service.diary.MyDiaryService;
 import org.zerock.decommi.service.member.LikeTagListService;
+import org.zerock.decommi.service.member.MemberService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -49,6 +51,8 @@ public class DiaryRepositoryTests {
   TagRepository tagRepository;
   @Autowired
   ReplyRepository replyRepository;
+  @Autowired
+  MemberService memberService;
   // @Autowired
   // MyDiaryService mdService;
   @Autowired
@@ -79,6 +83,21 @@ public class DiaryRepositoryTests {
   // PageResultDTO result = diaryService.getDiaryPostList(requestDTO);
   // log.info(result);
   // }
+
+  @Test
+  public void testFindByWriter() {
+    String writer = "deleteman@gmail.com";
+    log.info(repository.findByWriter(writer));
+  }
+
+  @Test
+  public void testDeleteDiaryPostByWriter() {
+    String writer = "deleteman@gmail.com";
+    Long mid = 12L;
+    tagRepository.deleteTagByMid(mid);
+    repository.deleteDiaryByWriter(writer);
+    log.info(repository.findByWriter(writer));
+  }
 
   @Test
   public void insertDiaryDummies() {
