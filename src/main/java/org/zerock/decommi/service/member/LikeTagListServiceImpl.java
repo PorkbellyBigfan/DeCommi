@@ -52,9 +52,10 @@ public class LikeTagListServiceImpl implements LikeTagListService {
     if (checkLikeTag.isPresent()) {
       // // 존재할경우 likeTagList 테이블에서 해당 태그이름의 행을 삭제
       likeTagListRepository.delete(checkLikeTag.get());
+      likeTagListRepository.flush();
       return false;
     } else {
-      likeTagListRepository.delete(LikeTagList.builder().email(email).tagName(tagName).build());
+      likeTagListRepository.save(LikeTagList.builder().email(email).tagName(tagName).build());
       log.info(getLikeTagList(email));
       return true;
     }
