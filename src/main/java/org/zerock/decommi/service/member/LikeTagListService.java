@@ -22,7 +22,8 @@ public interface LikeTagListService {
   // 추가의 경우 문제가 생길 것 같다. 태그 테이블(DB)에 존재하지 않는 태그를 선호태그로 추가하려는 걸 막을 수 없다.
 
   Boolean editLikeTagList(String tagName, String email);
-  Optional<List<String>>getLikeTagList(String email); //선호태그리스트가 null 값일 수도 있으니까 optional에다 집어 넣음
+
+  List<String> getLikeTagList(String email); // 선호태그리스트가 null 값일 수도 있으니까 optional에다 집어 넣음
 
   // 선호태그리스트
   default LikeTagList dtoToEntity(LikeTagListDTO dto) {

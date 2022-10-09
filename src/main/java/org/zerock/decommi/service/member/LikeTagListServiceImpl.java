@@ -26,12 +26,15 @@ public class LikeTagListServiceImpl implements LikeTagListService {
   private final TagRepository tagRepository;
 
   @Override
-  public Optional<List<String>> getLikeTagList(String email) {
-    Optional<List<String>> result = likeTagListRepository.getLikeTagList(email);
-    if (result.isPresent()) {
-      return result;
-    } else {
+  public List<String> getLikeTagList(String email) {
+    log.info("service class email :::" + email);
+    List<String> result = likeTagListRepository.getLikeTagList(email);
+    log.info("result ::: " + result);
+    // log.info("result.get() ::: " + result.get());
+    if (result == null) {
       return null;
+    } else {
+      return result;
     }
   }
 

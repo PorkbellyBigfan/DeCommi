@@ -50,10 +50,15 @@ public class Diary extends BaseEntity {
     @Column(nullable = false)
     private boolean replyYN; // 댓글 허용여부
 
+    // private Long replyCnt;
+    // private Long bookmarkCnt;
+    // private Long reportCnt;
+    // private Long heartCnt;
+
     @Builder.Default
     @OneToMany(mappedBy = "dino", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Tag> tagList = new ArrayList<>();
-    
+
     @Builder.Default
     @OneToMany(mappedBy = "dino", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Reply> replyList = new ArrayList<>();

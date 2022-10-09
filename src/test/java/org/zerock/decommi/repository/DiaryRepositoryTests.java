@@ -85,6 +85,13 @@ public class DiaryRepositoryTests {
   // }
 
   @Test
+  public void testGetDiaryListByTagName() {
+    PageRequestDTO requestDTO = PageRequestDTO.builder().page(1).size(5).build();
+    String tagName = "은암";
+    log.info(diaryService.getDiaryPostListByTagName(requestDTO, tagName));
+  }
+
+  @Test
   public void testFindByWriter() {
     String writer = "deleteman@gmail.com";
     log.info(repository.findByWriter(writer));
@@ -286,7 +293,7 @@ public class DiaryRepositoryTests {
 
   @Test
   void testGetLikeTagList() {
-    log.info(likeTagListService.getLikeTagList("porkbellyweb@gmail.com"));
+    log.info(likeTagListService.getLikeTagList("1@1.1"));
   }
 
 }

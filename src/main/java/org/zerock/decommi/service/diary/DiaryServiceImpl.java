@@ -187,6 +187,7 @@ public class DiaryServiceImpl implements DiaryService {
         Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
             @Override
             public DiaryDTO apply(Diary t) {
+
                 return entityToDTO(t);
             }
         };
@@ -197,7 +198,7 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     public PageResultDTO<DiaryDTO, Diary> getDiaryPostListByTagName(PageRequestDTO requestDTO, String tagName) {
         Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
-        BooleanBuilder booleanBuilder = getSearchByTagName(requestDTO, tagName);
+        BooleanBuilder booleanBuilder = getSearchByTagName(tagName);
         Page<Diary> result = repository.findAll(booleanBuilder, pageable);
         Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
             @Override
@@ -369,13 +370,20 @@ public class DiaryServiceImpl implements DiaryService {
         return booleanBuilder;
     }
 
-    private BooleanBuilder getSearchByTagName(PageRequestDTO requestDTO, String tagName) {
+    private BooleanBuilder getSearchByTagName(String tagName) {
         QDiary qDiary = QDiary.diary;
         BooleanBuilder booleanBuilder = new BooleanBuilder();
+        BooleanBuilder noResult = new BooleanBuilder();
+        BooleanExpression no = qDiary.dino.eq(0L);
+        noResult.and(no);
         Optional<Tag> temp = tagRepository.findByTagName(tagName);
-        BooleanExpression expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue())
-                .and(qDiary.tagList.contains(temp.get()));
-        booleanBuilder.and(expression);
-        return booleanBuilder;
+        BooleanExpression expression;
+        if (temp.isPresent()) {
+            expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue()).and(qDiary.tagList.contains(temp.get()));
+            booleanBuilder.and(expression);
+            return booleanBuilder;
+        } else {
+            return noResult;
+        }
     }
 }

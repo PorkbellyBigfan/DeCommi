@@ -69,6 +69,10 @@ public interface DiaryService {
                 .openYN(dto.isOpenYN())
                 .replyYN(dto.isReplyYN())
                 .writer(dto.getWriter())
+                // .bookmarkCnt(dto.getBookmarkCnt())
+                // .heartCnt(dto.getHeartCnt())
+                // .replyCnt(dto.getReplyCnt())
+                // .reportCnt(dto.getReportCnt())
                 .build();
         return diary;
     }
@@ -82,6 +86,10 @@ public interface DiaryService {
                 .openYN(diary.isOpenYN())
                 .replyYN(diary.isReplyYN())
                 .writer(diary.getWriter())
+                // .bookmarkCnt(diary.getBookmarkCnt())
+                // .heartCnt(diary.getHeartCnt())
+                // .replyCnt(diary.getReplyCnt())
+                // .reportCnt(diary.getReportCnt())
                 .regDate(diary.getRegDate())
                 .build();
         return dto;
