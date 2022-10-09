@@ -86,9 +86,8 @@ public class DiaryRepositoryTests {
 
   @Test
   public void testGetDiaryListByTagName() {
-    PageRequestDTO requestDTO = PageRequestDTO.builder().page(1).size(5).build();
-    String tagName = "은암";
-    log.info(diaryService.getDiaryPostListByTagName(requestDTO, tagName));
+    PageRequestDTO requestDTO = PageRequestDTO.builder().page(1).size(5).tagName("운동").build();
+    log.info(diaryService.getDiaryPostListByTagName(requestDTO));
   }
 
   @Test

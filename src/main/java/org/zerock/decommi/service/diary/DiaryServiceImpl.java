@@ -196,9 +196,9 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Transactional
     @Override
-    public PageResultDTO<DiaryDTO, Diary> getDiaryPostListByTagName(PageRequestDTO requestDTO, String tagName) {
+    public PageResultDTO<DiaryDTO, Diary> getDiaryPostListByTagName(PageRequestDTO requestDTO) {
         Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
-        BooleanBuilder booleanBuilder = getSearchByTagName(tagName);
+        BooleanBuilder booleanBuilder = getSearchByTagName(requestDTO.getTagName());
         Page<Diary> result = repository.findAll(booleanBuilder, pageable);
         Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
             @Override

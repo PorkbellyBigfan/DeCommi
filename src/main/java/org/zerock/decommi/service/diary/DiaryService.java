@@ -39,7 +39,7 @@ public interface DiaryService {
     // 결국 태그 검색 구현 못함
     // HashMap<String, Object> getSearchDiaryPostList(PageRequestDTO requestDTO);
 
-    PageResultDTO<DiaryDTO, Diary> getDiaryPostListByTagName(PageRequestDTO requestDTO, String tagName);
+    PageResultDTO<DiaryDTO, Diary> getDiaryPostListByTagName(PageRequestDTO requestDTO);
 
     String registerReply(ReplyDTO dto);
 
