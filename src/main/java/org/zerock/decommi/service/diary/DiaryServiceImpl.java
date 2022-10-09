@@ -198,6 +198,7 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     public PageResultDTO<DiaryDTO, Diary> getDiaryPostListByTagName(PageRequestDTO requestDTO) {
         Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
+        log.info("service code  requestDTO ::::: " + requestDTO);
         BooleanBuilder booleanBuilder = getSearchByTagName(requestDTO.getTagName());
         Page<Diary> result = repository.findAll(booleanBuilder, pageable);
         Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
@@ -206,6 +207,7 @@ public class DiaryServiceImpl implements DiaryService {
                 return entityToDTO(t);
             }
         };
+        log.info("result.getSize()::::::" + result.getSize());
         return new PageResultDTO<>(result, fn);
     }
 
@@ -374,16 +376,30 @@ public class DiaryServiceImpl implements DiaryService {
         QDiary qDiary = QDiary.diary;
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         BooleanBuilder noResult = new BooleanBuilder();
-        BooleanExpression no = qDiary.dino.eq(0L);
+        BooleanExpression no = qDiary.dino.isNull();
         noResult.and(no);
-        Optional<Tag> temp = tagRepository.findByTagName(tagName);
-        BooleanExpression expression;
-        if (temp.isPresent()) {
-            expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue()).and(qDiary.tagList.contains(temp.get()));
-            booleanBuilder.and(expression);
+        Optional<List<Tag>> temp = tagRepository.findByTagName(tagName);
+        // temp.get() ==> Tag
+        if (temp.get().size() > 0) {
+            temp.get().forEach(v -> {
+                BooleanExpression expression;
+                expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue()).and(qDiary.tagList.contains(v));
+                booleanBuilder.or(expression);
+            });
             return booleanBuilder;
         } else {
+            log.info("hello");
             return noResult;
         }
+
+        // if (temp.isPresent()) {
+        // expression =
+        // qDiary.dino.gt(0L).and(qDiary.openYN.isTrue()).and(qDiary.tagList.contains(temp.get().forEach(new
+        // Conusmer<String>)));
+        // booleanBuilder.and(expression);
+        // return booleanBuilder;
+        // } else {
+        // return noResult;
+        // }
     }
 }

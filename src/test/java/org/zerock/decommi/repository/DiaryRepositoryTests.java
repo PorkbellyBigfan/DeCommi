@@ -86,7 +86,7 @@ public class DiaryRepositoryTests {
 
   @Test
   public void testGetDiaryListByTagName() {
-    PageRequestDTO requestDTO = PageRequestDTO.builder().page(1).size(5).tagName("운동").build();
+    PageRequestDTO requestDTO = PageRequestDTO.builder().page(1).size(5).tagName("이규훈").build();
     log.info(diaryService.getDiaryPostListByTagName(requestDTO));
   }
 
