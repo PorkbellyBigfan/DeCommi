@@ -38,21 +38,17 @@ public class Help extends BaseEntity {
     private String title;
     private String content;
 
-    @ManyToOne
-    @JoinColumn(name = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mid")
     private Member writer;
 
-    @ElementCollection(fetch = FetchType.LAZY)
-    @Builder.Default
-    private Set<HelpType> roleSet = new HashSet<>();
+    private String helpType;
 
-    // @Enumerated(EnumType.STRING)
-    // private HelpType helpType;
-
-    public enum HelpType {
-        NOTICE, FQA
+    public void changTitle(String title) {
+        this.title = title;
     }
 
-    
-
+    public void changContent(String content) {
+        this.content = content;
+    }
 }

@@ -1,5 +1,7 @@
 package org.zerock.decommi.dto;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,13 +11,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class HelpBoardDTO {
-    private int hbno;
+public class HelpDTO {
+    private Long hbno;
     private String title;
     private String content;
+    private Long writer;
+    private String helpType;
 
-    private Enum hbType[];
-
-    private String memberemail;
+    private LocalDateTime regDate, modDate;
 
 }
