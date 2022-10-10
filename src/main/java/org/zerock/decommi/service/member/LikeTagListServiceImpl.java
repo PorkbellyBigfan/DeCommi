@@ -28,7 +28,8 @@ public class LikeTagListServiceImpl implements LikeTagListService {
   @Override
   public List<String> getLikeTagList(String email) {
     log.info("service class email :::" + email);
-    List<String> result = likeTagListRepository.getLikeTagList(email);
+    log.info(email.substring(10, email.length() - 2));
+    List<String> result = likeTagListRepository.getLikeTagList(email.substring(10, email.length() - 2));
     log.info("result ::: " + result);
     // log.info("result.get() ::: " + result.get());
     if (result == null) {
