@@ -33,4 +33,9 @@ public class PageRequestDTO { // which page, 어떤 페이지를 요청
   public Pageable getPageable(Sort sort) {
     return PageRequest.of(page - 1, size, sort);
   }
+
+  public Pageable getPageable2(Sort sort) {
+    return PageRequest.of(page - 1, size = 10, sort);
+  }
+
 }
