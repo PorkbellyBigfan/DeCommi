@@ -27,46 +27,53 @@ public class HelpController {
     private final HelpService helpService;
 
     // token보내주기
+    // body ={page ,keyword(검색시 필요?)}
     @PostMapping(value = "/notice")
     public ResponseEntity<PageResultDTO<HelpDTO, Help>> getNoticeList(@RequestBody PageRequestDTO req) {
         log.info("PageRequest:" + req);
         return new ResponseEntity<>(helpService.getNoticeList(req), HttpStatus.OK);
     }
 
+    // token보내주기
+    // body ={page ,keyword(검색시 필요?)}
     @PostMapping(value = "/faq")
     public ResponseEntity<PageResultDTO<HelpDTO, Help>> getFAQList(@ModelAttribute("requestDTO") PageRequestDTO req) {
         log.info("PageRequest:" + req);
         return new ResponseEntity<>(helpService.getFAQList(req), HttpStatus.OK);
     }
 
-    // token보내주기
-    // Long타입으로 게시판 number 보내주기
+    // token보내주기 ,hbno 게시판번호
+    // body = {Long:hbno }
     @PostMapping(value = "/read/{hbno}")
     public ResponseEntity<HelpDTO> read(@PathVariable("hbno") Long hbno) {
         log.info("read....num: " + hbno);
         return new ResponseEntity<>(helpService.read(hbno), HttpStatus.OK);
     }
 
-    // private Long hbno;
-    // private String title;
-    // private String content;
-    // private Long writer;
-    // body = {bhno:long타입으로 게시글번호 보내주기 , title:string , content:string, writer:long
-    // }
+    // private Long hbno; 고객센터 게시글 번호
+    // private String title; 제목
+    // private String content; 내용
+    // private Long writer; 글쓴이
+
+    // body = {bhno:long 타입으로 게시글번호 보내주기 , title:string , content:string,
+    // writer:long}
     @PostMapping(value = "/Nwrite")
-    public ResponseEntity<Long> Noticeregister(@RequestBody HelpDTO dto) {
+    public ResponseEntity<Long> NoticeRegister(@RequestBody HelpDTO dto) {
         log.info("Notice register... dto: " + dto);
         Long hbno = helpService.Noticeregister(dto);
         return new ResponseEntity<>(hbno, HttpStatus.OK);
     }
 
+    // body = {bhno:long 타입으로 게시글번호 보내주기 , title:string , content:string,
+    // writer:long}
     @PostMapping(value = "/Fwrite")
-    public ResponseEntity<Long> FAQregister(@RequestBody HelpDTO dto) {
+    public ResponseEntity<Long> FAQRegister(@RequestBody HelpDTO dto) {
         log.info("QnA register... dto: " + dto);
         Long hbno = helpService.FAQregister(dto);
         return new ResponseEntity<>(hbno, HttpStatus.OK);
     }
 
+    // body = {bhno:long , writer:long} ,, help.changTitle, help.changContent 필요
     @PostMapping(value = "/modify/{hbno}", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> modify(@RequestBody HelpDTO dto) {
         log.info("modify... dto: " + dto);
@@ -74,6 +81,7 @@ public class HelpController {
         return new ResponseEntity<>("modified", HttpStatus.OK);
     }
 
+    // body = {bhno:long , writer:long}
     @PostMapping(value = "/delete/{hbno}", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> remove(@PathVariable("hbno") HelpDTO dto) {// 프론트에 주는타입 ,,@ 주소에서 받는내용(쿼리스트링)
         log.info("remove......" + dto);
