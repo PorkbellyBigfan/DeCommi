@@ -12,9 +12,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 @SpringBootApplication
 @EnableJpaAuditing
 public class DecommiApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(DecommiApplication.class, args);
 	}
-
 }

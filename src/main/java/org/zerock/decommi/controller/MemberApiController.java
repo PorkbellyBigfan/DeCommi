@@ -122,13 +122,20 @@ public class MemberApiController {
   @RequestMapping(value = "/liketaglist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<String>> getLikeTagList(@RequestBody String email) {
     log.info("controller class email" + email);
+    if (email.contains("{")) {
+      email = email.substring(10, email.length() - 2);
+    }
     return new ResponseEntity<>(likeTagListService.getLikeTagList(email), HttpStatus.OK);
   }
 
   // 선호태그 변경
   @RequestMapping(value = "/editliketaglist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Boolean> reportingDiary(@RequestBody LikeTagList vo) {
-    log.info("vo 변수들" + vo.getEmail() + "tagName :::" + vo.getTagName());
+    log.info("vo 변수들 ::: " + vo.getEmail());
+    if (vo.getEmail().contains("{")) {
+      vo.getEmail().substring(10, vo.getEmail().length() - 2);
+    }
+    log.info("tagName ::: " + vo.getTagName());
     return new ResponseEntity<>(likeTagListService.editLikeTagList(vo.getTagName(), vo.getEmail()), HttpStatus.OK);
   }
 }

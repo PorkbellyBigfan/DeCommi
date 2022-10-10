@@ -50,7 +50,6 @@ public class AdminServiceImpl implements AdminService {
     private final AdminRepository adRepository;
     private final AdminMemRepository admRepository;
     private final AdminReportRepository adrRepository;
-    private final TagRepository tagRepository;
     private final DiaryService dService;
     private final MemberService mService;
 
@@ -195,13 +194,13 @@ public class AdminServiceImpl implements AdminService {
     // 태그 리스트
     // @Override
     // public List<String> getTag(Long dino) {
-    //     Optional<List<String>> hashs = tagRepository.OptionalfindByDiarys(dino);
-    //     if (hashs.isPresent()) {
-    //         List<String> result = hashs.get();
-    //         return result;
-    //     } else {
-    //         return null;
-    //     }
+    // Optional<List<String>> hashs = tagRepository.OptionalfindByDiarys(dino);
+    // if (hashs.isPresent()) {
+    // List<String> result = hashs.get();
+    // return result;
+    // } else {
+    // return null;
+    // }
     // }
 
     // 태그 수정

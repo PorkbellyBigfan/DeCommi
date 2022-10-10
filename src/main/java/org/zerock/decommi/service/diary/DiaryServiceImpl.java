@@ -128,7 +128,6 @@ public class DiaryServiceImpl implements DiaryService {
                 fileRepository.save(file);
             }
         });
-
         // 태그가 있을때만 TagDTO를 Tag로
         Member writer = memberRepository.findByUserId2(dto.getWriter());
         for (String i : tagList) {

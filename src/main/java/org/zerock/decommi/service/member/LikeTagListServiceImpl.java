@@ -23,18 +23,20 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class LikeTagListServiceImpl implements LikeTagListService {
   private final LikeTagListRepository likeTagListRepository;
-  private final TagRepository tagRepository;
 
   @Override
   public List<String> getLikeTagList(String email) {
-    log.info("service class email :::" + email);
-    log.info(email.substring(10, email.length() - 2));
-    List<String> result = likeTagListRepository.getLikeTagList(email.substring(10, email.length() - 2));
-    log.info("result ::: " + result);
+    // log.info("service class email :::" + email);
+    // log.info(email.substring(10, email.length() - 2));
+    // if (email.contains("{")) {
+    // email = email.substring(10, email.length() - 2);
+    // }
+    List<String> result = likeTagListRepository.getLikeTagList(email);
     // log.info("result.get() ::: " + result.get());
     if (result == null) {
       return null;
     } else {
+      log.info("{ 가 없는 email : : : " + email);
       return result;
     }
   }
@@ -42,23 +44,20 @@ public class LikeTagListServiceImpl implements LikeTagListService {
   // 선호태그리스트에 태그 추가 또는 삭제
   @Override
   public Boolean editLikeTagList(String tagName, String email) {
-    // log.info("사용자의 email ::" + email);
-    // log.info("사용자가 선택한 tagName " + tagName);
-    // LikeTagListDTO dto =
-    // LikeTagListDTO.builder().email(email).tagName(tagName).build();
-    // LikeTagList entity = dtoToEntity(dto);
-    // likeTagListRepository.save(entity);// 여기서 lid 생성됨
-    // log.info("dto :::::" + dto);
-    // log.info("entity :::::" + entity);
+    log.info("email :: " + email);
+    log.info("tagName :: " + tagName);
 
     Optional<LikeTagList> checkLikeTag = likeTagListRepository.checkLikeTagListByEmailAndTagName(email, tagName);
-    log.info("checkLikeTag ::::: " + checkLikeTag);
     if (checkLikeTag.isPresent()) {
-      // // 존재할경우 likeTagList 테이블에서 해당 태그이름의 행을 삭제
+      log.info("checkLikeTag :: " + checkLikeTag.get());
+      // 존재할경우 likeTagList 테이블에서 해당 태그이름의 행을 삭제
+      log.info("Before delete List :: " + likeTagListRepository.getLikeTagList(email));
       likeTagListRepository.delete(checkLikeTag.get());
-      likeTagListRepository.flush();
+      log.info("After delete List :: " + likeTagListRepository.getLikeTagList(email));
       return false;
     } else {
+      log.info("else condition email :: " + email);
+      log.info("else condition tagName :: " + tagName);
       likeTagListRepository.save(LikeTagList.builder().email(email).tagName(tagName).build());
       log.info(getLikeTagList(email));
       return true;
