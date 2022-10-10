@@ -8,7 +8,6 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.zerock.decommi.entity.diary.Diary;
-import org.zerock.decommi.entity.member.Member;
 
 @Repository
 public interface AdminRepository extends JpaRepository<Diary, Long>, QuerydslPredicateExecutor<Diary> {

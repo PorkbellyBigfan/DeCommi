@@ -1,7 +1,5 @@
 package org.zerock.decommi.admin.controller;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -57,14 +55,15 @@ public class AdminController {
     }
 
     // 태그 리스트
-    // @RequestMapping(value = "/tagmanagement", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    // @RequestMapping(value = "/tagmanagement", method = RequestMethod.POST,
+    // consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     // public ResponseEntity<List<String>> getTag(@RequestBody TagDTO dto,
-    //         @RequestHeader(value = "tagId") Long tagId) {
-    //     if (permissionCheckingEverytime(tagId)) {
-    //         return new ResponseEntity<>(adService.getTag(dto.getTagId()), HttpStatus.OK);
-    //     } else {
-    //         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-    //     }
+    // @RequestHeader(value = "tagId") Long tagId) {
+    // if (permissionCheckingEverytime(tagId)) {
+    // return new ResponseEntity<>(adService.getTag(dto.getTagId()), HttpStatus.OK);
+    // } else {
+    // return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    // }
     // }
 
     // 태그 수정

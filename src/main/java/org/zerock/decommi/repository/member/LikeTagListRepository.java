@@ -15,7 +15,7 @@ public interface LikeTagListRepository extends JpaRepository<LikeTagList, Long> 
 
   LikeTagList getByEmail(String email);
 
-  @Query("select l.tagName from LikeTagList l where l.email=:email and l.tagName =:tagName ")
+  @Query("select distinct(l.tagName) from LikeTagList l where l.email=:email and l.tagName =:tagName ")
   Optional<LikeTagList> checkLikeTagListByEmailAndTagName(String email, String tagName);
 
   @Query("select tagName from LikeTagList l where email=:email ")

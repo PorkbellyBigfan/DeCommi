@@ -39,5 +39,4 @@ public interface TodoService {
         .build();
     return dto;
   }
-
 }
