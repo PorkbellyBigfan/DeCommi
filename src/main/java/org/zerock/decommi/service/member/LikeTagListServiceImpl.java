@@ -44,16 +44,20 @@ public class LikeTagListServiceImpl implements LikeTagListService {
   // 선호태그리스트에 태그 추가 또는 삭제
   @Override
   public Boolean editLikeTagList(String tagName, String email) {
-    log.info(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" + email);
+    log.info("email :: " + email);
+    log.info("tagName :: " + tagName);
 
     Optional<LikeTagList> checkLikeTag = likeTagListRepository.checkLikeTagListByEmailAndTagName(email, tagName);
-
     if (checkLikeTag.isPresent()) {
+      log.info("checkLikeTag :: " + checkLikeTag.get());
       // 존재할경우 likeTagList 테이블에서 해당 태그이름의 행을 삭제
-      log.info("what is checkLikeTag ::: " + checkLikeTag.get());
-      likeTagListRepository.deleteById(checkLikeTag.get().getLid());
+      log.info("Before delete List :: " + likeTagListRepository.getLikeTagList(email));
+      likeTagListRepository.delete(checkLikeTag.get());
+      log.info("After delete List :: " + likeTagListRepository.getLikeTagList(email));
       return false;
     } else {
+      log.info("else condition email :: " + email);
+      log.info("else condition tagName :: " + tagName);
       likeTagListRepository.save(LikeTagList.builder().email(email).tagName(tagName).build());
       log.info(getLikeTagList(email));
       return true;
