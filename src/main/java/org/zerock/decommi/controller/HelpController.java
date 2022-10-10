@@ -26,30 +26,6 @@ import lombok.extern.log4j.Log4j2;
 public class HelpController {
     private final HelpService helpService;
 
-    // token보내주기
-    // body ={page ,keyword(검색시 필요?)}
-    @PostMapping(value = "/notice")
-    public ResponseEntity<PageResultDTO<HelpDTO, Help>> getNoticeList(@RequestBody PageRequestDTO req) {
-        log.info("PageRequest:" + req);
-        return new ResponseEntity<>(helpService.getNoticeList(req), HttpStatus.OK);
-    }
-
-    // token보내주기
-    // body ={page ,keyword(검색시 필요?)}
-    @PostMapping(value = "/faq")
-    public ResponseEntity<PageResultDTO<HelpDTO, Help>> getFAQList(@ModelAttribute("requestDTO") PageRequestDTO req) {
-        log.info("PageRequest:" + req);
-        return new ResponseEntity<>(helpService.getFAQList(req), HttpStatus.OK);
-    }
-
-    // token보내주기 ,hbno 게시판번호
-    // body = {Long:hbno }
-    @PostMapping(value = "/read/{hbno}")
-    public ResponseEntity<HelpDTO> read(@PathVariable("hbno") Long hbno) {
-        log.info("read....num: " + hbno);
-        return new ResponseEntity<>(helpService.read(hbno), HttpStatus.OK);
-    }
-
     // private Long hbno; 고객센터 게시글 번호
     // private String title; 제목
     // private String content; 내용

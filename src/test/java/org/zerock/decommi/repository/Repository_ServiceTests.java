@@ -199,7 +199,7 @@ public class Repository_ServiceTests {
     public void insertHelp() {
         IntStream.rangeClosed(1, 20).forEach(i -> {
             Member member = Member.builder().mid(20L).build();
-            Help help = Help.builder().content("QNA" + i).title("QNA" + i).writer(member).helpType("QNA")
+            Help help = Help.builder().content("QNA" + i).title("QNA" + i).writer(member).helpType("FAQ")
                     .build();
             helpRepository.save(help);
         });
