@@ -292,7 +292,8 @@ public class DiaryRepositoryTests {
 
   @Test
   void testGetLikeTagList() {
-    log.info(likeTagListService.getLikeTagList("1@1.1"));
+    String email = "{\"email\":\"2@2.2\"}";
+    log.info(likeTagListService.getLikeTagList(email));
   }
 
 }

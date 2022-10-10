@@ -27,6 +27,7 @@ public class TodoController {
 
   @RequestMapping(value = "/list", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<TodoDTO>> getTodoList(@RequestBody PageRequestDTO dto) {
+    // 필요한값 page, size, type, keyword, writer
     PageRequestDTO.builder().page(dto.getPage()).size(dto.getSize())
         .type(dto.getType()).keyword(dto.getKeyword()).build();
     PageResultDTO<TodoDTO, Todo> result = todoService.getTodoList(dto);
