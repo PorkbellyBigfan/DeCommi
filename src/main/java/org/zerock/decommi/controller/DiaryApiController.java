@@ -51,8 +51,8 @@ public class DiaryApiController {
     private String uploadPath;
 
     @RequestMapping(value = "/write", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    // 게시글 작성 컨트롤러
     public ResponseEntity<String> register(@RequestBody DiaryDTO dto) {
-        List<String> tagList = dto.getTagList();
         return new ResponseEntity<>(diaryService.registerDiary(dto), HttpStatus.OK);
     }
 
@@ -75,20 +75,19 @@ public class DiaryApiController {
     @RequestMapping(value = "/modify/check", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DiaryDTO> CheckBeforeDiaryModify(@RequestBody DiaryDTO dto) {
         DiaryDTO diaryPost = diaryService.checkBeforeDiaryModify(dto.getDino(), dto.getWriter());
-        log.info("writer's id ::"+ dto.getWriter());
         return new ResponseEntity<>(diaryPost, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/modify/register", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> articleModify(@RequestBody DiaryDTO dto) {
         String diaryPost = diaryService.modifyDiary(dto, dto.getTagList());
-        log.info("modify/check    "+"dto::"+dto+", diaryPost's tagList "+ dto.getTagList());
+        log.info("modify/check    " + "dto::" + dto + ", diaryPost's tagList " + dto.getTagList());
         return new ResponseEntity<>(diaryPost, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> deleteDiary(@RequestBody DiaryDTO dto) {
-        log.info("controller ::: delete ::::: "+dto);
+        log.info("controller ::: delete ::::: " + dto);
         return new ResponseEntity<>(diaryService.deleteDiary(dto), HttpStatus.OK);
     }
 
@@ -162,7 +161,7 @@ public class DiaryApiController {
     public ResponseEntity<HashMap<String, Object>> replyRead(@RequestBody Reply2 reply2) {
         Pageable pageable = PageRequest.of(reply2.getReqPage(), 5);
         HashMap<String, Object> result = diaryService.getReplyListByDino(reply2.getDino(), pageable);
-        log.info("this is reply2 :::"+reply2);
+        log.info("this is reply2 :::" + reply2);
         log.info("this is result :::: " + result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class LikeTagList {
   String tagName;
   String email;
+  Boolean on;
 }

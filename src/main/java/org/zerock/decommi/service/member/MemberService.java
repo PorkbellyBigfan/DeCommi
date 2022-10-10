@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.zerock.decommi.dto.MemberDTO;
-import org.zerock.decommi.dto.PageRequestDTO;
-import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.entity.member.MemberRole;
 import org.zerock.decommi.vo.Findpw;

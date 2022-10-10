@@ -9,8 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.zerock.decommi.entity.common.BaseEntity;
-import org.zerock.decommi.entity.member.Member;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,9 +19,9 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"dino"})
+@ToString(exclude = { "dino" })
 @Getter
-public class File extends BaseEntity{
+public class File extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long fid;
@@ -35,13 +33,15 @@ public class File extends BaseEntity{
     @JoinColumn(name = "diary_dino", referencedColumnName = "dino")
     private Diary dino;
 
-    public void changeUuid(String uuid){
+    public void changeUuid(String uuid) {
         this.uuid = uuid;
     }
-    public void changeFname(String fname){
+
+    public void changeFname(String fname) {
         this.fname = fname;
     }
-    public void changeFpath(String fpath){
+
+    public void changeFpath(String fpath) {
         this.fpath = fpath;
     }
 }

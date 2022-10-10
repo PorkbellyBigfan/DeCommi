@@ -1,7 +1,5 @@
 package org.zerock.decommi.entity.diary;
 
-import java.util.Optional;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,8 +12,6 @@ import javax.persistence.Table;
 
 import org.zerock.decommi.entity.common.BaseEntity;
 import org.zerock.decommi.entity.member.Member;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

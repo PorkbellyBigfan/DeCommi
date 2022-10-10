@@ -1,12 +1,6 @@
 package org.zerock.decommi.entity;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

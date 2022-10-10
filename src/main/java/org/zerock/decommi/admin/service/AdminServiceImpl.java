@@ -39,7 +39,6 @@ import org.zerock.decommi.entity.diary.Report;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.entity.member.QAlarm;
 import org.zerock.decommi.entity.member.QMember;
-import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.service.diary.DiaryService;
 import org.zerock.decommi.service.member.MemberService;
 

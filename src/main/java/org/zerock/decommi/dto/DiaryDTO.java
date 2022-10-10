@@ -4,11 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.zerock.decommi.entity.diary.Reply;
-import org.zerock.decommi.entity.diary.Tag;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

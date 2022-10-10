@@ -1,18 +1,10 @@
 package org.zerock.decommi.repository;
 
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
-
-import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.zerock.decommi.dto.DiaryDTO;
-import org.zerock.decommi.dto.LikeTagListDTO;
-import org.zerock.decommi.dto.MemberDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
-import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.Reply;
 import org.zerock.decommi.entity.member.Member;
@@ -34,7 +22,6 @@ import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.LikeTagListRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.service.diary.DiaryService;
-// import org.zerock.decommi.service.diary.MyDiaryService;
 import org.zerock.decommi.service.member.LikeTagListService;
 import org.zerock.decommi.service.member.MemberService;
 

@@ -8,9 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.zerock.decommi.dto.LikeTagListDTO;
 import org.zerock.decommi.entity.member.LikeTagList;
-import org.zerock.decommi.entity.member.Member;
 
 @Repository
 public interface LikeTagListRepository extends JpaRepository<LikeTagList, Long> {

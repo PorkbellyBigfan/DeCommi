@@ -3,11 +3,8 @@ package org.zerock.decommi.entity.member;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,8 +28,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = { "receiver", "sender", "bookmarkId", "diary", "hbno",
-        "heartId" })
+@ToString(exclude = { "receiver", "sender", "bookmarkId", "diary", "hbno" })
 @Table(name = "d_alarm")
 public class Alarm extends BaseEntity {
     @Id

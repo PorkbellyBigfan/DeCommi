@@ -1,20 +1,22 @@
 package org.zerock.decommi.service;
 
-import java.util.List;
-
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.dto.PageResultDTO;
 import org.zerock.decommi.dto.TodoDTO;
 import org.zerock.decommi.entity.member.Todo;
 
 public interface TodoService {
-  String registerTodo(TodoDTO dto); // TODO 등록
+  // TODO 등록
+  String registerTodo(TodoDTO dto);
 
-  Boolean deleteTodo(TodoDTO dto); // TODO 삭제
+  // TODO 삭제
+  Boolean deleteTodo(TodoDTO dto);
 
-  Boolean editTodo(TodoDTO dto); // TODO 자체를 변경(제목, 내용)
+  // TODO 자체를 변경(제목, 내용)
+  Boolean editTodo(TodoDTO dto);
 
-  Boolean checkUncheckTodo(TodoDTO dto); // TODO 상태변경
+  // TODO 상태변경
+  Boolean checkUncheckTodo(TodoDTO dto);
 
   PageResultDTO<TodoDTO, Todo> getTodoList(PageRequestDTO requestDTO);
 

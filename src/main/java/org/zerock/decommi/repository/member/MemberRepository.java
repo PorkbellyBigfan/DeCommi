@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.transaction.annotation.Transactional;
-import org.zerock.decommi.dto.MemberDTO;
 import org.zerock.decommi.entity.member.Member;
 
 public interface MemberRepository extends JpaRepository<Member, String> {

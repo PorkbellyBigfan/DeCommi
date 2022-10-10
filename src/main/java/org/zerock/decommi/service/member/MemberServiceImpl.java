@@ -4,27 +4,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.zerock.decommi.dto.MemberDTO;
-import org.zerock.decommi.dto.PageRequestDTO;
-import org.zerock.decommi.dto.PageResultDTO;
-import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.member.Member;
-import org.zerock.decommi.entity.member.QMember;
 import org.zerock.decommi.repository.diary.DiaryRepository;
 import org.zerock.decommi.repository.diary.ReplyRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
-import org.zerock.decommi.service.diary.DiaryService;
 import org.zerock.decommi.vo.Findpw;
 import org.zerock.decommi.vo.Setpw;
 

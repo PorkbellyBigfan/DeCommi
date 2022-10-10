@@ -3,22 +3,15 @@ package org.zerock.decommi.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.zerock.decommi.dto.LikeTagListDTO;
 import org.zerock.decommi.dto.MemberDTO;
-import org.zerock.decommi.dto.PageRequestDTO;
-import org.zerock.decommi.dto.PageResultDTO;
-import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.service.member.LikeTagListService;
 import org.zerock.decommi.service.member.MemberService;
 import org.zerock.decommi.vo.Findpw;
@@ -130,12 +123,18 @@ public class MemberApiController {
 
   // 선호태그 변경
   @RequestMapping(value = "/editliketaglist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Boolean> reportingDiary(@RequestBody LikeTagList vo) {
+  public ResponseEntity<Boolean> editLikeTagList(@RequestBody LikeTagList vo) {
+    // ==============================================================
+    // 컨트롤러 이름 변경함 reportingDiary 에서 editLikeTagList로!!!!
+    // ==============================================================
+    // 추가된 변수 vo 안에 담겨있는 on 이라는 Boolean 타입 변수.
+    // likeTagList 에 태그가 추가될때 해당 태그
     log.info("vo 변수들 ::: " + vo.getEmail());
     if (vo.getEmail().contains("{")) {
       vo.getEmail().substring(10, vo.getEmail().length() - 2);
     }
     log.info("tagName ::: " + vo.getTagName());
-    return new ResponseEntity<>(likeTagListService.editLikeTagList(vo.getTagName(), vo.getEmail()), HttpStatus.OK);
+    return new ResponseEntity<>(likeTagListService.editLikeTagList(vo.getTagName(), vo.getEmail(), vo.getOn()),
+        HttpStatus.OK);
   }
 }
