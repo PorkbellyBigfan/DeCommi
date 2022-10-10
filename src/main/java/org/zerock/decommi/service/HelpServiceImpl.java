@@ -52,7 +52,7 @@ public class HelpServiceImpl implements HelpService {
     @Override
     public PageResultDTO<HelpDTO, Help> getNoticeList(PageRequestDTO requestDTO) {
         log.info("service requestDTO===================" + requestDTO);
-        Pageable pageable = requestDTO.getPageable(Sort.by("hbno").descending());
+        Pageable pageable = requestDTO.getPageable2(Sort.by("hbno").descending());
         log.info("service pageable ===========================" + pageable);
         BooleanBuilder booleanBuilder = getSearch(requestDTO);
         Page<Help> result = helpRepository.getNoticeList(pageable, booleanBuilder);
@@ -70,7 +70,7 @@ public class HelpServiceImpl implements HelpService {
 
     @Override
     public PageResultDTO<HelpDTO, Help> getFAQList(PageRequestDTO requestDTO) {
-        Pageable pageable = requestDTO.getPageable(Sort.by("hbno").descending());
+        Pageable pageable = requestDTO.getPageable2(Sort.by("hbno").descending());
         BooleanBuilder booleanBuilder = getSearch(requestDTO);
         Page<Help> result = helpRepository.getFAQList(pageable, booleanBuilder);
         Function<Help, HelpDTO> fn = (entity -> entityToDTO(entity));
