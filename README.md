@@ -9,8 +9,8 @@
 
 [Decommi 상세설명 페이지](https://ordinary-bassoon-efe.notion.site/Decommi-54b1b7830f8545199a9f7c912e01f4bb)
 
-
-
+  
+  
 
 ### 1.기획의도
 
@@ -23,7 +23,8 @@
 이러한 사회적 문제에서 착안해 기존의 SNS에서 피로감을 느낀 사람들을 목표로 개발한 폐쇄형 SNS 서비스다.
 
 
-
+  
+    
 
 ### 2.개발 기간
 
@@ -44,9 +45,9 @@
 
 - 회원별 선호 태그리스트 기능을 추가하여 선호하는 태그들이 포함되어있는 게시글들에 접근이 용이하게 하였습니다.
 
+  
 
-
-
+  
 ### 4.개발 기술
 
 | Frontend | Vue.js | SASS | Bootstrap | 
@@ -55,21 +56,21 @@
 | 배포 |  |  |  | 
 | 협업 | Discord | GitHub |   | 
 
-
-
+  
+  
 
 ### 5.기술 상세 설명
 https://ordinary-bassoon-efe.notion.site/Decommi-54b1b7830f8545199a9f7c912e01f4bb
 위 링크에 상세 설명이 되어있습니다.
-
-
+  
+  
 
 ### 6.개발환경
 https://ordinary-bassoon-efe.notion.site/Decommi-54b1b7830f8545199a9f7c912e01f4bb
 위 링크에 상세 설명이 되어있습니다.
 
-
-
+  
+  
 
 ### 8.멤버구성
 
@@ -81,4 +82,4 @@ https://ordinary-bassoon-efe.notion.site/Decommi-54b1b7830f8545199a9f7c912e01f4b
 | 이준호 | 백앤드 | https://github.com/ZOONo-lee | zoonogi@naver.com 
 
 
-
+  
