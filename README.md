@@ -1,6 +1,10 @@
+
+
 # DeCommi
 ![title](https://user-images.githubusercontent.com/102857959/194991265-d3ffa7c8-3347-48d5-be27-325cf2396152.jpg)
 
+##[Decommi 홈페이지]()
+###[Decommi 상세설명 페이지](https://ordinary-bassoon-efe.notion.site/Decommi-54b1b7830f8545199a9f7c912e01f4bb)
 ### 1.기획의도
 
 코로나시국 이후 SNS의존성이 더 높아지면서, 우리의 일상생활에 SNS가 가지는 비중이 더욱 높아졌다. 하지만 그 부작용으로 개인의 권리 역시 외부의 여러 요인들로 인하여 쉽게 침해 당하기 시작했다.
