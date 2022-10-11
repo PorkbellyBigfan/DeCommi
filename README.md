@@ -1,5 +1,5 @@
 # DeCommi
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d4545522-13f6-4e7f-abe9-07d369d40d33/Untitled.png)
+![title](https://user-images.githubusercontent.com/102857959/194991265-d3ffa7c8-3347-48d5-be27-325cf2396152.jpg)
 
 ### 기획의도
 
@@ -13,7 +13,7 @@
 
 ### 개발 기간
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2ede3fa3-5472-4087-ab84-8abc01239246/Untitled.png)
+![개발일정](https://user-images.githubusercontent.com/102857959/194991254-a464eea8-732a-4487-a23f-3a5a0c1fd67a.jpg)
 
 ### 기능 요약
 
@@ -100,13 +100,13 @@ false로 지정하면 tomcat의 오류 페이지로 로딩이 된다 |
 
 ### 데이터베이스 구조
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d97ab9b1-79d9-49a7-9377-44c3c93d4ad5/Untitled.png)
+![DB_ERD](https://user-images.githubusercontent.com/102857959/194991259-5973f924-e4b0-4e31-89f6-7aab8d71a622.jpg)
 
 ### 멤버구성
 
 | 이름 | 역할 | Github | 이메일 |
 | --- | --- | --- | --- |
-| 김형준 | 팀장,백앤드 | https://github.com/PorkbellyBigfan | porkbellyweb@gmail.com |
-| 이태일 | 프론트앤드 | https://github.com/k1k2brz | refreshandreset@gmail.com |
-| 박상민 | 백앤드 | https://github.com/psm418 | tkdalsdk11@gmail.com |
-| 이준호 | 백앤드 | https://github.com/ZOONo-lee | zoonogi@naver.com |
+| 김형준 | 팀장,백앤드 | https://github.com/PorkbellyBigfan | porkbellyweb@gmail.com
+| 이태일 | 프론트앤드 | https://github.com/k1k2brz | refreshandreset@gmail.com
+| 박상민 | 백앤드 | https://github.com/psm418 | tkdalsdk11@gmail.com
+| 이준호 | 백앤드 | https://github.com/ZOONo-lee | zoonogi@naver.com
