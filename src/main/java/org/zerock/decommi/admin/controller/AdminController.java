@@ -1,5 +1,7 @@
 package org.zerock.decommi.admin.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -138,8 +140,8 @@ public class AdminController {
     // 신고 글 삭제
     @RequestMapping(value = "/reportmanagement/delete", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> reportdelete(@RequestBody ReportDTO dto,
-            @RequestHeader(value = "reid") Long reid) {
-        if (permissionCheckingEverytime(reid)) {
+            @RequestHeader(value = "mid") Long mid) {
+        if (permissionCheckingEverytime(mid)) {
             return new ResponseEntity<>(adService.reportDelete(dto), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);

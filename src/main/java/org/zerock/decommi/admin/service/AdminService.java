@@ -1,5 +1,7 @@
 package org.zerock.decommi.admin.service;
 
+import java.util.List;
+
 import org.zerock.decommi.admin.dto.PageRequestDTO;
 import org.zerock.decommi.admin.dto.PageResultDTO;
 import org.zerock.decommi.dto.DiaryDTO;
