@@ -50,4 +50,4 @@ https://ordinary-bassoon-efe.notion.site/Decommi-54b1b7830f8545199a9f7c912e01f4b
 | 김형준 | 팀장,백앤드 | https://github.com/PorkbellyBigfan | porkbellyweb@gmail.com
 | 이태일 | 프론트앤드 | https://github.com/k1k2brz | refreshandreset@gmail.com
 | 박상민 | 백앤드 | https://github.com/psm418 | tkdalsdk11@gmail.com
-| 이준호 | 백앤드 | https://github.com/ZOONo-lee | zoonogi@naver.com
+| 이준호 | 백앤드 | https://github.com/ZOONo-lee | zoonogi@naver.com 
