@@ -30,10 +30,10 @@
 ### 4.개발 기술
 
 | Frontend | Vue.js | SASS | Bootstrap | 
-| --- | --- | --- | --- | --- |
-| Backend | SpringBoot | MariaDB | 
-| 배포 |  |  | 
-| 협업 | Discord | GitHub | 
+| --- | --- | --- | --- |
+| Backend | SpringBoot | MariaDB |  |  
+| 배포 |  |  |  | 
+| 협업 | Discord | GitHub |   | 
 
 ### 5.기술 상세 설명
 https://ordinary-bassoon-efe.notion.site/Decommi-54b1b7830f8545199a9f7c912e01f4bb
