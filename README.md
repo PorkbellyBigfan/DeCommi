@@ -1,6 +1,7 @@
 
 
-# DeCommi
+# DeCommi :: Social Network Privacy Diary
+
 ![title](https://user-images.githubusercontent.com/102857959/194991265-d3ffa7c8-3347-48d5-be27-325cf2396152.jpg)
 
 [Decommi 홈페이지]()
