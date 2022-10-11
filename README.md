@@ -39,6 +39,7 @@ Controller/ReplyController
 
 ㅡAdmin/contollerㅡ
 -AdminController.java 파일 추가   (ㅇ)
+
 -ㅇ기능 추가{
 - 다이어리 리스트, 삭제   (ㅇ)	
 - // {"/diarymanagement" (리스트), "/diarymanagement/delete" (삭제)}
