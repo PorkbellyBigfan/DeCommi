@@ -19,7 +19,7 @@ public interface HelpRepository extends JpaRepository<Help, Long>, QuerydslPredi
     // getList 타입별로 만들기,, where절에 타입 확인
 
     @Query("select hp from Help hp where hp.hbno=:hbno and mid=:mid")
-    Optional<Help> getHelpByMid(Long hbno, Long mid);
+    Optional<Help> getHelpByMid(Long mid, Long hbno);
 
     @Query("select hp from Help hp where help_type='NOTICE' ")
     Page<Help> getNoticeList(Pageable pageable, BooleanBuilder booleanBuilder);

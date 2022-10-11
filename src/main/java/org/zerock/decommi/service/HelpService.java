@@ -17,9 +17,9 @@ public interface HelpService {
 
     HelpDTO read(Long hbno);
 
-    void modifyHelp(HelpDTO dto);
+    String modifyHelp(HelpDTO dto);
 
-    void deleteHelp(HelpDTO dto);
+    String deleteHelp(HelpDTO dto);
 
     default Help dtoToEntity(HelpDTO dto) {
         Help help = Help.builder()
