@@ -24,7 +24,6 @@ import com.querydsl.jpa.impl.JPADeleteClause;
 import org.zerock.decommi.admin.repository.AdminMemRepository;
 import org.zerock.decommi.admin.repository.AdminReportRepository;
 import org.zerock.decommi.admin.repository.AdminRepository;
-// import org.zerock.decommi.admin.repository.AdminRoleSetRepository;
 import org.zerock.decommi.admin.dto.PageRequestDTO;
 import org.zerock.decommi.admin.dto.PageResultDTO;
 import org.zerock.decommi.dto.DiaryDTO;
@@ -40,9 +39,9 @@ import org.zerock.decommi.entity.diary.Report;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.entity.member.QAlarm;
 import org.zerock.decommi.entity.member.QMember;
-import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.service.diary.DiaryService;
 import org.zerock.decommi.service.member.MemberService;
+// import org.zerock.decommi.repository.diary.TagRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -51,10 +50,8 @@ public class AdminServiceImpl implements AdminService {
     private final AdminRepository adRepository;
     private final AdminMemRepository admRepository;
     private final AdminReportRepository adrRepository;
-    private final TagRepository tagRepository;
     private final DiaryService dService;
     private final MemberService mService;
-    // private final AdminRoleSetRepository adRoleRepository;
 
     @PersistenceContext
     EntityManager em;
@@ -163,10 +160,10 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional
     public Boolean UserDeleter(MemberDTO dto) {
-        QMember mmbr = new QMember("mmbr");
+        // QMember mmbr = new QMember("mmbr");
         QReport qReport = new QReport("report");
 
-        JPADeleteClause deleteUser = new JPADeleteClause(em, mmbr);
+        // JPADeleteClause deleteUser = new JPADeleteClause(em, mmbr);
         JPADeleteClause deleteReport = new JPADeleteClause(em, qReport);
         Optional<List<Diary>> diarylist = adRepository.getDiaryListByUserid(dto.getId());
         if (diarylist.isPresent()) {

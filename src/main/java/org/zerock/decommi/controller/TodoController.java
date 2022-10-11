@@ -16,11 +16,9 @@ import org.zerock.decommi.entity.member.Todo;
 import org.zerock.decommi.service.TodoService;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequestMapping("/todo/")
-@Log4j2
 @RequiredArgsConstructor
 public class TodoController {
   private final TodoService todoService;

@@ -134,7 +134,7 @@ public class MemberApiController {
       vo.getEmail().substring(10, vo.getEmail().length() - 2);
     }
     log.info("tagName ::: " + vo.getTagName());
-    return new ResponseEntity<>(likeTagListService.editLikeTagList(vo.getTagName(), vo.getEmail(), vo.getOn()),
+    return new ResponseEntity<>(likeTagListService.editLikeTagList(vo.getTagName(), vo.getEmail()),
         HttpStatus.OK);
   }
 }

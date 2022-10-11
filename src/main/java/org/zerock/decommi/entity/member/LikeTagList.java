@@ -25,5 +25,4 @@ public class LikeTagList {
   private Long lid; // likeTagId
   private String tagName;
   private String email;
-  private Boolean on;
 }
