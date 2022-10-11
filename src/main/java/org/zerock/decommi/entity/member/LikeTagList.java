@@ -24,6 +24,8 @@ public class LikeTagList {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long lid; // likeTagId
   private String tagName;
+
+  // @ManyToOne(fetch = FetchType.LAZY)
   private String email;
   private Boolean on;
 }
