@@ -60,13 +60,13 @@
  <br/><br/> 
 
 ### 5.기술 상세 설명
-[디코미 상세설명](decommi.notion.site)
+[디코미 상세설명](https://www.notion.so/decommi/Decommi-54b1b7830f8545199a9f7c912e01f4bb)
 위 링크에 상세 설명이 되어있습니다.
   
 <br/><br/>  
 
 ### 6.개발환경
-[디코미 상세설명](decommi.notion.site)
+[디코미 상세설명](https://www.notion.so/decommi/Decommi-54b1b7830f8545199a9f7c912e01f4bb)
 위 링크에 상세 설명이 되어있습니다.
 
 <br/><br/>  
