@@ -78,30 +78,30 @@ public class HelpServiceImpl implements HelpService {
     }
 
     @Override
-    // public void deleteHelp(Long hbno) {
-    // log.info(hbno);
-    // helpRepository.deleteById(hbno);
-
-    public void deleteHelp(HelpDTO dto) {
+    public String deleteHelp(HelpDTO dto) {
         Optional<Help> checkHelp = helpRepository.getHelpByMid(dto.getWriter(), dto.getHbno());
         if (checkHelp.isPresent()) {
             log.info("delete....." + dto);
             helpRepository.delete(checkHelp.get());
+            return "삭제";
+        } else{
+            return "실패";
         }
     }
 
     @Override
-    public void modifyHelp(HelpDTO dto) {
-        log.info("modify...." + dto);
-        // Optional<Help> result = helpRepository.findById(dto.getHbno());
-        // if(result.isPresent()){
-        // Help help = result.get();
+    public String modifyHelp(HelpDTO dto) {
+        log.info("modify=====================dto" + dto);
         Optional<Help> checkHelp = helpRepository.getHelpByMid(dto.getWriter(), dto.getHbno());
+        log.info("checkHelp ===================" + checkHelp);
         if (checkHelp.isPresent()) {
             Help help = checkHelp.get();
             help.changTitle(dto.getTitle());
             help.changContent(dto.getContent());
             helpRepository.save(help);
+            return "수정";
+        }else{
+            return "실패";
         }
     }
 

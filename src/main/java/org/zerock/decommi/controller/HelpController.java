@@ -4,16 +4,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-// import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.zerock.decommi.service.HelpService;
 import org.zerock.decommi.dto.HelpDTO;
-// import org.zerock.decommi.dto.PageRequestDTO;
-// import org.zerock.decommi.dto.PageResultDTO;
-// import org.zerock.decommi.entity.Help;
+
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -50,7 +47,7 @@ public class HelpController {
 
     // body = {bhno:long , writer:long} ,, help.changTitle, help.changContent 필요
     @PostMapping(value = "/modify/{hbno}", produces = MediaType.TEXT_PLAIN_VALUE)
-    public ResponseEntity<String> modify(@RequestBody HelpDTO dto) {
+    public ResponseEntity<String> modify(@RequestBody HelpDTO dto ) {
         log.info("modify... dto: " + dto);
         helpService.modifyHelp(dto);
         return new ResponseEntity<>("modified", HttpStatus.OK);
@@ -58,7 +55,7 @@ public class HelpController {
 
     // body = {bhno:long , writer:long}
     @PostMapping(value = "/delete/{hbno}", produces = MediaType.TEXT_PLAIN_VALUE)
-    public ResponseEntity<String> remove(@PathVariable("hbno") HelpDTO dto) {// 프론트에 주는타입 ,,@ 주소에서 받는내용(쿼리스트링)
+    public ResponseEntity<String> remove(@PathVariable("hbno") Long hbno, @RequestBody HelpDTO dto) {
         log.info("remove......" + dto);
         helpService.deleteHelp(dto);
         return new ResponseEntity<>("removed", HttpStatus.OK);
