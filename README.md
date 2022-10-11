@@ -1,105 +1,110 @@
 # DeCommi
-#Develop 브랜치 공유사항
+### 기획의도
 
-#0819- 
-작성자 : 김형준
-<변경사항> 
+코로나시국 이후 SNS의존성이 더 높아지면서, 우리의 일상생활에 SNS가 가지는 비중이 더욱 높아졌다. 하지만 그 부작용으로 개인의 권리 역시 외부의 여러 요인들로 인하여 쉽게 침해 당하기 시작했다.
 
-1.DecommiApplication.java 클래스 변경 
-@SpringBootApplication(exclude = SecurityAutoConfiguration.class) 를 추가
-사용자인증기능이 구현이 되지 않아서 더미데이터를 넣는것에 문제가 생기는것 같습니다. 그래서 해당 dependency를 disable 하는 코드를 추가했습니다.
+또 SNS가 일상생활에 밀접하게 접촉해있다 보니 타인의 공감은 얻고 싶지만 섣불리 말하기 힘든 일들이 점점 많아졌으며, 관계를 지속하기 위한 노력도 필요하다.
 
-2.몇몇 entities 주석
-아직 테이블끼리의 관계가 불명확해 대부분의 테이블을 주석처리하고 기본적인 테이블만 살려뒀습니다. 조금씩 데이터를 집어넣으면서 구현하겠습니다.
+그렇기에 SNS에 피로감을 느낀다고 호소하는 사람들이 많아졌다.
 
-# DeCommi
-#Develop 브랜치 공유사항
+이러한 사회적 문제에서 착안해 기존의 SNS에서 피로감을 느낀 사람들을 목표로 개발한 폐쇄형 SNS 서비스다.
 
-#0830- 
-작성자 : 이준호
-<변경사항> 
-댓글 기능에 관련된 기능을 Board와 club 폴더 등에서 참조하여
-Decommi Reply로 변경 
-
-DTO/ReplyDTO
-Entity/Reply
-Service/ReplyService
-Controller/ReplyController
-
-추가 및 수정
-저희 파일 구조와 맞지않아서 발생하는 문제가 있으면 말씀부탁드립니다 이후 추가 수정하겠습니다
-
-22-10-03 23:00
-어드민 추가 부분
-
-ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
-ㅇAdmin
--Admin 폴더 추가   (ㅇ)
-
-ㅡAdmin/contollerㅡ
--AdminController.java 파일 추가   (ㅇ)
-
--ㅇ기능 추가{
-- 다이어리 리스트, 삭제   (ㅇ)	
-- // {"/diarymanagement" (리스트), "/diarymanagement/delete" (삭제)}
-- 
-- 태그 리스트, 수정, 삭제   (ㅇ)	
-- // {"/tagmanagement (리스트)", "/tagmanagement/modify" (수정),"/tagmanagement/delete" (삭제)}
-- 
-- 회원 리스트, 수정, 삭제   (ㅇ)	
-- // {"/usermanagement"(리스트) , "/usermanagement/modify" (수정) , "/usermanagement/delete" (삭제)}
-- 
-- 신고 리스트, 삭제   (ㅇ)	// {"/reportmanagement"(리스트) , "/reportmanagement/delete" (삭제)}
-}
-
-Admin/repositoryㅡ
-- AdminMemRepository.java 파일추가			(ㅇ)
-- ㅇ어드민 확인 쿼리문 추가   (ㅇ)	//Admincheck
-
-AdminReportRepository.java 파일 추가		(ㅇ)
-- ㅇ쿼리문 추가 예정   (~)
-- AdminRepository.java 파일추가   (ㅇ)
-- ㅇ회원 리스트 쿼리문 추가   (ㅇ)	//getDiaryByDinoAndId
-
-Admin/dtoㅡ
-- PageRequestDTO 파일 추가   (ㅇ)
-- PageResultDTO 파일 추가   (ㅇ)
-
-Admin/serviceㅡ
-- AdminService.java 파일 추가   (ㅇ)
-- ㅇ기능 추가{
-- 회원 관리   (ㅇ)	//getUserList(리스트), UserModifier(수정), UserDeleter(삭제)
-- 태그 관리   (ㅇ)	//getTags(리스트), tagModify(수정), tagDelete(삭제)
-- 다이어리 관리   (ㅇ)	//getDiaryList(리스트), diaryDelete(삭제)
-- 신고 관리   (ㅇ)	//getReportList(리스트), reportDelete(삭제)
-- 어드민 확인   (ㅇ)	//adminChecker(체크)
-}
+### 개발 기간
 
 
-ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+### 기능 요약
 
--vo 파일 이름들 대문자로 수정
+**폐쇄형 SNS 서비스**
 
-- TagRepository.java 수정
-- @Query("select t.TagName from Tag t where diary_dino=:dino")
-Optional<List<String>> OptionalfindByDiarys(Long dino);
-//추가.
+- 기본적인 게시글 작성에 대한 CRUD
 
-ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-  
-22-10-10 23:00
-  
-어드민 기능 수정 부분
-  
-ㅇAdminController.java, AdminServiceImpl.java 수정
-  
-ㅇ회원 정보 관리 탭(리스트형식 {회원번호, 이메일, 아이디, 가입일, 기능(모달창을 이용한 상세 수정, 삭제 기능)})
-- 회원 리스트 출력, 회원 리스트 검색, 회원 정보확인, 정보 수정, 삭제 기능 구현  (ㅇ)
-- 변수 이름(member)으로 인한 회원 정보 수정 , 삭제부분의 문제를 변수이름(mmbr)로 변경 (ㅇ)
-- JPAdelete 와 JPAupdate 문법 수정 (ㅇ)
+- 해당 게시글에 대한 좋아요, 북마크 , 신고, 댓글기능
 
-ㅇ신고 관리 탭(리스트형식 {신고 번호, 작성자, 신고 제목, 신고 내용, 다이어리 번호, 신고 당한 글, 신고 취소, 글 삭제})
-- 신고당한 다이어리 정보를 리스트로 출력, 산고 취소, 다이어리 삭제, 다이어리로 이동 구현 (ㅇ) 
-- 수정 내용은 회원 정보 관리와 동일함
+- 태그 기능으로 특정 태그가 포함된 게시글들만 볼 수 있는 편의성을 제공합니다.
 
+- 회원별 선호 태그리스트 기능을 추가하여 선호하는 태그들이 포함되어있는 게시글들에 접근이 용이하게 하였습니다.
+
+### 개발 기술
+
+| Frontend | Vue.js | SASS | Bootstrap |  |
+| --- | --- | --- | --- | --- |
+| Backend | SpringBoot | MariaDB |  |  |
+| 배포 | AWS lightsail |  |  |  |
+| 협업 | Discord | GitHub |  |  |
+
+### 기술 상세 설명
+
+> **Vue.js**
+> 
+> 
+> 빠른 세팅을 위해 Vue3를 vue-cli를 사용해 설치하여 개발을 시작했습니다.  코드의 통일성을 맞추고 빠른 유지 보수를 하기 위해 최대한 vue2의  문법을 지양하고 composition api의 문법으로 작성 되었습니다.
+> 
+> 또한 SpringBoot와 연결하기 위해 axios가 사용되었으며, 게시판 본문은 ckeditor5가 사용하였습니다.
+> 
+
+> **Bootstrap5 + SASS**
+> 
+> 
+> SASS를 사용해 중복 코드의 관리를 용이하게 하였으며, bootstrap5를 사용해 jQuery의 의존도를 없애고 flex-box나 modal, icon삽입 등 자주 사용하는 기능을 빠르게 도입할 수 있었습니다.
+> 
+
+> **SpringBoot**
+> 
+> 
+> 팀원들이 공통적으로 사용할 수 있는 **Springboot**를 사용했으며, 웹서비스 이용시 사용자 식별을 위한 토큰을 이용하기 위해 **jjwt**, 동적 검색을 위한 **querydsl** 등이 사용되었습니다.
+> 
+
+> **MariaDB**
+> 
+> 
+> 팀원들이 공통적으로 사용 했던 MariaDB를 선택했습니다. Decommi 프로젝트는 가벼운 기능들로 이루어져 있고, MySQL과 호환이 자유로워 프로젝트에 적합하다고 판단했습니다.
+> 
+
+> **GitHub**
+> 
+> 
+> [https://github.com/PorkbellyBigfan/DeCommi](https://github.com/PorkbellyBigfan/DeCommi)
+> 
+
+> **Discord**
+> 
+> 
+> 의사소통을 위해 익숙한 오픈소스 채팅 프로그램인 Discord를 이용하였습니다.
+> 
+
+### 개발환경
+
+### application.properties
+
+| 속성명 | 속성값 | 설명 |
+| --- | --- | --- |
+| server.port | 8081 | Front 구동시 프록시 포트가 8081입니다. 수정시 프론트 쪽도 맞춰주셔야 합니다. |
+| server.servlet.context-path | /decommi | 프런트 devserver 구동시 자동으로 decommi가 붙습니다 이 또한 수정 시 맞춰주시길 바랍니다 |
+| spring.devtools.livereload.enabled | true | 속성값이 true이면 jsp, css, scss 변경시 새로고침 없이 적용이 가능합니다. |
+| spring.datasource.driver-class-name | org.mariadb.jdbc.Driver | MariaDB로 세팅되어 있습니다 |
+| spring.datasource.url | jdbc:mariadb://localhost:3306/decommiex | MariaDB 세팅 |
+| spring.datasource.username | 접속자 이름 | MariaDB 세팅 |
+| spring.datasource.password | 접속자 비밀번호 | MariaDB 세팅 |
+| spring.jpa.hibernate.ddl-auto | update | JPA 하이버네이트의 설정입니다 상황에 맞게 조절해주세요. 개발환경에서는 create로 설정해주시면 테이블을 새로 설정합니다. |
+| spring.jpa.properties.hibernate.format_sql | true | JPA 하이버네이트의 설정입니다. 상황에 맞게 조절해주세요 |
+| spring.jpa.show-sql | true | JPA 하이버네이트의 설정입니다. 상황에 맞게 조절해주세요 |
+| org.zerock.upload.path | C:\\upload | 파일 업로드 관련 설정입니다. 업로드되는 파일의 경로입니다. |
+| spring.servlet.multipart.enabled | true | 파일 업로드 관련 설정입니다. 상황에 맞게 조절해 주세요 |
+| spring.servlet.multipart.location | C:\\upload | 파일 업로드 관련 설정입니다. 상황에 맞게 조절해 주세요 |
+| spring.servlet.multipart.max-request-size | 30MB | 파일 업로드 관련 설정입니다. 상황에 맞게 조절해 주세요 |
+| spring.servlet.multipart.max-file-size | 10MB | 파일 업로드 관련 설정입니다. 상황에 맞게 조절해 주세요 |
+| logging.servlet.org.springframework.security.web | trace | 스프링 부트 Security 로그 관련 설정입니다. Spring Boot의 일반적인 기본 로그 출력은 날짜 및 시간, 로그 수준, 프로세스 ID, 스레드 이름, 소스 클래스 이름 및 로그 메시지 요소를 캡처합니다. 로깅 수준은 ERROR, WARN, INFO, DEBUG 또는 TRACE 중 하나일 수 있습니다. 기본적으로 ERROR, WARN 및 INFO 수준 메시지가 기록됩니다. |
+| logging.level.org.zerock | debug | Spring Boot의 일반적인 기본 로그 출력은 날짜 및 시간, 로그 수준, 프로세스 ID, 스레드 이름, 소스 클래스 이름 및 로그 메시지 요소를 캡처합니다. 로깅 수준은 ERROR, WARN, INFO, DEBUG 또는 TRACE 중 하나일 수 있습니다. 기본적으로 ERROR, WARN 및 INFO 수준 메시지가 기록됩니다. |
+| server.error.whitelabel.enabled | false | 브라우져에서 오류 페이지를 보여줄 지 결정한다.
+false로 지정하면 tomcat의 오류 페이지로 로딩이 된다 |
+| spring.profiles.include | oauth | 설명필요! |
+
+
+### 멤버구성
+
+| 이름 | 역할 | Github | 이메일 |
+| --- | --- | --- | --- |
+| 김형준 | 팀장,백엔드 | https://github.com/PorkbellyBigfan | porkbellyweb@gmail.com |
+| 이태일 | 프론트엔드 | https://github.com/k1k2brz | refreshandreset@gmail.com |
+| 박상민 | 백엔드 | https://github.com/psm418 | tkdalsdk11@gmail.com |
+| 이준호 | 백엔드 | https://github.com/ZOONo-lee | zoonogi@naver.com |
