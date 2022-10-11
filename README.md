@@ -7,7 +7,7 @@
 [Decommi 홈페이지]()
 
 
-[Decommi 상세설명 페이지](https://ordinary-bassoon-efe.notion.site/Decommi-54b1b7830f8545199a9f7c912e01f4bb)
+[Decommi 상세설명 페이지](decommi.notion.site)
 
 <br/>  
   
@@ -60,13 +60,13 @@
  <br/><br/> 
 
 ### 5.기술 상세 설명
-https://ordinary-bassoon-efe.notion.site/Decommi-54b1b7830f8545199a9f7c912e01f4bb
+[디코미 상세설명](decommi.notion.site)
 위 링크에 상세 설명이 되어있습니다.
   
 <br/><br/>  
 
 ### 6.개발환경
-https://ordinary-bassoon-efe.notion.site/Decommi-54b1b7830f8545199a9f7c912e01f4bb
+[디코미 상세설명](decommi.notion.site)
 위 링크에 상세 설명이 되어있습니다.
 
 <br/><br/>  
