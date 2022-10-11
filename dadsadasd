@@ -1,0 +1,204 @@
+[33mcommit 3f04414b60309e624d09e14022805d90ba8e452a[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mdevelop[m[33m)[m
+Author: psm418 <106363902+psm418@users.noreply.github.com>
+Date:   Tue Aug 23 17:45:06 2022 +0900
+
+    Tag수정
+
+[33mcommit 5b02c0367a473df9aa5fae0fe09fe7d53252378a[m
+Author: psm418 <106363902+psm418@users.noreply.github.com>
+Date:   Tue Aug 23 17:30:14 2022 +0900
+
+    알람더미데이터
+
+[33mcommit 58e75215523a631fe665ef9bc6c45732132ca1e7[m
+Author: Hyeongjun Kim <PorkbellyWeb@gmail.com>
+Date:   Tue Aug 23 15:09:17 2022 +0900
+
+    Modified Tag entity (Merged SubTag entity to Tag Entity)
+
+[33mcommit b4f05a00a3040d68d3093274a465fb7caa465b80[m
+Merge: 7cb741e ec97dbc
+Author: Hyeongjun Kim <PorkbellyWeb@gmail.com>
+Date:   Tue Aug 23 15:05:59 2022 +0900
+
+    Modified Tag entity (Merged SubTag entity to Tag Entity)
+
+[33mcommit 7cb741e982f72422732a6766efb9b88e4b134463[m
+Author: Hyeongjun Kim <PorkbellyWeb@gmail.com>
+Date:   Tue Aug 23 14:59:57 2022 +0900
+
+    modified tag entity(merged subtag entity to tag entity)
+
+[33mcommit 399fbbedf27d862fc44b5165546db54402f2f334[m
+Author: Hyeongjun Kim <PorkbellyWeb@gmail.com>
+Date:   Mon Aug 22 14:19:18 2022 +0900
+
+    pull error
+
+[33mcommit ec97dbc3c430e2e50bb8ed28a6a8af6f67475215[m
+Merge: 7606cdd bfabead
+Author: psm418 <106363902+psm418@users.noreply.github.com>
+Date:   Sun Aug 21 23:39:32 2022 +0900
+
+    comflict solved
+
+[33mcommit 7606cddcc06c8649cff5438354f176b2dfcf3387[m
+Author: psm418 <106363902+psm418@users.noreply.github.com>
+Date:   Sun Aug 21 23:36:48 2022 +0900
+
+    Todo SC Alarm Bookmark 더미데이터까지
+
+[33mcommit bfabeaddda104a22519601e7d44d8a86550f07fc[m
+Author: 김형준 <porkbellyweb@gmail.com>
+Date:   Sun Aug 21 23:34:26 2022 +0900
+
+    added reply dummy data
+
+[33mcommit 65df3b4d51d98525851ee3a7ef0308f958b163ac[m
+Author: 김형준 <porkbellyweb@gmail.com>
+Date:   Sun Aug 21 20:54:50 2022 +0900
+
+    added DiaryTag data on Decommi
+
+[33mcommit 88b7e64a4e13205eb8c91a043edd7ddd7f53242a[m
+Author: 김형준 <porkbellyweb@gmail.com>
+Date:   Sun Aug 21 17:02:28 2022 +0900
+
+    DiaryTag problem not solved
+
+[33mcommit de315c0688db30b4265a68e534c4e3954a3513b1[m
+Merge: 568167f 61bbcb0
+Author: 김형준 <porkbellyweb@gmail.com>
+Date:   Sun Aug 21 16:03:01 2022 +0900
+
+    recommit
+
+[33mcommit 568167f53a44f6346d05ff8ec9372ab543ad4085[m
+Author: 김형준 <porkbellyweb@gmail.com>
+Date:   Sun Aug 21 16:01:38 2022 +0900
+
+    recommit
+
+[33mcommit 61bbcb0d4903892204dd16da53161ece3fe43caf[m
+Author: wnshspt <wnshspt@naverr.com>
+Date:   Sun Aug 21 14:41:13 2022 +0900
+
+    z-test1
+
+[33mcommit a055716625cdb2bae10384d920d6290b9fd55b32[m
+Author: 김형준 <porkbellyweb@gmail.com>
+Date:   Sun Aug 21 00:27:44 2022 +0900
+
+    Created Tag, subTag, DiaryTag tables and Added Dummy data
+
+[33mcommit 91adaa519390dc3bc2b145c7dcd95026ca199210[m
+Author: Hyeongjun Kim <PorkbellyWeb@gmail.com>
+Date:   Fri Aug 19 17:49:46 2022 +0900
+
+    added Heart table and Create DiaryRepository
+
+[33mcommit 1fe05ea9b79a5a421238ad5b0c42551b31f8c6d0[m
+Merge: e8d69b3 e6562f7
+Author: Hyeongjun Kim <PorkbellyWeb@gmail.com>
+Date:   Fri Aug 19 09:05:37 2022 +0900
+
+    Merge branch 'develop' of https://github.com/PorkbellyBigfan/DeCommi into develop
+
+[33mcommit e8d69b3a5d0fe7b774b40db61bc7f47d2e404b2c[m
+Author: Hyeongjun Kim <PorkbellyWeb@gmail.com>
+Date:   Fri Aug 19 09:04:07 2022 +0900
+
+    Added Member dummy data successfully
+
+[33mcommit e6562f7a269be851c965094ed3017266edda00e9[m
+Author: Hyeongjun Kim <102857959+PorkbellyBigfan@users.noreply.github.com>
+Date:   Fri Aug 19 08:31:36 2022 +0900
+
+    Update README.md
+
+[33mcommit ede2d5b37044fbdb0ea7896a77c4dbf9bad76ad6[m
+Author: Hyeongjun Kim <102857959+PorkbellyBigfan@users.noreply.github.com>
+Date:   Fri Aug 19 08:31:19 2022 +0900
+
+    Create README.md
+
+[33mcommit 9d6e5c54062fcf3b3b8f694c8fc8ad1a5ee2af61[m
+Author: Hyeongjun Kim <PorkbellyWeb@gmail.com>
+Date:   Fri Aug 19 08:24:28 2022 +0900
+
+    Spring Security5 disabled
+
+[33mcommit 4044ccaae10daf12c3f19eded5e5d655c8e62a9d[m
+Author: 김형준 <porkbellyweb@gmail.com>
+Date:   Tue Aug 16 21:49:15 2022 +0900
+
+    커밋을 잘못해서 수정해서 다시 커밋함
+
+[33mcommit bb4a8e4968355061bc0f9b28e38237fa6a97cd1c[m
+Merge: c868b95 32e5927
+Author: 김형준 <porkbellyweb@gmail.com>
+Date:   Tue Aug 16 21:48:28 2022 +0900
+
+    Merge branch 'develop' of https://github.com/PorkbellyBigfan/DeCommi into develop
+
+[33mcommit c868b95586b3665d647509a51308046e7254e9d7[m
+Author: 김형준 <porkbellyweb@gmail.com>
+Date:   Tue Aug 16 21:47:23 2022 +0900
+
+    added Entity
+
+[33mcommit 32e59274e4359e365771dce04b44b927e24d508f[m
+Author: 김형준 <porkbellyweb@gmail.com>
+Date:   Tue Aug 16 21:34:29 2022 +0900
+
+    Created Entities
+
+[33mcommit 8aa7405e94e7ac91676615e9dfb01ca986177615[m
+Author: Taeil <102219209+k1k2brz@users.noreply.github.com>
+Date:   Tue Aug 9 22:59:11 2022 +0900
+
+    taeil
+
+[33mcommit e5640775af1b912e361867739b0f7665c5614e4f[m
+Merge: 028d9ac 3e6cf04
+Author: wnshspt <wnshspt@naverr.com>
+Date:   Tue Aug 9 22:47:31 2022 +0900
+
+    Merge branch 'develop' of https://github.com/PorkbellyBigfan/DeCommi into develop
+
+[33mcommit 3e6cf042269c38586d72cba6d0cab50e6eab735f[m
+Author: psm418 <106363902+psm418@users.noreply.github.com>
+Date:   Tue Aug 9 22:46:48 2022 +0900
+
+    save
+
+[33mcommit 028d9acecf51d33d477fef094256ba19aa2835b2[m
+Merge: 2bec765 0953f33
+Author: wnshspt <wnshspt@naverr.com>
+Date:   Tue Aug 9 22:44:56 2022 +0900
+
+    Merge branch 'develop' of https://github.com/PorkbellyBigfan/DeCommi into develop
+
+[33mcommit 0953f330c75eee3535957f10b231c9983b3fe0e4[m
+Author: psm418 <106363902+psm418@users.noreply.github.com>
+Date:   Tue Aug 9 22:38:15 2022 +0900
+
+    diary엔티티
+
+[33mcommit 2bec765582dadd4df6f06c1dffb44ca7323d3741[m
+Author: wnshspt <wnshspt@naverr.com>
+Date:   Tue Aug 9 22:34:28 2022 +0900
+
+    수정완료
+
+[33mcommit b918c1d7377a82f91e0b7fcfbf99dafd495e9498[m
+Author: 김형준 <porkbellyweb@gmail.com>
+Date:   Tue Aug 9 22:15:10 2022 +0900
+
+    'memberentity'
+
+[33mcommit ec0c4170df2f32ed6e345af4ce09aaf017a9a543[m
+Author: 김형준 <porkbellyweb@gmail.com>
+Date:   Tue Aug 9 22:05:42 2022 +0900
+
+    'start'

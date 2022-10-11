@@ -1,85 +1,105 @@
+<!-- # DeCommi
+#Develop 브랜치 공유사항
 
+#0819- 
+작성자 : 김형준
+<변경사항> 
+
+1.DecommiApplication.java 클래스 변경 
+@SpringBootApplication(exclude = SecurityAutoConfiguration.class) 를 추가
+사용자인증기능이 구현이 되지 않아서 더미데이터를 넣는것에 문제가 생기는것 같습니다. 그래서 해당 dependency를 disable 하는 코드를 추가했습니다.
+
+2.몇몇 entities 주석
+아직 테이블끼리의 관계가 불명확해 대부분의 테이블을 주석처리하고 기본적인 테이블만 살려뒀습니다. 조금씩 데이터를 집어넣으면서 구현하겠습니다.
 
 # DeCommi
+#Develop 브랜치 공유사항
 
-![title](https://user-images.githubusercontent.com/102857959/194991265-d3ffa7c8-3347-48d5-be27-325cf2396152.jpg)
+#0830- 
+작성자 : 이준호
+<변경사항> 
+댓글 기능에 관련된 기능을 Board와 club 폴더 등에서 참조하여
+Decommi Reply로 변경 
 
-[Decommi 홈페이지]()
+DTO/ReplyDTO
+Entity/Reply
+Service/ReplyService
+Controller/ReplyController
+
+추가 및 수정
+저희 파일 구조와 맞지않아서 발생하는 문제가 있으면 말씀부탁드립니다 이후 추가 수정하겠습니다
+
+22-10-03 23:00
+어드민 추가 부분
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+ㅇAdmin
+-Admin 폴더 추가   (ㅇ)
+
+ㅡAdmin/contollerㅡ
+-AdminController.java 파일 추가   (ㅇ)
+
+-ㅇ기능 추가{
+- 다이어리 리스트, 삭제   (ㅇ)	
+- // {"/diarymanagement" (리스트), "/diarymanagement/delete" (삭제)}
+- 
+- 태그 리스트, 수정, 삭제   (ㅇ)	
+- // {"/tagmanagement (리스트)", "/tagmanagement/modify" (수정),"/tagmanagement/delete" (삭제)}
+- 
+- 회원 리스트, 수정, 삭제   (ㅇ)	
+- // {"/usermanagement"(리스트) , "/usermanagement/modify" (수정) , "/usermanagement/delete" (삭제)}
+- 
+- 신고 리스트, 삭제   (ㅇ)	// {"/reportmanagement"(리스트) , "/reportmanagement/delete" (삭제)}
+}
+
+Admin/repositoryㅡ
+- AdminMemRepository.java 파일추가			(ㅇ)
+- ㅇ어드민 확인 쿼리문 추가   (ㅇ)	//Admincheck
+
+AdminReportRepository.java 파일 추가		(ㅇ)
+- ㅇ쿼리문 추가 예정   (~)
+- AdminRepository.java 파일추가   (ㅇ)
+- ㅇ회원 리스트 쿼리문 추가   (ㅇ)	//getDiaryByDinoAndId
+
+Admin/dtoㅡ
+- PageRequestDTO 파일 추가   (ㅇ)
+- PageResultDTO 파일 추가   (ㅇ)
+
+Admin/serviceㅡ
+- AdminService.java 파일 추가   (ㅇ)
+- ㅇ기능 추가{
+- 회원 관리   (ㅇ)	//getUserList(리스트), UserModifier(수정), UserDeleter(삭제)
+- 태그 관리   (ㅇ)	//getTags(리스트), tagModify(수정), tagDelete(삭제)
+- 다이어리 관리   (ㅇ)	//getDiaryList(리스트), diaryDelete(삭제)
+- 신고 관리   (ㅇ)	//getReportList(리스트), reportDelete(삭제)
+- 어드민 확인   (ㅇ)	//adminChecker(체크)
+}
 
 
-[Decommi 상세설명 페이지](https://www.notion.so/decommi/Decommi-54b1b7830f8545199a9f7c912e01f4bb)
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-<br/>  
+-vo 파일 이름들 대문자로 수정
+
+- TagRepository.java 수정
+- @Query("select t.TagName from Tag t where diary_dino=:dino")
+Optional<List<String>> OptionalfindByDiarys(Long dino);
+//추가.
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
   
-
-### 1.기획의도
-<br/>
-코로나시국 이후 SNS의존성이 더 높아지면서, 우리의 일상생활에 SNS가 가지는 비중이 더욱 높아졌다. 하지만 그 부작용으로 개인의 권리 역시 외부의 여러 요인들로 인하여 쉽게 침해 당하기 시작했다.
-
-또 SNS가 일상생활에 밀접하게 접촉해있다 보니 타인의 공감은 얻고 싶지만 섣불리 말하기 힘든 일들이 점점 많아졌으며, 관계를 지속하기 위한 노력도 필요하다.
-
-그렇기에 SNS에 피로감을 느낀다고 호소하는 사람들이 많아졌다.
-
-이러한 사회적 문제에서 착안해 기존의 SNS에서 피로감을 느낀 사람들을 목표로 개발한 폐쇄형 SNS 서비스다.
-
-
- <br/><br/> 
-    
-
-### 2.개발 기간
-
-![개발일정](https://user-images.githubusercontent.com/102857959/194991254-a464eea8-732a-4487-a23f-3a5a0c1fd67a.jpg)
-
-
-<br/><br/>
-
-### 3.기능 요약
-
-**폐쇄형 SNS 서비스**
-
-- 기본적인 게시글 작성에 대한 CRUD
-
-- 해당 게시글에 대한 좋아요, 북마크 , 신고, 댓글기능
-
-- 태그 기능으로 특정 태그가 포함된 게시글들만 볼 수 있는 편의성을 제공합니다.
-
-- 회원별 선호 태그리스트 기능을 추가하여 선호하는 태그가 포함되어있는 게시글들에 접근이 용이하게 하였습니다.
-<br/><br/>
+22-10-10 23:00
   
-
+어드민 기능 수정 부분
   
-### 4.개발 기술
-
-| Frontend | Vue.js | SASS | Bootstrap | 
-| --- | --- | --- | --- |
-| Backend | SpringBoot | MariaDB |  |  
-| 배포 |  |  |  | 
-| 협업 | Discord | GitHub |   | 
-
+ㅇAdminController.java, AdminServiceImpl.java 수정
   
- <br/><br/> 
+ㅇ회원 정보 관리 탭(리스트형식 {회원번호, 이메일, 아이디, 가입일, 기능(모달창을 이용한 상세 수정, 삭제 기능)})
+- 회원 리스트 출력, 회원 리스트 검색, 회원 정보확인, 정보 수정, 삭제 기능 구현  (ㅇ)
+- 변수 이름(member)으로 인한 회원 정보 수정 , 삭제부분의 문제를 변수이름(mmbr)로 변경 (ㅇ)
+- JPAdelete 와 JPAupdate 문법 수정 (ㅇ)
 
-### 5.기술 상세 설명
-[디코미 상세설명](https://www.notion.so/decommi/Decommi-54b1b7830f8545199a9f7c912e01f4bb)
-
-  
-<br/><br/>  
-
-### 6.개발환경
-[디코미 상세설명](https://www.notion.so/decommi/Decommi-54b1b7830f8545199a9f7c912e01f4bb)
-
-
-<br/><br/>  
-  
-
-### 8.멤버구성
-
-| 이름 | 역할 | Github | 이메일 |
-| --- | --- | --- | --- |
-| 김형준 | 팀장,백앤드 | https://github.com/PorkbellyBigfan | porkbellyweb@gmail.com
-| 이태일 | 프론트앤드 | https://github.com/k1k2brz | refreshandreset@gmail.com
-| 박상민 | 백앤드 | https://github.com/psm418 | tkdalsdk11@gmail.com
-| 이준호 | 백앤드 | https://github.com/ZOONo-lee | zoonogi@naver.com 
-
-
-  
+ㅇ신고 관리 탭(리스트형식 {신고 번호, 작성자, 신고 제목, 신고 내용, 다이어리 번호, 신고 당한 글, 신고 취소, 글 삭제})
+- 신고당한 다이어리 정보를 리스트로 출력, 산고 취소, 다이어리 삭제, 다이어리로 이동 구현 (ㅇ) 
+- 수정 내용은 회원 정보 관리와 동일함
+ -->

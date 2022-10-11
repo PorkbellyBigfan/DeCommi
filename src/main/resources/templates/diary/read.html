@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+  <th:block th:fragment="content">
+        <h1 class="mt-4">Diary Read Page</h1>
+        <div class="form-group">
+            <label for="">Dino</label>
+            <input type="text" name="dino" class="form-control" readonly th:value="${dto.dino}">
+        </div>
+        <div class="form-group">
+             <label for="">writerEmail</label>
+            <input type="text" name="dino" class="form-control" readonly th:value="${dto.writerEmail}">
+        </div>
+        <div class="form-group">
+            <label for="">Title</label>
+            <input type="text" name="title" class="form-control" readonly th:value="${dto.title}">
+        </div>
+        <div class="form-group" style="margin-bottom: 10px">
+            <label for="">Content</label>
+            <textarea name="content" class="form-control" rows="5" readonly th:value="${dto.content}"></textarea>
+        </div>
+        <!-- <div class="form-group" style="margin-bottom: 10px">
+            <label for="">Writer</label>
+            <input type="text" name="writer" class="form-control" readonly th:value="${dto.writerName}">
+        </div> -->
+        <div class="form-group">
+            <label for="">tagDTOList</label>
+            <input type="text" name="tagDTOList" class="form-control" readonly th:value="${dto.tagDTOList}">
+        </div>
+        <div class="form-group">
+            <label for="">replyCnt</label>
+            <input type="text" name="replyCnt" class="form-control" readonly th:value="${dto.replyCnt}">
+        </div>
+        <div class="form-group">
+            <label for="">heartCnt</label>
+            <input type="text" name="heartCnt" class="form-control" readonly th:value="${dto.heartCnt}">
+        </div>
+        <div class="form-group">
+            <label for="">bookmarkCnt</label>
+            <input type="text" name="bookmarkCnt" class="form-control" readonly th:value="${dto.bookmarkCnt}">
+        </div>
+        <div class="form-group" style="margin-bottom: 10px">
+            <label for="">RegDate</label>
+            <input type="text" class="form-control" readonly
+                th:value="${#temporals.format(dto.regDate,'yyyy/MM/dd HH:mm:ss')}">
+        </div>
+        <div class="form-group" style="margin-bottom: 10px">
+            <label for="">ModDate</label>
+            <input type="text" class="form-control" readonly
+                th:value="${#temporals.format(dto.modDate,'yyyy/MM/dd HH:mm:ss')}">
+        </div>
+        <div class="form-group" style="margin-bottom: 10px">
+        <button class="btn btn-info"
+                th:onclick="|location.href='@{/diary/list(page=${requestDTO.page},type=${requestDTO.type}
+                ,keyword=${requestDTO.keyword})}'|">List</button>
+        </div>
+
+</html>
