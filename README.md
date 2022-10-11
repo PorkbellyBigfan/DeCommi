@@ -7,7 +7,7 @@
 [Decommi 홈페이지]()
 
 
-[Decommi 상세설명 페이지](decommi.notion.site)
+[Decommi 상세설명 페이지](https://www.notion.so/decommi/Decommi-54b1b7830f8545199a9f7c912e01f4bb)
 
 <br/>  
   
