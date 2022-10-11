@@ -180,8 +180,8 @@ public class DiaryRepositoryTests {
   @Test
   public void fghgfdhgfhgfhgfhgh() {
     // log.info(replyRepository.getLastestReplyGroupWhereMatchWithDino(1L));
-    Member member = Member.builder().mid(1L).build();
-    Diary diary = Diary.builder().dino(1L).build();
+    // Member member = Member.builder().mid(1L).build();
+    // Diary diary = Diary.builder().dino(1L).build();
     // log.info(replyRepository.findByMember(member));
     // log.info(replyRepository.getReplyByDinoAndMid(diary,member));
     // log.info(replyRepository.getReplyListByDino(1L));

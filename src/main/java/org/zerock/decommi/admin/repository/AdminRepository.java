@@ -13,5 +13,5 @@ import org.zerock.decommi.entity.diary.Diary;
 public interface AdminRepository extends JpaRepository<Diary, Long>, QuerydslPredicateExecutor<Diary> {
 
     @Query("select du from Diary du where writer =:mid")
-    Optional<List<Diary>> getDiaryListByUserid(Long mid);
+    Optional<List<Diary>> getDiaryListByUserid(String mid);
 }

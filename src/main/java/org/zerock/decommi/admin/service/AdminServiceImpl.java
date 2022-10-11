@@ -41,6 +41,7 @@ import org.zerock.decommi.entity.member.QAlarm;
 import org.zerock.decommi.entity.member.QMember;
 import org.zerock.decommi.service.diary.DiaryService;
 import org.zerock.decommi.service.member.MemberService;
+// import org.zerock.decommi.repository.diary.TagRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -83,11 +84,11 @@ public class AdminServiceImpl implements AdminService {
         JPADeleteClause deleteReply = new JPADeleteClause(em, qReply);
         JPADeleteClause deleteAlarm = new JPADeleteClause(em, qAlarm);
 
-        deleteClause.where(qDiary.dino.eq(dto.getDino())).execute();
+        deleteReply.where(qReply.dino.dino.eq(dto.getDino())).execute();
         deleteReport.where(qReport.dino.dino.eq(dto.getDino())).execute();
         deleteAlarm.where(qAlarm.diary.dino.eq(dto.getDino())).execute();
-        deleteReply.where(qReply.dino.dino.eq(dto.getDino())).execute();
         deleteTag.where(qTag.dino.dino.eq(dto.getDino())).execute();
+        deleteClause.where(qDiary.dino.eq(dto.getDino())).execute();
         return true;
     }
 
@@ -159,15 +160,23 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional
     public Boolean UserDeleter(MemberDTO dto) {
-        QMember member = new QMember("member");
-        JPADeleteClause deleteUser = new JPADeleteClause(em, member);
-        Optional<List<Diary>> diarylist = adRepository.getDiaryListByUserid(dto.getMid());
+        // QMember mmbr = new QMember("mmbr");
+        QReport qReport = new QReport("report");
+
+        // JPADeleteClause deleteUser = new JPADeleteClause(em, mmbr);
+        JPADeleteClause deleteReport = new JPADeleteClause(em, qReport);
+        Optional<List<Diary>> diarylist = adRepository.getDiaryListByUserid(dto.getId());
         if (diarylist.isPresent()) {
             diarylist.get().forEach(v -> {
                 diaryDelete(dService.entityToDTO(v));
             });
         }
-        deleteUser.where(member.mid.eq(dto.getMid())).execute();
+        // admRepository.findById(dto.getMid()).get().getRoleSet().remove(admRepository.findById(dto.getMid()).get().getRoleSet().toArray());
+        deleteReport.where(qReport.mid.mid.eq(dto.getMid())).execute();
+        admRepository.deleteById(dto.getMid());
+        // admRepository.delete();
+        // adRoleRepository.delete(admRepository.findById(dto.getMid()).get().getRoleSet());
+        // deleteUser.where(mmbr.mid.eq(dto.getMid())).execute();
         return true;
     }
 
@@ -175,17 +184,17 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional
     public Boolean UserModifier(MemberDTO dto) {
-        QMember member = new QMember("member");
-        JPAUpdateClause updateClause = new JPAUpdateClause(em, member);
+        QMember mmbr = new QMember("mmbr");
+        JPAUpdateClause updateClause = new JPAUpdateClause(em, mmbr);
 
-        updateClause.where(member.mid.eq(dto.getMid()))
-                .set(member.mid, dto.getMid())
-                .set(member.id, dto.getId())
-                .set(member.email, dto.getEmail())
-                .set(member.q1, dto.getQ1())
-                .set(member.q2, dto.getQ2())
-                .set(member.q3, dto.getQ3())
-                .set(member.auth, dto.isAuth())
+        updateClause.where(mmbr.mid.eq(dto.getMid()))
+                .set(mmbr.mid, dto.getMid())
+                .set(mmbr.id, dto.getId())
+                .set(mmbr.email, dto.getEmail())
+                .set(mmbr.q1, dto.getQ1())
+                .set(mmbr.q2, dto.getQ2())
+                .set(mmbr.q3, dto.getQ3())
+                .set(mmbr.auth, dto.isAuth())
                 .execute();
         return true;
     }

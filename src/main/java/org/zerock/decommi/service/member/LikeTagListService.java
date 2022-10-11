@@ -29,7 +29,6 @@ public interface LikeTagListService {
         .lid(dto.getLid())
         .email(dto.getEmail())
         .tagName(dto.getTagName())
-        .on(dto.getOn())
         .build();
     return likeTagList;
   }
@@ -39,7 +38,6 @@ public interface LikeTagListService {
         .lid(likeTagList.getLid())
         .email(likeTagList.getEmail())
         .tagName(likeTagList.getTagName())
-        .on(likeTagList.getOn())
         .build();
     return dto;
   }

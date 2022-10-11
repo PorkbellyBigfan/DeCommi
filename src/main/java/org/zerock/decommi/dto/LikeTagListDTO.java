@@ -13,5 +13,4 @@ public class LikeTagListDTO {
   private Long lid;
   private String tagName;
   private String email;
-  private Boolean on;
 }

@@ -1,8 +1,8 @@
 package org.zerock.decommi.repository;
 
-import static org.mockito.ArgumentMatchers.anyList;
+// import static org.mockito.ArgumentMatchers.anyList;
 
-import java.util.List;
+// import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -15,13 +15,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.zerock.decommi.dto.DiaryDTO;
+// import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.MemberDTO;
-import org.zerock.decommi.dto.TagDTO;
+// import org.zerock.decommi.dto.TagDTO;
 import org.zerock.decommi.entity.Help;
-import org.zerock.decommi.entity.diary.Diary;
-import org.zerock.decommi.entity.diary.Heart;
-import org.zerock.decommi.entity.diary.Report;
+// import org.zerock.decommi.entity.diary.Diary;
+// import org.zerock.decommi.entity.diary.Heart;
+// import org.zerock.decommi.entity.diary.Report;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.repository.diary.BookmarkRepository;
 import org.zerock.decommi.repository.diary.DiaryRepository;

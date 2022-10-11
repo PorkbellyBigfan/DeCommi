@@ -39,6 +39,7 @@ Controller/ReplyController
 
 ㅡAdmin/contollerㅡ
 -AdminController.java 파일 추가   (ㅇ)
+
 -ㅇ기능 추가{
 - 다이어리 리스트, 삭제   (ㅇ)	
 - // {"/diarymanagement" (리스트), "/diarymanagement/delete" (삭제)}
@@ -84,3 +85,21 @@ Admin/serviceㅡ
 - @Query("select t.TagName from Tag t where diary_dino=:dino")
 Optional<List<String>> OptionalfindByDiarys(Long dino);
 //추가.
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+  
+22-10-10 23:00
+  
+어드민 기능 수정 부분
+  
+ㅇAdminController.java, AdminServiceImpl.java 수정
+  
+ㅇ회원 정보 관리 탭(리스트형식 {회원번호, 이메일, 아이디, 가입일, 기능(모달창을 이용한 상세 수정, 삭제 기능)})
+- 회원 리스트 출력, 회원 리스트 검색, 회원 정보확인, 정보 수정, 삭제 기능 구현  (ㅇ)
+- 변수 이름(member)으로 인한 회원 정보 수정 , 삭제부분의 문제를 변수이름(mmbr)로 변경 (ㅇ)
+- JPAdelete 와 JPAupdate 문법 수정 (ㅇ)
+
+ㅇ신고 관리 탭(리스트형식 {신고 번호, 작성자, 신고 제목, 신고 내용, 다이어리 번호, 신고 당한 글, 신고 취소, 글 삭제})
+- 신고당한 다이어리 정보를 리스트로 출력, 산고 취소, 다이어리 삭제, 다이어리로 이동 구현 (ㅇ) 
+- 수정 내용은 회원 정보 관리와 동일함
+

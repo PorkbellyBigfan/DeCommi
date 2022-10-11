@@ -27,5 +27,4 @@ public class LikeTagList {
 
   // @ManyToOne(fetch = FetchType.LAZY)
   private String email;
-  private Boolean on;
 }
