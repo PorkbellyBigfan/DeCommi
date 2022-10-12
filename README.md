@@ -41,6 +41,7 @@
 
 ### 기술 상세 설명 && 개발 환경
 [Decommi Team :: Notion](https://www.notion.so/decommi/Decommi-54b1b7830f8545199a9f7c912e01f4bb)
+위 링크에 상세 설명이 되어 있습니다.
 
 ### 멤버구성
 
