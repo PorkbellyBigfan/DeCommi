@@ -34,6 +34,7 @@
 ### 개발 기술
 
 | Frontend | Vue.js | SASS | Bootstrap |
+| --- | --- | --- | --- |
 | Backend | SpringBoot | MariaDB |  |
 | 배포 | AWS lightsail | centOS7 | Ngnix |
 | 협업 | Discord | GitHub |  |
