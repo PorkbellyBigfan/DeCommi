@@ -33,11 +33,11 @@
 <br/><br/>
 ### 개발 기술
 
-| Frontend | Vue.js | SASS | Bootstrap |  |
-| --- | --- | --- | --- |  |
-| Backend | SpringBoot | MariaDB |  |  |
-| 배포 | Lightsail | CentOS7 |  |  |
-| 협업 | Discord | GitHub |  |  |
+| Frontend | Vue.js | SASS | Bootstrap |
+| --- | --- | --- | --- |
+| Backend | SpringBoot | MariaDB |  |
+| 배포 | AWS lightsail | centOS7 | Ngnix |
+| 협업 | Discord | GitHub |  |
 <br/><br/>
 
 ### 기술 상세 설명 && 개발 환경
