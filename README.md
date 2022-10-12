@@ -1,5 +1,6 @@
 # DeCommi
 ![image](https://user-images.githubusercontent.com/102857959/195088039-81779956-e593-4779-9014-93921004707e.png)
+<br/>
 [Decommi :: 바로가기]()
 <br/>
 [Decommi Team :: Notion](https://www.notion.so/decommi/Decommi-54b1b7830f8545199a9f7c912e01f4bb)
