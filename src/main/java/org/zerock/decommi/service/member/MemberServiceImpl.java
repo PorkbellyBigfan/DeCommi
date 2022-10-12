@@ -9,7 +9,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.zerock.decommi.dto.MemberDTO;
 import org.zerock.decommi.entity.member.Member;
+import org.zerock.decommi.repository.diary.BookmarkRepository;
 import org.zerock.decommi.repository.diary.DiaryRepository;
+import org.zerock.decommi.repository.diary.HeartRepository;
 import org.zerock.decommi.repository.diary.ReplyRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
@@ -28,6 +30,8 @@ public class MemberServiceImpl implements MemberService {
   private final ReplyRepository replyRepository;
   private final TagRepository tagRepository;
   private final PasswordEncoder encoder;
+  private final HeartRepository heartRepository;
+  private final BookmarkRepository bookmarkRepository;
   // @PersistenceContext
   // EntityManager em;
 
@@ -150,6 +154,8 @@ public class MemberServiceImpl implements MemberService {
       tagRepository.deleteTagByMid(dto.getMid());
       replyRepository.deleteReplyByMid(dto.getMid());
       diaryRepository.deleteDiaryByWriter(checkMember.get().getId());
+      heartRepository.deleteByMid(dto.getMid());
+      bookmarkRepository.deleteByMid(dto.getMid());
       repository.delete(checkMember.get());
       return true;
     } else {
