@@ -38,7 +38,6 @@
 | Backend | SpringBoot | MariaDB |  |
 | 배포 | AWS lightsail | centOS7 | Ngnix |
 | 협업 | Discord | GitHub |  |
-<br/><br/>
 
 ### 기술 상세 설명 && 개발 환경
 [Decommi Team :: Notion](https://www.notion.so/decommi/Decommi-54b1b7830f8545199a9f7c912e01f4bb)
