@@ -13,6 +13,7 @@
 그렇기에 SNS에 피로감을 느낀다고 호소하는 사람들이 많아졌다.
 
 이러한 사회적 문제에서 착안해 기존의 SNS에서 피로감을 느낀 사람들을 목표로 개발한 폐쇄형 SNS 서비스다.
+
 <br/><br/>
 ### 개발 기간
 ![image](https://user-images.githubusercontent.com/102857959/195088039-81779956-e593-4779-9014-93921004707e.png)
@@ -37,7 +38,9 @@
 | Backend | SpringBoot | MariaDB |  |  |
 | 배포 | AWS lightsail |  |  |  |
 | 협업 | Discord | GitHub |  |  |
+
 <br/><br/>
+
 ### 기술 상세 설명 && 개발 환경
 [Decommi Team :: Notion](https://www.notion.so/decommi/Decommi-54b1b7830f8545199a9f7c912e01f4bb)
 
