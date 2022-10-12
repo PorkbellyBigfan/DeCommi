@@ -1,4 +1,5 @@
 # DeCommi
+![image](https://user-images.githubusercontent.com/102857959/195088039-81779956-e593-4779-9014-93921004707e.png)
 [Decommi :: 바로가기]()
 <br/>
 [Decommi Team :: Notion](https://www.notion.so/decommi/Decommi-54b1b7830f8545199a9f7c912e01f4bb)
@@ -16,7 +17,7 @@
 
 <br/><br/>
 ### 개발 기간
-![image](https://user-images.githubusercontent.com/102857959/195088039-81779956-e593-4779-9014-93921004707e.png)
+![개발기간](https://user-images.githubusercontent.com/102857959/195088171-4f969b59-6033-40aa-834d-04b684991678.jpg)
 <br/>
 
 ### 기능 요약
