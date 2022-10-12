@@ -36,27 +36,12 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
     Optional<List<Long>> getLastestReplyGroupWhereMatchWithDino(Long dino);
 
     // 페이징 처리된 댓글리스트
-    @Query(value = "select r from Reply r where dino_dino=:dino order by reply_group asc, reply_order asc, reply_depth desc ", countQuery = "select count(r) from Reply r where dino_dino=:dino order by reply_group asc, reply_order asc, reply_depth desc ")
+    @Query(value = "select r from Reply r where dino_dino=:dino order by reply_group desc, reply_order asc, reply_depth desc ", countQuery = "select count(r) from Reply r where dino_dino=:dino order by reply_group desc, reply_order asc, reply_depth desc ")
     Page<Reply> getPageList(Pageable pageable, Long dino);
-
-    // @Query("select count(r.rno) from Reply r where r.dino =:dino ")
-    // Long getReplyCntByDino(Long dino);
 
     @Query(value = "SELECT COUNT(d_reply.rno) FROM d_reply WHERE d_reply.dino_dino =:dino ", nativeQuery = true)
     Long getReplyCntByDino(Long dino);
-    // 댓글 리스트
-    // @Query("select r from Reply r where diary_dino=:dino order by reply_group
-    // asc, reply_order asc, reply_depth desc")
-    // Optional<List<Reply>> getReplyListByDino2(Long dino);
-
-    // 댓글 페이지 리스트
-    // @Query(value = "select r from Reply r where diary_dino=:dino order by
-    // reply_group asc, reply_order asc, reply_depth desc ", countQuery = "select
-    // count(r) from Reply r where diary_dino=:dino order by reply_group asc,
-    // reply_order asc, reply_depth desc ")
-    // Page<Reply> getReplyPageList(Pageable pageable, Long dino);
-
-    // 작성자 mid 로 댓글 삭제
+ 
     @Modifying
     @Transactional
     @Query("delete from Reply r where member_mid=:mid ")

@@ -22,10 +22,7 @@ import lombok.extern.log4j.Log4j2;
 public class HelpController {
     private final HelpService helpService;
 
-    // private Long hbno; 고객센터 게시글 번호
-    // private String title; 제목
-    // private String content; 내용
-    // private Long writer; 글쓴이
+    // private Long writer;(mid) 글쓴이
 
     // body = {bhno:long 타입으로 게시글번호 보내주기 , title:string , content:string,
     // writer:long}
