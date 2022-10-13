@@ -53,4 +53,4 @@
 | 김형준 | 팀장,백엔드 | https://github.com/PorkbellyBigfan | porkbellyweb@gmail.com |
 | 이태일 | 프론트엔드 | https://github.com/k1k2brz | refreshandreset@gmail.com |
 | 박상민 | 백엔드 | https://github.com/psm418 | tkdalsdk11@gmail.com |
-| 이준호 | 백엔드 | https://github.com/ZOONo-lee | zoonogi@naver.com |
+| 이준호 | 백엔드 | https://github.com/ZOONo-lee | zoonogig@gmail.com |
