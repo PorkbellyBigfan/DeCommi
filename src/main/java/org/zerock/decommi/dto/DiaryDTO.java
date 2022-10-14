@@ -2,6 +2,9 @@ package org.zerock.decommi.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import org.zerock.decommi.entity.diary.Tag;
+
 import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;

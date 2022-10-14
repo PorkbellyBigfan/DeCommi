@@ -37,9 +37,10 @@ public class DiaryViewController {
   public ResponseEntity<List<DiaryDTO>> getDiaryList(@RequestBody PageRequestDTO dto) {
     PageRequestDTO.builder().page(dto.getPage()).size(5).keyword(dto.getKeyword()).build();
     PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostList(dto);
-    log.info("===============================");
-    log.info(" controller class dto::::" + dto);
-    log.info("===============================");
+    // log.info("===============================");
+    // log.info(" controller class dto::::" + dto);
+    // log.info("result.getDtoList() "+result.getDtoList());
+    // log.info("===============================");
     return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
   }
 
@@ -65,10 +66,11 @@ public class DiaryViewController {
   @RequestMapping(value = "/list/bytagname", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<DiaryDTO>> getDiaryLisyByTagName(@RequestBody PageRequestDTO dto) {
     PageRequestDTO.builder().page(dto.getPage()).size(5).tagList(dto.getTagList()).build();
-    log.info("dtodtodto///////////////////////////////" + dto);
+    log.info("dtodtodto" + dto);
     PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostListByTagName(dto);
     result.getDtoList().forEach(v -> {
-      log.info(v.getTitle());
+      log.info("getTitle:::"+v.getTitle());
+      log.info("getTagList:::"+v.getTagList());
     });
     return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
   }

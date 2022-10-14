@@ -181,7 +181,11 @@ public class DiaryServiceImpl implements DiaryService {
         Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
             @Override
             public DiaryDTO apply(Diary t) {
-
+                log.info("===================");
+                log.info("t::::"+t);
+                log.info("t.getTagList::::"+t.getTagList());
+                log.info("t.getReplyList::::"+t.getReplyList());
+                log.info("===================");
                 return entityToDTO(t);
             }
         };
@@ -192,16 +196,19 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     public PageResultDTO<DiaryDTO, Diary> getDiaryPostListByTagName(PageRequestDTO requestDTO) {
         Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
-        log.info("service code  requestDTO ::::: " + requestDTO);
         BooleanBuilder booleanBuilder = getSearchByTagName(requestDTO.getTagName());
         Page<Diary> result = repository.findAll(booleanBuilder, pageable);
         Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
             @Override
             public DiaryDTO apply(Diary t) {
+                log.info("===================");
+                log.info("t::::"+t);
+                log.info("t.getTagList::::"+t.getTagList());
+                log.info("t.getReplyList::::"+t.getReplyList());
+                log.info("===================");
                 return entityToDTO(t);
             }
         };
-        log.info("result.getSize()::::::" + result.getSize());
         return new PageResultDTO<>(result, fn);
     }
 
@@ -426,11 +433,11 @@ public class DiaryServiceImpl implements DiaryService {
             temp.get().forEach(v -> {
                 BooleanExpression expression;
                 expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue()).and(qDiary.tagList.contains(v));
-                booleanBuilder.or(expression);
+                booleanBuilder.and(expression);
             });
             return booleanBuilder;
         } else {
-            log.info("hello");
+            log.info(":::::::noResult::::::");
             return noResult;
         }
 

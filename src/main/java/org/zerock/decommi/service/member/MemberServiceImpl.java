@@ -16,7 +16,7 @@ import org.zerock.decommi.repository.diary.ReplyRepository;
 import org.zerock.decommi.repository.diary.ReportRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
-import org.zerock.decommi.vo.Findpw;
+import org.zerock.decommi.vo.ForgotPw;
 import org.zerock.decommi.vo.Setpw;
 
 import lombok.RequiredArgsConstructor;
@@ -114,15 +114,18 @@ public class MemberServiceImpl implements MemberService {
     return true;
   }
 
-  @Override
-  public Long findPw(Findpw vo) {
-    Long result = repository.findMidByEmailAndQ(vo.getEmail(), vo.getQ1(), vo.getQ2(), vo.getQ3());
-    if (result == null) {
-      return null;
-    } else {
-      return result;
-    }
-  }
+  // @Override
+  // public Boolean forgotPw(ForgotPw vo) {
+  //   Long mid = repository.findMidByEmailAndQ(vo.getEmail(), vo.getQ1(), vo.getQ2(), vo.getQ3());
+  //   if(mid == null) {
+  //     return false;
+  //   }else if(vo.getChangePw1() == vo.getChangePw2()){
+  //     repository.changePwByMid(mid, encoder.encode(vo.getChangePw2()));
+  //     return true;
+  //   } else{
+  //     return false;
+  //   }
+  // }
 
   @Override
   public Boolean changePw(Setpw vo) {
