@@ -65,7 +65,7 @@ public class DiaryViewController {
   // 태그를 눌렀을때 그 해당 태그를 포함하고있는 게시글 리스트반환 여기서 String tagName은 해당 태그의 tagName임.
   @RequestMapping(value = "/list/bytagname", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<DiaryDTO>> getDiaryLisyByTagName(@RequestBody PageRequestDTO dto) {
-    PageRequestDTO.builder().page(dto.getPage()).size(5).tagList(dto.getTagList()).build();
+    PageRequestDTO.builder().page(dto.getPage()).size(5).tagList(dto.getTagList()).tagName(dto.getTagName()).build();
     log.info("dtodtodto" + dto);
     PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostListByTagName(dto);
     result.getDtoList().forEach(v -> {
