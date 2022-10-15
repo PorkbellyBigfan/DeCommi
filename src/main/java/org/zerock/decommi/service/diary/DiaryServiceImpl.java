@@ -182,9 +182,9 @@ public class DiaryServiceImpl implements DiaryService {
             @Override
             public DiaryDTO apply(Diary t) {
                 log.info("===================");
-                log.info("t::::"+t);
-                log.info("t.getTagList::::"+t.getTagList());
-                log.info("t.getReplyList::::"+t.getReplyList());
+                log.info("t::::" + t);
+                log.info("t.getTagList::::" + t.getTagList());
+                log.info("t.getReplyList::::" + t.getReplyList());
                 log.info("===================");
                 return entityToDTO(t);
             }
@@ -202,9 +202,9 @@ public class DiaryServiceImpl implements DiaryService {
             @Override
             public DiaryDTO apply(Diary t) {
                 log.info("===================");
-                log.info("t::::"+t);
-                log.info("t.getTagList::::"+t.getTagList());
-                log.info("t.getReplyList::::"+t.getReplyList());
+                log.info("t::::" + t);
+                log.info("t.getTagList::::" + t.getTagList());
+                log.info("t.getReplyList::::" + t.getReplyList());
                 log.info("===================");
                 return entityToDTO(t);
             }
@@ -261,9 +261,9 @@ public class DiaryServiceImpl implements DiaryService {
         Optional<Member> result = memberRepository.findByMid(dto.getMid());
         Optional<List<Long>> lastestrg = replyRepository.getLastestReplyGroupWhereMatchWithDino(dto.getDino());
         Diary post = repository.getByDino(dto.getDino());
-        // rno 안쓰는 이유는 대 댓글때문임. 
-        //ex)두번째로 달린 댓글이 대댓글일 경우 3번째 댓글의 위치는 2번째에 위치해야하는데 
-        //rno로 정렬을 하게되면 2번째 대댓글의 rno가 3번째보다 우선되기 때문에 정렬이 이상해진다. 
+        // rno 안쓰는 이유는 대 댓글때문임.
+        // ex)두번째로 달린 댓글이 대댓글일 경우 3번째 댓글의 위치는 2번째에 위치해야하는데
+        // rno로 정렬을 하게되면 2번째 대댓글의 rno가 3번째보다 우선되기 때문에 정렬이 이상해진다.
         Long setrg = 1L; // set ReplyGroup = rg //처음 등록된 댓글은 setrg = 1L
         if (lastestrg.get().size() != 0) { // 처음 등록된 댓글이 아닐 경우
             setrg = lastestrg.get().get(0) + 1; // setrg += 1
@@ -273,9 +273,9 @@ public class DiaryServiceImpl implements DiaryService {
         dto.setReplyOrder(0L);
         dto.setMid(result.get().getMid());
         Reply reply = replyDTOtoEntity(dto);
-        if(post.isReplyYN()==false){
+        if (post.isReplyYN() == false) {
             return null;
-        }else{
+        } else {
             replyRepository.save(reply);
         }
         log.info("reply rno " + reply.getRno());
@@ -428,7 +428,6 @@ public class DiaryServiceImpl implements DiaryService {
         BooleanExpression no = qDiary.dino.isNull();
         noResult.and(no);
         Optional<List<Tag>> temp = tagRepository.findByTagName2(tagName);
-        // temp.get() ==> Tag
         if (temp.get().size() > 0) {
             temp.get().forEach(v -> {
                 BooleanExpression expression;

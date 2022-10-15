@@ -89,9 +89,14 @@ public interface DiaryService {
                 .replyYN(diary.isReplyYN())
                 .writer(diary.getWriter())
                 .tagList(diary.getTagList().stream().map(
-                    t-> new String(t.getTagName()))
-                    .collect(Collectors.toList())
-                )
+                        t -> new String(t.getTagName()))
+                        .collect(Collectors.toList()))
+                .replyList(diary.getReplyList().stream().map(
+                        t -> new ReplyDTO(
+                                t.getRno(), t.getMember().getMid(), diary.getDino(), t.getReplyContent(),
+                                t.getReplyGroup(), t.getReplyDepth(), t.getReplyOrder(), t.getRegDate(),
+                                t.getModDate()))
+                        .collect(Collectors.toList()))
                 // .bookmarkCnt(diary.getBookmarkCnt())
                 // .heartCnt(diary.getHeartCnt())
                 // .replyCnt(diary.getReplyCnt())
