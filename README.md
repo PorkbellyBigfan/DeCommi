@@ -38,7 +38,7 @@
 
 | Frontend | Vue.js | SASS | Bootstrap |
 | --- | --- | --- | --- |
-| Backend | SpringBoot | MariaDB |  |
+| Backend | SpringBoot | MariaDB |  QueryDSL |
 | 배포 | AWS lightsail | centOS7 | Ngnix |
 | 협업 | Discord | GitHub |  |
 
