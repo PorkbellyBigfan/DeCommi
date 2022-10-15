@@ -66,11 +66,12 @@ public class DiaryViewController {
   @RequestMapping(value = "/list/bytagname", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<DiaryDTO>> getDiaryLisyByTagName(@RequestBody PageRequestDTO dto) {
     PageRequestDTO.builder().page(dto.getPage()).size(5).tagList(dto.getTagList()).tagName(dto.getTagName()).build();
-    log.info("dtodtodto" + dto);
+    log.info("Controller class  dto ::: " + dto);
+    log.info("Controller class  dto.getTagName ::: " + dto.getTagName());
     PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostListByTagName(dto);
     result.getDtoList().forEach(v -> {
-      log.info("getTitle:::"+v.getTitle());
-      log.info("getTagList:::"+v.getTagList());
+      log.info("getTitle:::" + v.getTitle());
+      log.info("getTagList:::" + v.getTagList());
     });
     return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
   }

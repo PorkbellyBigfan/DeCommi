@@ -29,4 +29,10 @@ public interface LikeTagListRepository extends JpaRepository<LikeTagList, Long> 
 
   @Query("select l from LikeTagList l where l.email=:email ")
   Optional<List<LikeTagList>> getAllLikeTagList(String email);
+
+  @Modifying
+  @Transactional
+  @Query("delete from LikeTagList t where email=:email ")
+  void deleteLikeTagListByEmail(String email);
+
 }

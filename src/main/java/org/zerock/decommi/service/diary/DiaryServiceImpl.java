@@ -181,11 +181,6 @@ public class DiaryServiceImpl implements DiaryService {
         Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
             @Override
             public DiaryDTO apply(Diary t) {
-                log.info("===================");
-                log.info("t::::" + t);
-                log.info("t.getTagList::::" + t.getTagList());
-                log.info("t.getReplyList::::" + t.getReplyList());
-                log.info("===================");
                 return entityToDTO(t);
             }
         };
@@ -195,17 +190,16 @@ public class DiaryServiceImpl implements DiaryService {
     @Transactional
     @Override
     public PageResultDTO<DiaryDTO, Diary> getDiaryPostListByTagName(PageRequestDTO requestDTO) {
+        log.info("Service class requestDTO.getTagName() " + requestDTO.getTagName());
         Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
         BooleanBuilder booleanBuilder = getSearchByTagName(requestDTO.getTagName());
         Page<Diary> result = repository.findAll(booleanBuilder, pageable);
+        log.info("===================");
+        log.info("requestDTO.getTagName() ::: " + requestDTO.getTagName());
+        log.info("===================");
         Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
             @Override
             public DiaryDTO apply(Diary t) {
-                log.info("===================");
-                log.info("t::::" + t);
-                log.info("t.getTagList::::" + t.getTagList());
-                log.info("t.getReplyList::::" + t.getReplyList());
-                log.info("===================");
                 return entityToDTO(t);
             }
         };
@@ -424,15 +418,18 @@ public class DiaryServiceImpl implements DiaryService {
     private BooleanBuilder getSearchByTagName(String tagName) {
         QDiary qDiary = QDiary.diary;
         BooleanBuilder booleanBuilder = new BooleanBuilder();
+
         BooleanBuilder noResult = new BooleanBuilder();
         BooleanExpression no = qDiary.dino.isNull();
         noResult.and(no);
         Optional<List<Tag>> temp = tagRepository.findByTagName2(tagName);
+        log.info("this is temp ::: " + temp);
         if (temp.get().size() > 0) {
             temp.get().forEach(v -> {
                 BooleanExpression expression;
                 expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue()).and(qDiary.tagList.contains(v));
-                booleanBuilder.and(expression);
+                log.info("qDiary.tagList.contains(v):::" + qDiary.tagList.contains(v));
+                booleanBuilder.or(expression);
             });
             return booleanBuilder;
         } else {
@@ -449,5 +446,6 @@ public class DiaryServiceImpl implements DiaryService {
         // } else {
         // return noResult;
         // }
+
     }
 }

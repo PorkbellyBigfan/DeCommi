@@ -15,6 +15,7 @@ import org.zerock.decommi.repository.diary.HeartRepository;
 import org.zerock.decommi.repository.diary.ReplyRepository;
 import org.zerock.decommi.repository.diary.ReportRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
+import org.zerock.decommi.repository.member.LikeTagListRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
 import org.zerock.decommi.vo.ForgotPw;
 import org.zerock.decommi.vo.Setpw;
@@ -34,6 +35,7 @@ public class MemberServiceImpl implements MemberService {
   private final HeartRepository heartRepository;
   private final BookmarkRepository bookmarkRepository;
   private final ReportRepository reportRepository;
+  private final LikeTagListRepository likeTagListRepository;
   // @PersistenceContext
   // EntityManager em;
 
@@ -116,15 +118,16 @@ public class MemberServiceImpl implements MemberService {
 
   // @Override
   // public Boolean forgotPw(ForgotPw vo) {
-  //   Long mid = repository.findMidByEmailAndQ(vo.getEmail(), vo.getQ1(), vo.getQ2(), vo.getQ3());
-  //   if(mid == null) {
-  //     return false;
-  //   }else if(vo.getChangePw1() == vo.getChangePw2()){
-  //     repository.changePwByMid(mid, encoder.encode(vo.getChangePw2()));
-  //     return true;
-  //   } else{
-  //     return false;
-  //   }
+  // Long mid = repository.findMidByEmailAndQ(vo.getEmail(), vo.getQ1(),
+  // vo.getQ2(), vo.getQ3());
+  // if(mid == null) {
+  // return false;
+  // }else if(vo.getChangePw1() == vo.getChangePw2()){
+  // repository.changePwByMid(mid, encoder.encode(vo.getChangePw2()));
+  // return true;
+  // } else{
+  // return false;
+  // }
   // }
 
   @Override
@@ -156,9 +159,11 @@ public class MemberServiceImpl implements MemberService {
     Optional<Member> checkMember = repository.findByMid(dto.getMid());
     log.info("탈퇴하려고하는 멤버의 entity : " + checkMember);
     if (checkMember.isPresent()) {
+      log.info("checkMember's email ::: " + dto.getEmail());
       tagRepository.deleteTagByMid(dto.getMid());
+      likeTagListRepository.deleteLikeTagListByEmail(dto.getEmail());
       replyRepository.deleteReplyByMid(dto.getMid());
-      diaryRepository.deleteDiaryByWriter(checkMember.get().getId());
+      diaryRepository.deleteDiaryByWriter(dto.getEmail());
       heartRepository.deleteByMid(dto.getMid());
       bookmarkRepository.deleteByMid(dto.getMid());
       reportRepository.deleteByMid(dto.getMid());
