@@ -29,6 +29,8 @@ public interface MemberService {
 
     Long findPw(FindPw vo); // 비밀번호 찾기
 
+    Boolean findPw2(FindPw vo);// 비밀번호 찾기
+
     Boolean changePw(Setpw vo); // 비밀번호 변경
 
     Boolean deleteMember(MemberDTO dto);

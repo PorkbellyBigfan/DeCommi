@@ -128,6 +128,17 @@ public class MemberServiceImpl implements MemberService {
   }
 
   @Override
+  public Boolean findPw2(FindPw vo) {
+    Optional<Member> member = repository.findByMid(vo.getMid());
+    if (member.isPresent()) {
+      repository.changePwByMid(vo.getMid(), encoder.encode(vo.getChangePw()));
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  @Override
   public Boolean changePw(Setpw vo) {
     Optional<Member> member = repository.findByMid(vo.getMid());
     log.info("service member :::" + member);

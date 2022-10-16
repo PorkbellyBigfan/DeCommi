@@ -106,6 +106,15 @@ public class MemberApiController {
     return new ResponseEntity<>(service.findPw(vo), HttpStatus.OK);
   }
 
+  // 로그인시 비밀번호 까먹었을때 step2 (이메일과 질문을 답한 사용자)
+  @RequestMapping(value = "/findpw2", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Boolean> findpw2(@RequestBody FindPw vo) {
+    // 필요한 데이터
+    // mid, changePw 바꿀 비밀번호
+    log.info("front에서 넘겨주는 값들 ::: " + vo);
+    return new ResponseEntity<>(service.findPw2(vo), HttpStatus.OK);
+  }
+
   // 회원탈퇴
   @RequestMapping(value = "/deleteMember", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Boolean> deletemember(@RequestBody MemberDTO dto) {
