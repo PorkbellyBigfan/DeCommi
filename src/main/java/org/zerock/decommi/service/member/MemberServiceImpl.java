@@ -9,11 +9,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.zerock.decommi.dto.MemberDTO;
 import org.zerock.decommi.entity.member.Member;
+import org.zerock.decommi.repository.diary.BookmarkRepository;
 import org.zerock.decommi.repository.diary.DiaryRepository;
+import org.zerock.decommi.repository.diary.HeartRepository;
 import org.zerock.decommi.repository.diary.ReplyRepository;
+import org.zerock.decommi.repository.diary.ReportRepository;
 import org.zerock.decommi.repository.diary.TagRepository;
+import org.zerock.decommi.repository.member.LikeTagListRepository;
 import org.zerock.decommi.repository.member.MemberRepository;
-import org.zerock.decommi.vo.Findpw;
+import org.zerock.decommi.vo.FindPw;
 import org.zerock.decommi.vo.Setpw;
 
 import lombok.RequiredArgsConstructor;
@@ -28,6 +32,10 @@ public class MemberServiceImpl implements MemberService {
   private final ReplyRepository replyRepository;
   private final TagRepository tagRepository;
   private final PasswordEncoder encoder;
+  private final HeartRepository heartRepository;
+  private final BookmarkRepository bookmarkRepository;
+  private final ReportRepository reportRepository;
+  private final LikeTagListRepository likeTagListRepository;
   // @PersistenceContext
   // EntityManager em;
 
@@ -109,12 +117,13 @@ public class MemberServiceImpl implements MemberService {
   }
 
   @Override
-  public Long findPw(Findpw vo) {
-    Long result = repository.findMidByEmailAndQ(vo.getEmail(), vo.getQ1(), vo.getQ2(), vo.getQ3());
-    if (result == null) {
+  public Long findPw(FindPw vo) {
+    Long mid = repository.findMidByEmailAndQ(vo.getEmail(), vo.getQ1(),
+        vo.getQ2(), vo.getQ3());
+    if (mid == null) {
       return null;
     } else {
-      return result;
+      return mid;
     }
   }
 
@@ -147,9 +156,14 @@ public class MemberServiceImpl implements MemberService {
     Optional<Member> checkMember = repository.findByMid(dto.getMid());
     log.info("탈퇴하려고하는 멤버의 entity : " + checkMember);
     if (checkMember.isPresent()) {
+      log.info("checkMember's email ::: " + dto.getEmail());
       tagRepository.deleteTagByMid(dto.getMid());
+      likeTagListRepository.deleteLikeTagListByEmail(dto.getEmail());
       replyRepository.deleteReplyByMid(dto.getMid());
-      diaryRepository.deleteDiaryByWriter(checkMember.get().getId());
+      diaryRepository.deleteDiaryByWriter(dto.getEmail());
+      heartRepository.deleteByMid(dto.getMid());
+      bookmarkRepository.deleteByMid(dto.getMid());
+      reportRepository.deleteByMid(dto.getMid());
       repository.delete(checkMember.get());
       return true;
     } else {

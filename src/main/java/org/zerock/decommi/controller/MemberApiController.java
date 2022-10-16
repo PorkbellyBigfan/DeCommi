@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.zerock.decommi.dto.MemberDTO;
 import org.zerock.decommi.service.member.LikeTagListService;
 import org.zerock.decommi.service.member.MemberService;
-import org.zerock.decommi.vo.Findpw;
+import org.zerock.decommi.vo.FindPw;
 import org.zerock.decommi.vo.LikeTagList;
 import org.zerock.decommi.vo.Setpw;
 
@@ -98,9 +98,11 @@ public class MemberApiController {
 
   // 로그인시 비밀번호 까먹었을때
   @RequestMapping(value = "/findpw", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Long> findpw(@RequestBody Findpw vo) {
-    log.info(vo);
-    log.info(service.findPw(vo));
+  public ResponseEntity<Long> findpw(@RequestBody FindPw vo) {
+    // 필요한거
+    // email, q1, q2, q3, 새로 셋팅할 비밀번호 changePw2, 새로셋팅할 비밀번호 확인 changePw1
+    // 새로 셋팅할 비밀번호 1,2가 서로 일치할 경우만 변경 가능
+    log.info("what is input ? :: " + vo);
     return new ResponseEntity<>(service.findPw(vo), HttpStatus.OK);
   }
 
@@ -108,15 +110,17 @@ public class MemberApiController {
   @RequestMapping(value = "/deleteMember", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Boolean> deletemember(@RequestBody MemberDTO dto) {
     log.info("controller class :::탈퇴하려고하는 회원 dto : " + dto);
+    log.info("dto의 email ::: " + dto.getEmail());
     return new ResponseEntity<>(service.deleteMember(dto), HttpStatus.OK);
   }
 
   // 선호태그 리스트 출력
   @RequestMapping(value = "/liketaglist", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<String>> getLikeTagList(@RequestBody String email) {
-    log.info("controller class email" + email);
+    log.info("controller class email:::" + email);
     if (email.contains("{")) {
       email = email.substring(10, email.length() - 2);
+      log.info("{을 때버린 email :::: " + email);
     }
     return new ResponseEntity<>(likeTagListService.getLikeTagList(email), HttpStatus.OK);
   }

@@ -37,9 +37,10 @@ public class DiaryViewController {
   public ResponseEntity<List<DiaryDTO>> getDiaryList(@RequestBody PageRequestDTO dto) {
     PageRequestDTO.builder().page(dto.getPage()).size(5).keyword(dto.getKeyword()).build();
     PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostList(dto);
-    log.info("===============================");
-    log.info(" controller class dto::::" + dto);
-    log.info("===============================");
+    // log.info("===============================");
+    // log.info(" controller class dto::::" + dto);
+    log.info("result.getDtoList() " + result.getDtoList().get(0).getReplyList());
+    // log.info("===============================");
     return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
   }
 
@@ -64,11 +65,13 @@ public class DiaryViewController {
   // 태그를 눌렀을때 그 해당 태그를 포함하고있는 게시글 리스트반환 여기서 String tagName은 해당 태그의 tagName임.
   @RequestMapping(value = "/list/bytagname", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<DiaryDTO>> getDiaryLisyByTagName(@RequestBody PageRequestDTO dto) {
-    PageRequestDTO.builder().page(dto.getPage()).size(5).tagList(dto.getTagList()).build();
-    log.info("dtodtodto///////////////////////////////" + dto);
+    PageRequestDTO.builder().page(dto.getPage()).size(5).tagList(dto.getTagList()).tagName(dto.getTagName()).build();
+    log.info("Controller class  dto ::: " + dto);
+    log.info("Controller class  dto.getTagName ::: " + dto.getTagName());
     PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostListByTagName(dto);
     result.getDtoList().forEach(v -> {
-      log.info(v.getTitle());
+      log.info("getTitle:::" + v.getTitle());
+      log.info("getTagList:::" + v.getTagList());
     });
     return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
   }

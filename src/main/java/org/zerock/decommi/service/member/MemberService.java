@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.zerock.decommi.dto.MemberDTO;
 import org.zerock.decommi.entity.member.Member;
 import org.zerock.decommi.entity.member.MemberRole;
-import org.zerock.decommi.vo.Findpw;
+import org.zerock.decommi.vo.FindPw;
 import org.zerock.decommi.vo.Setpw;
 
 public interface MemberService {
@@ -27,7 +27,7 @@ public interface MemberService {
 
     Boolean findEmail(MemberDTO email); // 이메일 찾기
 
-    Long findPw(Findpw vo); // 비밀번호 찾기
+    Long findPw(FindPw vo); // 비밀번호 찾기
 
     Boolean changePw(Setpw vo); // 비밀번호 변경
 

@@ -181,7 +181,6 @@ public class DiaryServiceImpl implements DiaryService {
         Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
             @Override
             public DiaryDTO apply(Diary t) {
-
                 return entityToDTO(t);
             }
         };
@@ -191,17 +190,19 @@ public class DiaryServiceImpl implements DiaryService {
     @Transactional
     @Override
     public PageResultDTO<DiaryDTO, Diary> getDiaryPostListByTagName(PageRequestDTO requestDTO) {
+        log.info("Service class requestDTO.getTagName() " + requestDTO.getTagName());
         Pageable pageable = requestDTO.getPageable(Sort.by("dino").descending());
-        log.info("service code  requestDTO ::::: " + requestDTO);
         BooleanBuilder booleanBuilder = getSearchByTagName(requestDTO.getTagName());
         Page<Diary> result = repository.findAll(booleanBuilder, pageable);
+        log.info("===================");
+        log.info("requestDTO.getTagName() ::: " + requestDTO.getTagName());
+        log.info("===================");
         Function<Diary, DiaryDTO> fn = new Function<Diary, DiaryDTO>() {
             @Override
             public DiaryDTO apply(Diary t) {
                 return entityToDTO(t);
             }
         };
-        log.info("result.getSize()::::::" + result.getSize());
         return new PageResultDTO<>(result, fn);
     }
 
@@ -253,17 +254,27 @@ public class DiaryServiceImpl implements DiaryService {
     public String registerReply(ReplyDTO dto) {
         Optional<Member> result = memberRepository.findByMid(dto.getMid());
         Optional<List<Long>> lastestrg = replyRepository.getLastestReplyGroupWhereMatchWithDino(dto.getDino());
+        log.info("what is lastestrg :::" + lastestrg);
+        Diary post = repository.getByDino(dto.getDino());
         // rno 안쓰는 이유는 대 댓글때문임.
+        // ex)두번째로 달린 댓글이 대댓글일 경우 3번째 댓글의 위치는 2번째에 위치해야하는데
+        // rno로 정렬을 하게되면 2번째 대댓글의 rno가 3번째보다 우선되기 때문에 정렬이 이상해진다.
         Long setrg = 1L; // set ReplyGroup = rg //처음 등록된 댓글은 setrg = 1L
         if (lastestrg.get().size() != 0) { // 처음 등록된 댓글이 아닐 경우
             setrg = lastestrg.get().get(0) + 1; // setrg += 1
+            log.info("setrg ::: " + setrg);
         }
+        dto.setDino(dto.getDino());
         dto.setReplyGroup(setrg);
         dto.setReplyDepth(0L); // 새댓글이라서 뎁스0
         dto.setReplyOrder(0L);
         dto.setMid(result.get().getMid());
         Reply reply = replyDTOtoEntity(dto);
-        replyRepository.save(reply);
+        if (post.isReplyYN() == false) {
+            return null;
+        } else {
+            replyRepository.save(reply);
+        }
         log.info("reply rno " + reply.getRno());
         log.info("reply.getReplyContent()" + reply.getReplyContent());
         log.info("reply.getReplyDepth()" + reply.getReplyDepth());
@@ -410,20 +421,22 @@ public class DiaryServiceImpl implements DiaryService {
     private BooleanBuilder getSearchByTagName(String tagName) {
         QDiary qDiary = QDiary.diary;
         BooleanBuilder booleanBuilder = new BooleanBuilder();
+
         BooleanBuilder noResult = new BooleanBuilder();
         BooleanExpression no = qDiary.dino.isNull();
         noResult.and(no);
         Optional<List<Tag>> temp = tagRepository.findByTagName2(tagName);
-        // temp.get() ==> Tag
+        log.info("this is temp ::: " + temp);
         if (temp.get().size() > 0) {
             temp.get().forEach(v -> {
                 BooleanExpression expression;
                 expression = qDiary.dino.gt(0L).and(qDiary.openYN.isTrue()).and(qDiary.tagList.contains(v));
+                log.info("qDiary.tagList.contains(v):::" + qDiary.tagList.contains(v));
                 booleanBuilder.or(expression);
             });
             return booleanBuilder;
         } else {
-            log.info("hello");
+            log.info(":::::::noResult::::::");
             return noResult;
         }
 
@@ -436,5 +449,6 @@ public class DiaryServiceImpl implements DiaryService {
         // } else {
         // return noResult;
         // }
+
     }
 }

@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.zerock.decommi.admin.dto.PageResultDTO;
+import org.zerock.decommi.dto.DiaryDTO;
 import org.zerock.decommi.dto.PageRequestDTO;
 import org.zerock.decommi.entity.diary.Diary;
 import org.zerock.decommi.entity.diary.Reply;
@@ -71,9 +73,21 @@ public class DiaryRepositoryTests {
   // log.info(result);
   // }
 
+  // @Test
+  // public void testFindPwWithMid() {
+  // Long mid = 1L;
+  // String pw = memberRepository.findPwByMid(mid);
+  // }
+
+  @Test
+  public void testGetDiaryPostList() {
+    PageRequestDTO requestDTO = PageRequestDTO.builder().page(1).size(5).build();
+    log.info(diaryService.getDiaryPostList(requestDTO));
+  }
+
   @Test
   public void testGetDiaryListByTagName() {
-    PageRequestDTO requestDTO = PageRequestDTO.builder().page(1).size(5).tagName("이규훈").build();
+    PageRequestDTO requestDTO = PageRequestDTO.builder().page(1).size(5).tagName("운동").build();
     log.info(diaryService.getDiaryPostListByTagName(requestDTO));
   }
 

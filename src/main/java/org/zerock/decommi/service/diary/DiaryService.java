@@ -2,6 +2,7 @@ package org.zerock.decommi.service.diary;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Pageable;
 import org.zerock.decommi.dto.BookmarkDTO;
@@ -21,6 +22,7 @@ import org.zerock.decommi.entity.diary.Report;
 import org.zerock.decommi.entity.diary.Tag;
 import org.zerock.decommi.entity.member.Bookmark;
 import org.zerock.decommi.entity.member.Member;
+import org.zerock.decommi.repository.diary.TagRepository;
 
 public interface DiaryService {
     // 다이어리
@@ -86,6 +88,15 @@ public interface DiaryService {
                 .openYN(diary.isOpenYN())
                 .replyYN(diary.isReplyYN())
                 .writer(diary.getWriter())
+                .tagList(diary.getTagList().stream().map(
+                        t -> new String(t.getTagName()))
+                        .collect(Collectors.toList()))
+                .replyList(diary.getReplyList().stream().map(
+                        t -> new ReplyDTO(
+                                t.getRno(), t.getMember().getMid(), diary.getDino(), t.getReplyContent(),
+                                t.getReplyGroup(), t.getReplyDepth(), t.getReplyOrder(), t.getRegDate(),
+                                t.getModDate()))
+                        .collect(Collectors.toList()))
                 // .bookmarkCnt(diary.getBookmarkCnt())
                 // .heartCnt(diary.getHeartCnt())
                 // .replyCnt(diary.getReplyCnt())
