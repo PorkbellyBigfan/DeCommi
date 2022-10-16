@@ -73,8 +73,14 @@ public class DiaryRepositoryTests {
   // log.info(result);
   // }
 
+  // @Test
+  // public void testFindPwWithMid() {
+  // Long mid = 1L;
+  // String pw = memberRepository.findPwByMid(mid);
+  // }
+
   @Test
-  public void testGetDiaryPostList(){
+  public void testGetDiaryPostList() {
     PageRequestDTO requestDTO = PageRequestDTO.builder().page(1).size(5).build();
     log.info(diaryService.getDiaryPostList(requestDTO));
   }

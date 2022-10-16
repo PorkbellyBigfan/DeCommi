@@ -254,6 +254,7 @@ public class DiaryServiceImpl implements DiaryService {
     public String registerReply(ReplyDTO dto) {
         Optional<Member> result = memberRepository.findByMid(dto.getMid());
         Optional<List<Long>> lastestrg = replyRepository.getLastestReplyGroupWhereMatchWithDino(dto.getDino());
+        log.info("what is lastestrg :::" + lastestrg);
         Diary post = repository.getByDino(dto.getDino());
         // rno 안쓰는 이유는 대 댓글때문임.
         // ex)두번째로 달린 댓글이 대댓글일 경우 3번째 댓글의 위치는 2번째에 위치해야하는데
@@ -261,7 +262,9 @@ public class DiaryServiceImpl implements DiaryService {
         Long setrg = 1L; // set ReplyGroup = rg //처음 등록된 댓글은 setrg = 1L
         if (lastestrg.get().size() != 0) { // 처음 등록된 댓글이 아닐 경우
             setrg = lastestrg.get().get(0) + 1; // setrg += 1
+            log.info("setrg ::: " + setrg);
         }
+        dto.setDino(dto.getDino());
         dto.setReplyGroup(setrg);
         dto.setReplyDepth(0L); // 새댓글이라서 뎁스0
         dto.setReplyOrder(0L);

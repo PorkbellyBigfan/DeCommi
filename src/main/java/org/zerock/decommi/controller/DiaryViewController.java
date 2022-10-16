@@ -39,7 +39,7 @@ public class DiaryViewController {
     PageResultDTO<DiaryDTO, Diary> result = diaryService.getDiaryPostList(dto);
     // log.info("===============================");
     // log.info(" controller class dto::::" + dto);
-    // log.info("result.getDtoList() "+result.getDtoList());
+    log.info("result.getDtoList() " + result.getDtoList().get(0).getReplyList());
     // log.info("===============================");
     return new ResponseEntity<>(result.getDtoList(), HttpStatus.OK);
   }

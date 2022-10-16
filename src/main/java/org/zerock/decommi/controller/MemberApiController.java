@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.zerock.decommi.dto.MemberDTO;
 import org.zerock.decommi.service.member.LikeTagListService;
 import org.zerock.decommi.service.member.MemberService;
-import org.zerock.decommi.vo.ForgotPw;
+import org.zerock.decommi.vo.FindPw;
 import org.zerock.decommi.vo.LikeTagList;
 import org.zerock.decommi.vo.Setpw;
 
@@ -97,15 +97,14 @@ public class MemberApiController {
   }
 
   // 로그인시 비밀번호 까먹었을때
-  // @RequestMapping(value = "/forgotpw", method = RequestMethod.POST, consumes =
-  // MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  // public ResponseEntity<Boolean> findpw(@RequestBody ForgotPw vo) {
-  // //필요한거
-  // //email, q1, q2, q3, 새로 셋팅할 비밀번호 changePw2, 새로셋팅할 비밀번호 확인 changePw1
-  // //새로 셋팅할 비밀번호 1,2가 서로 일치할 경우만 변경 가능
-  // log.info("what is input ? :: "+vo);
-  // return new ResponseEntity<>(service.forgotPw(vo), HttpStatus.OK);
-  // }
+  @RequestMapping(value = "/findpw", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Long> findpw(@RequestBody FindPw vo) {
+    // 필요한거
+    // email, q1, q2, q3, 새로 셋팅할 비밀번호 changePw2, 새로셋팅할 비밀번호 확인 changePw1
+    // 새로 셋팅할 비밀번호 1,2가 서로 일치할 경우만 변경 가능
+    log.info("what is input ? :: " + vo);
+    return new ResponseEntity<>(service.findPw(vo), HttpStatus.OK);
+  }
 
   // 회원탈퇴
   @RequestMapping(value = "/deleteMember", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

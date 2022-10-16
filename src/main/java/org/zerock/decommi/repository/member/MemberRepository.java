@@ -46,6 +46,10 @@ public interface MemberRepository extends JpaRepository<Member, String> {
   @Query("select mid from Member where email=:email and (q1=:q1 or q2=:q2 or q3=:q3)")
   Long findMidByEmailAndQ(String email, String q1, String q2, String q3);
 
+  // 비밀번호찾기2
+  @Query("select pw from Member where mid=:mid ")
+  String findPwByMid(Long mid);
+
   // 비밀번호변경
   @Transactional
   @Modifying(clearAutomatically = true)

@@ -3,7 +3,7 @@ package org.zerock.decommi.vo;
 import lombok.Data;
 
 @Data
-public class ForgotPw {
+public class FindPw {
     String email;
     String q1;
     String q2;
